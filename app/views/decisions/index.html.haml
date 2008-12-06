@@ -1,0 +1,16 @@
+%h1
+  Decisions controller, index action
+%p
+  Edit this file in
+  %tt
+    app/views/decisions/index.html.erb
+%table
+  %tr
+  - for decision in @decisions
+    %tr
+      %td
+        = link_to 'Show', url(:decision, decision)
+      %td
+        = link_to 'Edit', url(:edit_decision,  decision)
+
+= link_to 'New', url(:new_decision)

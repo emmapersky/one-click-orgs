@@ -1,0 +1,16 @@
+%h1
+  Votes controller, index action
+%p
+  Edit this file in
+  %tt
+    app/views/votes/index.html.erb
+%table
+  %tr
+  - for vote in @votes
+    %tr
+      %td
+        = link_to 'Show', url(:vote, vote)
+      %td
+        = link_to 'Edit', url(:edit_vote,  vote)
+
+= link_to 'New', url(:new_vote)

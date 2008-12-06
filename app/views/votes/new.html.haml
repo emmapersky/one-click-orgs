@@ -1,0 +1,13 @@
+%h1 Votes controller, new action
+
+%p 
+  Edit this file in 
+  %tt app/views/votes/new.html.erb
+
+= error_messages_for @vote
+
+= form_for(@vote, :action => url(:votes) ) do
+  %p
+    = submit "Create"
+
+= link_to 'Back', url(:votes)

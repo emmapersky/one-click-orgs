@@ -1,0 +1,16 @@
+%h1
+  Members controller, index action
+%p
+  Edit this file in
+  %tt
+    app/views/members/index.html.erb
+%table
+  %tr
+  - for member in @members
+    %tr
+      %td
+        = link_to 'Show', url(:member, member)
+      %td
+        = link_to 'Edit', url(:edit_member,  member)
+
+= link_to 'New', url(:new_member)
