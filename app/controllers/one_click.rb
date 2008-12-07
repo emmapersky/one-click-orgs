@@ -3,6 +3,7 @@ class OneClick < Application
   # ...and remember, everything returned from an action
   # goes to the client...
   def index
+    @proposals = Decision.all(:open => true)
     render
   end
   

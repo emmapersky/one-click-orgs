@@ -1,3 +1,11 @@
-%h3 Current Decisions
+%h3= "Welcome back #{current_user.name}"
+
+%h5 Current Proposals
+
+%table
+  - for proposal in @proposals
+    %tr
+      %td= proposal.title
+      %td= time_to_go_in_words(proposal.end_date)
 
 = current_user.name

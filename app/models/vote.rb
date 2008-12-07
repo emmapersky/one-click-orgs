@@ -9,6 +9,10 @@ class Vote
   property :for, Boolean, :nullable => false
 
   def for_or_against
-    self.for ? "For" : "Against"
+    self.for_or_agains(self.for)
+  end
+  
+  def self.for_or_against(foa)
+    foa ? "For" : "Against"
   end
 end

@@ -1,10 +1,22 @@
 %h3 Open Proposals
 
 %table
+  %tr
+    %td Title
+    %td End in
+    %td Vote
   - for proposal in @proposals
     %tr
       %td= proposal.title
-      %td= date_format(proposal.end_date)
+      %td
+        = time_to_go_in_words(proposal.end_date)
+      %td
+        - if proposal.completed
+          voted
+          = Vote.for_or_against(proposal.for).downcase + "."
+          change?
+        - else
+          for / against
       
 %h5 New Proposal
 = form_for(@new_proposal, :action => url(:controller => :decisions, :action => :create_proposal)) do

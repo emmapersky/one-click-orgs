@@ -4,13 +4,17 @@ class Decision
   LENGTH_OF_DECISION = 3.days
   include DataMapper::Resource
   has n, :votes
-
+  
+  #class << self
+    attr_accessor :completed, :for
+  #end
+  
   belongs_to :proposer, :class_name => 'Member', :child_key => [:proposer_member_id]
   
   property :id, Serial
   property :title, String, :nullable => false
   property :description, Text
-  property :creation_date, DateTime, :default => Proc.new {|r,p| Time.now}
+  property :creation_date, DateTime, :default => Proc.new {|r,p| Time.now.to_datetime}
   property :open, Boolean, :default => true
   property :accepted, Boolean, :default => false
   
