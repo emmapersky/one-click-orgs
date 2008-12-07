@@ -5,17 +5,19 @@
       One Click Organisations
     = css_include_tag :one_click
   %body
-    %h1.header One Click Organisations
-    - if current_user_id
-      %ul#nav
-        %li#navitem= link_to 'Members', url(:controller => :members)
-        %li#navitem= link_to 'Proposals', url('proposals')
-        %li#navitem= link_to 'Decisions', url(:controller => :decisions)
-        %li#navitem= link_to 'Constitution', url('constitution')
-        %li#navitem= link_to 'Logout', url('logout')
-    = message[:notice]
-    = message[:error]
-    = catch_content :for_layout
-    
-    %div.footer
-      One Click Organisations - verson 0.1 - December 2008
+    %div#doc
+      %div#hd
+        %h1.header One Click Organisations
+      %div#bd
+        - if current_user_id
+          %ul#nav
+            %li#navitem= link_to 'Members', url(:controller => :members)
+            %li#navitem= link_to 'Proposals', url('proposals')
+            %li#navitem= link_to 'Decisions', url(:controller => :decisions)
+            %li#navitem= link_to 'Constitution', url('constitution')
+            %li#navitem= link_to 'Logout', url('logout')
+        = message[:notice]
+        = message[:error]
+        = catch_content :for_layout
+      %div.footer
+        One Click Organisations - verson 0.1 - December 2008

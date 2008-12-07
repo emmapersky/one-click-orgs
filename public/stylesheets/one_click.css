@@ -6,4 +6,25 @@ body { font-family: Arial, "MS Trebuchet", sans-serif; }
 
 #navitem { display: inline; color: rgb(23,56,23); margin-left: 2em; margin-right: 2em; }
 
-.footer { font-size: 0.7em; text-align: center; }
+.footer { font-size: 0.7em; text-align: center; margin-top: 20px; }
+
+#doc { width: 750px; margin: auto; }
+
+#hd #bd .footer { width: 750px; margin: auto; }
+
+table#proposal { width: 700px; margin: auto; border: 1px solid #004422; }
+
+table#proposal td#vote { text-align: center; width: 12em; }
+
+table#proposal form { display: inline; }
+
+table#proposal input { width: 7em; margin: auto; }
+
+th#proposal { background-color: #356AA0; }
+
+td#proposal_ends_in { text-align: center; }
+
+tr.proposal_one { background-color: #CDEB8B; }
+
+tr.proposal_two { background-color: #C3D9FF; }
+

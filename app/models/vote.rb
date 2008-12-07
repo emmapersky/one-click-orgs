@@ -7,9 +7,10 @@ class Vote
   
   property :id, Serial
   property :for, Boolean, :nullable => false
-
+  property :created_at, DateTime
+  
   def for_or_against
-    self.for_or_agains(self.for)
+    Vote.for_or_against(self.for)
   end
   
   def self.for_or_against(foa)
