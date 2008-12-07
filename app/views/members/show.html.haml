@@ -1,10 +1,22 @@
-%h1
-  Members controller, show action
+%h3
+  = @member.name
 %p
-  Edit this file in
   %tt
-    app/views/members/show.html.erb
+    = @member.email
 
-= link_to 'Edit',  url(:edit_member,  @member)
-|
+%h5
+  Voting History
+  
+%table
+  - for vote in @member.votes
+    %tr
+      %td= vote.decision.title
+      %td= vote.for_or_against
+      
+%h5
+  Proposal History
+%ul
+  - for proposal in @member.proposals
+    %li= proposal.title
+     
 = link_to 'Back', url(:members)

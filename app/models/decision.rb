@@ -1,6 +1,7 @@
 require 'dm-validations'
 
 class Decision
+  LENGTH_OF_DECISION = 3.days
   include DataMapper::Resource
   has n, :votes
 
@@ -14,4 +15,8 @@ class Decision
   property :accepted, Boolean, :default => false
   
   validates_present :proposer_member_id
+  
+  def end_date
+    creation_date.to_time + 3.days
+  end
 end

@@ -1,16 +1,14 @@
-%h1
-  Members controller, index action
+%h3
+  Members
 %p
-  Edit this file in
-  %tt
-    app/views/members/index.html.erb
-%table
-  %tr
+  Create a new member:
+  = form_for(@new_member, :action => url(:members) ) do
+    = text_field :email, :label => "Email Address"
+    = text_field :name, :label => "Name"
+    = submit "Add Member"
+%p
+  Existing Members
+%ol
   - for member in @members
-    %tr
-      %td
-        = link_to 'Show', url(:member, member)
-      %td
-        = link_to 'Edit', url(:edit_member,  member)
-
-= link_to 'New', url(:new_member)
+    %li
+      = link_to "#{member.name}", url(:member, member)

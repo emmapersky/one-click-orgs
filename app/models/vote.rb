@@ -8,4 +8,7 @@ class Vote
   property :id, Serial
   property :for, Boolean, :nullable => false
 
+  def for_or_against
+    self.for ? "For" : "Against"
+  end
 end

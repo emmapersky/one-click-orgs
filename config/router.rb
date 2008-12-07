@@ -25,8 +25,16 @@
 # You can also use regular expressions, deferred routes, and many other options.
 # See merb/specs/merb/router.rb for a fairly complete usage sample.
 
+
+
 Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do
+  match('/login').to(:controller => 'one_click', :action => 'login')
+  match('/logout').to(:controller => 'one_click', :action => 'logout')  
+  match('/proposals').to(:controller => "decisions", :action => "proposals")      
+  match('/proposals/create').to(:controller => 'decisions', :action => 'create_proposal')  
+  match('/proposals/:proposal_id').to(:controller => "decisions", :action => "proposals", :id => :proposal_id)    
+  
   resources :votes
   resources :decisions
   resources :members
@@ -42,6 +50,9 @@ Merb::Router.prepare do
   # clients from calling your create or destroy actions with a GET
   default_routes
   
+
+
+  
   # Change this for your home page to be available at /
-  # match('/').to(:controller => 'whatever', :action =>'index')
+  match('/').to(:controller => :one_click, :action => :index)
 end

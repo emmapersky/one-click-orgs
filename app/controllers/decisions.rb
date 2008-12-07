@@ -2,8 +2,15 @@ class Decisions < Application
   # provides :xml, :yaml, :js
 
   def index
-    @decisions = Decision.all
+    @decisions = Decision.all(:accepted => true)
     display @decisions
+  end
+
+  def proposals
+    @proposals = Decision.all(:open => true)
+    @new_proposal = Decision.new
+    display @proposals
+    display @new_proposal
   end
 
   def show(id)
@@ -28,10 +35,19 @@ class Decisions < Application
   def create(decision)
     @decision = Decision.new(decision)
     if @decision.save
-      redirect resource(@decision), :message => {:notice => "Decision was successfully created"}
+      redirect url('decisions'), :message => {:notice => "Proposal was successfully created"}
     else
-      message[:error] = "Decision failed to be created"
-      render :new
+      redirect url('decisions'), :message => {:error => "Proposal not created"}
+    end
+  end
+  
+  def create_proposal(decision)
+    decision[:proposer_member_id] = current_user_id
+    @proposal = Decision.new(decision)
+    if @proposal.save
+      redirect url('proposals'), :message => {:notice => "Proposal was successfully created"}
+    else
+      redirect url('proposals'), :message => {:notice => "Proposal not created:{#{decision.inspect}}"}      
     end
   end
 

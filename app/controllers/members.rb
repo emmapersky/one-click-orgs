@@ -3,7 +3,9 @@ class Members < Application
 
   def index
     @members = Member.all
+    @new_member = Member.new
     display @members
+    display @new_member
   end
 
   def show(id)
@@ -28,10 +30,9 @@ class Members < Application
   def create(member)
     @member = Member.new(member)
     if @member.save
-      redirect resource(@member), :message => {:notice => "Member was successfully created"}
+      redirect resource(:members), :message => {:notice => "Member was successfully created"}
     else
-      message[:error] = "Member failed to be created"
-      render :new
+      redirect resource(:members), :message => {:error => "Error creating member"}
     end
   end
 

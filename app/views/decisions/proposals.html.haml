@@ -1,0 +1,13 @@
+%h3 Open Proposals
+
+%table
+  - for proposal in @proposals
+    %tr
+      %td= proposal.title
+      %td= date_format(proposal.end_date)
+      
+%h5 New Proposal
+= form_for(@new_proposal, :action => url(:controller => :decisions, :action => :create_proposal)) do
+  = text_field :title, :label => "Title"
+  = text_area :description, :label => "Description"
+  = submit "Create Proposal"
