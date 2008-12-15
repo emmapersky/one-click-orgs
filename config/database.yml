@@ -26,8 +26,12 @@ test:
   #     database: sample_1_test.db
  
 production:
-  <<:       *defaults
-  database: production.db
+  adapter:  mysql
+  database: one_click_production
+  encoding: utf8
+  username: oneclick
+  password: themis
+  host:     localhost  
  
   # repositories:
   #   repo1:
