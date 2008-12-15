@@ -1,13 +1,15 @@
 class Decisions < Application
   # provides :xml, :yaml, :js
-
+  
+  before :check_login
+  
   def index
-    @decisions = Decision.all(:accepted => true)
+    @decisions = Decision.all(:close_date.lt => Time.now).select{|v| v.accepted}
     display @decisions
   end
 
   def proposals
-    @proposals = Decision.all(:open => true)
+    @proposals = Decision.all(:open => true, :close_date.gt => Time.now)
     
     completed_votes = current_user.votes
     completed_decisions = {}

@@ -1,14 +1,16 @@
 %h3
-  Members
-%p
-  Create a new member:
-  = form_for(@new_member, :action => url(:members) ) do
-    = text_field :email, :label => "Email Address"
-    = text_field :name, :label => "Name"
-    = submit "Add Member"
-%p
   Existing Members
 %ol
   - for member in @members
     %li
       = link_to "#{member.name}", url(:member, member)
+%h3
+  New Member
+%p
+  = form_for(@new_member, :action => url(:members) ) do
+    = text_field :email, :label => "Email Address "
+    %br
+    = text_field :name, :label => "Name "
+    %br
+    = submit "Add Member", :id => 'submit'
+    %br

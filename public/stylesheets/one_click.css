@@ -24,7 +24,22 @@ th#proposal { background-color: #356AA0; }
 
 td#proposal_ends_in { text-align: center; }
 
+tr.vote_for { background-color: #6BBA70; }
+
+tr.vote_against { background-color: #B02B2C; }
+
+tr.vote_in_progress { background-color: #C79810; }
+
 tr.proposal_one { background-color: #CDEB8B; }
 
 tr.proposal_two { background-color: #C3D9FF; }
 
+label, input { display: block; width: 30em; float: left; margin-bottom: 10px; }
+
+label { text-align: right; width: 10em; padding-right: 1em; }
+
+br { clear: left; }
+
+input#submit { width: 10em; margin-left: 16em; }
+
+form { clear: left; }

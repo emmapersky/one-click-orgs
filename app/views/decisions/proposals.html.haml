@@ -16,8 +16,9 @@
       %td#vote
         = partial :vote, :proposal => proposal
       
-%h5 New Proposal
+%h3 New Proposal
 = form_for(@new_proposal, :action => url(:controller => :decisions, :action => :create_proposal)) do
-  = text_field :title, :label => "Title"
-  = text_area :description, :label => "Description"
-  = submit "Create Proposal"
+  = text_field :title, :label => "Title  ", :style => 'width:30em'
+  /= text_area :description, :label => "Description"
+  = submit "Create Proposal", :id => 'submit'
+  %br

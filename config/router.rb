@@ -34,6 +34,7 @@ Merb::Router.prepare do
   match('/proposals').to(:controller => "decisions", :action => "proposals")      
   match('/proposals/create').to(:controller => 'decisions', :action => 'create_proposal')  
   match('/proposals/:proposal_id').to(:controller => "decisions", :action => "proposals", :id => :proposal_id)    
+  match('/constitution').to(:controller => 'one_click', :action => 'constitution')
   
   resources :votes
   resources :decisions
@@ -54,5 +55,5 @@ Merb::Router.prepare do
 
   
   # Change this for your home page to be available at /
-  match('/').to(:controller => :one_click, :action => :index)
+  match('/').to(:controller => :decisions, :action => :proposals)
 end

@@ -1,13 +1,17 @@
-%h1 Decisions controller, new action
+%h3 Decisions
 
-%p 
-  Edit this file in 
-  %tt app/views/decisions/new.html.erb
-
-= error_messages_for @decision
-
-= form_for(@decision, :action => url(:decisions) ) do
-  %p
-    = submit "Create"
-
-= link_to 'Back', url(:decisions)
+%table#proposal
+  %tr
+    %th#proposal Title
+    %th#proposal Ended
+    %th#proposal Vote
+  - on = true
+  - for decision in @decisions
+    - on = !on    
+    - on ? p = "one" : p = "two"
+    %tr{:class => "proposal_#{p}"}
+      %td= decision.title
+      %td#proposal_ends_in
+        = proposal.close_date
+      %td#vote
+        = partial :vote_count, :decision => decision

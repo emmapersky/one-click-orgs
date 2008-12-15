@@ -1,0 +1,6 @@
+- votes_for = decision.votes.select{|v| v.for}.size
+- votes_against = decision.votes.select{|v| ! v.for}.size
+
+= votes_for 
+\/ 
+= votes_against

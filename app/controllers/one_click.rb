@@ -8,7 +8,7 @@ class OneClick < Application
   end
   
   def login
-    render
+    render 
   end
   
   def logout
@@ -18,11 +18,15 @@ class OneClick < Application
   
   def authenticate
     user = Member.first(:email => params[:email])
-    if user
+    if user && params[:password] == 'oneclick'
       session('cookie')[:current_user_id] = user.id
       redirect url('')
     else
       redirect url('login')
     end
+  end
+  
+  def constitution
+    render
   end
 end
