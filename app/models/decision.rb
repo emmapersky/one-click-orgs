@@ -1,7 +1,7 @@
 require 'dm-validations'
 
 class Decision
-  LENGTH_OF_DECISION = 3.days
+  LENGTH_OF_DECISION = 3.minutes
   include DataMapper::Resource
   has n, :votes
   
@@ -12,16 +12,16 @@ class Decision
   belongs_to :proposer, :class_name => 'Member', :child_key => [:proposer_member_id]
   
   property :id, Serial
-  property :title, String, :nullable => false
+  property :title, String, :nullable => false, :length => 255
   property :description, Text
   property :creation_date, DateTime, :default => Proc.new {|r,p| Time.now.to_datetime}
   property :open, Boolean, :default => true
   property :accepted, Boolean, :default => false
-  property :close_date, DateTime, :default => Proc.new {|r,p| (Time.now + 3.days).to_datetime}
+  property :close_date, DateTime, :default => Proc.new {|r,p| (Time.now + LENGTH_OF_DECISION).to_datetime}
   validates_present :proposer_member_id
   
   def end_date
-    creation_date.to_time + 3.days
+    self.close_date
   end
   
   def votes_for
