@@ -1,7 +1,7 @@
 require 'dm-validations'
 
 class Decision
-  LENGTH_OF_DECISION = 3.minutes
+  LENGTH_OF_DECISION = 3.days
   include DataMapper::Resource
   has n, :votes
   
