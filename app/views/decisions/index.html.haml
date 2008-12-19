@@ -10,7 +10,12 @@
     - on = !on    
     - on ? p = "one" : p = "two"
     %tr{:class => "proposal_#{p}"}
-      %td= decision.title
+      %td
+        = decision.title
+        - unless decision.description.blank?
+          - paras = decision.description.split("\n")
+          - for para in paras
+            %div.description= para
       %td#proposal_ends_in
         = date_format(decision.close_date)
       %td#vote

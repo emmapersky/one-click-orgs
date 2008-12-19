@@ -2,6 +2,6 @@
   = Vote.for_or_against(proposal.for)
 - else
   = form(:action => url(:controller => :votes, :action => :vote_for, :id => proposal.id, :return_to => :proposals)) do
-    = submit "For"
+    = submit "Support"
   = form(:action => url(:controller => :votes, :action => :vote_against, :id => proposal.id, :return_to => :proposals)) do
-    = submit "Against"
+    = submit "Oppose"

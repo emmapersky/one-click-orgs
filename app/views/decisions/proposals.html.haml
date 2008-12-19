@@ -15,6 +15,9 @@
         (
         = proposal.proposer.name
         )
+        - paras = proposal.description.split("\n")
+        - for para in paras
+          %div.description= para
       %td#proposal_ends_in
         = time_to_go_in_words(proposal.end_date)
       %td#vote
@@ -22,7 +25,9 @@
       
 %h3 New Proposal
 = form_for(@new_proposal, :action => url(:controller => :decisions, :action => :create_proposal)) do
-  = text_field :title, :label => "Title  ", :style => 'width:30em'
-  /= text_area :description, :label => "Description"
+  = text_field :title, :label => "Title  "
+  %br
+  = text_area :description, :label => "Description "
+  %br
   = submit "Create Proposal", :id => 'submit'
   %br

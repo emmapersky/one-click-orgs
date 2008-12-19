@@ -4,7 +4,7 @@ class Decisions < Application
   before :check_login
   
   def index
-    @decisions = Decision.all(:close_date.lt => Time.now).select{|v| v.accepted}
+    @decisions = Decision.all(:close_date.lt => Time.now, :order => [:close_date.desc]).select{|v| v.accepted}
     display @decisions
   end
 

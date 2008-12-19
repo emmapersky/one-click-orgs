@@ -14,6 +14,6 @@ class Vote
   end
   
   def self.for_or_against(foa)
-    foa ? "For" : "Against"
+    foa ? "Support" : "Oppose"
   end
 end
