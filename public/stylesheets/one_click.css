@@ -47,3 +47,5 @@ br { clear: left; }
 input#submit { width: 10em; margin-left: 16em; }
 
 form { clear: left; }
+
+.control_bar { position: absolute; right: 0.5em; top: 0.2em; }

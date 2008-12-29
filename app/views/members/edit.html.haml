@@ -1,15 +1,11 @@
-%h1
-  Members controller, edit action
+%h3
+  Edit Profile
+
 %p
-  Edit this file in
-  %tt
-    app/views/members/edit.html.erb
-= error_messages_for @member
-
-= form_for(@member, :action => url(:member, @member)) do
-  %p
-    = submit "Update"
-
-= link_to 'Show', url(:member, @member)
-|
-= link_to 'Back', url(:members)
+  = form_for(@member, :action => url(:member, @member) ) do
+    = text_field :email, :label => "Email Address "
+    %br
+    = text_field :name, :label => "Name "
+    %br
+    = submit "Save Profile", :id => 'submit'
+    %br

@@ -5,9 +5,15 @@
       One Click Organisations
     = css_include_tag :one_click
   %body
+    %div.control_bar
+      - if current_user_id
+        =link_to 'profile', url(:controller => :members, :action => :edit, :id => current_user_id)
+        |
+        =link_to 'logout', url('logout')
     %div#doc
       %div#hd
         %h1.header One Click Organisations
+        
       %div#bd
         - if current_user_id
           %ul#nav
@@ -15,7 +21,7 @@
             %li#navitem= link_to 'Proposals', url('proposals')
             %li#navitem= link_to 'Decisions', url(:controller => :decisions)
             %li#navitem= link_to 'Constitution', url('constitution')
-            %li#navitem= link_to 'Logout', url('logout')
+
         = message[:notice]
         = message[:error]
         = catch_content :for_layout

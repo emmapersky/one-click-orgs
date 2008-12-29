@@ -22,5 +22,6 @@ Merb::BootLoader.before_app_loads do
 end
  
 Merb::BootLoader.after_app_loads do
+  require 'lib/find_by_sql_hack'
   # This will get executed after your app's classes have been loaded.
 end

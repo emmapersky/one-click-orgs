@@ -18,3 +18,5 @@ class Application < Merb::Controller
     session('cookie')[:current_user_id]
   end
 end
+
+class AuthenticationError < RuntimeError; end
