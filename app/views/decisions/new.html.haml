@@ -6,12 +6,13 @@
     %th#proposal Ended
     %th#proposal Vote
   - on = true
-  - for decision in @decisions
-    - on = !on    
-    - on ? p = "one" : p = "two"
-    %tr{:class => "proposal_#{p}"}
-      %td= decision.title
-      %td#proposal_ends_in
-        = proposal.close_date
-      %td#vote
-        = partial :vote_count, :decision => decision
+  - if @decisions
+    - for decision in @decisions
+      - on = !on    
+      - on ? p = "one" : p = "two"
+      %tr{:class => "proposal_#{p}"}
+        %td= decision.title
+        %td#proposal_ends_in
+          = proposal.close_date
+        %td#vote
+          = partial :vote_count, :decision => decision
