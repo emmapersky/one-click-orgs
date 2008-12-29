@@ -47,4 +47,15 @@ class Decision
   def closed?
     ! self.open?
   end
+  
+  def self.find_closed_early_decisions
+    decisions = []
+    ds = Decision.all(:close_date.gt => Time.now)
+    ds.each do |d|
+      m = Member.count(:created_at.lt => d.creation_date)
+      v = Vote.count(:decision_id => d.id, :for => true)
+      decisions << d if v > (m / 2.0).ceil
+    end
+    decisions
+  end
 end
