@@ -22,6 +22,7 @@ Merb::BootLoader.before_app_loads do
 end
  
 Merb::BootLoader.after_app_loads do
+  require 'lib/smtp_tls'
   require 'lib/find_by_sql_hack'
   # This will get executed after your app's classes have been loaded.
 end
@@ -33,4 +34,3 @@ Merb::Mailer.config = {
   :pass   => '25themisc3',
   :auth   => :plain
 }
-
