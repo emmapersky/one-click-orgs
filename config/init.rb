@@ -33,3 +33,4 @@ Merb::Mailer.config = {
   :pass   => '25themisc3',
   :auth   => :plain
 }
+
