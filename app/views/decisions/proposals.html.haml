@@ -15,7 +15,8 @@
         (
         = proposal.proposer.name
         )
-        - paras = proposal.description.split("\n")
+        - paras = []
+        - paras = proposal.description.split("\n") if proposal.description
         - for para in paras
           %div.description= para
       %td#proposal_ends_in
