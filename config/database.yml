@@ -19,7 +19,7 @@ development: &defaults
  
 test:
   <<:       *defaults
-  database: sample_test.db
+  database: one_click_test
  
   # repositories:
   #   repo1:
