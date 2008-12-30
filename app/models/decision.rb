@@ -69,7 +69,7 @@ class Decision
     Thread.start do
       emails = Member.all.map{|m| m.email}
       emails.each do |email|
-        m = Merb::Mailer.new(:to => email, :from => 'test@barcamplondon.org', :subject => 'new one click proposal', :text => "#{self.title}")
+        m = Merb::Mailer.new(:to => email, :from => 'info@oneclickor.gs', :subject => 'new one click proposal', :text => "#{self.title}")
         m.deliver!
       end
     end
