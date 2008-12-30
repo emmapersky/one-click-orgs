@@ -3,6 +3,8 @@ require 'dm-validations'
 class Decision
   LENGTH_OF_DECISION = 3.days
   include DataMapper::Resource
+  
+  after :create, :send_email
   has n, :votes
   
   #class << self
@@ -57,5 +59,19 @@ class Decision
       decisions << d if v > (m / 2.0).ceil
     end
     decisions
+  end
+  
+  def initialize(*args)
+    super
+  end
+  
+  def send_email
+    Thread.start do
+      emails = Member.all.map{|m| m.email}
+      emails.each do |email|
+        m = Merb::Mailer.new(:to => email, :from => 'test@barcamplondon.org', :subject => 'new one click proposal', :text => "#{self.title}")
+        m.deliver!
+      end
+    end
   end
 end
