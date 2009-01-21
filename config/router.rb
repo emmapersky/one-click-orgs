@@ -29,31 +29,35 @@
 
 Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do
-  match('/login').to(:controller => 'one_click', :action => 'login')
-  match('/logout').to(:controller => 'one_click', :action => 'logout')  
-  match('/proposals').to(:controller => "decisions", :action => "proposals")      
-  match('/proposals/create').to(:controller => 'decisions', :action => 'create_proposal')  
-  match('/proposals/:proposal_id').to(:controller => "decisions", :action => "proposals", :id => :proposal_id)    
-  match('/constitution').to(:controller => 'one_click', :action => 'constitution')
+  # match('/login').to(:controller => 'one_click', :action => 'login')
+  # match('/logout').to(:controller => 'one_click', :action => 'logout')  
+  # match('/proposals').to(:controller => "decisions", :action => "proposals")      
+  # match('/proposals/create').to(:controller => 'decisions', :action => 'create_proposal')  
+  # match('/proposals/:proposal_id').to(:controller => "decisions", :action => "proposals", :id => :proposal_id)    
+  # match('/constitution').to(:controller => 'one_click', :action => 'constitution')
+  # 
+  # resources :votes
+  # resources :decisions
+  # resources :members
+  # # RESTful routes
+  # # resources :posts
+  # 
+  # # Adds the required routes for merb-auth using the password slice
+  # slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
+  # 
+  # # This is the default route for /:controller/:action/:id
+  # # This is fine for most cases.  If you're heavily using resource-based
+  # # routes, you may want to comment/remove this line to prevent
+  # # clients from calling your create or destroy actions with a GET
+  # default_routes
+  # 
+  # 
+  # 
+  # 
+  # # Change this for your home page to be available at /
+  # match('/').to(:controller => :decisions, :action => :proposals)
   
-  resources :votes
-  resources :decisions
-  resources :members
-  # RESTful routes
-  # resources :posts
+  match('/crap').to(:controller => :blah, :action => :foo)
   
-  # Adds the required routes for merb-auth using the password slice
-  slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
-
-  # This is the default route for /:controller/:action/:id
-  # This is fine for most cases.  If you're heavily using resource-based
-  # routes, you may want to comment/remove this line to prevent
-  # clients from calling your create or destroy actions with a GET
-  default_routes
-  
-
-
-  
-  # Change this for your home page to be available at /
-  match('/').to(:controller => :decisions, :action => :proposals)
+  default_routes  
 end
