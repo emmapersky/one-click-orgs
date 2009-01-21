@@ -10,4 +10,12 @@ class Exceptions < Merb::Controller
     render :format => :html
   end
 
+  def current_user
+    Member.get(current_user_id)
+  end
+  
+  def current_user_id
+    session('cookie')[:current_user_id]
+  end
+  
 end
