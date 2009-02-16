@@ -5,7 +5,12 @@ Net::SMTP.class_eval do
   private
   def do_start(helodomain, user, secret, authtype)
     raise IOError, 'SMTP session already started' if @started
-    check_auth_args user, secret, authtype if user or secret
+
+    begin
+     check_auth_args user, secret, authtype if user or secret
+    rescue ArgumentError
+     check_auth_args user, secret if user or secret # ruby 1.8.7
+    end
 
     sock = timeout(@open_timeout) { TCPSocket.open(@address, @port) }
     @socket = Net::InternetMessageIO.new(sock)
