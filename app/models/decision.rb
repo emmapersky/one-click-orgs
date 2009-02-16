@@ -78,7 +78,7 @@ class Decision
 
         #{self.description}
         
-        Please visit http://staging.oneclickor.gs/proposals to vote on in.
+        Please visit http://staging.oneclickor.gs/proposals to vote on it.
         
         Thanks
         
