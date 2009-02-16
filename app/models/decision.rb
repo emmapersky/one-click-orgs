@@ -1,15 +1,15 @@
 require 'dm-validations'
 
 class Decision
-  LENGTH_OF_DECISION = 3.days
+  LENGTH_OF_DECISION = 5.minutes
   include DataMapper::Resource
   
   after :create, :send_email
   has n, :votes
   
-  #class << self
-    attr_accessor :completed, :for
-  #end
+
+  attr_accessor :completed, :for
+
   
   belongs_to :proposer, :class_name => 'Member', :child_key => [:proposer_member_id]
   
@@ -66,10 +66,24 @@ class Decision
   end
   
   def send_email
+    ## FIXME
     Thread.start do
-      emails = Member.all.map{|m| m.email}
-      emails.each do |email|
-        m = Merb::Mailer.new(:to => email, :from => 'info@oneclickor.gs', :subject => 'new one click proposal', :text => "#{self.title}")
+      Member.all.each do |m|
+        m = Merb::Mailer.new(:to => m.email, :from => 'info@oneclickor.gs', :subject => 'new one click proposal', :text => <<-END)
+        Dear #{m.name || 'member'},
+        
+        a new proposal has been created.
+        
+        "#{self.title}", by #{self.proposer.name || self.proposer.email}
+
+        #{self.description}
+        
+        Please visit http://staging.oneclickor.gs/proposals to vote on in.
+        
+        Thanks
+        
+        oneclickor.gs
+        END
         m.deliver!
       end
     end

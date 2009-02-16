@@ -2,6 +2,10 @@ require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
 describe Decision do
 
+  before do
+    Merb::Mailer.delivery_method = :test_send
+  end
+  
   it "should selected closed early decsions" do
     member_0 = Member.create(:name => 'm0', :email => 'm0@blah.com', :created_at => Time.now - 1.day)  
     member_1 = Member.create(:name => 'm1', :email => 'm1@blah.com', :created_at => Time.now - 1.day)
@@ -18,5 +22,8 @@ describe Decision do
     
     Decision.find_closed_early_decisions.should include(proposal)
   end
-
+  
+  it "should send out an email after a decision has been made" do
+    pending
+  end
 end
