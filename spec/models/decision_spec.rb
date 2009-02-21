@@ -1,8 +1,6 @@
 require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
 describe Decision do
-
-
   before do
     Merb::Mailer.deliveries.clear
   end
@@ -27,10 +25,13 @@ describe Decision do
   it "should send out an email after a decision has been made" do
     Merb.should_receive(:run_later).and_return { |block| block.call }
 
-    member_1 = Member.create(:name => 'm1', :email => 'm1@blah.com', :created_at => Time.now - 1.day)
-    d = Decision.create(:proposer_member_id => member_1.id, :title => 'test')
+    m = Member.create(:name => 'm1', :email => 'm1@blah.com', :created_at => Time.now - 1.day)
+    Member.count.should ==(1)
+    d = Decision.create(:proposer_member_id => m.id, :title => 'test')
   
     deliveries = Merb::Mailer.deliveries
     deliveries.size.should ==(Member.count)    
+    
+    deliveries.first.text.should match(/test/)
   end
 end
