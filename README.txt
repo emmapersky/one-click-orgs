@@ -1,3 +1,0 @@
-This is one click orgs...
-
-ftw
