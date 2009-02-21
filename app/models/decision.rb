@@ -66,8 +66,7 @@ class Decision
   end
   
   def send_email
-    ## FIXME
-    Thread.start do
+    Merb.run_later do
       Member.all.each do |m|
         m = Merb::Mailer.new(:to => m.email, :from => 'info@oneclickor.gs', :subject => 'new one click proposal', :text => <<-END)
         Dear #{m.name || 'member'},

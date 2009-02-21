@@ -11,3 +11,7 @@ Merb::Config.use { |c|
   #c[:log_stream] = STDOUT
 }
 
+
+Merb::BootLoader.before_app_loads do 
+  Merb::Mailer.delivery_method = :test_send 
+end
