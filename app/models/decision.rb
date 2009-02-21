@@ -56,9 +56,17 @@ class Decision
     ds.each do |d|
       m = Member.count(:created_at.lt => d.creation_date)
       v = Vote.count(:decision_id => d.id, :for => true)
-      decisions << d if v > (m / 2.0).ceil
+      decisions << d if v >= (m / 2.0).ceil
     end
     decisions
+  end
+  
+  def self.close_early_decisions
+    find_closed_early_decisions.each do |d|
+      Merb.logger.info("closing proposal #{d}")
+      d.close_date = Time.now
+      d.save!
+    end
   end
   
   def initialize(*args)

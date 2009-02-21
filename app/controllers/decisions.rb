@@ -4,7 +4,6 @@ class Decisions < Application
   
   def index
     @decisions = Decision.all(:close_date.lt => Time.now, :order => [:close_date.desc]).select{|v| v.accepted}
-    @decisions += Decision.find_closed_early_decisions if @decisions
     display @decisions
   end
 
