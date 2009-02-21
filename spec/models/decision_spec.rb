@@ -32,7 +32,9 @@ describe Decision do
     deliveries = Merb::Mailer.deliveries
     deliveries.size.should ==(Member.count)    
     
-    
-    deliveries.first.text.should match(/test/)
+    mail = deliveries.first
+    mail.text.should match(/test/)
+    mail.to.should ==([m.email])
+    mail.from.should ==(["info@oneclickor.gs"])
   end
 end
