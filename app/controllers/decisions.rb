@@ -54,7 +54,7 @@ class Decisions < Application
   
   def create_proposal(decision)
     @proposal = Decision.new(decision)
-    @proposal.proposer_member_id = current_user_id
+    @proposal.proposer_member_id = current_user.id
     if @proposal.save
       redirect url('proposals'), :message => {:notice => "Proposal was successfully created"}
     else

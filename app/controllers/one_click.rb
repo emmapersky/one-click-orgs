@@ -1,7 +1,6 @@
 class OneClick < Application
-  before :check_login, :exclude => [:authenticate, :login]
-  # ...and remember, everything returned from an action
-  # goes to the client...
+#  before :check_login, :exclude => [:authenticate, :login]
+
   def index
     @proposals = Decision.all(:open => true)
     render
@@ -12,18 +11,8 @@ class OneClick < Application
   end
   
   def logout
-    session('cookie')[:current_user_id] = nil
+    session.user = nil
     redirect url('login')
-  end
-  
-  def authenticate
-    user = Member.first(:email => params[:email])
-    if user && params[:password] == 'oneclick'
-      session('cookie')[:current_user_id] = user.id
-      redirect url('')
-    else
-      redirect url('login')
-    end
   end
   
   def constitution

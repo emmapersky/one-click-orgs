@@ -6,8 +6,8 @@
     = css_include_tag :one_click
   %body
     %div.control_bar
-      - if current_user_id
-        =link_to 'profile', url(:controller => :members, :action => :edit, :id => current_user_id)
+      - if current_user
+        =link_to 'profile', url(:controller => :members, :action => :edit, :id => current_user.id)
         |
         =link_to 'logout', url('logout')
     %div#doc
@@ -15,7 +15,7 @@
         %h1.header One Click Organisations
         
       %div#bd
-        - if current_user_id
+        - if current_user
           %ul#nav
             %li#navitem= link_to 'Members', url(:controller => :members)
             %li#navitem= link_to 'Proposals', url('proposals')

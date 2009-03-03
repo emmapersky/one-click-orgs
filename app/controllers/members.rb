@@ -22,7 +22,7 @@ class Members < Application
 
   def edit(id)
     only_provides :html
-    raise AuthenticationError, 'You are not authorizied to do this' unless session('cookie')[:current_user_id].to_i == id.to_i
+    raise AuthenticationError, 'You are not authorizied to do this' unless current_user.id == id.to_i
     
     @member = Member.get(id)
     raise NotFound unless @member

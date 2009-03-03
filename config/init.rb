@@ -33,5 +33,5 @@ Merb::BootLoader.after_app_loads do
       Decision.close_early_decisions
       sleep 60
     end
-  end
+  end unless Merb.testing?
 end

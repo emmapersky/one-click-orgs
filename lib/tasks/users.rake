@@ -11,7 +11,7 @@ namespace :users do
     ['smallcaps@gmail.com', 'Jef Koh'],
     ['angusprune@gmail.com', 'James Heaver']
     ].each do |(email, name)|
-      Member.create(:email=>email, :name=>name) if Member.all(:email=>email).empty?
+      Member.create!(:email=>email, :name=>name, :password=>'oneclick') if Member.all(:email=>email).empty?
     end
   end
 end

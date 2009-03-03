@@ -4,13 +4,13 @@
 #
 # To change the parameter names for the password or login field you may set either of these two options
 #
-# Merb::Plugins.config[:"merb-auth"][:login_param]    = :email 
-# Merb::Plugins.config[:"merb-auth"][:password_param] = :my_password_field_name
+Merb::Plugins.config[:"merb-auth"][:login_param]    = :email 
+#Merb::Plugins.config[:"merb-auth"][:password_param] = :password
 
 begin
   # Sets the default class ofr authentication.  This is primarily used for 
   # Plugins and the default strategies
-  Merb::Authentication.user_class = User 
+  Merb::Authentication.user_class = Member
   
   
   # Mixin the salted user mixin
