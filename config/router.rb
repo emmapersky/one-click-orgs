@@ -48,7 +48,7 @@ Merb::Router.prepare do
   # clients from calling your create or destroy actions with a GET
   default_routes
   
-#  authenticate do
+# authenticate do
   # Change this for your home page to be available at /
     match('/').to(:controller => :decisions, :action => :proposals)
 #  end

@@ -1,3 +1,4 @@
+= @errors.inspect
 %h3
   Edit Profile
 
@@ -7,5 +8,9 @@
     %br
     = text_field :name, :label => "Name "
     %br
+    = text_field :password, :label => "password",:type=>:password
+    %br
+    = text_field :password_confirmation, :label => "repeat password", :type=>:password
+        
     = submit "Save Profile", :id => 'submit'
     %br

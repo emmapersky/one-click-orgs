@@ -44,6 +44,7 @@ class Members < Application
     if @member.update_attributes(member)
        redirect resource(@member)
     else
+      @errors = @member.errors
       display @member, :edit
     end
   end

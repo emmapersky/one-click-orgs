@@ -24,15 +24,6 @@ class Member
       Vote.create(:member => self, :decision_id => proposal_id, :for => false)      
     end
   end
-  
-  # def self.authenticate(login, password)
-  #   user = Member.first(:email => login)
-  #   if user && password == 'oneclick'
-  #     user
-  #   else
-  #     nil
-  #   end
-  # end
 end
 
 #error class
