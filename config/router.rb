@@ -30,8 +30,6 @@ Merb::Router.prepare do
   # Adds the required routes for merb-auth using the password slice
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
    
-  #match('/login').to(:controller => 'one_click', :action => 'login')
-  #match('/logout').to(:controller => 'one_click', :action => 'logout')
     
   match('/proposals').to(:controller => "decisions", :action => "proposals")      
   match('/proposals/create').to(:controller => 'decisions', :action => 'create_proposal')  
@@ -48,8 +46,6 @@ Merb::Router.prepare do
   # clients from calling your create or destroy actions with a GET
   default_routes
   
-# authenticate do
   # Change this for your home page to be available at /
-    match('/').to(:controller => :decisions, :action => :proposals)
-#  end
+  match('/').to(:controller => :decisions, :action => :proposals)
 end

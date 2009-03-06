@@ -1,6 +1,4 @@
 class OneClick < Application
-#  before :check_login, :exclude => [:authenticate, :login]
-
   def index
     @proposals = Decision.all(:open => true)
     render
