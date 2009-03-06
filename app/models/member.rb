@@ -24,6 +24,15 @@ class Member
       Vote.create(:member => self, :decision_id => proposal_id, :for => false)      
     end
   end
+  
+  def new_password!
+    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
+    new_password = ""
+    1.upto(6) { new_password << chars[rand(chars.size-1)] }
+    self.password = new_password
+    self.password_confirmation = new_password
+    new_password
+  end
 end
 
 #error class

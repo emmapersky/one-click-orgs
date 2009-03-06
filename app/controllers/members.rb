@@ -31,10 +31,24 @@ class Members < Application
 
   def create(member)
     @member = Member.new(member)
-    if @member.save
-      redirect resource(:members), :message => "Member was successfully created"
+    password = @member.new_password!
+    if @member.save!
+      
+      mail = Merb::Mailer.new(:to => @member.email, :from => 'info@oneclickor.gs', :subject => 'Your password', :text => <<-END)
+        Dear #{@member.name || 'member'},
+
+        you are now member of OCO. Your password is
+        #{password}
+
+        Thanks
+
+        oneclickor.gs
+        END
+      mail.deliver!
+            
+      redirect resource(:members), :message => {:notice=> "Member was successfully created"}
     else
-      redirect resource(:members)#, :message => {:error => "Error creating member"}
+      redirect resource(:members), :message => {:error => "Error creating member: #{@member.errors.inspect}"}
     end
   end
 

@@ -4,15 +4,6 @@ class OneClick < Application
     render
   end
   
-  def login
-    render 
-  end
-  
-  def logout
-    session.user = nil
-    redirect url('login')
-  end
-  
   def constitution
     render
   end
