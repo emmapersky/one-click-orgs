@@ -11,7 +11,6 @@ describe Decision do
     
     proposal = Decision.create!(:proposer_member_id => member_1.id, :title => 'test')        
     
-    
     member_0.cast_vote(:for, proposal.id)
     member_1.cast_vote(:for, proposal.id)
     member_2.cast_vote(:for, proposal.id)    

@@ -21,3 +21,4 @@ gems/specifications
 gems/gems
 gems/doc
 lib-src
+spec/log
