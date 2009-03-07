@@ -2,10 +2,13 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 given "a member exists" do
   Member.all.destroy!
+  login
   request(resource(:members), :method => "POST", 
     :params => { :member => { :id => nil }})
 end
 
+describe "everything" do
+  before { login }
 describe "resource(:members)" do
   describe "GET" do
     
@@ -39,11 +42,11 @@ describe "resource(:members)" do
     before(:each) do
       Member.all.destroy!
       @response = request(resource(:members), :method => "POST", 
-        :params => { :member => { :id => nil }})
+        :params => { :member => { :id => nil, :email=>'anemail@example.com', :name=>"test" }})
     end
     
     it "redirects to resource(:members)" do
-      @response.should redirect_to(resource(Member.first), :message => {:notice => "member was successfully created"})
+      @response.should redirect_to(resource(:members), :message => {:notice => "member was successfully created"})
     end
     
   end
@@ -105,6 +108,6 @@ describe "resource(@member)", :given => "a member exists" do
       @response.should redirect_to(resource(@member))
     end
   end
-  
+end
 end
 

@@ -12,3 +12,7 @@ Member.blueprint do
   password pw
   password_confirmation pw
 end
+
+Decision.blueprint do
+  title "a proposal title"
+end

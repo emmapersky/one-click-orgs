@@ -1,7 +1,6 @@
 class Decisions < Application
   # provides :xml, :yaml, :js
   
-  
   def index
     @decisions = Decision.all(:close_date.lt => Time.now, :order => [:close_date.desc]).select{|v| v.accepted}
     display @decisions

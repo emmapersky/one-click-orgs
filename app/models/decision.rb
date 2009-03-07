@@ -73,6 +73,7 @@ class Decision
     super
   end
   
+  
   def send_email
     Merb.run_later do
       Member.all.each do |m|

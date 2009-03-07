@@ -3,9 +3,11 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 given "a vote exists" do
   Vote.all.destroy!
   request(resource(:votes), :method => "POST", 
-    :params => { :vote => { :id => nil }})
+    :params => { :vote => { :id => nil, :for=>'Support'}})
 end
 
+describe "everything" do
+  before { login }
 describe "resource(:votes)" do
   describe "GET" do
     
@@ -39,7 +41,7 @@ describe "resource(:votes)" do
     before(:each) do
       Vote.all.destroy!
       @response = request(resource(:votes), :method => "POST", 
-        :params => { :vote => { :id => nil }})
+        :params => { :vote => { :id => nil, :for=>'Support' }})
     end
     
     it "redirects to resource(:votes)" do
@@ -107,4 +109,4 @@ describe "resource(@vote)", :given => "a vote exists" do
   end
   
 end
-
+end

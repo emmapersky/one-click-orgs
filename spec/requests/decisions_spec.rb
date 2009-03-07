@@ -1,15 +1,20 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 given "a decision exists" do
-  Decision.all.destroy!
-  
-  
+  Decision.all.destroy!  
+  login    
   request(resource(:decisions), :method => "POST", 
-    :params => { :decision => { :id => nil, :proposer_member_id => 1 }})#.should redirect_to(resource(Decision.first), :message => {:notice => "decision was successfully created"})
-    
+    :params => { :decision => 
+        { :id => nil, :proposer_member_id => Member.first.id, :title=>'proposal' }
+               }).should redirect_to(url('decisions'), :message => {:notice => "decision was successfully created"})    
 end
 
+describe "everything" do
+  before do 
+    login
+  end
 describe "resource(:decisions)" do
+  
   describe "GET" do
     
     before(:each) do
@@ -37,23 +42,11 @@ describe "resource(:decisions)" do
       @response.should have_xpath("//ul/li")
     end
   end
-  
-  describe "a successful POST" do
-    before(:each) do
-      Decision.all.destroy!
-      @response = request(resource(:decisions), :method => "POST", 
-        :params => { :decision => { :id => nil }})
-    end
-    
-    it "redirects to resource(:decisions)" do
-      Decision.count.should ==(1)
-      @response.should redirect_to(resource(Decision.first), :message => {:notice => "decision was successfully created"})
-    end
-    
-  end
 end
 
 describe "resource(@decision)" do 
+  before { login }
+  
   describe "a successful DELETE", :given => "a decision exists" do
      before(:each) do
        @response = request(resource(Decision.first), :method => "DELETE")
@@ -102,13 +95,13 @@ describe "resource(@decision)", :given => "a decision exists" do
     before(:each) do
       @decision = Decision.first
       @response = request(resource(@decision), :method => "PUT", 
-        :params => { :decision => {:id => @decision.id} })
+        :params => { :decision => {:id => @decision.id, :title=>'foo'} })
     end
   
     it "redirect to the article show action" do
       @response.should redirect_to(resource(@decision))
     end
   end
-  
+end
 end
 
