@@ -22,3 +22,4 @@ gems/gems
 gems/doc
 lib-src
 spec/log
+coverage
