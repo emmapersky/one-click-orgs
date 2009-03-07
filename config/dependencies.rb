@@ -26,3 +26,9 @@ dependency "dm-validations", dm_gems_version
 dependency "data_objects", "0.9.11"
 dependency "do_mysql", "0.9.11"
 dependency "merb_datamapper", merb_gems_version
+
+dependency "faker", "0.3.1"
+
+# need to add gem sources for these
+# $ gem sources -a http://gems.github.com 
+dependency "snepo-dm-machinist", :require_as => 'dm-machinist'
