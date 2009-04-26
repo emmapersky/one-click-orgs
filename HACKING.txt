@@ -1,0 +1,28 @@
+Basic get-you-up-and-running instructions.
+
+1. Grab the source:
+
+$ git clone git://github.com/emmapersky/one-click-orgs.git
+
+2. Install the necessary gems locally:
+
+$ cd one-click-orgs
+$ bin/thor merb:gem:redeploy
+
+3. Make a MySQL database for development, as described in config/database.yml.
+
+4. Create an empty config/local_config.rb file.
+
+5. Migrate the database up, and create default users:
+
+$ bin/rake users:create
+
+6. Start the server:
+
+$ bin/merb
+
+7. Visit http://localhost:4000/ and log in using, for example, username "emma@trampolinesytems.com" and password "oneclick".
+
+8. To run the specs:
+
+$ bin/rake spec
