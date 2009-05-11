@@ -29,3 +29,37 @@ $ ./bin/merb
 8. To run the specs:
 
 $ ./bin/rake spec
+
+9. To deploy using passenger:
+
+Install apache & mod_rails (http://www.modrails.com/) (the following instructions are for mac os x)
+
+  1. add a oneclick.local to /etc/hosts, same line as 127.0.0.1
+  
+  2. install passenger gem (> 2.2)
+    $ sudo gem install passenger  
+    
+  3. install mod_rails 
+    $ sudo passenger-install-apache2-module
+    
+  This will compile the module for you, and give you some instructions how to enable
+  the module. On my system, I created a new file /etc/apache2/other/passenger.conf with the following
+  contents:
+  
+    LoadModule passenger_module /Library/Ruby/Gems/1.8/gems/passenger-2.2.2/ext/apache2/mod_passenger.so
+    PassengerRoot /Library/Ruby/Gems/1.8/gems/passenger-2.2.2
+    PassengerRuby /System/Library/Frameworks/Ruby.framework/Versions/1.8/usr/bin/ruby
+    
+  4. copy config/passenger_config_sample.conf to /etc/apache2/other/oneclick.conf, and edit as appropriate
+     (you'll need to change DocumentRoot and Directory)
+     
+    $ cp config/passenger_config_sample.conf /etc/apache2/other/oneclick.conf
+    
+  5. restart/start apache (System Preferences ➔ Sharing ➔ Web Sharing)
+  
+  6. Visit http://oneclick.local
+  
+  7. If it doesn't work, check the system log (using the Console app, /Application/Utilities/Console.app)
+     or the apache error log (location of file defined in oneclick.conf, line starting with 'ErrorLog')
+  
+  
