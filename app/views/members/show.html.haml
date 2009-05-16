@@ -8,36 +8,36 @@
 %h5
   Voting History
 
-%table#proposal
+%table.proposals
   %tr
-    %th#proposal Title
-    %th#proposal Vote
+    %th Title
+    %th Vote
   - for vote in @member.votes
     - vote.for ? p = "for" : p = "against"
     %tr{:class => "vote_#{p}"}
-      %td= vote.decision.title
-      %td#vote= vote.for_or_against
+      %td= link_to(h(vote.decision.title), resource(vote.decision))
+      %td.vote= vote.for_or_against
 
 %h5
   Proposal History
         
-%table#proposal
+%table.proposals
   %tr
-    %th#proposal Title
-    %th#proposal Outcome
+    %th Title
+    %th Outcome
   - for proposal in @member.proposals
     - if proposal.close_date < Time.now.to_datetime
       - proposal.accepted ? p = "for" : p = "against"
     - else
       - p = "in_progress"
     %tr{:class => "vote_#{p}"}
-      %td= proposal.title
+      %td= link_to(h(proposal.title), resource(proposal))
       - if proposal.close_date < Time.now.to_datetime
-        %td#vote= proposal.accepted_or_rejected
+        %td.vote= proposal.accepted_or_rejected
       - else
-        %td#vote Vote in Progress
+        %td.vote Vote in Progress
 
-      
+
 
 /%ul
 /  - for proposal in @member.proposals
