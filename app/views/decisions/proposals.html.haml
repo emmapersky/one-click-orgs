@@ -1,15 +1,12 @@
 %h3 Open Proposals
 
-%table#proposal
+%table#proposals
   %tr
-    %th#proposal Title
-    %th#proposal End in
-    %th#proposal Vote
-  - on = true
+    %th Title
+    %th End in
+    %th Vote
   - for proposal in @proposals
-    - on = !on    
-    - on ? p = "one" : p = "two"
-    %tr{:class => "proposal_#{p}"}
+    %tr{:class => "#{cycle('odd', 'even')}"}
       %td
         = proposal.title
         (

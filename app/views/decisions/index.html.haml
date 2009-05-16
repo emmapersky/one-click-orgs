@@ -1,15 +1,12 @@
 %h3 Decisions
 
-%table#proposal
+%table#decisions
   %tr
-    %th#proposal Title
-    %th#proposal Ended
-    %th#proposal Vote
-  - on = true
+    %th Title
+    %th Ended
+    %th Vote
   - for decision in @decisions
-    - on = !on    
-    - on ? p = "one" : p = "two"
-    %tr{:class => "proposal_#{p}"}
+    %tr{:class => "#{cycle('odd', 'even')}"}
       %td
         = decision.title
         - unless decision.description.blank?
