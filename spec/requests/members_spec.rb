@@ -65,16 +65,6 @@ describe "resource(@member)" do
    end
 end
 
-describe "resource(:members, :new)" do
-  before(:each) do
-    @response = request(resource(:members, :new))
-  end
-  
-  it "responds successfully" do
-    @response.should be_successful
-  end
-end
-
 describe "resource(@member, :edit)", :given => "a member exists" do
   before(:each) do
     @response = request(resource(Member.first, :edit))
