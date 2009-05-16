@@ -43,7 +43,7 @@
   %li If at any time the number of Members is zero the Custodian of CIRCUS foundation shall have the right to appoint one, two or three new Members.
 
 %h4 New Proposal
-= form_for(@new_proposal, :action => url(:controller => :decisions, :action => :create_proposal)) do
+= form_for(@new_proposal, :action => resource('proposals')) do
   = text_field :title, :label => "Title  "
   %br
   = text_area :description, :label => "Description "

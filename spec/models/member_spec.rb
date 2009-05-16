@@ -4,7 +4,7 @@ describe Member do
   
   before(:each) do
     @member = Member.make
-    @proposal = Decision.make(:proposer_member_id => @member.id)
+    @proposal = Proposal.make(:proposer_member_id => @member.id)
   end
   
   it "should not allow votes on members created before proposals" do

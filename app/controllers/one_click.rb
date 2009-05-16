@@ -1,6 +1,6 @@
 class OneClick < Application
   def constitution
-    @new_proposal = Decision.new
+    @new_proposal = Proposal.new
     render
   end
   
@@ -8,11 +8,11 @@ class OneClick < Application
     only_provides :html
     
     # Fetch open proposals, with current user's status on each
-    @proposals = Decision.all_proposals
+    @proposals = Proposal.all_open
     
     completed_votes = current_user.votes
     completed_decisions = {}
-    completed_votes.each{|v| completed_decisions[v.decision_id] = v.for}
+    completed_votes.each{|v| completed_decisions[v.proposal_id] = v.for}
     
     @proposals.each do |p| 
       p.completed = completed_decisions.keys.include? p.id
@@ -20,19 +20,19 @@ class OneClick < Application
     end
     
     # Fetch five most recent decisions
-    @decisions = Decision.all_decisions[0..4]
+    @decisions = Decision.all(:limit => 5, :order => [:id.desc])
     
     # Fetch five most recent failed proposals
-    @failed_proposals = Decision.all_failed_proposals[0..4]
+    @failed_proposals = Proposal.all_failed[0..4]
     
     render
   end
   
   def timeline
     members = Member.all
-    proposals = Decision.all
-    decisions = Decision.all_decisions
-    failed_proposals = Decision.all_failed_proposals
+    proposals = Proposal.all
+    decisions = Decision.all
+    failed_proposals = Proposal.all_failed
     
     @timeline = []
     @timeline += members.map do |member|
@@ -42,7 +42,7 @@ class OneClick < Application
       {:timestamp => proposal.creation_date, :object => proposal, :kind => :proposal}
     end
     @timeline += decisions.map do |decision|
-      {:timestamp => decision.close_date, :object => decision, :kind => :decision}
+      {:timestamp => decision.proposal.close_date, :object => decision, :kind => :decision}
     end
     @timeline += failed_proposals.map do |failed_proposal|
       {:timestamp => failed_proposal.close_date, :object => failed_proposal, :kind => :failed_proposal}

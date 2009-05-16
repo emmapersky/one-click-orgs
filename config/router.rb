@@ -30,14 +30,13 @@ Merb::Router.prepare do
   # Adds the required routes for merb-auth using the password slice
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
   
-  match('/proposals/create').to(:controller => 'decisions', :action => 'create_proposal')
-  
   match('/constitution').to(:controller => 'one_click', :action => 'constitution')
   
   match('/timeline').to(:controller => 'one_click', :action => 'timeline')
   
   resources :votes
   resources :decisions
+  resources :proposals
   resources :members
   
   # This is the default route for /:controller/:action/:id

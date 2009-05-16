@@ -13,6 +13,7 @@ Member.blueprint do
   password_confirmation pw
 end
 
-Decision.blueprint do
-  title "a proposal title"
+Proposal.blueprint do |bp|
+  bp.title "a proposal title"
+  bp.open "1"
 end

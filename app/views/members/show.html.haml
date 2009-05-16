@@ -15,7 +15,7 @@
   - for vote in @member.votes
     - vote.for ? p = "for" : p = "against"
     %tr{:class => "vote_#{p}"}
-      %td= link_to(h(vote.decision.title), resource(vote.decision))
+      %td= link_to(h(vote.proposal.title), resource(vote.proposal))
       %td.vote= vote.for_or_against
 
 %h5
