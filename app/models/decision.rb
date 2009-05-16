@@ -69,6 +69,18 @@ class Decision
     end
   end
   
+  def self.all_decisions
+    all(:close_date.lt => Time.now, :order => [:close_date.desc]).select{|v| v.accepted}
+  end
+  
+  def self.all_proposals
+    all(:open => true, :close_date.gt => Time.now)
+  end
+  
+  def self.all_failed_proposals
+    all(:close_date.lt => Time.now, :order => [:close_date.desc]).select{|v| !v.accepted}
+  end
+  
   def initialize(*args)
     super
   end
