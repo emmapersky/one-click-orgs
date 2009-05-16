@@ -1,5 +1,7 @@
 %h3 My Control Centre
 
+%p= "Welcome back, #{current_user.name}!"
+
 %h4 Open Proposals
 %table.proposals
   %tr
@@ -24,6 +26,7 @@
   %tr
     %th Title
     %th Decision made
+    %th For/against
   - reset_cycle
   - for decision in @decisions
     %tr{:class => cycle('odd', 'even')}
@@ -34,12 +37,14 @@
         )
         = partial 'decisions/description', :decision => decision
       %td.timestamp= decision.close_date.formatted(:long)
+      %td.vote= partial 'decisions/vote_count', :decision => decision
 
 %h4 Recent Failed Proposals
 %table.failed_proposals
   %tr
     %th Title
     %th Proposal failed
+    %th For/against
   - reset_cycle
   - for failed_proposal in @failed_proposals
     %tr{:class => cycle('odd', 'even')}
@@ -50,3 +55,4 @@
         )
         = partial 'decisions/description', :decision => failed_proposal
       %td.timestamp= failed_proposal.close_date.formatted(:long)
+      %td.vote= partial 'decisions/vote_count', :decision => failed_proposal

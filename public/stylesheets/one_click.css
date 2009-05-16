@@ -29,7 +29,7 @@ tr.odd { background-color: #CDEB8B; }
 
 tr.even { background-color: #C3D9FF; }
 
-div.description { font-size: 0.7em; padding-left: 1em; padding-right: 1em; padding-top: 0.1em; text-align: justify; }
+div.description { font-size: 0.8em; padding-left: 1em; padding-right: 1em; padding-top: 0.1em; text-align: justify; }
 
 label, input, textarea { display: block; width: 30em; float: left; margin-bottom: 10px; }
 
