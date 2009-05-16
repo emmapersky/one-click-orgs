@@ -13,10 +13,7 @@
         (
         = proposal.proposer.name
         )
-        - paras = []
-        - paras = proposal.description.split("\n") if proposal.description
-        - for para in paras
-          %div.description= para
+        = partial 'decisions/description', :decision => proposal
       %td#proposal_ends_in
         = time_to_go_in_words(proposal.end_date)
       %td#vote
@@ -35,10 +32,7 @@
         (
         = decision.proposer.name
         )
-        - paras = []
-        - paras = decision.description.split("\n") if decision.description
-        - for para in paras
-          %div.description= para
+        = partial 'decisions/description', :decision => decision
       %td= decision.close_date.formatted(:long)
 
 %h4 Recent Failed Proposals
@@ -54,8 +48,5 @@
         (
         = failed_proposal.proposer.name
         )
-        - paras = []
-        - paras = failed_proposal.description.split("\n") if failed_proposal.description
-        - for para in paras
-          %div.description= para
+        = partial 'decisions/description', :decision => failed_proposal
       %td= failed_proposal.close_date.formatted(:long)

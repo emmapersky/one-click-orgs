@@ -1,0 +1,5 @@
+- paras = []
+- paras = decision.description.split("\n") if decision.description
+%div.description
+  - for para in paras
+    %p= para
