@@ -49,5 +49,5 @@ Merb::Router.prepare do
   default_routes
   
   # Change this for your home page to be available at /
-  match('/').to(:controller => :decisions, :action => :proposals)
+  match('/').to(:controller => :one_click, :action => :control_centre)
 end
