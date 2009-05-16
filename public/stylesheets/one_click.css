@@ -12,12 +12,12 @@ body { font-family: Arial, "MS Trebuchet", sans-serif; }
 
 #hd #bd .footer { width: 950px; margin: auto; }
 
-table#proposals, table#decisions, table#failed_proposals { width: 900px; margin: auto; border: 1px solid #004422; }
-table#proposals td#vote, table#decisions td#vote, table#failed_proposals td#vote { text-align: center; width: 12em; }
-table#proposals form, table#decisions form, table#failed_proposals form { display: inline; }
-table#proposals input, table#decisions input, table#failed_proposals input { width: 7em; margin: auto; }
-table#proposals th, table#decisions th, table#failed_proposals th { background-color: #356AA0; }
-table#proposals td#proposal_ends_in, table#decisions td#proposal_ends_in, table#failed_proposals td#proposal_ends_in { text-align: center; width: 14em; }
+table.proposals, table.decisions, table.failed_proposals { width: 900px; margin: auto; border: 1px solid #004422; }
+table.proposals td.vote, table.decisions td.vote, table.failed_proposals td.vote { text-align: center; width: 12em; }
+table.proposals form, table.decisions form, table.failed_proposals form { display: inline; }
+table.proposals input, table.decisions input, table.failed_proposals input { width: 7em; margin: auto; }
+table.proposals th, table.decisions th, table.failed_proposals th { background-color: #356AA0; }
+table.proposals td.proposal_ends_in, table.decisions td.proposal_ends_in, table.failed_proposals td.proposal_ends_in { text-align: center; width: 14em; }
 
 tr.vote_for { background-color: #6BBA70; }
 
@@ -39,7 +39,7 @@ label { text-align: right; width: 10em; padding-right: 1em; }
 
 br { clear: left; }
 
-input#submit { width: 10em; margin-left: 16em; }
+input.submit { width: 10em; margin-left: 16em; }
 
 form { clear: left; }
 

@@ -1,7 +1,7 @@
 %h3 My Control Centre
 
 %h4 Open Proposals
-%table#proposals
+%table.proposals
   %tr
     %th Title
     %th End in
@@ -14,13 +14,13 @@
         = proposal.proposer.name
         )
         = partial 'decisions/description', :decision => proposal
-      %td#proposal_ends_in
+      %td.timestamp
         = time_to_go_in_words(proposal.end_date)
-      %td#vote
+      %td.vote
         = partial 'decisions/vote', :proposal => proposal
   
 %h4 Recent Decisions
-%table#decisions
+%table.decisions
   %tr
     %th Title
     %th Decision made
@@ -33,10 +33,10 @@
         = decision.proposer.name
         )
         = partial 'decisions/description', :decision => decision
-      %td= decision.close_date.formatted(:long)
+      %td.timestamp= decision.close_date.formatted(:long)
 
 %h4 Recent Failed Proposals
-%table#failed_proposals
+%table.failed_proposals
   %tr
     %th Title
     %th Proposal failed
@@ -49,4 +49,4 @@
         = failed_proposal.proposer.name
         )
         = partial 'decisions/description', :decision => failed_proposal
-      %td= failed_proposal.close_date.formatted(:long)
+      %td.timestamp= failed_proposal.close_date.formatted(:long)
