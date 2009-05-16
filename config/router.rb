@@ -31,7 +31,6 @@ Merb::Router.prepare do
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
   
   match('/proposals/create').to(:controller => 'decisions', :action => 'create_proposal')
-  match('/proposals/:proposal_id').to(:controller => "decisions", :action => "proposals", :id => :proposal_id)
   
   match('/constitution').to(:controller => 'one_click', :action => 'constitution')
   
