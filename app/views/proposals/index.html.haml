@@ -21,11 +21,11 @@
           %div.description= para
       %td#proposal_ends_in
         = time_to_go_in_words(proposal.end_date)
-      %td#vote
-        = partial :vote, :proposal => proposal
+      / %td#vote
+      /   = partial :vote, :proposal => proposal
       
 %h3 New Proposal
-= form_for(@new_proposal, :action => url(:controller => :decisions, :action => :create_proposal)) do
+= form_for(@new_proposal, :action => url(:controller => :proposals, :action => :create)) do
   = text_field :title, :label => "Title  "
   %br
   = text_area :description, :label => "Description "

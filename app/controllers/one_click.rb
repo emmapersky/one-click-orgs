@@ -1,6 +1,6 @@
 class OneClick < Application
   def index
-    @proposals = Decision.all(:open => true)
+    @proposals = Proposal.all(:open => true)
     render
   end
   

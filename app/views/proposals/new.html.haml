@@ -1,4 +1,4 @@
-%h3 Decisions
+%h3 Proposal
 
 %table#proposal
   %tr
@@ -6,13 +6,13 @@
     %th#proposal Ended
     %th#proposal Vote
   - on = true
-  - if @decisions
-    - for decision in @decisions
+  - if @proposals
+    - for proposal in @proposals
       - on = !on    
       - on ? p = "one" : p = "two"
       %tr{:class => "proposal_#{p}"}
-        %td= decision.title
+        %td= proposal.title
         %td#proposal_ends_in
           = proposal.close_date
         %td#vote
-          = partial :vote_count, :decision => decision
+          = partial :vote_count, :proposal => proposal

@@ -24,6 +24,19 @@ th#proposal { background-color: #356AA0; }
 
 td#proposal_ends_in { text-align: center; width: 14em; }
 
+table#decision { width: 900px; margin: auto; border: 1px solid #004422; }
+
+table#decision td#vote { text-align: center; width: 12em; }
+
+table#decision form { display: inline; }
+
+table#decision input { width: 7em; margin: auto; }
+
+th#decision { background-color: #356AA0; }
+
+td#decision_ends_in { text-align: center; width: 14em; }
+
+
 tr.vote_for { background-color: #6BBA70; }
 
 tr.vote_against { background-color: #B02B2C; }
@@ -33,6 +46,10 @@ tr.vote_in_progress { background-color: #C79810; }
 tr.proposal_one { background-color: #CDEB8B; }
 
 tr.proposal_two { background-color: #C3D9FF; }
+
+tr.decision_one { background-color: #CDEB8B; }
+
+tr.decision_two { background-color: #C3D9FF; }
 
 div.description { font-size: 0.7em; padding-left: 1em; padding-right: 1em; padding-top: 0.1em; text-align: justify; }
 

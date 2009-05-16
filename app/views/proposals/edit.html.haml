@@ -1,0 +1,15 @@
+%h1
+  Decisions controller, edit action
+%p
+  Edit this file in
+  %tt
+    app/views/proposals/edit.html.erb
+= error_messages_for @proposal
+
+= form_for(@proposal, :action => url(:proposal, @proposal)) do
+  %p
+    = submit "Update"
+
+= link_to 'Show', url(:proposal, @proposal)
+|
+= link_to 'Back', url(:proposals)

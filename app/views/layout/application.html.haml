@@ -18,7 +18,7 @@
         - if current_user
           %ul#nav
             %li#navitem= link_to 'Members', url(:controller => :members)
-            %li#navitem= link_to 'Proposals', url('proposals')
+            %li#navitem= link_to 'Proposals', url(:controller => :proposals)
             %li#navitem= link_to 'Decisions', url(:controller => :decisions)
             %li#navitem= link_to 'Constitution', url('constitution')
 

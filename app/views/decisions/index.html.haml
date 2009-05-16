@@ -1,22 +1,22 @@
-%h3 Decisions
+%h3 decisions
 
-%table#proposal
+%table#decision
   %tr
-    %th#proposal Title
-    %th#proposal Ended
-    %th#proposal Vote
+    %th#decision Title
+    %th#decision Ended
+    %th#decision Vote
   - on = true
   - for decision in @decisions
     - on = !on    
     - on ? p = "one" : p = "two"
-    %tr{:class => "proposal_#{p}"}
+    %tr{:class => "decision_#{p}"}
       %td
-        = decision.title
-        - unless decision.description.blank?
-          - paras = decision.description.split("\n")
+        = decision.proposal.title
+        - unless decision.proposal.description.blank?
+          - paras = decision.proposal.description.split("\n")
           - for para in paras
             %div.description= para
-      %td#proposal_ends_in
-        = date_format(decision.close_date)
+      %td#decision_ends_in
+        = date_format(decision.proposal.close_date)
       %td#vote
-        = partial :vote_count, :decision => decision
+        = partial :vote_count, :proposal => decision.proposal

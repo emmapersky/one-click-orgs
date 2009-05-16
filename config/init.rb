@@ -29,8 +29,8 @@ Merb::BootLoader.after_app_loads do
   
   Merb.run_later do
     while true do
-      Merb.logger.debug("running Decision.close_early_decisions()")            
-      Decision.close_early_decisions
+      Merb.logger.debug("running Proposal.close_proposals()")            
+      Proposal.close_proposals
       sleep 60
     end
   end unless Merb.testing?
