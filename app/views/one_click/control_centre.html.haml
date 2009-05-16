@@ -1,0 +1,61 @@
+%h3 My Control Centre
+
+%h4 Open Proposals
+%table#proposals
+  %tr
+    %th Title
+    %th End in
+    %th Vote
+  - for proposal in @proposals
+    %tr{:class => cycle('odd', 'even')}
+      %td
+        = proposal.title
+        (
+        = proposal.proposer.name
+        )
+        - paras = []
+        - paras = proposal.description.split("\n") if proposal.description
+        - for para in paras
+          %div.description= para
+      %td#proposal_ends_in
+        = time_to_go_in_words(proposal.end_date)
+      %td#vote
+        = partial 'decisions/vote', :proposal => proposal
+  
+%h4 Recent Decisions
+%table#decisions
+  %tr
+    %th Title
+    %th Decision made
+  - reset_cycle
+  - for decision in @decisions
+    %tr{:class => cycle('odd', 'even')}
+      %td
+        = decision.title
+        (
+        = decision.proposer.name
+        )
+        - paras = []
+        - paras = decision.description.split("\n") if decision.description
+        - for para in paras
+          %div.description= para
+      %td= decision.close_date.formatted(:long)
+
+%h4 Recent Failed Proposals
+%table#failed_proposals
+  %tr
+    %th Title
+    %th Proposal failed
+  - reset_cycle
+  - for failed_proposal in @failed_proposals
+    %tr{:class => cycle('odd', 'even')}
+      %td
+        = failed_proposal.title
+        (
+        = failed_proposal.proposer.name
+        )
+        - paras = []
+        - paras = failed_proposal.description.split("\n") if failed_proposal.description
+        - for para in paras
+          %div.description= para
+      %td= failed_proposal.close_date.formatted(:long)

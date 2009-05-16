@@ -12,17 +12,12 @@ body { font-family: Arial, "MS Trebuchet", sans-serif; }
 
 #hd #bd .footer { width: 950px; margin: auto; }
 
-table#proposal { width: 900px; margin: auto; border: 1px solid #004422; }
-
-table#proposal td#vote { text-align: center; width: 12em; }
-
-table#proposal form { display: inline; }
-
-table#proposal input { width: 7em; margin: auto; }
-
-th#proposal { background-color: #356AA0; }
-
-td#proposal_ends_in { text-align: center; width: 14em; }
+table#proposals, table#decisions, table#failed_proposals { width: 900px; margin: auto; border: 1px solid #004422; }
+table#proposals td#vote, table#decisions td#vote, table#failed_proposals td#vote { text-align: center; width: 12em; }
+table#proposals form, table#decisions form, table#failed_proposals form { display: inline; }
+table#proposals input, table#decisions input, table#failed_proposals input { width: 7em; margin: auto; }
+table#proposals th, table#decisions th, table#failed_proposals th { background-color: #356AA0; }
+table#proposals td#proposal_ends_in, table#decisions td#proposal_ends_in, table#failed_proposals td#proposal_ends_in { text-align: center; width: 14em; }
 
 tr.vote_for { background-color: #6BBA70; }
 
@@ -30,9 +25,9 @@ tr.vote_against { background-color: #B02B2C; }
 
 tr.vote_in_progress { background-color: #C79810; }
 
-tr.proposal_one { background-color: #CDEB8B; }
+tr.odd { background-color: #CDEB8B; }
 
-tr.proposal_two { background-color: #C3D9FF; }
+tr.even { background-color: #C3D9FF; }
 
 div.description { font-size: 0.7em; padding-left: 1em; padding-right: 1em; padding-top: 0.1em; text-align: justify; }
 

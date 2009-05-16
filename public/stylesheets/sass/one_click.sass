@@ -26,28 +26,30 @@ body
   :width 950px
   :margin auto
   
-table#proposal
+table#proposals,
+table#decisions,
+table#failed_proposals
   :width 900px
   :margin auto
   :border 1px solid #004422
 
-table#proposal td#vote
-  :text-align center
-  :width 12em
+  td#vote
+    :text-align center
+    :width 12em
   
-table#proposal form
-  :display inline
+  form
+    :display inline
   
-table#proposal input
-  :width 7em
-  :margin auto
+  input
+    :width 7em
+    :margin auto
   
-th#proposal
-  :background-color #356AA0
+  th
+    :background-color #356AA0
   
-td#proposal_ends_in
-  :text-align center
-  :width 14em
+  td#proposal_ends_in
+    :text-align center
+    :width 14em
 
 tr.vote_for
   :background-color #6BBA70
@@ -58,10 +60,10 @@ tr.vote_against
 tr.vote_in_progress
   :background-color #C79810
 
-tr.proposal_one
+tr.odd
   :background-color #CDEB8B
   
-tr.proposal_two
+tr.even
   :background-color #C3D9FF
 
 
