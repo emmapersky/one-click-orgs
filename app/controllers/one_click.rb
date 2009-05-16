@@ -5,6 +5,7 @@ class OneClick < Application
   end
   
   def constitution
+    @new_proposal = Decision.new
     render
   end
   

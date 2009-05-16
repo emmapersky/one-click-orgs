@@ -41,3 +41,12 @@
   %li Members may resign from OCO by informing the Custodian of CIRCUS foundation in writing.
 
   %li If at any time the number of Members is zero the Custodian of CIRCUS foundation shall have the right to appoint one, two or three new Members.
+
+%h4 New Proposal
+= form_for(@new_proposal, :action => url(:controller => :decisions, :action => :create_proposal)) do
+  = text_field :title, :label => "Title  "
+  %br
+  = text_area :description, :label => "Description "
+  %br
+  = submit "Create Proposal", :id => 'submit'
+  %br
