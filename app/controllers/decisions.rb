@@ -18,9 +18,9 @@ class Decisions < Application
     @proposal = Decision.new(decision)
     @proposal.proposer_member_id = current_user.id
     if @proposal.save
-      redirect url('proposals'), :message => {:notice => "Proposal was successfully created"}
+      redirect resource(@proposal), :message => {:notice => "Proposal was successfully created"}
     else
-      redirect url('proposals'), :message => {:notice => "Proposal not created"}      
+      redirect '/', :message => {:notice => "Proposal not created"}      
     end
   end
 end # Decisions
