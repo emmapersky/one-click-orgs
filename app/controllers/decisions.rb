@@ -4,6 +4,13 @@ class Decisions < Application
   def show(id)
     @decision = Decision.get(id)
     raise NotFound unless @decision
+    
+    vote = current_user.votes.first(:decision_id => @decision.id)
+    if vote
+      @decision.completed = true
+      @decision.for = vote.for
+    end
+    
     display @decision
   end
 
