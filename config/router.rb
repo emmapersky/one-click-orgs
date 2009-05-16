@@ -29,11 +29,10 @@ Merb.logger.info("Compiling routes...")
 Merb::Router.prepare do
   # Adds the required routes for merb-auth using the password slice
   slice(:merb_auth_slice_password, :name_prefix => nil, :path_prefix => "")
-   
-    
-  match('/proposals').to(:controller => "decisions", :action => "proposals")      
-  match('/proposals/create').to(:controller => 'decisions', :action => 'create_proposal')  
-  match('/proposals/:proposal_id').to(:controller => "decisions", :action => "proposals", :id => :proposal_id)    
+  
+  match('/proposals/create').to(:controller => 'decisions', :action => 'create_proposal')
+  match('/proposals/:proposal_id').to(:controller => "decisions", :action => "proposals", :id => :proposal_id)
+  
   match('/constitution').to(:controller => 'one_click', :action => 'constitution')
   
   match('/timeline').to(:controller => 'one_click', :action => 'timeline')
@@ -41,7 +40,7 @@ Merb::Router.prepare do
   resources :votes
   resources :decisions
   resources :members
- 
+  
   # This is the default route for /:controller/:action/:id
   # This is fine for most cases.  If you're heavily using resource-based
   # routes, you may want to comment/remove this line to prevent
