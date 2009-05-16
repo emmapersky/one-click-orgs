@@ -1,0 +1,5 @@
+%h3 Timeline
+%table.timeline
+  - for event in @timeline
+    %tr
+      = partial event[:kind], :event => event

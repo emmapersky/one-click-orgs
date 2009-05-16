@@ -36,6 +36,8 @@ Merb::Router.prepare do
   match('/proposals/:proposal_id').to(:controller => "decisions", :action => "proposals", :id => :proposal_id)    
   match('/constitution').to(:controller => 'one_click', :action => 'constitution')
   
+  match('/timeline').to(:controller => 'one_click', :action => 'timeline')
+  
   resources :votes
   resources :decisions
   resources :members
