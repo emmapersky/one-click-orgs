@@ -33,4 +33,37 @@ describe Decision do
     mail.to.should ==([m.email])
     mail.from.should ==(["info@oneclickor.gs"])
   end
+  
+  describe "finders" do
+    before(:each) do
+      Vote.all.destroy!
+      Decision.all.destroy!
+      Member.all.destroy!
+      
+      @member = Member.create!(:email => "member@example.com")
+      
+      # An in-progress proposal
+      @proposal = Decision.create!(:proposer => @member, :title => "")
+      
+      # An accepted decision
+      @decision = Decision.create!(:close_date => 1.week.ago, :proposer => @member, :title => "")
+      Vote.create(:member => @member, :decision_id => @decision.id, :for => true)
+      
+      # A failed proposal
+      @failed = Decision.create!(:close_date => 1.week.ago, :proposer => @member, :title => "")
+      Vote.create(:member => @member, :decision_id => @failed.id, :for => false)
+    end
+    
+    it "should find the in-progress proposal" do
+      Decision.all_proposals.should == [@proposal]
+    end
+    
+    it "should find the decision" do
+      Decision.all_decisions.should == [@decision]
+    end
+    
+    it "should find the failed proposal" do
+      Decision.all_failed_proposals.should == [@failed]
+    end
+  end
 end
