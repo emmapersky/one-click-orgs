@@ -26,11 +26,11 @@ class Proposal
   end
   
   def votes_for
-    self.votes.select{|v| v.for}.size        
+    Vote.count(:proposal_id => self.id, :for => true)
   end
   
   def votes_against
-    self.votes.select{|v| ! v.for}.size    
+    Vote.count(:proposal_id => self.id, :for => false)
   end
   
   def accepted
@@ -51,8 +51,7 @@ class Proposal
   
   def majority?
     num_members = Member.count(:created_at.lt => creation_date)
-    num_votes   = Vote.count(:proposal_id => self.id, :for => true)
-    return num_votes >= (num_members / 2.0).ceil
+    return votes_for >= (num_members / 2.0).ceil
   end
     
   def close!
