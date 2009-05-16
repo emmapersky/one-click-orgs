@@ -13,9 +13,10 @@
       %td
         = proposal.title
         (
-        = proposal.proposer.name
+        = link_to(h(proposal.proposer.name), resource(proposal.proposer))
         )
         = partial 'decisions/description', :decision => proposal
+        %p= link_to("More details", resource(proposal))
       %td.timestamp
         = time_to_go_in_words(proposal.end_date)
       %td.vote
@@ -33,9 +34,10 @@
       %td
         = decision.title
         (
-        = decision.proposer.name
+        = link_to(h(decision.proposer.name), resource(decision.proposer))
         )
         = partial 'decisions/description', :decision => decision
+        %p= link_to("More details", resource(decision))
       %td.timestamp= decision.close_date.formatted(:long)
       %td.vote= partial 'decisions/vote_count', :decision => decision
 
@@ -51,8 +53,9 @@
       %td
         = failed_proposal.title
         (
-        = failed_proposal.proposer.name
+        = link_to(h(failed_proposal.proposer.name), resource(failed_proposal.proposer))
         )
         = partial 'decisions/description', :decision => failed_proposal
+        %p= link_to("More details", resource(failed_proposal))
       %td.timestamp= failed_proposal.close_date.formatted(:long)
       %td.vote= partial 'decisions/vote_count', :decision => failed_proposal
