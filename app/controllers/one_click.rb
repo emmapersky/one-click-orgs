@@ -9,7 +9,7 @@ class OneClick < Application
     period  = Clause.get_current('voting_period').integer_value
     @voting_period = case period
     when 0..86400
-      "#{(period / 60.0).round minutes}"
+      "#{(period / 60.0).round} minutes"
     when 86400..(86400 * 5)
       "#{(period / 3600.0).round} hours"
     else
