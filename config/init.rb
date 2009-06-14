@@ -30,5 +30,5 @@ Merb::BootLoader.after_app_loads do
   require 'lib/mailer_in_class'
   require 'config/local_config'
   # Make sure the worker process is running
-  AsyncJobs.ensure_worker_process_running
+  #AsyncJobs.ensure_worker_process_running 
 end
