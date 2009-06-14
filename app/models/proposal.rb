@@ -80,7 +80,7 @@ class Proposal
   end
   
   def get_voting_system
-    Consitution.get_general_voting_system
+    Constitution.get_general_voting_system
   end
     
   def close!
