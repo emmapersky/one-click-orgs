@@ -6,17 +6,14 @@ class OneClick < Application
     @assets = Clause.get_current('assets').boolean_value
     @domain = Clause.get_current('domain').text_value
     
-    @voting_period = case Clause.get_current('voting_period').integer_value
-    when 1
-      "24 hours"
-    when 2
-      "48 hours"
-    when 3
-      "72 hours"
-    when 4
-      "1 week"
-    when 5
-      "2 weeks"
+    period  = Clause.get_current('voting_period').integer_value
+    @voting_period = case period
+    when 0..86400
+      "#{(period / 60.0).round minutes}"
+    when 86400..(86400 * 5)
+      "#{(period / 3600.0).round} hours"
+    else
+      "#{(period / 3600.0 * 24).round} days"
     end
     
     @general_voting_system = case Clause.get_current('general_voting_system').text_value
