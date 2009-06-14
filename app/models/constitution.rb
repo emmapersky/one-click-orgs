@@ -1,15 +1,11 @@
 class Constitution
   
   def self.get_organisation_name
-    "One Click Organisations"
-  end
-  
-  def self.get_voting_system(klass)
-    VotingSystem
+    Clause.get_current("organisation_name").text_value
   end
   
   def self.get_general_voting_system
-    VotingSystem
+    RelativeMajority
   end
   
   def self.get_membership_voting_system
@@ -31,14 +27,4 @@ class Constitution
   def self.get_voting_period
     3.days
   end
-end
-
-class VotingSystem
-  def self.passed?(params={})
-    true
-  end
-end
-
-class RelativeMajority < VotingSystem
-  
 end
