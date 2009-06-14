@@ -33,6 +33,18 @@ class Proposal
     Vote.count(:proposal_id => self.id, :for => false)
   end
   
+  def total_members
+     Member.count(:created_at.lt => creation_date)
+  end
+  
+  def abstained
+    member_count - total_votes
+  end
+  
+  def total_votes
+    votes_for + votes_against
+  end
+  
   def accepted
     votes_for > votes_against
   end
