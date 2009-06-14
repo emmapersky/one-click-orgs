@@ -1,19 +1,6 @@
 require File.join(File.dirname(__FILE__), "..", "spec_helper")
 
-# Move this to your spec_helper.rb.
 module MailControllerTestHelper
-  # Helper to clear mail deliveries.
-  def clear_mail_deliveries
-    Merb::Mailer.deliveries.clear
-  end
-
-  # Helper to access last delivered mail.
-  # In test mode merb-mailer puts email to
-  # collection accessible as Merb::Mailer.deliveries.
-  def last_delivered_mail
-    Merb::Mailer.deliveries.last
-  end
-
   # Helper to deliver
   def deliver(action, mail_params = {}, send_params = {})
     ProposalMailer.dispatch_and_deliver(action, { :from => "no-reply@webapp.com", :to => "recepient@person.com" }.merge(mail_params), send_params)
@@ -21,19 +8,24 @@ module MailControllerTestHelper
   end
 end
 
-describe ProposalMailer, "#notify_on_event email template" do
+describe ProposalMailer, "#notify_creation email template" do
   include MailControllerTestHelper
   
   before :each do
     clear_mail_deliveries
     
-    # instantiate some fixture objects
+    @member, @proposal = mock(Member), mock(Proposal)
+    @member.stub!(:name).and_return("Peter Pan")
+    @proposal.stub!(:title).and_return("grow up")
+    @proposal.stub!(:description).and_return("later")
+    @proposal.stub!(:proposer).and_return(@member) 
+
   end
     
-  it "includes welcome phrase in email text" do
-    violated "Mailer controller deserves to have specs, too."
-    
-    # ProposalMailer.dispatch_and_deliver(:notify_on_event, {}, { :name => "merb-mailer user" })
-    # last_delivered_mail.text.should =~ /Hello, merb-mailer user!/
+  it "includes welcome phrase and proposal information in email text" do    
+    ProposalMailer.dispatch_and_deliver(:notify_creation, {}, { :member => @member, :proposal => @proposal })
+    last_delivered_mail.text.should =~ /Dear #{@member.name}/
+    last_delivered_mail.text.should =~ /#{@proposal.title}/
+    last_delivered_mail.text.should =~ /#{@proposal.description}/            
   end
 end

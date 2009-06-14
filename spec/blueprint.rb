@@ -18,6 +18,12 @@ Proposal.blueprint do |bp|
   bp.open "1"
 end
 
+AddMemberProposal.blueprint do |bp|
+  bp.title "a proposal title"
+  bp.open "1"
+  bp.proposer Member.make
+end
+
 Clause.blueprint do |bp|
   bp.name 'objectives'
   bp.text_value 'consuming doughnuts'

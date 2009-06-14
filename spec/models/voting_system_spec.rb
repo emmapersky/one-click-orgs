@@ -20,7 +20,7 @@ describe VotingSystems do
 
   describe VotingSystems::RelativeMajority do    
     before do
-      @system = VotingSystems::RelativeMajority.new
+      @system = VotingSystems::RelativeMajority
     end
 
     it "relative majority" do
@@ -32,7 +32,7 @@ describe VotingSystems do
 
   describe VotingSystems::Veto do    
     before do
-      @system = VotingSystems::Veto.new
+      @system = VotingSystems::Veto
     end
 
     it "veto" do
@@ -44,7 +44,7 @@ describe VotingSystems do
 
   describe VotingSystems::AbsoluteMajority do    
     before do
-      @system = VotingSystems::AbsoluteMajority.new
+      @system = VotingSystems::AbsoluteMajority
     end
 
     it "absolute" do
@@ -56,7 +56,7 @@ describe VotingSystems do
 
   describe VotingSystems::AbsoluteTwoThirdsMajority do    
     before do
-      @system = VotingSystems::AbsoluteTwoThirdsMajority.new
+      @system = VotingSystems::AbsoluteTwoThirdsMajority
     end
 
     it "absolute two thirds majority" do
@@ -69,7 +69,7 @@ describe VotingSystems do
 
   describe VotingSystems::Unanimous do    
     before do
-      @system = VotingSystems::Unanimous.new
+      @system = VotingSystems::Unanimous
     end
     
     it "unanimous" do

@@ -4,6 +4,7 @@ describe Proposal do
   
   before(:each) do
     @member = Member.make
+    Merb::Mailer.deliveries.clear
   end
 
   it "should close early proposals" do

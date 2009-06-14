@@ -29,7 +29,11 @@ module AsyncJobs
   
   # For use in controllers
   def async_job(method_name, *args)
-    AsyncJobs.async_job(self.class.name, method_name, *args)
+    if Merb.env =~ /test/
+      self.class.send(method_name, *args)
+    else
+      AsyncJobs.async_job(self.class.name, method_name, *args)
+    end
   end
   
   # Generic use

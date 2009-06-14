@@ -1,10 +1,10 @@
-Dear #{@member.name || 'member'},
+Dear <%= @member && @member.name || 'member' %>,
 
 a new proposal has been created.
 
-"#{@proposal.title}", by #{@proposal.proposer.name || @proposal.proposer.email}
+<%= @proposal.title %>, by <%= @proposal.proposer.name || @proposal.proposer.email %>
 
-#{@proposal.description}
+<%= @proposal.description %>
 
 Please visit http://staging.oneclickor.gs/proposals to vote on it.
 

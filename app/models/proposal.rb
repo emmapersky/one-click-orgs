@@ -22,7 +22,8 @@ class Proposal
   property :accepted, Boolean, :default => false
   property :close_date, DateTime, :default => Proc.new {|r,p| (Time.now + Constitution.get_voting_period).to_datetime}
   property :parameters, String, :length => 10000
-  property :type, Class 
+  property :type, Discriminator 
+  
   validates_present :proposer_member_id
   
   def end_date
@@ -59,6 +60,9 @@ class Proposal
   
   def accepted_or_rejected
     accepted ? "accepted" : "rejected"
+  end
+  
+  def enact!
   end
   
   def open?

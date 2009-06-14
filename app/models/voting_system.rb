@@ -5,6 +5,7 @@ module VotingSystems
       false
     end
     
+    
     def self.passed?(proposal)
       raise NotImplementedError      
     end
@@ -30,6 +31,11 @@ module VotingSystems
 
   class Majority < VotingSystem
     
+    def self.fraction_needed=(f)
+      @fraction_needed = f
+    end
+  
+    
     def self.initialize(fraction_needed)
       @fraction_needed = fraction_needed
     end
@@ -40,15 +46,15 @@ module VotingSystems
   end
   
   class AbsoluteMajority < Majority
-    def self.initialize; super(0.5); end
+    self.fraction_needed = 0.5
   end
   
   class AbsoluteTwoThirdsMajority < Majority
-    def self.initialize; super(2.0/3.0); end
+    self.fraction_needed = 2.0/3.0
   end
   
   class Unanimous < Majority
-    def self.initialize; super(1.0); end
+    self.fraction_needed = 1.0
   end
 end
 

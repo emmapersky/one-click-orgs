@@ -2,18 +2,6 @@ require File.join(File.dirname(__FILE__), "..", "spec_helper")
 
 # Move this to your spec_helper.rb.
 module MailControllerTestHelper
-  # Helper to clear mail deliveries.
-  def clear_mail_deliveries
-    Merb::Mailer.deliveries.clear
-  end
-
-  # Helper to access last delivered mail.
-  # In test mode merb-mailer puts email to
-  # collection accessible as Merb::Mailer.deliveries.
-  def last_delivered_mail
-    Merb::Mailer.deliveries.last
-  end
-
   # Helper to deliver
   def deliver(action, mail_params = {}, send_params = {})
     MembersMailer.dispatch_and_deliver(action, { :from => "no-reply@webapp.com", :to => "recepient@person.com" }.merge(mail_params), send_params)
@@ -21,19 +9,19 @@ module MailControllerTestHelper
   end
 end
 
-describe MembersMailer, "#notify_on_event email template" do
+describe MembersMailer, "#notify_new_password email template" do
   include MailControllerTestHelper
   
   before :each do
     clear_mail_deliveries
-    
-    # instantiate some fixture objects
+    @member = mock(Member)
+    @member.stub!(:name).and_return("Peter Pan")
+    @new_password = "foo"
   end
     
-  it "includes welcome phrase in email text" do
-    violated "Mailer controller deserves to have specs, too."
-    
-    # MembersMailer.dispatch_and_deliver(:notify_on_event, {}, { :name => "merb-mailer user" })
-    # last_delivered_mail.text.should =~ /Hello, merb-mailer user!/
+  it "includes welcome phrase and password in email text" do    
+    MembersMailer.dispatch_and_deliver(:notify_new_password, {}, { :member =>  @member, :new_password=>@new_password})
+    last_delivered_mail.text.should =~ /Dear #{@member.name}/
+    last_delivered_mail.text.should =~ /#{@new_password}/            
   end
 end

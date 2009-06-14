@@ -96,4 +96,14 @@ module Merb
   end
 end
   
+module MailControllerTestHelper          
+  def clear_mail_deliveries
+    Merb::Mailer.deliveries.clear
+  end
+
+  def last_delivered_mail
+    Merb::Mailer.deliveries.last
+  end
+end
+
           
