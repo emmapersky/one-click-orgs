@@ -37,6 +37,8 @@ Merb::Router.prepare do
   resources :votes
   resources :decisions
   resources :proposals
+  resources :add_member_proposals
+    
   resources :members
   
   # This is the default route for /:controller/:action/:id
