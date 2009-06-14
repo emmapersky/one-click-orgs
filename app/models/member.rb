@@ -2,7 +2,7 @@ require 'dm-validations'
 
 class Member
   include DataMapper::Resource
-  
+  include AsyncJobs
   after :create, :send_welcome  
   has n, :votes
   has n, :proposals, :class_name => 'Proposal', :child_key => [:proposer_member_id]
@@ -46,8 +46,16 @@ class Member
   end
   
   def send_welcome
-    #do some email sending magic
+    async_job :send_new_member_email, self.id, self.password
   end
+  
+  def self.send_new_member_email(member_id, password)
+    member = Member.get(member_id)
+    OCOMail.send_mail(MembersMailer, :welcome_new_member,
+      {:to => member.email, :from => 'info@oneclickor.gs', :subject => 'Your password'},
+      {:member => member, :password => password}
+    )
+  end  
 end
 
 #error class

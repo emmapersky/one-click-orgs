@@ -1,4 +1,5 @@
 class Members < Application
+  include AsyncJobs
   # provides :xml, :yaml, :js
 
   def index
@@ -43,6 +44,7 @@ class Members < Application
       redirect resource(:members), :message => {:error => "Error creating proposal: #{@member.errors.inspect}"}      
     end
   end
+
 
   def update(id, member)
     @member = Member.get(id)

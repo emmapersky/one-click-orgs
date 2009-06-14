@@ -26,13 +26,8 @@ Merb::BootLoader.after_app_loads do
   require 'lib/smtp_tls'
   require 'lib/find_by_sql_hack'
   # This will get executed after your app's classes have been loaded.
+  require 'lib/mailer_in_class'
   require 'config/local_config'
-  
-  Merb.run_later do
-    while true do
-      Merb.logger.debug("running Proposal.close_proposals()")            
-      Proposal.close_proposals
-      sleep 60
-    end
-  end unless Merb.testing?
+  # Make sure the worker process is running
+  AsyncJobs.ensure_worker_process_running
 end
