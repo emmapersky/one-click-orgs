@@ -2,6 +2,8 @@ require 'dm-validations'
 
 class Member
   include DataMapper::Resource
+  
+  after :create, :send_welcome  
   has n, :votes
   has n, :proposals, :class_name => 'Proposal', :child_key => [:proposer_member_id]
   
@@ -35,6 +37,16 @@ class Member
     self.password = new_password
     self.password_confirmation = new_password
     new_password
+  end
+  
+  def self.create_member(params)
+    member = Member.new(params)
+    member.new_password!
+    member.save
+  end
+  
+  def send_welcome
+    #do some email sending magic
   end
 end
 

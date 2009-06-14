@@ -30,27 +30,17 @@ class Members < Application
   end
 
   def create(member)
-    @member = Member.new(member)
-    password = @member.new_password!
-    if @member.save
-      
-      #Merb.run_later do
-        mail = Merb::Mailer.new(:to => @member.email, :from => 'info@oneclickor.gs', :subject => 'Your password', :text => <<-END)
-          Dear #{@member.name || 'member'},
-
-          you are now member of OCO. Your password is
-          #{password}
-
-          Thanks
-
-          oneclickor.gs
-          END
-        mail.deliver!
-      #end
-            
-      redirect resource(:members), :message => {:notice=> "Member was successfully created"}
+    title = "Add #{member['name']} as a member of #{Constitution.get_organisation_name}"
+    proposal = AddMemberProposal.new(
+      :title => title,
+      :proposer_member_id => current_user.id,
+      :parameters => AddMemberProposal.serialize_parameters(member)
+    )
+    
+    if proposal.save
+      redirect resource(:members), :message => {:notice=> "Add Member Proposal successfully created"}
     else
-      redirect resource(:members), :message => {:error => "Error creating member: #{@member.errors.inspect}"}
+      redirect resource(:members), :message => {:error => "Error creating proposal: #{@member.errors.inspect}"}      
     end
   end
 

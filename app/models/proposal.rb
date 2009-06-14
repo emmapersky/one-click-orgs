@@ -18,7 +18,9 @@ class Proposal
   property :creation_date, DateTime, :default => Proc.new {|r,p| Time.now.to_datetime}
   property :open, Boolean, :default => true
   property :accepted, Boolean, :default => false
-  property :close_date, DateTime, :default => Proc.new {|r,p| (Time.now + LENGTH_OF_DECISION).to_datetime}
+  property :close_date, DateTime, :default => Proc.new {|r,p| (Time.now + Constitution.get_voting_period).to_datetime}
+  property :parameters, String, :length => 10000
+  property :type, Class 
   validates_present :proposer_member_id
   
   def end_date
@@ -37,6 +39,10 @@ class Proposal
     votes_for > votes_against
   end
   
+  def reject!
+    #do some kind of email notification
+  end
+  
   def accepted_or_rejected
     accepted ? "accepted" : "rejected"
   end
@@ -53,15 +59,31 @@ class Proposal
     num_members = Member.count(:created_at.lt => creation_date)
     return votes_for >= (num_members / 2.0).ceil
   end
+
+  def passed?
+    vs = get_voting_system
+    vs.passed?(self)
+  end
+  
+  def get_voting_system
+    Consitution.get_general_voting_system
+  end
     
   def close!
+    passed = passed?
     raise "proposal #{self} already closed" if closed?    
     Merb.logger.info("closing proposal #{self}")
-          
-    Decision.create!(:proposal_id=>self.id) if majority?
+        
+    Decision.create!(:proposal_id=>self.id) if passed
     self.open = 0
     self.close_date = Time.now
+    self.accepted = passed
+    enact! if passed
     save!
+  end
+
+  def self.serialize_parameters(params)
+    params.to_json
   end
   
   def self.find_closed_early_proposals
