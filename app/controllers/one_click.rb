@@ -1,6 +1,65 @@
 class OneClick < Application
   def constitution
+    # TODO: Replace these direct calls to Clause.get_current and hard-coded values with neater calls to the Constitution uber-brain class
+    @organisation_name = Clause.get_current('organisation_name').text_value
+    @objectives = Clause.get_current('objectives').text_value
+    @assets = Clause.get_current('assets').boolean_value
+    @domain = Clause.get_current('domain').text_value
+    
+    @voting_period = case Clause.get_current('voting_period').integer_value
+    when 1
+      "24 hours"
+    when 2
+      "48 hours"
+    when 3
+      "72 hours"
+    when 4
+      "1 week"
+    when 5
+      "2 weeks"
+    end
+    
+    @general_voting_system = case Clause.get_current('general_voting_system').text_value
+    when "RelativeMajority"
+      "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
+    when "Veto"
+      "receives no Opposing Votes during the Voting Period."
+    when "AbsoluteMajority"
+      "receives Supporting Votes from more than half of Members during the Voting Period."
+    when "AbsoluteTwoThirdsMajority"
+      "receives Supporting Votes from more than two thirds of Members during the Voting Period."
+    when "Unanimous"
+      "receives Supporting Votes from all Members during the Voting Period."
+    end
+    
+    @membership_voting_system = case Clause.get_current('membership_voting_system').text_value
+    when "RelativeMajority"
+      "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
+    when "Veto"
+      "receives no Opposing Votes during the Voting Period."
+    when "AbsoluteMajority"
+      "receives Supporting Votes from more than half of Members during the Voting Period."
+    when "AbsoluteTwoThirdsMajority"
+      "receives Supporting Votes from more than two thirds of Members during the Voting Period."
+    when "Unanimous"
+      "receives Supporting Votes from all Members during the Voting Period."
+    end
+    
+    @constitution_voting_system = case Clause.get_current('constitution_voting_system').text_value
+    when "RelativeMajority"
+      "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
+    when "Veto"
+      "receives no Opposing Votes during the Voting Period."
+    when "AbsoluteMajority"
+      "receives Supporting Votes from more than half of Members during the Voting Period."
+    when "AbsoluteTwoThirdsMajority"
+      "receives Supporting Votes from more than two thirds of Members during the Voting Period."
+    when "Unanimous"
+      "receives Supporting Votes from all Members during the Voting Period."
+    end
+    
     @new_proposal = Proposal.new
+    
     render
   end
   
