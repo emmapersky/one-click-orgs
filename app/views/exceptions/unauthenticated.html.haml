@@ -10,6 +10,6 @@
     %br
     = password_field @password_param.to_sym, :label => "password"
     %br
-    = submit "Login", :id => 'submit'
+    = submit "login", :id => 'submit'
     %br
-    = link_to 'Forgotten password', url(:controller => :reset_password)
+    = link_to 'forgotten password', url(:controller => :reset_password)
