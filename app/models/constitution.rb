@@ -25,7 +25,7 @@ class Constitution
   end
   
   def self.get_voting_period
-    3.days
+    Clause.get_current('voting_period').integer_value
   end
   
   def self.voting_system(klass)

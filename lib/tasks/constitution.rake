@@ -7,7 +7,7 @@ namespace :constitution do
     Clause.create(:name => 'objectives', :text_value => objectives)
     Clause.create(:name => 'assets', :boolean_value => true)
     Clause.create(:name => 'domain', :text_value => "")
-    Clause.create(:name => 'voting_period', :integer_value => 3)
+    Clause.create(:name => 'voting_period', :integer_value => 3 * 86400)
     Clause.create(:name => 'general_voting_system', :text_value => "RelativeMajority")
     Clause.create(:name => 'membership_voting_system', :text_value => "RelativeMajority")
     Clause.create(:name => 'constitution_voting_system', :text_value => "RelativeMajority")

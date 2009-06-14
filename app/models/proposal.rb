@@ -3,7 +3,6 @@ require 'dm-validations'
 class Proposal
   include AsyncJobs
   
-  LENGTH_OF_DECISION = 3.days
   include DataMapper::Resource
   
   after :create, :send_email
