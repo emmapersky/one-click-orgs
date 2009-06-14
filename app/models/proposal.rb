@@ -1,6 +1,8 @@
 require 'dm-validations'
 
 class Proposal
+  include AsyncJobs
+  
   LENGTH_OF_DECISION = 3.days
   include DataMapper::Resource
   
@@ -76,6 +78,7 @@ class Proposal
     find_closed_early_proposals.each { |p| p.close! }
   end
   
+  # Called every 60 seconds in the worker process (set up at end of file)
   def self.close_proposals
     close_due_proposals
     close_early_proposals
@@ -91,25 +94,21 @@ class Proposal
   
   
   def send_email
-    Merb.run_later do
-      Member.all.each do |m|
-        m = Merb::Mailer.new(:to => m.email, :from => 'info@oneclickor.gs', :subject => 'new one click proposal', :text => <<-END)
-        Dear #{m.name || 'member'},
-        
-        a new proposal has been created.
-        
-        "#{self.title}", by #{self.proposer.name || self.proposer.email}
-
-        #{self.description}
-        
-        Please visit http://staging.oneclickor.gs/proposals to vote on it.
-        
-        Thanks
-        
-        oneclickor.gs
-        END
-        m.deliver!
-      end
+    async_job :send_email_for, self.id
+  end
+  
+  def self.send_email_for(proposal_id)
+    proposal = Proposal.get(proposal_id)
+    
+    Member.all.each do |m|
+      OCOMail.send_mail(ProposalMailer, :notify_creation,
+        {:to => m.email, :from => 'info@oneclickor.gs', :subject => 'new one click proposal'},
+        {:member => m, :proposal => proposal}
+      )
     end
   end
 end
+
+# Run the close proposal every 60 seconds
+AsyncJobs.periodical Proposal, 60, :close_proposals
+

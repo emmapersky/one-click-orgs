@@ -1,4 +1,5 @@
 class Members < Application
+  include AsyncJobs
   # provides :xml, :yaml, :js
 
   def index
@@ -33,25 +34,20 @@ class Members < Application
     @member = Member.new(member)
     password = @member.new_password!
     if @member.save
-      
-      #Merb.run_later do
-        mail = Merb::Mailer.new(:to => @member.email, :from => 'info@oneclickor.gs', :subject => 'Your password', :text => <<-END)
-          Dear #{@member.name || 'member'},
-
-          you are now member of OCO. Your password is
-          #{password}
-
-          Thanks
-
-          oneclickor.gs
-          END
-        mail.deliver!
-      #end
+      async_job :send_new_member_email, @member.id, password
             
       redirect resource(:members), :message => {:notice=> "Member was successfully created"}
     else
       redirect resource(:members), :message => {:error => "Error creating member: #{@member.errors.inspect}"}
     end
+  end
+  
+  def self.send_new_member_email(member_id, password)
+    member = Member.get(member_id)
+    send_mail(MembersMailer, :welcome_new_member,
+      {:to => member.email, :from => 'info@oneclickor.gs', :subject => 'Your password'},
+      {:member => member, :password => password}
+    )
   end
 
   def update(id, member)

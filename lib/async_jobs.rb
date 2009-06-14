@@ -27,7 +27,13 @@ module AsyncJobs
   @@async_job_connection = nil
   @@async_periodic_jobs = Array.new
   
+  # For use in controllers
   def async_job(method_name, *args)
+    AsyncJobs.async_job(self.class.name, method_name, *args)
+  end
+  
+  # Generic use
+  def self.async_job(klass_name, method_name, *args)
     retries = 3
     begin
       begin
@@ -46,7 +52,7 @@ module AsyncJobs
       end
 
       # Run job in remote server
-      @@async_job_connection.job(self.class.name, method_name, args)
+      @@async_job_connection.job(klass_name, method_name, args)
           
     rescue => e
       # Only retry this a few times
@@ -66,6 +72,8 @@ module AsyncJobs
   end
   
   def self.async_job_server
+    # Reload classes if we're not running in production
+    Merb::BootLoader::ReloadClasses.run unless Merb.environment == "production"
     # Flag for termination
     terminate_server = false
     # Run service
@@ -102,6 +110,14 @@ module AsyncJobs
   def self.drb_url
     'drbunix:'+self.drb_socket
   end
+  
+  def self.ensure_worker_process_running
+    AsyncJobs.async_job 'AsyncJobs', :do_absolutely_nothing
+  end
+  
+  def self.do_absolutely_nothing
+    nil
+  end
 
 private
   # ================ SERVER IMPLEMENTATION ================
@@ -120,7 +136,22 @@ private
       Thread.new do
         @lock.synchronize do
           begin
+            # Log job
+            Merb.logger.info("async_job: #{klass_name}##{method_name} with args #{args.inspect}")
+            
+            # Perform the method
             klass.send(method_name, *args)
+            
+            # Dump any emails sent, if in development mode
+            if Merb.environment == "development"
+              emails = Merb::Mailer.deliveries
+              unless emails.empty?
+                puts " ============== EMAILS SENT =============="
+                emails.each { |e| puts e.inspect }
+                puts " (#{emails.length} emails)"
+                emails.clear
+              end
+            end
           rescue => e
             Merb.logger.error("async_job error: #{klass_name}##{method_name} with exception #{e.inspect}")
           end
