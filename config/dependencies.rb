@@ -27,6 +27,9 @@ dependency "dm-validations", dm_gems_version
 
 dependency "data_objects", "0.9.11"
 dependency "do_mysql", "0.9.11"
+#if you are having problems, you can install this locally with this line on os x
+#sudo gem install do_mysql -- --with-mysql-config=/usr/local/mysql/bin/mysql_config 
+
 dependency "merb_datamapper", merb_gems_version
 
 dependency "faker", "0.3.1"
