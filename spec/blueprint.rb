@@ -17,3 +17,9 @@ Proposal.blueprint do |bp|
   bp.title "a proposal title"
   bp.open "1"
 end
+
+Clause.blueprint do |bp|
+  bp.name 'objectives'
+  bp.text_value 'consuming doughnuts'
+  bp.started_at(Time.now - 1.day)
+end
