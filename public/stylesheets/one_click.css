@@ -1,46 +1,180 @@
-body { font-family: Arial, "MS Trebuchet", sans-serif; }
+body {
+color:#666;
+font-family:Myriad,Arial,Helvetica,sans-serif;
+margin:0;
+padding:0;
+}
 
-.header { text-align: center; }
+.control_bar {
+position:absolute;
+right:.5em;
+top:.2em;
+}
 
-#nav { text-align: center; }
+h1.header {
+color:#666;
+font-family:Georgia,Times New Roman;
+font-size:3em;
+margin:0;
+padding:0;
+text-align:center;
+}
 
-#navitem { display: inline; color: rgb(23,56,23); margin-left: 2em; margin-right: 2em; }
+h2,h3,h4 {
+color:#977C57;
+}
 
-.footer { font-size: 0.7em; text-align: center; margin-top: 20px; }
+h3 {
+font-size:1.5em;
+margin:20px 0 0;
+padding:0;
+}
 
-#doc { width: 950px; margin: auto; }
+a {
+color:#627FC4;
+}
 
-#hd #bd .footer { width: 950px; margin: auto; }
+a:hover {
+color:#69F;
+}
 
-table.proposals, table.decisions, table.failed_proposals { width: 900px; margin: auto; border: 1px solid #004422; }
-table.proposals td.vote, table.decisions td.vote, table.failed_proposals td.vote { text-align: center; width: 12em; }
-table.proposals form, table.decisions form, table.failed_proposals form { display: inline; }
-table.proposals input, table.decisions input, table.failed_proposals input { width: 7em; margin: auto; }
-table.proposals th, table.decisions th, table.failed_proposals th { background-color: #356AA0; }
-table.proposals td.proposal_ends_in, table.decisions td.proposal_ends_in, table.failed_proposals td.proposal_ends_in { text-align: center; width: 14em; }
+#nav {
+text-align:center;
+}
 
-tr.vote_for { background-color: #6BBA70; }
+#navitem {
+display:inline;
+margin:0;
+padding:0;
+}
 
-tr.vote_against { background-color: #B02B2C; }
+#nav li {
+float:left;
+}
 
-tr.vote_in_progress { background-color: #C79810; }
+#nav a {
+border-bottom:3px #eee solid;
+display:block;
+font-family:georgia;
+font-size:17px;
+margin:0;
+padding:3px 0;
+text-decoration:none!important;
+width:170px;
+}
 
-tr.odd { background-color: #CDEB8B; }
+#nav a:hover {
+border-bottom:3px #CDEB8B solid;
+text-decoration:none;
+}
 
-tr.even { background-color: #C3D9FF; }
+#notice {
+clear:both;
+}
 
-div.description { font-size: 0.8em; padding-left: 1em; padding-right: 1em; padding-top: 0.1em; text-align: justify; }
+table {
+border:1px #ccc solid!important;
+}
 
-label, input, textarea { display: block; width: 30em; float: left; margin-bottom: 10px; }
+table.proposals,table.decisions,table.failed_proposals {
+border:1px solid #042;
+margin:auto;
+width:900px;
+}
 
-textarea { height: 10em; width: 25em; }
+table.proposals td.vote,table.decisions td.vote,table.failed_proposals td.vote {
+text-align:center;
+width:12em;
+}
 
-label { text-align: right; width: 10em; padding-right: 1em; }
+table.proposals form,table.decisions form,table.failed_proposals form {
+display:inline;
+}
 
-br { clear: left; }
+table.proposals input,table.decisions input,table.failed_proposals input {
+margin:auto;
+width:7em;
+}
 
-input.submit { width: 10em; margin-left: 16em; }
+table.proposals td.proposal_ends_in,table.decisions td.proposal_ends_in,table.failed_proposals td.proposal_ends_in {
+text-align:center;
+width:14em;
+}
 
-form { clear: left; }
+th {
+background:#ABC969!important;
+color:#fff!important;
+font-family:georgia,times new roman;
+font-weight:400;
+padding:3px 0;
+}
 
-.control_bar { position: absolute; right: 0.5em; top: 0.2em; }
+tr.even {
+background:#eee!important;
+}
+
+tr.odd {
+background:#fff!important;
+}
+
+tr:hover td {
+background:#ffc;
+}
+
+tr.vote_for {
+background-color:#6BBA70;
+}
+
+tr.vote_against {
+background-color:#B02B2C;
+}
+
+tr.vote_in_progress {
+background-color:#C79810;
+}
+
+div.description {
+font-size:.8em;
+padding-left:1em;
+padding-right:1em;
+padding-top:.1em;
+text-align:justify;
+}
+
+label,input,textarea {
+display:block;
+float:left;
+margin-bottom:10px;
+width:30em;
+}
+
+textarea {
+height:10em;
+width:25em;
+}
+
+label {
+padding-right:1em;
+text-align:right;
+width:10em;
+}
+
+input.submit {
+margin-left:16em;
+width:10em;
+}
+
+.footer {
+font-size:.7em;
+margin-top:20px;
+text-align:center;
+}
+
+#doc,#hd #bd .footer {
+margin:auto;
+width:950px;
+}
+
+br,form {
+clear:left;
+}
