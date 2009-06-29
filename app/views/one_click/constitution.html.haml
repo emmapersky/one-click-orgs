@@ -68,12 +68,3 @@
   %li An Emergency Meeting may be conducted in person, by any form of synchronous electronic communication or by a combination thereof.
   %li At a duly convened Emergency Meeting the Members shall be able to make General Decisions on the basis described in the Constitution but stating “support” or “oppose” in place of the Management System.
   %li Should the number of Members become zero the Custodian of CIRCUS foundation as named on the website CIRCUS-foundation.org/custodian shall have the right to appoint one, two or three new Members.
-
-%h3 New Proposal
-= form_for(@new_proposal, :action => resource('proposals')) do
-  = text_field :title, :label => "Title  "
-  %br
-  = text_area :description, :label => "Description "
-  %br
-  = submit "Create Proposal", :id => 'submit'
-  %br

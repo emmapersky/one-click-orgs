@@ -55,14 +55,14 @@ class OneClick < Application
       "receives Supporting Votes from all Members during the Voting Period."
     end
     
-    @new_proposal = Proposal.new
+    
     
     render
   end
   
   def control_centre
     only_provides :html
-    
+  
     # Fetch open proposals, with current user's status on each
     @proposals = Proposal.all_open
     
@@ -80,7 +80,8 @@ class OneClick < Application
     
     # Fetch five most recent failed proposals
     @failed_proposals = Proposal.all_failed[0..4]
-    
+    @new_proposal = Proposal.new
+        
     render
   end
   
