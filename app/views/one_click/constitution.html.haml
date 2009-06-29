@@ -16,8 +16,8 @@
   %li The Organisation has one or more members ("Members") who support its Objectives. 
   %li Each Member nominates an email address at which they will receive important notices from the Organisation ("Nominated Email Address"). 
   %li 
-    Members may access the Management System at the website http://manage.
-    = @domain
+    Members may access the Management System at the website
+    = @domain.blank? ? absolute_url('') : "http://manage.#{@domain}"
   %li Members may view the current Constitution on the Management Systems. 
   %li Members may view a register of current Members together with their Nominated Email Addresses on the Management System. 
   %li Members may resign their membership via the Management System.
