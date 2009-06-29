@@ -1,180 +1,44 @@
-body {
-color:#666;
-font-family:Myriad,Arial,Helvetica,sans-serif;
-margin:0;
-padding:0;
-}
+body{color:#666;font-family:Myriad,Arial,Helvetica,sans-serif;margin:0;padding:0;}
+.control_bar{position:absolute;right:.5em;top:.2em;}
+h1.header{color:#666;font-family:Georgia,Times New Roman;font-size:3em;margin:0;padding:0;text-align:center;}
+h2,h3,h4{color:#977C57;}
+h3{font-size:1.5em;margin:20px 0 0;padding:0;}
+#doc,#hd #bd .footer{margin:auto;width:950px;}
+br,form{clear:left;}
 
-.control_bar {
-position:absolute;
-right:.5em;
-top:.2em;
-}
+a{color:#627FC4;}
+a:hover{color:#69F;}
+#nav{text-align:center;}
+#navitem{display:inline;margin:0;padding:0;}
+#nav li{float:left;}
+#nav a{border-bottom:3px #eee solid;display:block;font-family:georgia;font-size:17px;margin:0;padding:3px 0;text-decoration:none!important;width:170px;}
+#nav a:hover{border-bottom:3px #CDEB8B solid;text-decoration:none;}
+#notice{clear:both;}
+table{border:1px #ccc solid!important;}
+table.proposals,table.decisions,table.failed_proposals{border:1px solid #042;margin:auto;width:900px;}
+table.proposals td.vote,table.decisions td.vote,table.failed_proposals td.vote{text-align:center;width:12em;}
+table.proposals form,table.decisions form,table.failed_proposals form{display:inline;}
+table.proposals input,table.decisions input,table.failed_proposals input{margin:auto;width:7em;}
+table.proposals td.proposal_ends_in,table.decisions td.proposal_ends_in,table.failed_proposals td.proposal_ends_in{text-align:center;width:14em;}
+th{background:#ABC969!important;color:#fff!important;font-family:georgia,times new roman;font-weight:400;padding:3px 0;}
 
-h1.header {
-color:#666;
-font-family:Georgia,Times New Roman;
-font-size:3em;
-margin:0;
-padding:0;
-text-align:center;
-}
+tr.even{background:#eee!important;}
+tr.odd{background:#fff!important;}
+tr:hover td{background:#ffc;}
+tr.vote_for{background-color:#6BBA70;color:#ffffff;}
+tr.vote_against{background-color:#B02B2C;color:#ffffff;}
+tr.vote_in_progress{background-color:#C79810;color:#ffffff;}
+tr.vote_against:hover td{background-color:#A0090A;}
+tr.vote_for:hover td{background-color:#499850;}
+tr.vote_in_progress:hover td{background-color:#A57600;}
+tr.vote_for a,tr.vote_against a;tr.vote_in_progress a{color:#ffffff;}
 
-h2,h3,h4 {
-color:#977C57;
-}
+div.description{font-size:.8em;padding-left:1em;padding-right:1em;padding-top:.1em;text-align:justify;}
 
-h3 {
-font-size:1.5em;
-margin:20px 0 0;
-padding:0;
-}
+label,input,textarea{display:block;float:left;margin-bottom:10px;width:30em;}
+label{padding-right:1em;text-align:right;width:10em;}
 
-a {
-color:#627FC4;
-}
+textarea{height:10em;width:25em;}
+input.submit{margin-left:16em;width:10em;}
 
-a:hover {
-color:#69F;
-}
-
-#nav {
-text-align:center;
-}
-
-#navitem {
-display:inline;
-margin:0;
-padding:0;
-}
-
-#nav li {
-float:left;
-}
-
-#nav a {
-border-bottom:3px #eee solid;
-display:block;
-font-family:georgia;
-font-size:17px;
-margin:0;
-padding:3px 0;
-text-decoration:none!important;
-width:170px;
-}
-
-#nav a:hover {
-border-bottom:3px #CDEB8B solid;
-text-decoration:none;
-}
-
-#notice {
-clear:both;
-}
-
-table {
-border:1px #ccc solid!important;
-}
-
-table.proposals,table.decisions,table.failed_proposals {
-border:1px solid #042;
-margin:auto;
-width:900px;
-}
-
-table.proposals td.vote,table.decisions td.vote,table.failed_proposals td.vote {
-text-align:center;
-width:12em;
-}
-
-table.proposals form,table.decisions form,table.failed_proposals form {
-display:inline;
-}
-
-table.proposals input,table.decisions input,table.failed_proposals input {
-margin:auto;
-width:7em;
-}
-
-table.proposals td.proposal_ends_in,table.decisions td.proposal_ends_in,table.failed_proposals td.proposal_ends_in {
-text-align:center;
-width:14em;
-}
-
-th {
-background:#ABC969!important;
-color:#fff!important;
-font-family:georgia,times new roman;
-font-weight:400;
-padding:3px 0;
-}
-
-tr.even {
-background:#eee!important;
-}
-
-tr.odd {
-background:#fff!important;
-}
-
-tr:hover td {
-background:#ffc;
-}
-
-tr.vote_for {
-background-color:#6BBA70;
-}
-
-tr.vote_against {
-background-color:#B02B2C;
-}
-
-tr.vote_in_progress {
-background-color:#C79810;
-}
-
-div.description {
-font-size:.8em;
-padding-left:1em;
-padding-right:1em;
-padding-top:.1em;
-text-align:justify;
-}
-
-label,input,textarea {
-display:block;
-float:left;
-margin-bottom:10px;
-width:30em;
-}
-
-textarea {
-height:10em;
-width:25em;
-}
-
-label {
-padding-right:1em;
-text-align:right;
-width:10em;
-}
-
-input.submit {
-margin-left:16em;
-width:10em;
-}
-
-.footer {
-font-size:.7em;
-margin-top:20px;
-text-align:center;
-}
-
-#doc,#hd #bd .footer {
-margin:auto;
-width:950px;
-}
-
-br,form {
-clear:left;
-}
+.footer{font-size:.7em;margin-top:20px;text-align:center;}
