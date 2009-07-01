@@ -29,9 +29,8 @@ describe Proposal do
     proposal.should be_closed     
   end
   
-  it "should send out an email after a Proposal has been made" do
-    Merb.stub!(:run_later).and_return { |block| block.call }
-    p = Proposal.make(:proposer_member_id => @member.id)
+  it "should send out an email to each member after a Proposal has been made" do
+    p = Proposal.make(:proposer => @member)
   
     deliveries = Merb::Mailer.deliveries
     deliveries.size.should ==(Member.count)    

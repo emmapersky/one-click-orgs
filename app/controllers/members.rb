@@ -23,7 +23,7 @@ class Members < Application
 
   def edit(id)
     only_provides :html
-    raise AuthenticationError, 'You are not authorizied to do this' unless current_user.id == id.to_i
+    raise ::Merb::ControllerExceptions::Unauthorized, 'You are not authorizied to do this' unless current_user.id == id.to_i
     
     @member = Member.get(id)
     raise NotFound unless @member
@@ -31,7 +31,7 @@ class Members < Application
   end
 
   def create(member)
-    title = "Add #{member['name']} as a member of #{Constitution.get_organisation_name}"
+    title = "Add #{member['name']} as a member of #{Constitution.get_organisation_name}" 
     proposal = AddMemberProposal.new(
       :title => title,
       :proposer_member_id => current_user.id,

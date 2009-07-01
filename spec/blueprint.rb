@@ -16,6 +16,7 @@ end
 Proposal.blueprint do |bp|
   bp.title "a proposal title"
   bp.open "1"
+#  bp.proposer Member.make  
 end
 
 AddMemberProposal.blueprint do |bp|

@@ -1,10 +1,7 @@
 require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 given "a member exists" do
-  Member.all.destroy!
-  login
-  request(resource(:members), :method => "POST", 
-    :params => { :member => { :id => nil }})
+  @member = Member.make
 end
 
 describe "everything" do
@@ -40,22 +37,20 @@ describe "resource(:members)" do
   
   describe "a successful POST" do
     before(:each) do
-      Member.all.destroy!
       @response = request(resource(:members), :method => "POST", 
         :params => { :member => { :id => nil, :email=>'anemail@example.com', :name=>"test" }})
     end
     
     it "redirects to resource(:members)" do
       @response.should redirect_to(resource(:members), :message => {:notice => "member was successfully created"})
-    end
-    
+    end    
   end
 end
 
 describe "resource(@member)" do 
   describe "a successful DELETE", :given => "a member exists" do
      before(:each) do
-       @response = request(resource(Member.first), :method => "DELETE")
+       @response = request(resource(@member), :method => "DELETE")
      end
 
      it "should redirect to the index action" do
@@ -67,19 +62,26 @@ end
 
 describe "resource(@member, :edit)", :given => "a member exists" do
   before(:each) do
-    @response = request(resource(Member.first, :edit))
   end
   
-  it "responds successfully" do
+  it "responds successfully if resource == current_user" do
+    @response = request(resource(default_user, :edit))  
     @response.should be_successful
   end
+
+  it "responds unauthorized if resource != current_user" do
+    @response = request(resource(@member, :edit))  
+    @response.status.should == 401
+  end  
 end
+
+
 
 describe "resource(@member)", :given => "a member exists" do
   
   describe "GET" do
     before(:each) do
-      @response = request(resource(Member.first))
+      @response = request(resource(default_user))
     end
   
     it "responds successfully" do
@@ -89,7 +91,6 @@ describe "resource(@member)", :given => "a member exists" do
   
   describe "PUT" do
     before(:each) do
-      @member = Member.first
       @response = request(resource(@member), :method => "PUT", 
         :params => { :member => {:id => @member.id} })
     end

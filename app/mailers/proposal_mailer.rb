@@ -1,5 +1,6 @@
 class ProposalMailer < Merb::MailController
-
+  include Merb::GlobalHelpers
+  
   def notify_creation
     @member = params[:member]
     @proposal = params[:proposal]

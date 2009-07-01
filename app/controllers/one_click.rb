@@ -4,7 +4,7 @@ class OneClick < Application
     @organisation_name = Clause.get_current('organisation_name').text_value
     @objectives = Clause.get_current('objectives').text_value
     @assets = Clause.get_current('assets').boolean_value
-    @domain = Clause.get_current('domain').text_value 
+    @website = Clause.domain.blank? ? absolute_url('') : Clause.domain
     
     period  = Clause.get_current('voting_period').integer_value
     @voting_period = case period
@@ -54,9 +54,7 @@ class OneClick < Application
     when "Unanimous"
       "receives Supporting Votes from all Members during the Voting Period."
     end
-    
-    
-    
+        
     render
   end
   

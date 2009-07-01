@@ -70,7 +70,7 @@ module DataMapper
 end
 
 Merb::Test.add_helpers do
-  def create_default_user
+  def default_user
     Member.first(:email => "krusty@clown.com") || Member.create(:email => "krusty@clown.com",
                    :name => "Krusty the clown",
                    :password => "password",
@@ -78,7 +78,7 @@ Merb::Test.add_helpers do
   end
 
   def login
-    user = create_default_user
+    user = default_user
     request("/login", {
       :method => "PUT",
       :params => {
@@ -94,6 +94,14 @@ module Merb
   def self.run_later(&block)
     block.call
   end
+end
+
+Merb::GlobalHelpers.module_eval do
+  def oco_domain() "http://test.com" end
+end
+
+Constitution.class_eval do
+  def self.get_organisation_name() "test" end
 end
   
 module MailControllerTestHelper          

@@ -14,11 +14,8 @@ describe ProposalMailer, "#notify_creation email template" do
   before :each do
     clear_mail_deliveries
     
-    @member, @proposal = mock(Member), mock(Proposal)
-    @member.stub!(:name).and_return("Peter Pan")
-    @proposal.stub!(:title).and_return("grow up")
-    @proposal.stub!(:description).and_return("later")
-    @proposal.stub!(:proposer).and_return(@member) 
+    @member = Member.make
+    @proposal = Proposal.make(:proposer_member_id=>@member.id)
 
   end
     
@@ -27,5 +24,10 @@ describe ProposalMailer, "#notify_creation email template" do
     last_delivered_mail.text.should =~ /Dear #{@member.name}/
     last_delivered_mail.text.should =~ /#{@proposal.title}/
     last_delivered_mail.text.should =~ /#{@proposal.description}/            
+  end
+  
+  it "includes correct propsal link in email text" do
+    ProposalMailer.dispatch_and_deliver(:notify_creation, {}, { :member => @member, :proposal => @proposal })
+    last_delivered_mail.text.should =~ %r{http://test.com/proposals/\d+}
   end
 end
