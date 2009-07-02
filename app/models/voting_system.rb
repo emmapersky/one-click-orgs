@@ -58,7 +58,7 @@ module VotingSystems
   end
   
   def self.all(&block)
-    returning(constants - ['VotingSystem']) do |systems|
+    returning(constants - ['VotingSystem', 'Majority']) do |systems|
       systems.each { |s| block.call(s) } if block
     end      
   end
