@@ -106,4 +106,27 @@ class OneClick < Application
     
     render
   end
+  
+  def propose_amendment
+  
+    if proposed_system = params['general_voting_system']      
+      
+        current_system = Clause.get_current('general_voting_system')
+        if current_system.text_value != proposed_system           
+          proposal = ChangeVotingSystemProposal.new(
+            :title => "change general voting system to #{proposed_system}",
+            :proposer_member_id => current_user.id,
+            :parameters => ChangeVotingSystemProposal.serialize_parameters('type'=>'general', 'proposed_system'=> proposed_system)
+          )
+
+          if proposal.save
+            redirect '/constitution', :message => {:notice=> "Change voting system proposal successfully created"}
+          else
+            redirect '/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"}      
+          end
+        end
+    end
+    
+    redirect '/constitution', :message => {:error => "No changes."}                
+  end
 end

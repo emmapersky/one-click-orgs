@@ -21,7 +21,15 @@ class Constitution
   end
 
   def self.set_constitution_voting_system(params={})
-    Clause.create(:name => 'constitutionp_voting_system', :text_value => params['class_name'])
+    Clause.create(:name => 'constitution_voting_system', :text_value => params['class_name'])
+  end
+  
+  def self.set_voting_system(type, new_system)
+    system = Clause.first(:name=>"#{type}_voting_system")
+    raise ArgumentError, "system #{type} not found" unless system
+    raise ArgumentError, "invalid voting system: #{new_system}" unless Constitution.voting_system(new_system)
+    system.text_value = new_system
+    system.save!
   end
   
   def self.get_voting_period

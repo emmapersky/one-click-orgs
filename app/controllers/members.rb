@@ -31,7 +31,7 @@ class Members < Application
   end
 
   def create(member)
-    title = "Add #{member['name']} as a member of #{Constitution.get_organisation_name}" 
+    title = "Add #{member['name']} as a member of #{Constitution.get_organisation_name}" # TODO: should default in model
     proposal = AddMemberProposal.new(
       :title => title,
       :proposer_member_id => current_user.id,

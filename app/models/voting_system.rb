@@ -56,6 +56,12 @@ module VotingSystems
   class Unanimous < Majority
     self.fraction_needed = 1.0
   end
+  
+  def self.all(&block)
+    returning(constants - ['VotingSystem']) do |systems|
+      systems.each { |s| block.call(s) } if block
+    end      
+  end
 end
 
 
