@@ -19,7 +19,7 @@ describe "/one_click" do
         :method=>'POST', :params=>{:general_voting_system=>'Unanimous'})
 
       puts @response.body if @response.status == 500
-      @response.should redirect_to("/constitution")
+      @response.should redirect_to("/one_click/control_centre")
       
       ChangeVotingSystemProposal.count.should == 1      
       ChangeVotingSystemProposal.all.first.title.should == 'change general voting system to Unanimous'

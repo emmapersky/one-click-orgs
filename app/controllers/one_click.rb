@@ -120,10 +120,11 @@ class OneClick < Application
           )
 
           if proposal.save
-            redirect '/constitution', :message => {:notice=> "Change voting system proposal successfully created"}
+            redirect url(:controller=>'one_click', :action=>'control_centre'), :message => {:notice=> "Change voting system proposal successfully created"}
           else
             redirect '/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"}      
           end
+          return
         end
     end
     
