@@ -109,23 +109,26 @@ class OneClick < Application
   
   def propose_amendment
   
-    if proposed_system = params['general_voting_system']      
+    if params['general_voting_system']
+      proposed_system = Constitution.voting_system(params['general_voting_system'])      
+      current_system = Constitution.get_general_voting_system
       
-        current_system = Clause.get_current('general_voting_system')
-        if current_system.text_value != proposed_system           
-          proposal = ChangeVotingSystemProposal.new(
-            :title => "change general voting system to #{proposed_system}",
-            :proposer_member_id => current_user.id,
-            :parameters => ChangeVotingSystemProposal.serialize_parameters('type'=>'general', 'proposed_system'=> proposed_system)
-          )
+      if current_system != proposed_system           
+              
+        proposal = ChangeVotingSystemProposal.new(
+          :title => "change general voting system to #{proposed_system.description}",
+          :proposer_member_id => current_user.id,
+          :parameters => ChangeVotingSystemProposal.serialize_parameters('type'=>'general', 'proposed_system'=> proposed_system.simple_name)
+        )
 
-          if proposal.save
-            redirect url(:controller=>'one_click', :action=>'control_centre'), :message => {:notice=> "Change voting system proposal successfully created"}
-          else
-            redirect '/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"}      
-          end
-          return
+        if proposal.save
+          redirect url(:controller=>'one_click', :action=>'control_centre'), :message => {:notice=> "Change voting system proposal successfully created"}
+        else
+          redirect '/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"}      
         end
+        
+        return
+      end
     end
     
     redirect '/constitution', :message => {:error => "No changes."}                

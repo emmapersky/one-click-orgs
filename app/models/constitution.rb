@@ -5,7 +5,7 @@ class Constitution
   end
   
   def self.get_general_voting_system
-    voting_system('RelativeMajority')
+    voting_system(Clause.get_current('general_voting_system').text_value)
   end
   
   def self.get_membership_voting_system
@@ -37,6 +37,12 @@ class Constitution
   end
   
   def self.voting_system(klass)
-    VotingSystems.const_get(klass)
+    raise ArgumentError, "empty argument" if klass.nil?
+    
+    begin
+      VotingSystems.const_get(klass.to_s) 
+    rescue NameError
+      nil
+    end
   end
 end

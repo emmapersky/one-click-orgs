@@ -5,11 +5,13 @@
   %ul.constitution
     %li
       This is the constitution ("Constitution") of
-      = @organisation_name
+      %span{:class=>'dynamic'}
+        = @organisation_name
       ("The Organisation").  
     %li
       The Organisation has the objectives of
-      = @objectives
+      %span{:class=>'dynamic'}
+        = @objectives
       ("Objectives").
     - if @assets
       %li The Organisation may hold, transfer and dispose of material assets and intangible assets. 
@@ -18,7 +20,8 @@
     %li Each Member nominates an email address at which they will receive important notices from the Organisation ("Nominated Email Address"). 
     %li 
       Members may access the Management System at the website
-      = @website
+      %span{:class=>'dynamic'}
+        = @website
     %li Members may view the current Constitution on the Management Systems. 
     %li Members may view a register of current Members together with their Nominated Email Addresses on the Management System. 
     %li Members may resign their membership via the Management System.
@@ -28,7 +31,8 @@
     %li Members may submit a proposal ("Proposal") on the Management System. 
     %li
       A Proposal may be voted on for a period of
-      = @voting_period
+      %span{:class=>'dynamic'}
+        = @voting_period
       starting with its submission ("Voting Period").
     %li Members may view all current Proposals on the Management System. 
     %li Members may vote to support ("Supporting Vote") or vote to oppose ("Opposing Vote") a Proposal on the Management System during the Proposal's Voting Period. 
@@ -44,23 +48,26 @@
         %div.proposal_form{:style => 'display: none;'}
           %p
             %label{:for => 'general_voting_system'}
-              New voting system for General Decisions:
+              Change the way General Decisions are made:
             %select{:name=>'general_voting_system'}
               - VotingSystems.all do |vs|
-                %option= vs
+                %option{:value=>vs.simple_name}= vs.description
           %p
-            = submit "Create proposal", :id => 'submit'
+            = submit "Propose change", :id => 'submit'
           %p
             %a{:href => '#', :class => 'cancel_link'}
               Cancel
       A General Decision is made when a Proposal that does not concern a change to the membership or an amendment to the Constitution
-      = @general_voting_system
+      %span{:class=>'dynamic'}
+        = @general_voting_system
     %li
       A Membership Decision is made when a Proposal concerning a change to the membership
-      = @membership_voting_system
+      %span{:class=>'dynamic'}
+        = @membership_voting_system
     %li
       A Constitution Decision is made when a Proposal concerning an amendment to the Constitution
-      = @constitution_voting_system
+      %span{:class=>'dynamic'}       
+        = @constitution_voting_system
     %li Members may view all General Decisions, Membership Decisions and Constitution Decisions on the Management System.
 
   / %h4 Proxies

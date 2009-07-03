@@ -1,6 +1,16 @@
 module VotingSystems  
 
   class VotingSystem
+    
+    def self.simple_name
+      self.name.split('::').last
+    end
+    
+    def self.description(text=nil)
+      @description = text if text
+      @description
+    end
+    
     def self.can_be_closed_early?(proposal)
       false
     end
@@ -13,6 +23,9 @@ module VotingSystems
   
   
   class RelativeMajority < VotingSystem
+    description "More supporting votes than opposing votes"
+    
+    
     def self.can_be_closed_early?(proposal)
       proposal.votes_for > (proposal.total_members  / 2.0).ceil
     end
@@ -23,18 +36,18 @@ module VotingSystems
   end
   
   class Veto < VotingSystem
+    description "No opposing votes"
+    
     def self.passed?(proposal)
       proposal.votes_against == 0
     end
   end
   
 
-  class Majority < VotingSystem
-    
+  class Majority < VotingSystem      
     def self.fraction_needed=(f)
       @fraction_needed = f
     end
-  
     
     def self.initialize(fraction_needed)
       @fraction_needed = fraction_needed
@@ -46,20 +59,33 @@ module VotingSystems
   end
   
   class AbsoluteMajority < Majority
+    description "Supporting votes from more than half the members"
     self.fraction_needed = 0.5
   end
   
   class AbsoluteTwoThirdsMajority < Majority
+    description "Supporting votes from more than two thirds of the members"
+    
     self.fraction_needed = 2.0/3.0
   end
   
   class Unanimous < Majority
+    description "Supporting votes from every single member"
+    
     self.fraction_needed = 1.0
   end
   
   def self.all(&block)
-    returning(constants - ['VotingSystem', 'Majority']) do |systems|
-      systems.each { |s| block.call(s) } if block
+    returning(
+      [
+        RelativeMajority,
+        AbsoluteMajority,
+        AbsoluteTwoThirdsMajority,
+        Unanimous,
+        Veto
+      ]
+      ) do |systems|
+      systems.each(&block) if block
     end      
   end
 end

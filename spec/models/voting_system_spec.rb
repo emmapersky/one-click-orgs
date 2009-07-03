@@ -10,6 +10,10 @@ describe VotingSystems do
     p
   end
 
+  def _should_have_description
+    @system.description.should_not be_blank
+  end
+  
   def should_pass(proposal)
      @system.passed?(proposal).should be_true
   end
@@ -18,6 +22,12 @@ describe VotingSystems do
      @system.passed?(proposal).should be_false
   end
 
+  describe VotingSystems do
+    it "should return all voting systems" do
+      VotingSystems.all.map {|s|s.name.split('::')[-1] }.should == ["RelativeMajority", "AbsoluteMajority", "AbsoluteTwoThirdsMajority", "Unanimous", "Veto"]
+    end
+  end
+  
   describe VotingSystems::RelativeMajority do    
     before do
       @system = VotingSystems::RelativeMajority
@@ -31,10 +41,14 @@ describe VotingSystems do
   end
 
   describe VotingSystems::Veto do    
-    before do
+    before(:each) do
       @system = VotingSystems::Veto
     end
 
+    it "should have a description" do
+      _should_have_description
+    end
+    
     it "veto" do
       should_pass make_proposal(0, 0)
       should_not_pass make_proposal(5, 4)

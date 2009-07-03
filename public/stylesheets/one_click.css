@@ -70,3 +70,5 @@ div.constitution_proposal label, div.constitution_proposal input, div.constituti
 div.constitution_proposal p { margin: 0 0 0.5em; }
 
 form div.constitution_proposal input#submit { margin: 0; }
+
+span.dynamic { background-color: #FFFF66 }
