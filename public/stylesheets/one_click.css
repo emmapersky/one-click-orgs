@@ -6,6 +6,10 @@ h3{font-size:1.5em;margin:20px 0 0;padding:0;}
 #doc,#hd #bd .footer{margin:auto;width:950px;}
 br,form{clear:left;}
 
+form p{clear:left;}
+form input#submit{margin-left: 16em;}
+h4{clear:left;}
+
 a{color:#627FC4;}
 a:hover{color:#69F;}
 #nav{text-align:center;}
@@ -38,7 +42,7 @@ div.description{font-size:.8em;padding-left:1em;padding-right:1em;padding-top:.1
 label,input,textarea{display:block;float:left;margin-bottom:10px;width:30em;}
 label{padding-right:1em;text-align:right;width:10em;}
 
-textarea{height:10em;width:25em;}
+textarea{height:10em;width:30em;}
 input.submit{margin-left:16em;width:10em;}
 
-.footer{font-size:.7em;margin-top:20px;text-align:center;}
+.footer{font-size:.7em;margin-top:20px;text-align:center;clear:both;}

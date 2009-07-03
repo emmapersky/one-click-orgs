@@ -8,9 +8,9 @@
   New Member
 %p
   = form_for(@new_member, :action => url(:members) ) do
-    = text_field :email, :label => "Email Address "
-    %br
-    = text_field :name, :label => "Name "
-    %br
-    = submit "Add Member", :id => 'submit'
-    %br
+    %p
+      = text_field :email, :label => "Email Address "
+    %p
+      = text_field :name, :label => "Name "
+    %p
+      = submit "Add Member", :id => 'submit'

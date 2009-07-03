@@ -2,14 +2,14 @@
   Edit Profile
 
 %p
-  = form_for(@member, :action => url(:member, @member) ) do
-    = text_field :email, :label => "Email Address "
-    %br
-    = text_field :name, :label => "Name "
-    %br
-    = text_field :password, :label => "password",:type=>:password
-    %br
-    = text_field :password_confirmation, :label => "repeat password", :type=>:password
-        
-    = submit "Save Profile", :id => 'submit'
-    %br
+  = form_for(@member, :action => url(:member, @member), 'class' => 'member') do
+    %p
+      = text_field :email, :label => "Email Address "
+    %p
+      = text_field :name, :label => "Name "
+    %p
+      = text_field :password, :label => "password",:type=>:password
+    %p
+      = text_field :password_confirmation, :label => "repeat password", :type=>:password
+    %p    
+      = submit "Save Profile", :id => 'submit'

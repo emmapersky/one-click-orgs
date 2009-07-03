@@ -3,13 +3,13 @@
 %p= "Welcome back, #{current_user.name}!"
 
 %h4 New Proposal
-= form_for(@new_proposal, :action => resource('proposals')) do
-  = text_field :title, :label => "Title  "
-  %br
-  = text_area :description, :label => "Description "
-  %br
+= form_for(@new_proposal, :action => resource('proposals'), 'class' => 'proposal') do
+  %p
+    = text_field :title, :label => "Title  "
+  %p
+    = text_area :description, :label => "Description "
+  %p
   = submit "Create Proposal", :id => 'submit'
-  %br
   
 %h4 Open Proposals
 %table.proposals
