@@ -9,11 +9,11 @@ class OneClick < Application
     period  = Clause.get_current('voting_period').integer_value
     @voting_period = case period
     when 0..86400
-      "#{(period / 60.0).round} minutes"
+      pluralize((period / 60.0).round, 'minute')
     when 86400..(86400 * 5)
-      "#{(period / 3600.0).round} hours"
+      pluralize((period / 3600.0).round, 'hour')
     else
-      "#{(period / 3600.0 * 24).round} days"
+      pluralize((period / 3600.0 * 24).round, 'day')
     end
     
     @general_voting_system = case Clause.get_current('general_voting_system').text_value

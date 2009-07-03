@@ -1,6 +1,10 @@
 module Merb
   module GlobalHelpers
     # helpers defined here available to all views.  
+
+    def pluralize(n, name)
+      "#{n} " + ((n > 1 || n == 0) ?  name.pluralize : name)
+    end
     
     def oco_domain
       Clause.domain or raise "domain not defined"
