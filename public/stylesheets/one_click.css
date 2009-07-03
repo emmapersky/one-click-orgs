@@ -47,8 +47,8 @@ input.submit{margin-left:16em;width:10em;}
 
 .footer{font-size:.7em;margin-top:20px;text-align:center;clear:both;}
 
-ul.constitution li{margin-bottom: 0.2em; clear: right;}
-div.constitution_proposal{float: right; border: 1px solid #042; padding: 1em; background-color: #ddd;}
+ul.constitution li{margin-bottom: 0.5em; clear: right;}
+div.constitution_proposal{float: right; border: 1px solid #042; padding: 0.5em 0.5em 0; background-color: #ddd; margin: 0 0 0.5em 0.5em;}
 div.constitution_proposal label,
 div.constitution_proposal input,
 div.constitution_proposal textarea{float: none; width: auto;}

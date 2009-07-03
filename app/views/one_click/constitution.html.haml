@@ -38,14 +38,21 @@
     %li The Constitution may be amended by a constitution decision ("Constitution Decision").
     %li
       %div.constitution_proposal
-        %p
-          %label{:for => 'general_voting_system'}
-            New voting system for General Decisions:
-          %select{:name=>'general_voting_system'}
-            - VotingSystems.all do |vs|
-              %option= vs
-        %p
-          = submit "Create proposal", :id => 'submit'
+        %p.reveal_link
+          %a{:href => '#'}
+            Propose an amendment to this clause
+        %div.proposal_form{:style => 'display: none;'}
+          %p
+            %label{:for => 'general_voting_system'}
+              New voting system for General Decisions:
+            %select{:name=>'general_voting_system'}
+              - VotingSystems.all do |vs|
+                %option= vs
+          %p
+            = submit "Create proposal", :id => 'submit'
+          %p
+            %a{:href => '#', :class => 'cancel_link'}
+              Cancel
       A General Decision is made when a Proposal that does not concern a change to the membership or an amendment to the Constitution
       = @general_voting_system
     %li
