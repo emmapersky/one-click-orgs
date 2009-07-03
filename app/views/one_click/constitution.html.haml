@@ -2,7 +2,7 @@
 
 %form{:action=>url(:action=>'propose_amendment'), :method=>:post}
   %h4 Definitions & Membership
-  %ul
+  %ul.constitution
     %li
       This is the constitution ("Constitution") of
       = @organisation_name
@@ -24,7 +24,7 @@
     %li Members may resign their membership via the Management System.
 
   %h4 Proposals & Decisions
-  %ul
+  %ul.constitution
     %li Members may submit a proposal ("Proposal") on the Management System. 
     %li
       A Proposal may be voted on for a period of
@@ -37,16 +37,17 @@
     %li New Members may be appointed and existing Members may be ejected by a membership decision ("Membership Decision"). 
     %li The Constitution may be amended by a constitution decision ("Constitution Decision").
     %li
+      %div.constitution_proposal
+        %p
+          %label{:for => 'general_voting_system'}
+            New voting system for General Decisions:
+          %select{:name=>'general_voting_system'}
+            - VotingSystems.all do |vs|
+              %option= vs
+        %p
+          = submit "Create proposal", :id => 'submit'
       A General Decision is made when a Proposal that does not concern a change to the membership or an amendment to the Constitution
       = @general_voting_system
-    
-    
-    %select{:name=>'general_voting_system'}
-      - VotingSystems.all do |vs|
-        %option= vs
-
-    %input{:type=>:submit}
-    
     %li
       A Membership Decision is made when a Proposal concerning a change to the membership
       = @membership_voting_system
@@ -56,14 +57,14 @@
     %li Members may view all General Decisions, Membership Decisions and Constitution Decisions on the Management System.
 
   / %h4 Proxies
-  / %ul
+  / %ul.constitution
   /   %li A Member may nominate another Member as their proxy (“Proxy Nomination”) on the Management System. In this case the Member assigning the proxy is the proxy giver (“Proxy Giver”) and the nominated Member is the proxy holder (“Proxy Holder”). 
   /   %li On each occasion a Proxy Holder submits a Supporting Vote or Opposing Vote equivalent votes shall be submitted for all Proxy Givers by whom they are currently nominated. 
   /   %li A Proxy Holder may in turn nominate another Member as their proxy. 
   /   %li A Member may withdraw a Proxy Nomination at any time on the Management System. 
 
   %h4 Failsafe Clauses 
-  %ul
+  %ul.constitution
     %li Should the Constitution be amended in such a way that an impasse arises any Member may submit a special proposal (“Reset Proposal”) to reset the Constitution to the default options for a General Decision, a Membership Decision and a Constitution Decision on the Management System.
     %li A Reset Proposal is enacted if it receives Supporting Votes from more than two thirds of Members during the Voting Period.
     %li Should the Management System become unavailable or defective such that it does not meet the requirements specified in the Constitution any Member may convene an emergency meeting (“Emergency Meeting”) by sending an email to all other Members at their Nominated Email Address stating a date and time at which the meeting shall commence.
