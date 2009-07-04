@@ -19,9 +19,20 @@ describe MembersMailer, "#notify_new_password email template" do
     @new_password = "foo"
   end
     
-  it "includes welcome phrase and password in email text" do    
-    MembersMailer.dispatch_and_deliver(:notify_new_password, {}, { :member =>  @member, :new_password=>@new_password})
-    last_delivered_mail.text.should =~ /Dear #{@member.name}/
-    last_delivered_mail.text.should =~ /#{@new_password}/            
+  describe "new password email" do
+    it "includes welcome phrase and password in email text" do    
+      MembersMailer.dispatch_and_deliver(:notify_new_password, {}, { :member =>  @member, :new_password=>@new_password})
+      last_delivered_mail.text.should =~ /Dear #{@member.name}/
+      last_delivered_mail.text.should =~ /#{@new_password}/            
+    end
   end
+  
+  describe "new member email" do
+    it "includes welcome phrase and password in email text" do    
+      MembersMailer.dispatch_and_deliver(:welcome_new_member, {}, { :member =>  @member, :password=>@new_password})
+      last_delivered_mail.text.should =~ /Dear #{@member.name}/
+      last_delivered_mail.text.should =~ /#{@new_password}/            
+    end
+  end
+
 end
