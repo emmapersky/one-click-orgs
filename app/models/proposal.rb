@@ -49,10 +49,6 @@ class Proposal
     votes_for + votes_against
   end
   
-  def accepted
-    votes_for > votes_against
-  end
-  
   def reject!
     #do some kind of email notification
   end
@@ -78,8 +74,7 @@ class Proposal
   end
 
   def passed?
-    vs = get_voting_system
-    vs.passed?(self)
+    get_voting_system.passed?(self)
   end
   
   def get_voting_system
@@ -87,8 +82,9 @@ class Proposal
   end
     
   def close!
+    raise "proposal #{self} already closed" if closed?   
+        
     passed = passed?
-    raise "proposal #{self} already closed" if closed?    
     Merb.logger.info("closing proposal #{self}")
         
     Decision.create!(:proposal_id=>self.id) if passed
