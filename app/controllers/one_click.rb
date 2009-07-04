@@ -78,7 +78,9 @@ class OneClick < Application
     
     # Fetch five most recent failed proposals
     @failed_proposals = Proposal.all_failed[0..4]
+    
     @new_proposal = Proposal.new
+    @new_member = Member.new
         
     render
   end

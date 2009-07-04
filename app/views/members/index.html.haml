@@ -4,13 +4,4 @@
   - for member in @members
     %li
       = link_to "#{member.name}", url(:member, member)
-%h3
-  New Member
-%p
-  = form_for(@new_member, :action => url(:members) ) do
-    %p
-      = text_field :email, :label => "Email Address "
-    %p
-      = text_field :name, :label => "Name "
-    %p
-      = submit "Add Member", :id => 'submit'
+/ = partial :new_member
