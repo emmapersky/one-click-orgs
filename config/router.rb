@@ -40,6 +40,7 @@ Merb::Router.prepare do
   
   resources :add_member_proposals, :controller=>'proposals'
   resources :change_voting_system_proposals, :controller=>'proposals'
+  resources :change_text_proposals, :controller => 'proposals'
   
   resources :members
   
