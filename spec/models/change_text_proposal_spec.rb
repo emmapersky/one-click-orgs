@@ -11,10 +11,10 @@ describe ChangeTextProposal do
   end
   
   it "should change the objectives after successful proposal" do
-    @p = ChangeTextProposal.new(:parameters=>{'name'=>'objectives', 'value'=>'make all the yoghurt'}.to_json)
+    @p = ChangeTextProposal.new
     @p.stub!(:passed?).and_return(true)
     lambda {
-      @p.enact!
+      @p.enact!('name'=>'objectives', 'value'=>'make all the yoghurt')
     }.should change(Clause, :count).by(1)
     Clause.get_current('objectives').text_value.should == 'make all the yoghurt'
   end

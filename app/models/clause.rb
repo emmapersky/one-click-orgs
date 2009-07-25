@@ -40,11 +40,11 @@ class Clause
     Clause.all(:name => name, :ended_at => nil, :id.not => self.id).update!(:ended_at => Time.now.utc)
   end
   
-  def self.domain
-    get_current('domain').text_value           
-  end
-  
   def to_s
     "#{name}: #{text_value || integer_value || boolean_value}"
+  end
+  
+  def self.exists?(name)
+    !!get_current(name)
   end
 end

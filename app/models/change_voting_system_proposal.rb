@@ -1,7 +1,6 @@
 class ChangeVotingSystemProposal < Proposal
-  def enact!
-    raise "Can not enact a proposal which has not passed" unless passed?    
-    params = YAML.JSON(self.parameters)
+
+  def enact!(params)
     Constitution.change_voting_system(params['type'], params['proposed_system'])
   end
   

@@ -7,7 +7,7 @@ module Merb
     end
     
     def oco_domain
-      Clause.domain or raise "domain not defined"
+      Consitution.domain or raise "domain not defined"
     end
     
     def absolute_oco_url(name, defaults={})
@@ -22,7 +22,7 @@ module Merb
       from_time = from_time.to_time if from_time.respond_to?(:to_time)
       to_time = to_time.to_time if to_time.respond_to?(:to_time)
       
-      distance_in_minutes = (((to_time - from_time).abs)/60).round
+      distance_in_minutes = (((to_time - from_time).abs)/60.0).round
       distance_in_seconds = ((to_time - from_time).abs).round
     
       case distance_in_minutes

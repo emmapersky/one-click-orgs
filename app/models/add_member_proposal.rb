@@ -1,7 +1,5 @@
 class AddMemberProposal < Proposal
-  def enact!
-    raise "Can not enact a proposal which has not passed" unless passed?
-    params = YAML.JSON(self.parameters)
+  def enact!(params)
     member = Member.create_member(params)
   end
   

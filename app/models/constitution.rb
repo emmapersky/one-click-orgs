@@ -67,14 +67,28 @@ class Constitution
   
   def self.change_voting_system(type, new_system)
     raise ArgumentError, "system #{type} not found" unless ['general', 'membership', 'constitution'].include?(type.to_s)
+    raise ArgumentError, "no previous voting system" unless Clause.exists?("#{type}_voting_system")
     raise ArgumentError, "invalid voting system: #{new_system}" unless VotingSystems.get(new_system)
-    Clause.create!(:name => "#{type}_voting_system", :text_value => new_system)
+    Clause.create!(:name=>"#{type}_voting_system", :text_value=> new_system)
+  end
+  
+  def self.domain
+    Clause.get_current('domain').text_value           
   end
   
   # VOTING PERIOD
   
   def self.voting_period
     Clause.get_current('voting_period').integer_value rescue 3 * 86400 # fixme
+  end
+  
+  def self.change_voting_period(new_period)
+    raise ArgumentError, "invalid voting period #{new_period}" unless new_period > 0
+    raise ArgumentError, "no previous voting period" unless Clause.exists?('voting_period')
+    
+    c = Clause.create!(:name=>'voting_period', :integer_value=>new_period)
+    c.integer_value = new_period
+    c.save!
   end
   
 end
