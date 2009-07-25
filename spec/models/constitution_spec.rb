@@ -22,6 +22,10 @@ describe Constitution do
         Constitution.change_voting_system(:general, 'Unanimous')
         Constitution.voting_system(:general).should ==(VotingSystems::Unanimous)
       end
+      
+      it "should keep track of the previous voting system after changing it" do
+        pending
+      end
     
       it "should raise ArgumentError when invalid system is specified" do
         lambda { Constitution.change_voting_system(:general, nil) }.should raise_error(ArgumentError)              
