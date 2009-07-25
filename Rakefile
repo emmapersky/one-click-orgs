@@ -33,3 +33,22 @@ task :default => 'spec'
 # ADD YOUR CUSTOM TASKS IN /lib/tasks
 # NAME YOUR RAKE FILES file_name.rake
 ##############################################################################
+Rake::TaskManager.class_eval do
+  def remove_task(task_name)
+    @tasks.delete(task_name.to_s)
+  end
+end
+Rake.application.remove_task 'spec:coverage'
+
+namespace :spec do
+  desc "Run specs and check coverage with rcov"
+  Spec::Rake::SpecTask.new('coverage') do |t|
+    t.spec_opts = SPEC_OPTS
+    t.spec_files = Dir['spec/**/*_spec.rb'].sort
+    t.libs = ['lib', 'server/lib' ]
+    t.rcov = true
+    t.rcov_opts = ["--exclude 'config,spec,#{Gem::path.join(',')},gems,merb/'"]
+    end
+end
+
+
