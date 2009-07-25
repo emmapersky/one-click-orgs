@@ -5,7 +5,7 @@ class ChangeVotingSystemProposal < Proposal
     Constitution.set_voting_system(params['type'], params['proposed_system'])
   end
   
-  def get_voting_system
-    Constitution.get_constitution_voting_system
+  def voting_system
+    Constitution.voting_system(:constitution)
   end
 end

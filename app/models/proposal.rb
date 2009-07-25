@@ -19,7 +19,7 @@ class Proposal
   property :creation_date, DateTime, :default => Proc.new {|r,p| Time.now.to_datetime}
   property :open, Boolean, :default => true
   property :accepted, Boolean, :default => false
-  property :close_date, DateTime, :default => Proc.new {|r,p| (Time.now + Constitution.get_voting_period).to_datetime}
+  property :close_date, DateTime, :default => Proc.new {|r,p| (Time.now + Constitution.voting_period).to_datetime}
   property :parameters, String, :length => 10000
   property :type, Discriminator 
   
@@ -74,11 +74,11 @@ class Proposal
   end
 
   def passed?
-    get_voting_system.passed?(self)
+    voting_system.passed?(self)
   end
   
-  def get_voting_system
-    Constitution.get_general_voting_system
+  def voting_system
+    Constitution.voting_system(:general)
   end
     
   def close!

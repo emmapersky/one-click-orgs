@@ -1,4 +1,14 @@
 module VotingSystems  
+  
+  def self.get(klass)
+    raise ArgumentError, "empty argument" if klass.nil?    
+    begin
+      const_get(klass.to_s) 
+    rescue NameError
+      nil
+    end
+  end
+  
 
   class VotingSystem
     

@@ -5,7 +5,7 @@ class AddMemberProposal < Proposal
     member = Member.create_member(params)
   end
   
-  def get_voting_system
-    Constitution.get_membership_voting_system
+  def voting_system
+    Constitution.voting_system(:membership)
   end
 end

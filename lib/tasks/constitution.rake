@@ -4,6 +4,7 @@ namespace :constitution do
     organisation_name = ENV['ORGANISATION_NAME'] || "My Organisation"
     Clause.create(:name => 'organisation_name', :text_value => organisation_name)
     objectives = ENV['OBJECTIVES'] || ""
+    
     Clause.create(:name => 'objectives', :text_value => objectives)
     Clause.create(:name => 'assets', :boolean_value => true)
     Clause.create(:name => 'domain', :text_value => "http://oco.example.com")

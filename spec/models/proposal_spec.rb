@@ -5,6 +5,7 @@ describe Proposal do
   before(:each) do
     @member = Member.make
     Merb::Mailer.deliveries.clear
+    Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))
   end
 
   it "should close early proposals" do

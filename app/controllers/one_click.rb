@@ -112,8 +112,8 @@ class OneClick < Application
   def propose_amendment
   
     if params['general_voting_system']
-      proposed_system = Constitution.voting_system(params['general_voting_system'])      
-      current_system = Constitution.get_general_voting_system
+      proposed_system = VotingSystems.get(params['general_voting_system'])      
+      current_system = Constitution.voting_system :general
       
       if current_system != proposed_system           
               
