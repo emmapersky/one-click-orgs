@@ -46,7 +46,7 @@ describe "everything" do
         @response = request(resource(:members), :method => "POST", 
           :params => { :member => { :id => nil, :email=>'anemail@example.com', :name=>"test" }})
       end
-    
+      
       it "redirects to resource(:members)" do
         @response.should redirect_to(resource(:members), :message => {:notice => "member was successfully created"})
       end    
@@ -55,14 +55,26 @@ describe "everything" do
 
   describe "resource(@member)" do 
     describe "a successful DELETE", :given => "a member exists" do
-       before(:each) do
-         @response = request(resource(@member), :method => "DELETE")
-       end
+      it "should create the proposal to eject the member" do
+        EjectMemberProposal.should_receive(:serialize_parameters).with('id' => @member.id).and_return(@serialized_parameters = mock('serialized parameters'))
+        EjectMemberProposal.should_receive(:new).with(
+          :parameters => @serialized_parameters,
+          :title => "Eject #{@member.name} from Test",
+          :proposer_member_id => @user.id
+        ).and_return(@proposal = mock('proposal'))
+        @proposal.should_receive(:save).and_return(true)
+        
+        make_request
+      end
 
-       it "should redirect to the index action" do
-         @response.should redirect_to(resource(:members))
-       end
-
+      it "should redirect to the control center" do
+        make_request
+        @response.should redirect_to('/one_click/control_centre')
+      end
+      
+      def make_request
+        @response = request(resource(@member), :method => "DELETE")
+      end
      end
   end
 

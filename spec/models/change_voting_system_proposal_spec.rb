@@ -8,9 +8,9 @@ describe ChangeVotingSystemProposal do
   end
   
   it "should change voting system after successful proposal" do
-    @p = ChangeVotingSystemProposal.new(:parameters=>{'type'=>'constitution', 'proposed_system'=>@proposed_system}.to_json)
+    @p = ChangeVotingSystemProposal.new
     @p.stub!(:passed?).and_return(true)
-    @p.enact!        
-    Clause.first(:name=>'constitution_voting_system').text_value.should == @proposed_system
+    Constitution.should_receive(:change_voting_system).with('constitution', @proposed_system)
+    @p.enact!('type'=>'constitution', 'proposed_system'=>@proposed_system)
   end
 end

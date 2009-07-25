@@ -37,7 +37,19 @@
       - else
         %td.vote Vote in Progress
 
+%h5
+  Eject member
 
+%p
+  Create a proposal to eject this member from the organisation.
+
+= form(:action => resource(@member), :method => :delete) do
+  %p
+    = text_area :description, :label => "Description"
+  %p
+    = submit "Create Proposal", :id => 'submit'
+  
+    
 
 /%ul
 /  - for proposal in @member.proposals

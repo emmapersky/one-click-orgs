@@ -61,10 +61,18 @@ class Members < Application
   def destroy(id)
     @member = Member.get(id)
     raise NotFound unless @member
-    if @member.destroy
-      redirect resource(:members)
+    
+    title = "Eject #{@member.name} from #{Constitution.organisation_name}"
+    proposal = EjectMemberProposal.new(
+      :title => title,
+      :proposer_member_id => current_user.id,
+      :parameters => EjectMemberProposal.serialize_parameters('id' => @member.id)
+    )
+    
+    if proposal.save
+      redirect url(:controller=>'one_click', :action=>'control_centre'), :message => {:notice=> "Ejection proposal successfully created"}
     else
-      raise InternalServerError
+      redirect resource(@member), :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
     end
   end
 

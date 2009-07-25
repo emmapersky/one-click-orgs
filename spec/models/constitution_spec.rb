@@ -40,6 +40,10 @@ describe Constitution do
       Constitution.voting_period.should >(0)
       Constitution.voting_period.should ==(1000)            
     end
+    
+    it "should change the current voting period" do
+      lambda { Constitution.change_voting_period(86400 * 2) }.should change(Constitution, :voting_period).from(1000).to(86400*2)
+    end
   end
   
   describe "text fields" do

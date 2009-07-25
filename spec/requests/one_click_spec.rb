@@ -138,6 +138,20 @@ describe "/one_click" do
       end
     end
     
-    
+    describe "voting period amendments" do
+      it "should add the proposal" do
+        @response = request(url(:controller=>'one_click', 
+          :action=>'propose_voting_period_amendment'),
+          :method=>'POST', :params=>{:new_voting_period=>'300'})
+
+        puts @response.body if @response.status == 500
+        @response.should redirect_to("/one_click/control_centre")
+
+        ChangeVotingPeriodProposal.count.should == 1
+        ChangeVotingPeriodProposal.all.first.title.should == 'Change voting period'
+        proposal_parameters = YAML.JSON(ChangeVotingPeriodProposal.all.first.parameters)
+        proposal_parameters['new_voting_period'].to_i.should == 300
+      end
+    end
   end
 end

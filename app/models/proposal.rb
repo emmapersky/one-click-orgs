@@ -57,7 +57,7 @@ class Proposal
     accepted ? "accepted" : "rejected"
   end
   
-  def enact!
+  def enact!(params={})
   end
   
   def open?
@@ -91,9 +91,15 @@ class Proposal
     self.open = 0
     self.close_date = Time.now
     self.accepted = passed
-    enact! if passed
+
+    if passed
+      params = self.parameters ? YAML.JSON(self.parameters) : {}      
+      enact!(params) 
+    end
+    
     save!
   end
+
 
   def self.serialize_parameters(params)
     params.to_json

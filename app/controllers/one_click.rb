@@ -4,19 +4,20 @@ class OneClick < Application
     @organisation_name = Clause.get_current('organisation_name').text_value
     @objectives = Clause.get_current('objectives').text_value
     @assets = Clause.get_current('assets').boolean_value
-    @website = Clause.domain.blank? ? absolute_url('') : Clause.domain
+    @website = Constitution.domain.blank? ? absolute_url('') : Constitution.domain
     
-    period  = Clause.get_current('voting_period').integer_value
-    @voting_period = case period
+    @period  = Clause.get_current('voting_period').integer_value
+    @voting_period = case @period
     when 0..86400
-      pluralize((period / 60.0).round, 'minute')
+      pluralize((@period / 60.0).round, 'minute')
     when 86400..(86400 * 5)
-      pluralize((period / 3600.0).round, 'hour')
+      pluralize((@period / 3600.0).round, 'hour')
     else
-      pluralize((period / 3600.0 * 24).round, 'day')
+      pluralize((@period / 3600.0 * 24).round, 'day')
     end
     
-    @general_voting_system = case Clause.get_current('general_voting_system').text_value
+    @general_voting_system = Clause.get_current('general_voting_system').text_value
+    @general_voting_system_description = case @general_voting_system
     when "RelativeMajority"
       "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
     when "Veto"
@@ -29,7 +30,8 @@ class OneClick < Application
       "receives Supporting Votes from all Members during the Voting Period."
     end
     
-    @membership_voting_system = case Clause.get_current('membership_voting_system').text_value
+    @membership_voting_system = Clause.get_current('membership_voting_system').text_value
+    @membership_voting_system_description = case @membership_voting_system
     when "RelativeMajority"
       "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
     when "Veto"
@@ -42,7 +44,8 @@ class OneClick < Application
       "receives Supporting Votes from all Members during the Voting Period."
     end
     
-    @constitution_voting_system = case Clause.get_current('constitution_voting_system').text_value
+    @constitution_voting_system = Clause.get_current('constitution_voting_system').text_value
+    @constitution_voting_system_description = case @constitution_voting_system
     when "RelativeMajority"
       "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
     when "Veto"
@@ -122,6 +125,22 @@ class OneClick < Application
       redirect(url(:controller => 'one_click', :action => 'control_centre'), :message => {:notice => "Constitutional amendment proposal succesfully created"})
     else
       redirect('/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
+    end
+  end
+  
+  def propose_voting_period_amendment
+    if params['new_voting_period']
+      proposal = ChangeVotingPeriodProposal.new(
+        :title=>"Change voting period",
+        :proposer_member_id => current_user.id,
+        :parameters => ChangeVotingSystemProposal.serialize_parameters(
+          'new_voting_period'=>params['new_voting_period'])
+      )      
+      if proposal.save
+        redirect(url(:controller => 'one_click', :action => 'control_centre'), :message => {:notice => "Constitutional amendment proposal succesfully created"})
+      else
+        redirect('/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
+      end
     end
   end
   
