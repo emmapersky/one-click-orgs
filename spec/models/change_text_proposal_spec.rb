@@ -5,6 +5,11 @@ describe ChangeTextProposal do
     @objectives = Clause.create!(:name => 'objectives', :text_value => "eat all the cheese")
   end
   
+  it "should use the constitution voting system" do
+    Clause.create!(:name => 'constitution_voting_system', :text_value => 'Veto')
+    ChangeTextProposal.new.voting_system.should == VotingSystems::Veto
+  end
+  
   it "should change the objectives after successful proposal" do
     @p = ChangeTextProposal.new(:parameters=>{'name'=>'objectives', 'value'=>'make all the yoghurt'}.to_json)
     @p.stub!(:passed?).and_return(true)

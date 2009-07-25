@@ -7,4 +7,8 @@ class ChangeTextProposal < Proposal
     params = YAML.JSON(self.parameters)
     Constitution.set_text(params['name'], params['value'])
   end
+  
+  def voting_system
+    Constitution.voting_system(:constitution)
+  end
 end
