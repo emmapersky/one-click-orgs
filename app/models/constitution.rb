@@ -14,6 +14,10 @@ class Constitution
     Clause.get_current('domain').text_value
   end
   
+  def self.text(name)
+    Clause.get_current(name.to_s).text_value
+  end
+  
   def self.set_text(name, value)
     name = name.to_s
     case name

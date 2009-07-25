@@ -7,6 +7,75 @@ describe "/one_click" do
     # Constitution.stub!(:organisation_name).and_return("Test") # TODO should be in spec_helper, default            
   end
   
+  describe "proposing text amendments" do
+    before(:each) do
+      login
+      @proposal = mock('proposal', :save => true)
+    end
+    
+    it "should create a proposal to change the organisation name" do
+      ChangeTextProposal.should_receive(:serialize_parameters).with(
+        'name' => 'organisation_name',
+        'value' => 'The Yoghurt Yurt'
+      ).and_return(@serialized_parameters = mock('serialized_parameters'))
+      
+      ChangeTextProposal.should_receive(:new).with(
+        :title => "Change organisation_name to 'The Yoghurt Yurt'",
+        :parameters => @serialized_parameters,
+        :proposer_member_id => @user.id
+      ).and_return(@proposal)
+      
+      @response = request(
+        url(:controller => 'one_click', :action => 'propose_text_amendment'),
+        :method => 'POST',
+        :params => {'name' => 'organisation_name', 'value' => 'The Yoghurt Yurt'}
+      )
+      
+      @response.should redirect_to('/one_click/control_centre')
+    end
+    
+    it "should create a proposal to change the objectives" do
+      ChangeTextProposal.should_receive(:serialize_parameters).with(
+        'name' => 'objectives',
+        'value' => 'make all the yoghurt'
+      ).and_return(@serialized_parameters = mock('serialized_parameters'))
+      
+      ChangeTextProposal.should_receive(:new).with(
+        :title => "Change objectives to 'make all the yoghurt'",
+        :parameters => @serialized_parameters,
+        :proposer_member_id => @user.id
+      ).and_return(@proposal)
+      
+      @response = request(
+        url(:controller => 'one_click', :action => 'propose_text_amendment'),
+        :method => 'POST',
+        :params => {'name' => 'objectives', 'value' => 'make all the yoghurt'}
+      )
+      
+      @response.should redirect_to('/one_click/control_centre')
+    end
+    
+    it "should create a proposal to change the domain" do
+      ChangeTextProposal.should_receive(:serialize_parameters).with(
+        'name' => 'domain',
+        'value' => 'yaourt.com'
+      ).and_return(@serialized_parameters = mock('serialized_parameters'))
+      
+      ChangeTextProposal.should_receive(:new).with(
+        :title => "Change domain to 'yaourt.com'",
+        :parameters => @serialized_parameters,
+        :proposer_member_id => @user.id
+      ).and_return(@proposal)
+      
+      @response = request(
+        url(:controller => 'one_click', :action => 'propose_text_amendment'),
+        :method => 'POST',
+        :params => {'name' => 'domain', 'value' => 'yaourt.com'}
+      )
+      
+      @response.should redirect_to('/one_click/control_centre')
+    end
+  end
   
   describe "proposing voting system amendments" do
     before do
@@ -19,7 +88,7 @@ describe "/one_click" do
     describe "for general decisions" do
       it "should add the proposal" do
         @response = request(url(:controller=>'one_click', 
-          :action=>'propose_amendment'),
+          :action=>'propose_voting_system_amendment'),
           :method=>'POST', :params=>{:general_voting_system=>'Unanimous'})
 
         puts @response.body if @response.status != 302
@@ -37,7 +106,7 @@ describe "/one_click" do
     describe "for membership decisions" do
       it "should add the proposal" do
         @response = request(url(:controller=>'one_click', 
-          :action=>'propose_amendment'),
+          :action=>'propose_voting_system_amendment'),
           :method=>'POST', :params=>{:membership_voting_system=>'Veto'})
 
         puts @response.body if @response.status != 302
@@ -55,7 +124,7 @@ describe "/one_click" do
     describe "for constitution decisions" do
       it "should add the proposal" do
         @response = request(url(:controller=>'one_click', 
-          :action=>'propose_amendment'),
+          :action=>'propose_voting_system_amendment'),
           :method=>'POST', :params=>{:constitution_voting_system=>'AbsoluteMajority'})
 
         puts @response.body if @response.status == 500

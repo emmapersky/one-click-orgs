@@ -39,7 +39,7 @@
   %li New Members may be appointed and existing Members may be ejected by a membership decision ("Membership Decision"). 
   %li The Constitution may be amended by a constitution decision ("Constitution Decision").
   %li
-    %form{:action=>url(:action=>'propose_amendment'), :method=>:post}
+    %form{:action=>url(:action=>'propose_voting_system_amendment'), :method=>:post}
       %div.constitution_proposal
         %p.reveal_link
           %a{:href => '#'}
@@ -60,7 +60,7 @@
     %span{:class=>'dynamic'}
       = @general_voting_system
   %li
-    %form{:action=>url(:action=>'propose_amendment'), :method=>:post}
+    %form{:action=>url(:action=>'propose_voting_system_amendment'), :method=>:post}
       %div.constitution_proposal
         %p.reveal_link
           %a{:href => '#'}
@@ -81,7 +81,7 @@
     %span{:class=>'dynamic'}
       = @membership_voting_system
   %li
-    %form{:action=>url(:action=>'propose_amendment'), :method=>:post}
+    %form{:action=>url(:action=>'propose_voting_system_amendment'), :method=>:post}
       %div.constitution_proposal
         %p.reveal_link
           %a{:href => '#'}
