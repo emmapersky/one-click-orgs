@@ -5,7 +5,9 @@ class Constitution
   end
   
   def self.voting_system(type = :general)     
-    voting_system(Clause.get_current("#{type}_voting_system").text_value)
+    clause = Clause.get_current("#{type}_voting_system") 
+    raise ArgumentError, "invalid system: #{type}" unless clause && clause.text_value
+    VotingSystems.get(clause.text_value)
   end
   
   def self.get_general_voting_system
@@ -24,16 +26,16 @@ class Constitution
   end
   
   def self.set_membership_voting_system(params={})
-    warn "[DEPRECATED] use set_voting_system(type,params) instead"    
-    set_voting_system(:membership, params)
+    warn "[DEPRECATED] use change_voting_system(type,params) instead"    
+    change_voting_system(:membership, params)
   end
   
   def self.set_constitution_voting_system(params={})
-    warn "[DEPRECATED] use set_voting_system(type,params) instead"    
-    set_voting_system(:constitution, params)
+    warn "[DEPRECATED] use change_voting_system(type,params) instead"    
+    change_voting_system(:constitution, params)
   end
   
-  def self.set_voting_system(type, new_system)
+  def self.change_voting_system(type, new_system)
     system = Clause.first(:name=>"#{type}_voting_system")
     raise ArgumentError, "system #{type} not found" unless system
     raise ArgumentError, "invalid voting system: #{new_system}" unless VotingSystems.get(new_system)
