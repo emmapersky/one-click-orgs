@@ -52,5 +52,23 @@ describe "/one_click" do
       end
     end
     
+    describe "for constitution decisions" do
+      it "should add the proposal" do
+        @response = request(url(:controller=>'one_click', 
+          :action=>'propose_amendment'),
+          :method=>'POST', :params=>{:constitution_voting_system=>'AbsoluteMajority'})
+
+        puts @response.body if @response.status == 500
+        @response.should redirect_to("/one_click/control_centre")
+      
+        ChangeVotingSystemProposal.count.should == 1
+        ChangeVotingSystemProposal.all.first.title.should == 'change constitution voting system to Supporting votes from more than half the members'
+        proposal_parameters = YAML.JSON(ChangeVotingSystemProposal.all.first.parameters)
+        proposal_parameters['type'].should == 'constitution'
+        proposal_parameters['proposed_system'].should == 'AbsoluteMajority'
+      end
+    end
+    
+    
   end
 end

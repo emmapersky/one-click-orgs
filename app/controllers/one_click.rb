@@ -149,6 +149,27 @@ class OneClick < Application
         
         return
       end
+    elsif params['constitution_voting_system']
+      proposed_system = VotingSystems.get(params['constitution_voting_system'])
+      current_system = Constitution.voting_system :constitution
+      
+      if current_system != proposed_system
+        proposal = ChangeVotingSystemProposal.new(
+          :title => "change constitution voting system to #{proposed_system.description}",
+          :proposer_member_id => current_user.id,
+          :parameters => ChangeVotingSystemProposal.serialize_parameters('type' => 'constitution', 'proposed_system' => proposed_system.simple_name)
+        )
+        
+        if proposal.save
+          redirect url(:controller=>'one_click', :action=>'control_centre'), :message => {:notice=> "Change constitution voting system proposal successfully created"}
+        else
+          redirect '/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
+        end
+        
+        return
+      end
+      
+    
     end
     
     redirect '/constitution', :message => {:error => "No changes."}                

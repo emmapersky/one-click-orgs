@@ -81,6 +81,23 @@
     %span{:class=>'dynamic'}
       = @membership_voting_system
   %li
+    %form{:action=>url(:action=>'propose_amendment'), :method=>:post}
+      %div.constitution_proposal
+        %p.reveal_link
+          %a{:href => '#'}
+            Propose an amendment to this clause
+        %div.proposal_form{:style => 'display: none;'}
+          %p
+            %label{:for => 'constitution_voting_system'}
+              Change the way Constitution Decisions are made:
+            %select{:name=>'constitution_voting_system'}
+              - VotingSystems.all do |vs|
+                %option{:value=>vs.simple_name}= vs.description
+          %p
+            = submit "Propose change", :id => 'submit'
+          %p
+            %a{:href => '#', :class => 'cancel_link'}
+              Cancel
     A Constitution Decision is made when a Proposal concerning an amendment to the Constitution
     %span{:class=>'dynamic'}       
       = @constitution_voting_system
