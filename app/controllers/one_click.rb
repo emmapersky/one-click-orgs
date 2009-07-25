@@ -16,7 +16,8 @@ class OneClick < Application
       pluralize((period / 3600.0 * 24).round, 'day')
     end
     
-    @general_voting_system = case Clause.get_current('general_voting_system').text_value
+    @general_voting_system = Clause.get_current('general_voting_system').text_value
+    @general_voting_system_description = case @general_voting_system
     when "RelativeMajority"
       "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
     when "Veto"
@@ -29,7 +30,8 @@ class OneClick < Application
       "receives Supporting Votes from all Members during the Voting Period."
     end
     
-    @membership_voting_system = case Clause.get_current('membership_voting_system').text_value
+    @membership_voting_system = Clause.get_current('membership_voting_system').text_value
+    @membership_voting_system_description = case @membership_voting_system
     when "RelativeMajority"
       "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
     when "Veto"
@@ -42,7 +44,8 @@ class OneClick < Application
       "receives Supporting Votes from all Members during the Voting Period."
     end
     
-    @constitution_voting_system = case Clause.get_current('constitution_voting_system').text_value
+    @constitution_voting_system = Clause.get_current('constitution_voting_system').text_value
+    @constitution_voting_system_description = case @constitution_voting_system
     when "RelativeMajority"
       "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
     when "Veto"
