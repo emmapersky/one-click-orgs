@@ -7,25 +7,137 @@ describe "/one_click" do
     # Constitution.stub!(:organisation_name).and_return("Test") # TODO should be in spec_helper, default            
   end
   
+  describe "proposing text amendments" do
+    before(:each) do
+      login
+      @proposal = mock('proposal', :save => true)
+    end
+    
+    it "should create a proposal to change the organisation name" do
+      ChangeTextProposal.should_receive(:serialize_parameters).with(
+        'name' => 'organisation_name',
+        'value' => 'The Yoghurt Yurt'
+      ).and_return(@serialized_parameters = mock('serialized_parameters'))
+      
+      ChangeTextProposal.should_receive(:new).with(
+        :title => "Change organisation_name to 'The Yoghurt Yurt'",
+        :parameters => @serialized_parameters,
+        :proposer_member_id => @user.id
+      ).and_return(@proposal)
+      
+      @response = request(
+        url(:controller => 'one_click', :action => 'propose_text_amendment'),
+        :method => 'POST',
+        :params => {'name' => 'organisation_name', 'value' => 'The Yoghurt Yurt'}
+      )
+      
+      @response.should redirect_to('/one_click/control_centre')
+    end
+    
+    it "should create a proposal to change the objectives" do
+      ChangeTextProposal.should_receive(:serialize_parameters).with(
+        'name' => 'objectives',
+        'value' => 'make all the yoghurt'
+      ).and_return(@serialized_parameters = mock('serialized_parameters'))
+      
+      ChangeTextProposal.should_receive(:new).with(
+        :title => "Change objectives to 'make all the yoghurt'",
+        :parameters => @serialized_parameters,
+        :proposer_member_id => @user.id
+      ).and_return(@proposal)
+      
+      @response = request(
+        url(:controller => 'one_click', :action => 'propose_text_amendment'),
+        :method => 'POST',
+        :params => {'name' => 'objectives', 'value' => 'make all the yoghurt'}
+      )
+      
+      @response.should redirect_to('/one_click/control_centre')
+    end
+    
+    it "should create a proposal to change the domain" do
+      ChangeTextProposal.should_receive(:serialize_parameters).with(
+        'name' => 'domain',
+        'value' => 'yaourt.com'
+      ).and_return(@serialized_parameters = mock('serialized_parameters'))
+      
+      ChangeTextProposal.should_receive(:new).with(
+        :title => "Change domain to 'yaourt.com'",
+        :parameters => @serialized_parameters,
+        :proposer_member_id => @user.id
+      ).and_return(@proposal)
+      
+      @response = request(
+        url(:controller => 'one_click', :action => 'propose_text_amendment'),
+        :method => 'POST',
+        :params => {'name' => 'domain', 'value' => 'yaourt.com'}
+      )
+      
+      @response.should redirect_to('/one_click/control_centre')
+    end
+  end
   
-  describe "propose amendment" do
+  describe "proposing voting system amendments" do
     before do
       login
-      @general_voting_system = Clause.create!(:name=>'general_voting_system', :text_value=>'RelativeMajority')        
+      @general_voting_system = Clause.create!(:name=>'general_voting_system', :text_value=>'RelativeMajority')
+      @membership_voting_system = Clause.create!(:name => 'membership_voting_system', :text_value => 'RelativeMajority')
+      @constitution_voting_system = Clause.create!(:name => 'constitution_voting_system', :text_value => 'RelativeMajority')
     end
     
-    
-    it "should add a proposal" do      
-      @response = request(url(:controller=>'one_click', 
-        :action=>'propose_amendment'),
-        :method=>'POST', :params=>{:general_voting_system=>'Unanimous'})
+    describe "for general decisions" do
+      it "should add the proposal" do
+        @response = request(url(:controller=>'one_click', 
+          :action=>'propose_voting_system_amendment'),
+          :method=>'POST', :params=>{:general_voting_system=>'Unanimous'})
 
-      puts @response.body if @response.status != 302
+        puts @response.body if @response.status != 302
+
+        @response.should redirect_to("/one_click/control_centre")
       
-      @response.should redirect_to("/one_click/control_centre")
-      
-      ChangeVotingSystemProposal.count.should == 1      
-      ChangeVotingSystemProposal.all.first.title.should == 'change general voting system to Supporting votes from every single member'
+        ChangeVotingSystemProposal.count.should == 1
+        ChangeVotingSystemProposal.all.first.title.should == 'change general voting system to Supporting votes from every single member'
+        proposal_parameters = YAML.JSON(ChangeVotingSystemProposal.all.first.parameters)
+        proposal_parameters['type'].should == 'general'
+        proposal_parameters['proposed_system'].should == 'Unanimous'
+      end
     end
+    
+    describe "for membership decisions" do
+      it "should add the proposal" do
+        @response = request(url(:controller=>'one_click', 
+          :action=>'propose_voting_system_amendment'),
+          :method=>'POST', :params=>{:membership_voting_system=>'Veto'})
+
+        puts @response.body if @response.status != 302
+
+        @response.should redirect_to("/one_click/control_centre")
+      
+        ChangeVotingSystemProposal.count.should == 1
+        ChangeVotingSystemProposal.all.first.title.should == 'change membership voting system to No opposing votes'
+        proposal_parameters = YAML.JSON(ChangeVotingSystemProposal.all.first.parameters)
+        proposal_parameters['type'].should == 'membership'
+        proposal_parameters['proposed_system'].should == 'Veto'
+      end
+    end
+    
+    describe "for constitution decisions" do
+      it "should add the proposal" do
+        @response = request(url(:controller=>'one_click', 
+          :action=>'propose_voting_system_amendment'),
+          :method=>'POST', :params=>{:constitution_voting_system=>'AbsoluteMajority'})
+
+        puts @response.body if @response.status == 500
+        @response.should redirect_to("/one_click/control_centre")
+      
+        ChangeVotingSystemProposal.count.should == 1
+        ChangeVotingSystemProposal.all.first.title.should == 'change constitution voting system to Supporting votes from more than half the members'
+        proposal_parameters = YAML.JSON(ChangeVotingSystemProposal.all.first.parameters)
+        proposal_parameters['type'].should == 'constitution'
+        proposal_parameters['proposed_system'].should == 'AbsoluteMajority'
+      end
+    end
+    
+    
   end
 end

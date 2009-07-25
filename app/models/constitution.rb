@@ -1,8 +1,38 @@
 class Constitution
   
+  # FREE TEXT FIELDS
+  
   def self.organisation_name
     Clause.get_current("organisation_name").text_value
   end
+  
+  def self.objectives
+    Clause.get_current('objectives').text_value
+  end
+  
+  def self.domain
+    Clause.get_current('domain').text_value
+  end
+  
+  def self.text(name)
+    Clause.get_current(name.to_s).text_value
+  end
+  
+  def self.set_text(name, value)
+    name = name.to_s
+    case name
+    when 'organisation_name'
+      Clause.create!(:name => 'organisation_name', :text_value => value)
+    when 'objectives'
+      Clause.create!(:name => 'objectives', :text_value => value)
+    when 'domain'
+      Clause.create!(:name => 'domain', :text_value => value)
+    else
+      raise ArgumentError, "invalid text field name: #{name}"
+    end
+  end
+  
+  # VOTING SYSTEMS
   
   def self.voting_system(type = :general)     
     clause = Clause.get_current("#{type}_voting_system") 
@@ -42,6 +72,8 @@ class Constitution
     system.text_value = new_system
     system.save!
   end
+  
+  # VOTING PERIOD
   
   def self.voting_period
     Clause.get_current('voting_period').integer_value rescue 3 * 86400 # fixme

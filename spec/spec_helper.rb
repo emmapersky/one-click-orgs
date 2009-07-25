@@ -78,11 +78,11 @@ Merb::Test.add_helpers do
   end
 
   def login
-    user = default_user
+    @user = default_user
     request("/login", {
       :method => "PUT",
       :params => {
-        :email => user.email,
+        :email => @user.email,
         :password => "password"
       }
     }).should redirect_to('/')
