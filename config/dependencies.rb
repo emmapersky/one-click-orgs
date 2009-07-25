@@ -2,7 +2,8 @@
 merb_gems_version = "1.0.8.1"
 dm_gems_version   = "0.9.11"
 
-# For more information about each component, please read http://wiki.merbivore.com/faqs/merb_components
+
+#For more information about each component, please read http://wiki.merbivore.com/faqs/merb_components
 # after updating: thor merb:gem:install && thor merb:gem:redeploy
 dependency "merb-action-args", merb_gems_version
 dependency "merb-assets", merb_gems_version  
@@ -25,7 +26,6 @@ dependency "dm-timestamps", dm_gems_version
 dependency "dm-types", dm_gems_version        
 dependency "dm-validations", dm_gems_version  
 
-dependency "data_objects", "0.9.11"
 dependency "do_mysql", "0.9.11"
 #if you are having problems, you can install this locally with this line on os x
 #sudo gem install do_mysql -- --with-mysql-config=/usr/local/mysql/bin/mysql_config 
@@ -33,7 +33,16 @@ dependency "do_mysql", "0.9.11"
 dependency "merb_datamapper", merb_gems_version
 
 dependency "faker", "0.3.1"
-
+dependency "haml", "2.0.9"
+dependency "rspec", "1.1.12", :require_as => 'spec'
+dependency "rack", "1.0.0"
+dependency "mongrel", "1.1.5"
+dependency "data_objects", "0.9.11"
+dependency "json_pure", "1.1.7", :require_as => 'json'
+dependency "daemons", "1.0.10"
+dependency "ZenTest", "4.1.3", :require_as => 'zentest'
+dependency "ruby_parser", "2.0.3"
+ 
 # need to add gem sources for these
 # $ gem sources -a http://gems.github.com 
 dependency "snepo-dm-machinist", :require_as => 'dm-machinist'
