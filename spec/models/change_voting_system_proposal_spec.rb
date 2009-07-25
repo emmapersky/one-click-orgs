@@ -11,6 +11,6 @@ describe ChangeVotingSystemProposal do
     @p = ChangeVotingSystemProposal.new(:parameters=>{'type'=>'constitution', 'proposed_system'=>@proposed_system}.to_json)
     @p.stub!(:passed?).and_return(true)
     @p.enact!        
-    Clause.first(:name=>'constitution_voting_system').text_value.should == @proposed_system
+    Clause.get_current('constitution_voting_system').text_value.should == @proposed_system
   end
 end

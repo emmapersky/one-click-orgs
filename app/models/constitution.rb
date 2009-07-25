@@ -66,11 +66,9 @@ class Constitution
   end
   
   def self.change_voting_system(type, new_system)
-    system = Clause.first(:name=>"#{type}_voting_system")
-    raise ArgumentError, "system #{type} not found" unless system
+    raise ArgumentError, "system #{type} not found" unless ['general', 'membership', 'constitution'].include?(type.to_s)
     raise ArgumentError, "invalid voting system: #{new_system}" unless VotingSystems.get(new_system)
-    system.text_value = new_system
-    system.save!
+    Clause.create!(:name => "#{type}_voting_system", :text_value => new_system)
   end
   
   # VOTING PERIOD
