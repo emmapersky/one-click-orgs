@@ -31,6 +31,8 @@ describe Proposal do
   end
   
   it "should send out an email to each member after a Proposal has been made" do
+    Member.count.should >0
+    
     p = Proposal.make(:proposer => @member)
   
     deliveries = Merb::Mailer.deliveries
