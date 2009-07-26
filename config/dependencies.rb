@@ -34,7 +34,7 @@ dependency "merb_datamapper", merb_gems_version
 
 dependency "faker", "0.3.1"
 dependency "haml", "2.0.9"
-dependency "rspec", "1.1.12", :require_as => 'spec'
+dependency "rspec", "1.1.12", :require_as => nil
 dependency "rack", "1.0.0"
 dependency "mongrel", "1.1.5"
 dependency "data_objects", "0.9.11"
