@@ -1,6 +1,8 @@
 require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
 describe EjectMemberProposal do
+  before { stub_constitution! }
+    
   it "should use the membership voting system" do
     Clause.create!(:name => 'membership_voting_system', :text_value => 'Veto')
     EjectMemberProposal.new.voting_system.should == VotingSystems::Veto

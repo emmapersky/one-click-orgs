@@ -7,7 +7,7 @@ module Merb
     end
     
     def oco_domain
-      Consitution.domain or raise "domain not defined"
+      Constitution.domain or raise "domain not defined"
     end
     
     def absolute_oco_url(name, defaults={})

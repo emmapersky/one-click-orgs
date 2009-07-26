@@ -3,6 +3,8 @@ require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 describe Member do
   
   before(:each) do
+    stub_constitution!
+    
     @member = Member.make
     @proposal = Proposal.make(:proposer_member_id => @member.id)
   end

@@ -7,15 +7,17 @@ given "a vote exists" do
 end
 
 describe "everything" do
-  before { login }
-  
-describe "vote casting" do
-  it "should cast a 'for' vote" do
-    pending
+  before do 
+    login 
   end
+      
+  describe "vote casting" do
+    it "should cast a 'for' vote" do
+      pending
+    end
   
-  it "should cast an 'against' vote" do
-    pending
+    it "should cast an 'against' vote" do
+      pending
+    end
   end
-end
 end

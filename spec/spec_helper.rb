@@ -41,22 +41,6 @@ Spec::Runner.configure do |config|
     end
   end
     
-  # config.after(:each) do
-  #   repository(:default) do
-  #     while repository.adapter.current_transaction
-  #       repository.adapter.current_transaction.rollback
-  #       repository.adapter.pop_transaction
-  #     end
-  #   end
-  # end
-  #  
-  # config.before(:each) do
-  #   repository(:default) do
-  #     transaction = DataMapper::Transaction.new(repository)
-  #     transaction.begin
-  #     repository.adapter.push_transaction(transaction)
-  #   end
-  # end
 end
 
 module DataMapper
@@ -71,12 +55,21 @@ end
 
 Merb::Test.add_helpers do
   def default_user
-    Member.first(:email => "krusty@clown.com") || Member.create(:email => "krusty@clown.com",
+    stub_constitution!
+      
+    Member.first(:email => "krusty@clown.com") || 
+      Member.create(:email => "krusty@clown.com",
                    :name => "Krusty the clown",
                    :password => "password",
                    :password_confirmation => "password") or raise "can't create user"
   end
 
+
+  def stub_constitution!
+    Constitution.stub!(:domain).and_return('http://test.com')
+    Constitution.stub!(:organisation_name).and_return('test')
+  end
+  
   def login
     @user = default_user
     request("/login", {
@@ -96,13 +89,8 @@ module Merb
   end
 end
 
-Merb::GlobalHelpers.module_eval do
-  def oco_domain() "http://test.com" end
-end
 
-Constitution.class_eval do
-  def self.get_organisation_name() "test" end
-end
+
   
 module MailControllerTestHelper          
   def clear_mail_deliveries

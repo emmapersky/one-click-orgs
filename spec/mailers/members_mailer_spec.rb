@@ -17,6 +17,8 @@ describe MembersMailer, "#notify_new_password email template" do
     @member = mock(Member)
     @member.stub!(:name).and_return("Peter Pan")
     @new_password = "foo"
+    
+    stub_constitution!
   end
     
   describe "new password email" do

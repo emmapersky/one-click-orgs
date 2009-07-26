@@ -10,13 +10,12 @@ end
 
 describe ProposalMailer, "#notify_creation email template" do
   include MailControllerTestHelper
-  
+
   before :each do
     clear_mail_deliveries
-    
+    stub_constitution!    
     @member = Member.make
     @proposal = Proposal.make(:proposer_member_id=>@member.id)
-
   end
     
   it "includes welcome phrase and proposal information in email text" do    

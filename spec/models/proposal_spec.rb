@@ -3,6 +3,8 @@ require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 describe Proposal do
   
   before(:each) do
+    stub_constitution!  
+    
     @member = Member.make
     Merb::Mailer.deliveries.clear
     Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))
