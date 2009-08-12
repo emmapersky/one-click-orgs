@@ -16,7 +16,7 @@ Merb::Config.use do |c|
 end
  
 Merb::Plugins.config[:sass][:style] = :compact
- 
+
 Merb::BootLoader.before_app_loads do
   # This will get executed after dependencies have been loaded but before your app's classes have loaded.
   require 'lib/async_jobs'
@@ -32,3 +32,7 @@ Merb::BootLoader.after_app_loads do
   # Make sure the worker process is running
   #AsyncJobs.ensure_worker_process_running 
 end
+
+# use double quotes for generated HTML/XML attributes
+Merb::Plugins.config[:haml][:attr_wrapper] = '"'
+ 
