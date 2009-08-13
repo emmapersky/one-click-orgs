@@ -36,14 +36,14 @@ dependency "faker", "0.3.1"
 dependency "haml", "2.0.9"
 dependency "rspec", "1.1.12", :require_as => nil
 dependency "rack", "1.0.0"
-dependency "fastthread", "1.0.1"
+dependency "fastthread", "1.0.7"
 dependency "gem_plugin", "0.2.3"
 dependency "cgi_multipart_eof_fix", "2.5.0"
 dependency "mongrel", "1.1.5"
 dependency "data_objects", "0.9.11"
 dependency "json_pure", "1.1.7", :require_as => 'json'
 dependency "daemons", "1.0.10"
-dependency "ZenTest", "3.11.1", :require_as => 'zentest'
+dependency "ZenTest", >= "4.1.3", :require_as => 'zentest'
 dependency "ruby_parser", "2.0.3"
  
 # need to add gem sources for these
