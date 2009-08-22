@@ -55,22 +55,21 @@ class Induction < Application
   end
   
   def create_members
-    debug_message = ""
     params[:members].each_value do |member_params|
       if !member_params[:name].blank? && !member_params[:email].blank?
         if member_params[:id].blank?
-          debug_message += "| new member"
           member = Member.new
           member.new_password!
         else
-          debug_message += "| update member"
           member = Member.get!(member_params[:id])
         end
         member.name = member_params[:name]
         member.email = member_params[:email]
         member.save
       elsif !member_params[:id].blank?
-        debug_message += "| destroy member"
+        # We get here if the name and email fields have been cleared
+        # for a memeber that's already been saved to the database.
+        # Treat this as a deletion.
         Member.get!(member_params[:id]).destroy
       end
     end
