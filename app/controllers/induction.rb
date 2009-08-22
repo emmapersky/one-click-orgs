@@ -23,7 +23,6 @@ class Induction < Application
     @organisation_name = (Clause.get_current('organisation_name') ? Clause.get_current('organisation_name').text_value : nil)
     @objectives = (Clause.get_current('objectives') ? Clause.get_current('objectives').text_value : nil)
     @assets = (Clause.get_current('assets') ? Clause.get_current('assets').boolean_value : true)
-    # @assets = (@assets? "checked" : nil)
     render
   end
   
@@ -36,8 +35,12 @@ class Induction < Application
     objectives.text_value = params[:objectives]
     objectives.save
     
-    assets = Clause.get_current('assets') || Clause.new(:name => assets)
-    assets.boolean_value = params[:assets]
+    assets = Clause.get_current('assets') || Clause.new(:name => 'assets')
+    assets.boolean_value = if params[:assets] == '1'
+      true
+    else
+      false
+    end
     assets.save
     
     redirect(url(:action => 'members'))
