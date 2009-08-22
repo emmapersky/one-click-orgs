@@ -8,12 +8,14 @@ class Induction < Application
   before :ensure_organisation_under_construction, :exclude => [:confirm_agenda, :founding_meeting, :confirm_founding_meeting, :restart_induction]
 
   def founder
-    @founder = Member.new
+    @founder = Member.first || Member.new
     render
   end
   
   def create_founder
-    Member.create(params[:member])
+    @founder = Member.first || Member.new
+    @founder.attributes = params[:member]
+    @founder.save
     redirect(url(:action => 'organisation_details'))
   end
   
