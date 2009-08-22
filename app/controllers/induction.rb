@@ -1,4 +1,6 @@
 class Induction < Application
+  layout :induction
+  
   skip_before :ensure_organisation_active
   
   # UNDER CONSTRUCTION
