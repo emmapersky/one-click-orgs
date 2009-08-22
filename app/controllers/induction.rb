@@ -5,7 +5,7 @@ class Induction < Application
   
   # UNDER CONSTRUCTION
   
-  before :ensure_organisation_under_construction, :exclude => [:confirm_agenda, :founding_meeting, :confirm_founding_meeting, :restart_induction]
+  before :ensure_organisation_under_construction, :exclude => [:confirm_agenda, :founding_meeting, :confirm_founding_meeting, :restart_induction, :confirm_agenda]
 
   def founder
     @founder = Member.first || Member.new
@@ -133,17 +133,30 @@ class Induction < Application
   end
   
   def preview_agenda
+    @organisation_name = Clause.get_current('organisation_name').text_value
+    @founding_meeting_location = Clause.get_current('founding_meeting_location').text_value
+    @founding_meeting_date = Clause.get_current('founding_meeting_date').text_value
+    @founding_meeting_time = Clause.get_current('founding_meeting_time').text_value
+    
+    @members = Member.all
+    
     render
   end
     
   # Sends the constitution and agenda to founding members,
   # and moves the organisation to 'pending' state.
   def confirm_agenda
+    # TODO: Send emails
+    organisation_state = Clause.get_current('organisation_state') || Clause.new(:name => 'organisation_state')
+    organisation_state.text_value = 'pending'
+    organisation_state.save!
+    
+    redirect(url(:action => 'founding_meeting'))
   end
   
   # PENDING STATE
   
-  before :ensure_organisation_pending, :only => [:confirm_agenda, :founding_meeting, :confirm_founding_meeting, :restart_induction]
+  before :ensure_organisation_pending, :only => [:founding_meeting, :confirm_founding_meeting, :restart_induction]
   
   # Form to confirm that the founding meeting happened,
   # and select which founding members voted in favour.
