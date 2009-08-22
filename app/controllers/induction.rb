@@ -1,10 +1,15 @@
 class Induction < Application
-  skip_before :ensure_organisation_active
-  
-  # UNDER CONSTRUCTION
-  
-  before :ensure_organisation_under_construction, :exclude => [:confirm_agenda, :founding_meeting, :confirm_founding_meeting, :restart_induction]
 
+  skip_before :ensure_organisation_active
+  before :ensure_authenticated, :exclude => [:founder, :create_founder]
+
+  PENDING_ACTIONS = [:confirm_agenda, :founding_meeting, :confirm_founding_meeting, :restart_induction]
+  CONSTRUCTION_ACTIONS = [ :founder, :create_founder, :members, :create_members, :organisation_details, :create_organisation_details]
+  
+  before :ensure_organisation_under_construction, :only => CONSTRUCTION_ACTIONS
+  before :ensure_organisation_pending, :only => PENDING_ACTIONS
+
+  # UNDER CONSTRUCTION    
   def founder
     @founder = Member.new
     render
@@ -70,9 +75,7 @@ class Induction < Application
   def confirm_agenda
   end
   
-  # PENDING STATE
-  
-  before :ensure_organisation_pending, :only => [:confirm_agenda, :founding_meeting, :confirm_founding_meeting, :restart_induction]
+  # PENDING STATE  
   
   # Form to confirm that the founding meeting happened,
   # and select which founding members voted in favour.

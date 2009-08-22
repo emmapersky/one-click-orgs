@@ -1,4 +1,9 @@
 class OneClick < Application
+
+  def index
+    redirect(url(:action=>'control_centre'))
+  end
+  
   def constitution
     # TODO: Replace these direct calls to Clause.get_current and hard-coded values with neater calls to the Constitution uber-brain class
     @organisation_name = Clause.get_current('organisation_name').text_value

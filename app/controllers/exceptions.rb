@@ -9,6 +9,14 @@ class Exceptions < Merb::Controller
   def not_acceptable
     render :format => :html
   end
+  
+  def unauthenticated
+    if Organisation.has_founding_member?
+      render # unauthenticated, login page      
+    else
+      redirect(url(:controller=>'induction', :action=>'founder'))
+    end
+  end
 
   def current_user
     Member.get(current_user_id)
