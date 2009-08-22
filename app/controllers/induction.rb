@@ -110,10 +110,26 @@ class Induction < Application
   end
   
   def founding_meeting_details
+    @founding_meeting_date = Clause.get_current('founding_meeting_date') ? Clause.get_current('founding_meeting_date').text_value : nil
+    @founding_meeting_time = Clause.get_current('founding_meeting_time') ? Clause.get_current('founding_meeting_time').text_value : nil
+    @founding_meeting_location = Clause.get_current('founding_meeting_location') ? Clause.get_current('founding_meeting_location').text_value : nil
     render
   end
   
   def create_founding_meeting_details
+    founding_meeting_date = Clause.get_current('founding_meeting_date') || Clause.new(:name => 'founding_meeting_date')
+    founding_meeting_date.text_value = params[:date]
+    founding_meeting_date.save
+    
+    founding_meeting_time = Clause.get_current('founding_meeting_time') || Clause.new(:name => 'founding_meeting_time')
+    founding_meeting_time.text_value = params[:time]
+    founding_meeting_time.save
+    
+    founding_meeting_location = Clause.get_current('founding_meeting_location') || Clause.new(:name => 'founding_meeting_location')
+    founding_meeting_location.text_value = params[:location]
+    founding_meeting_location.save
+    
+    redirect(url(:action => 'preview_agenda'))
   end
   
   def preview_agenda
