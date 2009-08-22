@@ -189,6 +189,13 @@ class Induction < Application
   # Moves the organisation back from 'pending' state, to
   # allow editing of org details.
   def restart_induction
+    Clause.get_current('founding_meeting_date').destroy
+    Clause.get_current('founding_meeting_time').destroy
+    Clause.get_current('founding_meeting_location').destroy
+    
+    Clause.get_current('organisation_state').destroy
+    
+    redirect(url(:action => 'founder'))
   end
 
 private
