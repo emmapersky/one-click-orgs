@@ -161,12 +161,29 @@ class Induction < Application
   # Form to confirm that the founding meeting happened,
   # and select which founding members voted in favour.
   def founding_meeting
+    @organisation_name = Clause.get_current('organisation_name').text_value
+    @founding_member = Member.first
+    @other_members = Member.all; @other_members.shift
+    
     render
   end
   
   # Remove any founding members that did not vote in favour,
   # and move organisation to 'active' state.
   def confirm_founding_meeting
+    other_members = Member.all; other_members.shift
+    confirmed_member_ids = params[:members].keys.map{|id| id.to_i}
+    other_members.each do |member|
+      unless confirmed_member_ids.include?(member.id)
+        member.destroy
+      end
+    end
+    
+    organisation_state = Clause.get_current('organisation_state')
+    organisation_state.text_value = "active"
+    organisation_state.save
+    
+    redirect(url(:controller => 'one_click', :action => 'control_centre'))
   end
   
   # Moves the organisation back from 'pending' state, to
