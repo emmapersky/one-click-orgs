@@ -26,6 +26,8 @@ describe ProposalMailer, "#notify_creation email template" do
   end
   
   it "includes correct propsal link in email text" do
+    
+    
     ProposalMailer.dispatch_and_deliver(:notify_creation, {}, { :member => @member, :proposal => @proposal })
     last_delivered_mail.text.should =~ %r{http://test.com/proposals/\d+}
   end

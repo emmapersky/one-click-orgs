@@ -2,9 +2,7 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 describe "/one_click" do
   before(:each) do
-    @response = request("/one_click")
-    Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))        
-    # Constitution.stub!(:organisation_name).and_return("Test") # TODO should be in spec_helper, default            
+    stub_constitution!    
   end
   
   describe "proposing text amendments" do

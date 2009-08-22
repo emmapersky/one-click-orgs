@@ -1,4 +1,9 @@
 class Organisation
+  
+  def self.has_founding_member?
+    Member.count > 0
+  end
+  
   def self.under_construction?
     Clause.get_current('organisation_state').nil?
   end

@@ -1,4 +1,9 @@
 class OneClick < Application
+
+  def index
+    redirect(url(:action=>'control_centre'))
+  end
+  
   def constitution
     set_up_instance_variables_for_constitution_view
     render

@@ -6,9 +6,8 @@ end
 
 describe "everything" do
   before(:each) do 
+    stub_constitution!
     login 
-    Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))        
-    Constitution.stub!(:organisation_name).and_return("Test") # TODO should be in spec_helper, default        
   end
   
   describe "resource(:members)" do
@@ -56,10 +55,11 @@ describe "everything" do
   describe "resource(@member)" do 
     describe "a successful DELETE", :given => "a member exists" do
       it "should create the proposal to eject the member" do
+        
         EjectMemberProposal.should_receive(:serialize_parameters).with('id' => @member.id).and_return(@serialized_parameters = mock('serialized parameters'))
         EjectMemberProposal.should_receive(:new).with(
           :parameters => @serialized_parameters,
-          :title => "Eject #{@member.name} from Test",
+          :title => "Eject #{@member.name} from test",
           :proposer_member_id => @user.id
         ).and_return(@proposal = mock('proposal'))
         @proposal.should_receive(:save).and_return(true)

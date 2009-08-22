@@ -10,6 +10,7 @@ namespace :constitution do
     Clause.create(:name => 'domain', :text_value => "http://oco.example.com")
     Clause.create(:name => 'voting_period', :integer_value => 3 * 86400)
     Clause.create(:name => 'general_voting_system', :text_value => "RelativeMajority")
+    Clause.create(:name => 'organisation_state', :text_value => "active")
     Clause.create(:name => 'membership_voting_system', :text_value => "RelativeMajority")
     Clause.create(:name => 'constitution_voting_system', :text_value => "RelativeMajority")
   end

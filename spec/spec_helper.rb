@@ -66,8 +66,10 @@ Merb::Test.add_helpers do
 
 
   def stub_constitution!
+    organisation_is_active
     Constitution.stub!(:domain).and_return('http://test.com')
     Constitution.stub!(:organisation_name).and_return('test')
+#    Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))                
   end
   
   def login
@@ -80,6 +82,24 @@ Merb::Test.add_helpers do
       }
     }).should redirect_to('/')
   end
+  
+  def organisation_is_pending
+    Organisation.stub!(:pending?).and_return(true)      
+    Organisation.stub!(:active?).and_return(false)      
+    Organisation.stub!(:under_construction?).and_return(false)
+  end
+  
+  def organisation_is_active
+    Organisation.stub!(:pending?).and_return(false)      
+    Organisation.stub!(:active?).and_return(true)      
+    Organisation.stub!(:under_construction?).and_return(false)
+  end
+
+  def organisation_is_under_construction
+    Organisation.stub!(:pending?).and_return(false)      
+    Organisation.stub!(:active?).and_return(false)      
+    Organisation.stub!(:under_construction?).and_return(true)
+  end  
 end
 
 module Merb
