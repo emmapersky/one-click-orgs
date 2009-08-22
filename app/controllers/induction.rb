@@ -20,6 +20,10 @@ class Induction < Application
   end
   
   def organisation_details
+    @organisation_name = (Clause.get_current('organisation_name') ? Clause.get_current('organisation_name').text_value : nil)
+    @objectives = (Clause.get_current('objectives') ? Clause.get_current('objectives').text_value : nil)
+    @assets = (Clause.get_current('assets') ? Clause.get_current('assets').boolean_value : true)
+    # @assets = (@assets? "checked" : nil)
     render
   end
   
