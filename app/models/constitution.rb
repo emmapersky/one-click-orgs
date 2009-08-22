@@ -73,7 +73,7 @@ class Constitution
   end
   
   def self.domain
-    Clause.get_current('domain').text_value           
+    Clause.get_current('domain') ? Clause.get_current('domain').text_value : ""
   end
   
   # VOTING PERIOD

@@ -105,6 +105,7 @@ class Induction < Application
   end
   
   def preview_constitution
+    set_up_instance_variables_for_constitution_view
     render
   end
   
