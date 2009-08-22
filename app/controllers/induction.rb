@@ -2,6 +2,7 @@ class Induction < Application
   layout :induction
 
   skip_before :ensure_organisation_active
+  before :check_active_organisation
   before :ensure_authenticated, :exclude => [:founder, :create_founder]
 
   PENDING_ACTIONS = [:founding_meeting, :confirm_founding_meeting, :restart_induction]
@@ -204,21 +205,22 @@ class Induction < Application
   end
 
 private
-
-  def ensure_organisation_under_construction
-    if Organisation.pending?
-      throw :halt, redirect(url(:action => 'founding_meeting'))
-    elsif Organisation.active?
-      throw :halt, redirect(url(:controller => 'one_click', :action => 'control_centre'))
+  def check_active_organisation
+    if Organisation.active?
+      if Organisation.has_founding_member?
+        throw :halt, redirect(url(:controller => 'one_click', :action => 'control_centre'))
+      else
+        Organisation.under_construction!
+        throw :halt, "ERROR: organisation marked as active but no members present - reset"
+      end
     end
   end
   
-  def ensure_organisation_pending
-    if Organisation.under_construction?
-      throw :halt, redirect(url(:action => 'founder'))
-    elsif Organisation.active?
-      throw :halt, redirect(url(:controller => 'one_click', :action => 'control_centre'))
-    end
+  def ensure_organisation_under_construction
+    throw :halt, redirect(url(:action => 'founding_meeting')) unless Organisation.under_construction?
   end
-
+  
+  def ensure_organisation_pending
+    throw :halt, redirect(url(:action => 'founder')) unless Organisation.pending?
+  end
 end
