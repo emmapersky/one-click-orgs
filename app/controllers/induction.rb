@@ -77,10 +77,31 @@ class Induction < Application
   end
   
   def voting_settings
+    @voting_period = (Clause.get_current('voting_period') ? Clause.get_current('voting_period').integer_value : 259200)
+    @general_voting_system = (Clause.get_current('general_voting_system') ? Clause.get_current('general_voting_system').text_value : "RelativeMajority")
+    @membership_voting_system = (Clause.get_current('membership_voting_system') ? Clause.get_current('membership_voting_system').text_value : "AbsoluteTwoThirdsMajority")
+    @constitution_voting_system = (Clause.get_current('constitution_voting_system') ? Clause.get_current('constitution_voting_system').text_value : "AbsoluteTwoThirdsMajority")
     render
   end
   
   def create_voting_settings
+    voting_period = Clause.get_current('voting_period') || Clause.new(:name => 'voting_period')
+    voting_period.integer_value = params[:voting_period]
+    voting_period.save
+    
+    general_voting_system = Clause.get_current('general_voting_system') || Clause.new(:name => 'general_voting_system')
+    general_voting_system.text_value = params[:general_voting_system]
+    general_voting_system.save
+    
+    membership_voting_system = Clause.get_current('membership_voting_system') || Clause.new(:name => 'membership_voting_system')
+    membership_voting_system.text_value = params[:membership_voting_system]
+    membership_voting_system.save
+    
+    constitution_voting_system = Clause.get_current('constitution_voting_system') || Clause.new(:name => 'constitution_voting_system')
+    constitution_voting_system.text_value = params[:constitution_voting_system]
+    constitution_voting_system.save
+    
+    redirect(url(:action => 'preview_constitution'))
   end
   
   def preview_constitution

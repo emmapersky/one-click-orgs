@@ -1,0 +1,11 @@
+%h3 Induction - Voting settings
+= form(:action => url(:controller => 'induction', :action => 'create_voting_settings')) do
+  %p
+    = text_field(:name => "voting_period", :value => @voting_period, :label => "Voting period")
+  %p
+    = partial 'one_click/voting_system_field', :type => 'general', :description => "How will general decisions be made?"
+  %p
+    = partial 'one_click/voting_system_field', :type => 'membership', :description => "How will membership decisions be made?"
+  %p
+    = partial 'one_click/voting_system_field', :type => 'constitution', :description => "How will constitution decisions be made?"
+  %p= submit("Save settings")
