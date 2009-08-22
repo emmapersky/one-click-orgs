@@ -44,11 +44,37 @@ class Induction < Application
   end
   
   def members
+    # Find the first five members after the founding member,
+    # creating new empty members as necessary.
+    @members = Member.all
+    @members.shift
+    while @members.length < 5 do
+      @members.push(Member.new)
+    end
     render
   end
   
   def create_members
-    
+    debug_message = ""
+    params[:members].each_value do |member_params|
+      if !member_params[:name].blank? && !member_params[:email].blank?
+        if member_params[:id].blank?
+          debug_message += "| new member"
+          member = Member.new
+          member.new_password!
+        else
+          debug_message += "| update member"
+          member = Member.get!(member_params[:id])
+        end
+        member.name = member_params[:name]
+        member.email = member_params[:email]
+        member.save
+      elsif !member_params[:id].blank?
+        debug_message += "| destroy member"
+        Member.get!(member_params[:id]).destroy
+      end
+    end
+    redirect(url(:action => 'voting_settings'))
   end
   
   def voting_settings

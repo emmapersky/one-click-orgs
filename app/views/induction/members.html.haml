@@ -1,0 +1,12 @@
+%h3 Induction - Members
+= form(:action => url(:controller => 'induction', :action => 'create_members')) do
+  - 0.upto(4) do |i|
+    = fields_for(@members[i]) do
+      %h4="Member #{i+1}"
+      %p
+        = text_field(:name => "members[#{i}][name]", :value => @members[i].name, :label => "Name")
+      %p
+        = text_field(:name => "members[#{i}][email]", :value => @members[i].email, :label => "Email")
+      = hidden_field(:name => "members[#{i}][id]", :value => @members[i].id)
+  %p
+    = submit("Save members")
