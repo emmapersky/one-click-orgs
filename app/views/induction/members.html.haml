@@ -9,4 +9,6 @@
         = text_field(:name => "members[#{i}][email]", :value => @members[i].email, :label => "Email")
       = hidden_field(:name => "members[#{i}][id]", :value => @members[i].id)
   %p
-    = submit("Save members")
+    = submit("Save members and move on")
+%p
+  = link_to("Discard changes and go back", url(:controller => 'induction', :action => 'organisation_details'))

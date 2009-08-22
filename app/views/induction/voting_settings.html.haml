@@ -8,4 +8,6 @@
     = partial 'one_click/voting_system_field', :type => 'membership', :description => "How will membership decisions be made?"
   %p
     = partial 'one_click/voting_system_field', :type => 'constitution', :description => "How will constitution decisions be made?"
-  %p= submit("Save settings")
+  %p= submit("Save settings and move on")
+%p
+  = link_to("Discard and go back", url(:controller => 'induction', :action => 'members'))

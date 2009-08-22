@@ -9,4 +9,6 @@
   %p
     = check_box(:name => 'assets', :checked => @assets, :label => 'The organisation will have the power to hold and transfer assets')
   %p
-    = submit("Save details")
+    = submit("Save and move on")
+%p
+  = link_to("Discard and go back", url(:controller => 'induction', :action => 'founder'))

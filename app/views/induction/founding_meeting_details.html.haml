@@ -3,4 +3,6 @@
   %p= text_field(:name => 'date', :value => @founding_meeting_date, :label => "Date")
   %p= text_field(:name => 'time', :value => @founding_meeting_time, :label => "Starting at time")
   %p= text_field(:name => 'location', :value => @founding_meeting_location, :label => "Location")
-  %p= submit("Save details")
+  %p= submit("Save details and move on")
+%p= link_to("Discard changes and go back", url(:controller => 'induction', :action => 'preview_constitution'))
+

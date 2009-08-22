@@ -200,7 +200,7 @@ class Induction < Application
     
     Clause.get_current('organisation_state').destroy
     
-    redirect(url(:action => 'founder'))
+    redirect(url(:action => 'organisation_details'))
   end
 
 private
