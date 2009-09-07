@@ -14,7 +14,8 @@ on Debian:
 
 Also note:
 
- * Merb.thor is broken with rubygems >= 1.3.2, cf http://github.com/wycats/merb/issues#issue/2
+ * you need thor 0.9.9, version 0.11.5 is broken
+   (http://github.com/emmapersky/one-click-orgs/issues/#issue/35)
 
 
 1. Grab the source:
@@ -24,7 +25,7 @@ $ cd one-click-orgs
 
 2. Install the necessary gems locally:
 
-$ sudo gem install thor
+$ sudo gem install thor --version 0.9.9
 $ gem sources -a http://gems.github.com
 $ thor merb:gem:redeploy
 
