@@ -56,7 +56,7 @@ class OneClick < Application
   def propose_voting_period_amendment
     if params['new_voting_period']
       proposal = ChangeVotingPeriodProposal.new(
-        :title=>"Change voting period",
+        :title=>"Change voting period to #{VotingPeriods.name_for_value(params['new_voting_period'])}",
         :proposer_member_id => current_user.id,
         :parameters => ChangeVotingSystemProposal.serialize_parameters(
           'new_voting_period'=>params['new_voting_period'])

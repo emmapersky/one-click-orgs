@@ -1,4 +1,6 @@
 class Induction < Application
+  include AsyncJobs
+  
   layout :induction
 
   skip_before :ensure_organisation_active
@@ -155,10 +157,15 @@ class Induction < Application
   # Sends the constitution and agenda to founding members,
   # and moves the organisation to 'pending' state.
   def confirm_agenda
-    # TODO: Send emails
     organisation_state = Clause.get_current('organisation_state') || Clause.new(:name => 'organisation_state')
     organisation_state.text_value = 'pending'
     organisation_state.save!
+    
+    
+    # Send emails with founding meeting agenda
+    Member.all.each do |member|
+      async_job :send_agenda_email, member
+    end
     
     redirect(url(:action => 'founding_meeting'))
   end
@@ -223,5 +230,29 @@ private
   
   def ensure_organisation_pending
     throw :halt, redirect(url(:action => 'founder')) unless Organisation.pending?
+  end
+
+public
+  
+  def self.send_agenda_email(member)
+    organisation_name = Clause.get_current('organisation_name').text_value
+    founding_meeting_location = Clause.get_current('founding_meeting_location').text_value
+    founding_meeting_date = Clause.get_current('founding_meeting_date').text_value
+    founding_meeting_time = Clause.get_current('founding_meeting_time').text_value
+    founding_member_name = Member.first.name
+    members = Member.all
+    
+    send_mail(InductionMailer, :notify_agenda,
+      {:to => member.email, :from => 'info@oneclickor.gs', :subject => "Agenda for '#{organisation_name}' founding meeting"},
+      {
+        :member => member,
+        :organisation_name => organisation_name,
+        :founding_meeting_location => founding_meeting_location,
+        :founding_meeting_date => founding_meeting_date,
+        :founding_meeting_time => founding_meeting_time,
+        :founding_member_name => founding_member_name,
+        :members => members
+      }
+    )
   end
 end

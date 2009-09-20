@@ -140,15 +140,15 @@ describe "/one_click" do
       it "should add the proposal" do
         @response = request(url(:controller=>'one_click', 
           :action=>'propose_voting_period_amendment'),
-          :method=>'POST', :params=>{:new_voting_period=>'300'})
+          :method=>'POST', :params=>{:new_voting_period=>'86400'})
 
         puts @response.body if @response.status == 500
         @response.should redirect_to("/one_click/control_centre")
 
         ChangeVotingPeriodProposal.count.should == 1
-        ChangeVotingPeriodProposal.all.first.title.should == 'Change voting period'
+        ChangeVotingPeriodProposal.all.first.title.should == 'Change voting period to 24 hours'
         proposal_parameters = JSON.parse(ChangeVotingPeriodProposal.all.first.parameters)
-        proposal_parameters['new_voting_period'].to_i.should == 300
+        proposal_parameters['new_voting_period'].to_i.should == 86400
       end
     end
   end
