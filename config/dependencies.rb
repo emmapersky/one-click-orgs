@@ -44,6 +44,7 @@ dependency "mongrel", "1.1.5"
 dependency "data_objects", ">= 0.9.11"
 dependency "json_pure", "1.1.9", :require_as => 'json'
 dependency "daemons", "1.0.10"
+dependency "thor", "0.9.9"
  
 # need to add gem sources for these
 # $ gem sources -a http://gems.github.com 
