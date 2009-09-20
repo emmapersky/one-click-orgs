@@ -159,11 +159,11 @@ describe "/one_click" do
     end
     
     it "should display a timeline with past events" do
+      Member.make_n(10) 
+      Decision.make_n(10)
+      Proposal.make_n(10)
+      
       @response = request(url(:controller=>'one_click', :action=>'timeline'))
-#      Member.stub!(:all).and_return( Member.make_n(10) )
-      Decision.stub!(:all).and_return([ Decision.make ])
-      Proposal.stub!(:all).and_return([ Proposal.make ])
-        
       @response.should be_successful
       @response.should have_xpath("//table[@class='timeline']")
     end
