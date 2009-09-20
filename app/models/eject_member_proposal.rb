@@ -1,9 +1,10 @@
 class EjectMemberProposal < Proposal
-  def enact!
+  def enact!(args={})
     raise "Can not enact a proposal which has not passed" unless passed?
+    
     params = YAML.JSON(self.parameters)
     member = Member.get(params['id'])
-    member.destroy
+    member.eject!
   end
   
   def voting_system

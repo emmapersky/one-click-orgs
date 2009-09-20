@@ -1,8 +1,7 @@
 namespace :users do 
   desc "create default users"
   task :create => :merb_env do
-
-    DataMapper.auto_migrate!
+#    DataMapper.auto_migrate!
 
     [['jan@trampolinesystems.com', 'Jan Berkel'],
     ['emma@trampolinesystems.com', 'Emma Persky'],
@@ -11,7 +10,7 @@ namespace :users do
     ['smallcaps@gmail.com', 'Jef Koh'],
     ['angusprune@gmail.com', 'James Heaver']
     ].each do |(email, name)|
-      Member.create!(:email=>email, :name=>name, :password=>'oneclick') if Member.all(:email=>email).empty?
+      Member.create!(:email=>email, :name=>name, :password=>'oneclick') unless Member.first(:email=>email)
     end
   end
 end

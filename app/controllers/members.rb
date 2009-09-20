@@ -3,7 +3,7 @@ class Members < Application
   # provides :xml, :yaml, :js
 
   def index
-    @members = Member.all
+    @members = Member.all.active
     @new_member = Member.new
     display @members
     display @new_member

@@ -11,6 +11,7 @@ Member.blueprint do
   pw = Sham.password
   password pw
   password_confirmation pw
+  active true
 end
 
 Proposal.blueprint do |bp|

@@ -25,6 +25,8 @@ class Proposal
   
   validates_present :proposer_member_id
   
+  
+  
   def end_date
     self.close_date
   end
@@ -69,6 +71,7 @@ class Proposal
   end
   
   def majority?
+    #FIXME, voting system?
     num_members = Member.count(:created_at.lt => creation_date)
     return votes_for >= (num_members / 2.0).ceil
   end
@@ -110,7 +113,7 @@ class Proposal
   end
 
   def self.close_due_proposals
-   Proposal.all(:close_date.lt => Time.now, :open=>1).each { |p| p.close! }
+   Proposal.all(:close_date.lt => Time.now, :open=>true).each { |p| p.close! }
   end
   
   def self.close_early_proposals
@@ -139,7 +142,7 @@ class Proposal
   def self.send_email_for(proposal_id)
     proposal = Proposal.get(proposal_id)
     
-    Member.all.each do |m|
+    Member.all.active.each do |m|
       OCOMail.send_mail(ProposalMailer, :notify_creation,
         {:to => m.email, :from => 'info@oneclickor.gs', :subject => 'new one click proposal'},
         {:member => m, :proposal => proposal}
@@ -150,6 +153,7 @@ class Proposal
   def to_event
     {:timestamp => self.creation_date, :object => self, :kind => accepted ? :proposal : :failed_proposal }
   end
+  
 end
 
 # Run the close proposal every 60 seconds

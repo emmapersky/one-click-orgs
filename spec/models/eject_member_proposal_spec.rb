@@ -8,16 +8,17 @@ describe EjectMemberProposal do
     EjectMemberProposal.new.voting_system.should == VotingSystems::Veto
   end
   
-  it "should eject the member after passing" do
-    @m = Member.create!(:name => "Bob Smith", :email => "bob@example.com")
+  it "should eject the member after passing, disabling the account" do
+    @m = Member.make    
     
-    @p = EjectMemberProposal.new(:parameters=>{'id' => @m.id}.to_json)
+    @p = EjectMemberProposal.new(:parameters=> {'id' => @m.id }.to_json)
+    @m.should be_active
+    passed_proposal(@p).call
     
-    @p.stub!(:passed?).and_return(true)
-    lambda {
-      @p.enact!        
-    }.should change(Member, :count).by(-1)
+    #FIXME make proposals more testable by avoiding loading of models
+    #@m.should_receive(:eject!)
     
-    Member.first(:id => @m.id).should be_nil
-  end
+    @m.reload
+    @m.should_not be_active
+  end  
 end

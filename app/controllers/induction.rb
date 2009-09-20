@@ -3,6 +3,7 @@ class Induction < Application
 
   skip_before :ensure_organisation_active
   before :check_active_organisation
+  
   before :ensure_authenticated, :exclude => [:founder, :create_founder]
 
   PENDING_ACTIONS = [:founding_meeting, :confirm_founding_meeting, :restart_induction]
@@ -54,7 +55,7 @@ class Induction < Application
   def members
     # Find the first five members after the founding member,
     # creating new empty members as necessary.
-    @members = Member.all
+    @members = Member.all.active
     @members.shift
     while @members.length < 5 do
       @members.push(Member.new)
@@ -146,7 +147,7 @@ class Induction < Application
     @founding_meeting_date = Clause.get_current('founding_meeting_date').text_value
     @founding_meeting_time = Clause.get_current('founding_meeting_time').text_value
     
-    @members = Member.all
+    @members = Member.all.active
     
     render
   end
@@ -169,7 +170,7 @@ class Induction < Application
   def founding_meeting
     @organisation_name = Clause.get_current('organisation_name').text_value
     @founding_member = Member.first
-    @other_members = Member.all; @other_members.shift
+    @other_members = Member.all.active; @other_members.shift
     
     render
   end
@@ -177,7 +178,7 @@ class Induction < Application
   # Remove any founding members that did not vote in favour,
   # and move organisation to 'active' state.
   def confirm_founding_meeting
-    other_members = Member.all; other_members.shift
+    other_members = Member.all.active; other_members.shift
     confirmed_member_ids = params[:members].keys.map{|id| id.to_i}
     other_members.each do |member|
       unless confirmed_member_ids.include?(member.id)

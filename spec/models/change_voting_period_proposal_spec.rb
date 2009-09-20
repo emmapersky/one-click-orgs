@@ -8,8 +8,7 @@ describe ChangeVotingPeriodProposal do
   
   it "should change voting period after successful proposal" do
     @p = ChangeVotingPeriodProposal.new
-    @p.stub!(:passed?).and_return(true)
     Constitution.should_receive(:change_voting_period).with(86400)
-    @p.enact!('new_voting_period'=>86400)
+    passed_proposal(@p, 'new_voting_period'=>86400).call
   end
 end

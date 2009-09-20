@@ -1,5 +1,7 @@
 require 'dm-validations'
 
+class VoteError < RuntimeError; end
+
 class Member
   include DataMapper::Resource
   include AsyncJobs
@@ -11,13 +13,19 @@ class Member
   property :email, String, :nullable => false
   property :name, String
   property :created_at, DateTime, :default => Proc.new {|r,p| Time.now.to_datetime}
+  property :active, Boolean, :default => true
   
+  def self.active
+    all(:active=>true)
+  end
+    
   def cast_vote(action, proposal_id)
     raise ArgumentError, "need action and proposal_id" unless action and proposal_id
     
-    existing_vote = Vote.all(:member_id => self.id, :proposal_id => proposal_id)
-    raise VoteError, "Vote already exists for this proposal" unless existing_vote.blank?
-    
+    existing_vote = Vote.first(:member_id => self.id, :proposal_id => proposal_id)
+    raise VoteError, "Vote already exists for this proposal" if existing_vote
+
+    #FIXME why not just pass the proposal in?    
     proposal = Proposal.get(proposal_id)
     raise VoteError, "proposal with id #{proposal_id} not found" unless proposal
     raise VoteError, "Can not vote on proposals created before member created" if proposal.creation_date < self.created_at
@@ -30,13 +38,10 @@ class Member
     end
   end
   
-  def new_password!
-    chars = ("a".."z").to_a + ("A".."Z").to_a + ("0".."9").to_a
-    new_password = ""
-    1.upto(6) { new_password << chars[rand(chars.size-1)] }
-    self.password = new_password
-    self.password_confirmation = new_password
-    new_password
+  def new_password!(n=6)
+    raise ArgumentError, "password must have at least 6 characters" if n < 6
+    chars = ["a".."z", "A".."Z", "0".."9"].map(&:to_a).flatten
+    self.password = self.password_confirmation = (1..n).map { chars[rand(chars.size-1)] }.join
   end
   
   def self.create_member(params)
@@ -57,10 +62,13 @@ class Member
     )
   end  
   
+  def eject!
+    self.active = false
+    save
+  end
+  
   def to_event
     {:timestamp => self.created_at, :object => self, :kind => :new_member}
   end
 end
 
-#error class
-class VoteError < RuntimeError; end

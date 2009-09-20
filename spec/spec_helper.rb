@@ -83,6 +83,12 @@ Merb::Test.add_helpers do
     }).should redirect_to('/')
   end
   
+  
+  def passed_proposal(p, args={})
+    p.stub!(:passed?).and_return(true)
+    lambda { p.enact!(args) }
+  end
+  
   def organisation_is_pending
     Organisation.stub!(:pending?).and_return(true)      
     Organisation.stub!(:active?).and_return(false)      
