@@ -31,14 +31,7 @@ class Application < Merb::Controller
     @website = Constitution.domain.blank? ? absolute_url('') : Constitution.domain
     
     @period  = Clause.get_current('voting_period').integer_value
-    @voting_period = case @period
-    when 0..86400
-      pluralize((@period / 60.0).round, 'minute')
-    when 86400..(86400 * 5)
-      pluralize((@period / 3600.0).round, 'hour')
-    else
-      pluralize((@period / 3600.0 * 24).round, 'day')
-    end
+    @voting_period = VotingPeriods.name_for_value(@period)
     
     @general_voting_system = Clause.get_current('general_voting_system').text_value
     @general_voting_system_description = case @general_voting_system

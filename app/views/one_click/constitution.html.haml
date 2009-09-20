@@ -84,10 +84,14 @@
             Propose an amendment to this clause
         %div.proposal_form{:style => 'display: none;'}
           %p
-            %label{:for => 'value'}
+            %label{:for => 'new_voting_period'}
               Change the voting period to:
-            %input{:name => 'new_voting_period', :value=>@period }
-            %input{:type => 'hidden', :name => 'name', :value => 'domain'}
+            %select{:name => 'new_voting_period'}
+              - VotingPeriods.all do |vp|
+                - if vp[:value] == @period
+                  %option{:value => vp[:value], :selected => true}= vp[:name]
+                - else
+                  %option{:value => vp[:value]}= vp[:name]
           %p
             = submit "Propose change", :id => 'submit'
           %p
