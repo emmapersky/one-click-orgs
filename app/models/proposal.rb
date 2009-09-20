@@ -9,8 +9,6 @@ class Proposal
   has n, :votes
   has 1, :decision
   
-  attr_accessor :completed, :for
-
   belongs_to :proposer, :class_name => 'Member', :child_key => [:proposer_member_id]
   
   property :id, Serial
@@ -29,6 +27,11 @@ class Proposal
   
   def end_date
     self.close_date
+  end
+  
+  # Returns a Vote by the member specified, or Nil
+  def vote_by(member)
+    member.votes.first(:proposal_id => self.id)
   end
   
   def votes_for
@@ -133,7 +136,6 @@ class Proposal
   def self.all_failed
     all(:close_date.lt => Time.now, :accepted => false, :order => [:close_date.desc])
   end
-  
   
   def send_email
     async_job :send_email_for, self.id

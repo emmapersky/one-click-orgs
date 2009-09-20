@@ -1,16 +1,22 @@
 class Proposals < Application
   # provides :xml, :yaml, :js
   
+  def index
+    # Fetch open proposals
+    @proposals = Proposal.all_open
+    
+    # Fetch five most recent decisions
+    @decisions = Decision.all(:limit => 5, :order => [:id.desc])
+    
+    # Fetch five most recent failed proposals
+    @failed_proposals = Proposal.all_failed[0..4]
+        
+    render
+  end
+
   def show(id)
     @proposal = Proposal.get(id)
     raise NotFound unless @proposal
-    
-    vote = current_user.votes.first(:proposal_id => @proposal.id)
-    if vote
-      @proposal.completed = true
-      @proposal.for = vote.for
-    end
-    
     display @proposal
   end
 
