@@ -9,8 +9,8 @@ class Members < Application
     display @new_member
   end
 
-  def show(id)
-    @member = Member.get(id)
+  def show
+    @member = Member.get(params[:id])
     raise NotFound unless @member
     display @member
   end
@@ -21,16 +21,17 @@ class Members < Application
     display @member
   end
 
-  def edit(id)
+  def edit
     only_provides :html
-    raise ::Merb::ControllerExceptions::Unauthorized, 'You are not authorizied to do this' unless current_user.id == id.to_i
+    raise ::Merb::ControllerExceptions::Unauthorized, 'You are not authorizied to do this' unless current_user.id == params[:id].to_i
     
-    @member = Member.get(id)
+    @member = Member.get(params[:id])
     raise NotFound unless @member
     display @member
   end
 
-  def create(member)
+  def create
+    member = params[:member]
     title = "Add #{member['name']} as a member of #{Constitution.organisation_name}" # TODO: should default in model
     proposal = AddMemberProposal.new(
       :title => title,
@@ -46,7 +47,8 @@ class Members < Application
   end
 
 
-  def update(id, member)
+  def update
+    id, member = params[:id], params[:member]
     @member = Member.get(id)
     raise NotFound unless @member
     if @member.update_attributes(member)
@@ -58,8 +60,8 @@ class Members < Application
     end
   end
 
-  def destroy(id)
-    @member = Member.get(id)
+  def destroy
+    @member = Member.get(params[:id])
     raise NotFound unless @member
     
     title = "Eject #{@member.name} from #{Constitution.organisation_name}"

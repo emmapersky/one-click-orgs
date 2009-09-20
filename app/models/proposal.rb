@@ -99,7 +99,7 @@ class Proposal
     self.accepted = passed
 
     if passed
-      params = self.parameters ? YAML.JSON(self.parameters) : {}      
+      params = self.parameters ? JSON.parse(self.parameters) : {}      
       enact!(params) 
     end
     

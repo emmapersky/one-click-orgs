@@ -14,14 +14,14 @@ class Proposals < Application
     render
   end
 
-  def show(id)
-    @proposal = Proposal.get(id)
+  def show
+    @proposal = Proposal.get(params[:id])
     raise NotFound unless @proposal
     display @proposal
   end
 
-  def create(proposal)
-    @proposal = Proposal.new(proposal)
+  def create
+    @proposal = Proposal.new(params[:proposal])
     @proposal.proposer_member_id = current_user.id #fixme
         
     if @proposal.save

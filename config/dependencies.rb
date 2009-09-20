@@ -5,7 +5,6 @@ dm_gems_version   = "0.9.11"
 
 #For more information about each component, please read http://wiki.merbivore.com/faqs/merb_components
 # after updating: thor merb:gem:install && thor merb:gem:redeploy
-dependency "merb-action-args", merb_gems_version
 dependency "merb-assets", merb_gems_version  
 dependency "merb-cache", merb_gems_version   
 dependency "merb-helpers", merb_gems_version 
@@ -33,18 +32,18 @@ dependency "do_mysql", "0.9.11"
 dependency "merb_datamapper", merb_gems_version
 
 dependency "faker", "0.3.1"
-dependency "haml", "2.0.9"
-dependency "rspec", "1.1.12", :require_as => nil
+dependency "haml", ">= 2.2.5"
+dependency "erubis", ">= 2.6.5"
+dependency "extlib", ">= 0.9.13"
+dependency "rspec", "1.2.8", :require_as => nil
 dependency "rack", "1.0.0"
-dependency "fastthread", "1.0.7"
+dependency "fastthread", ">= 1.0.7"
 dependency "gem_plugin", "0.2.3"
 dependency "cgi_multipart_eof_fix", "2.5.0"
 dependency "mongrel", "1.1.5"
-dependency "data_objects", "0.9.11"
-dependency "json_pure", "1.1.7", :require_as => 'json'
+dependency "data_objects", ">= 0.9.11"
+dependency "json_pure", "1.1.9", :require_as => 'json'
 dependency "daemons", "1.0.10"
-dependency "ZenTest", "4.1.3", :require_as => 'zentest'
-dependency "ruby_parser", "2.0.3"
  
 # need to add gem sources for these
 # $ gem sources -a http://gems.github.com 
