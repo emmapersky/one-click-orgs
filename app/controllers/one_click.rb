@@ -37,25 +37,11 @@ class OneClick < Application
   end
   
   def timeline
-    members = Member.all
-    proposals = Proposal.all
-    decisions = Decision.all
-    failed_proposals = Proposal.all_failed
-    
-    @timeline = []
-    @timeline += members.map do |member|
-      {:timestamp => member.created_at, :object => member, :kind => :new_member}
-    end
-    @timeline += proposals.map do |proposal|
-      {:timestamp => proposal.creation_date, :object => proposal, :kind => :proposal}
-    end
-    @timeline += decisions.map do |decision|
-      {:timestamp => decision.proposal.close_date, :object => decision, :kind => :decision}
-    end
-    @timeline += failed_proposals.map do |failed_proposal|
-      {:timestamp => failed_proposal.close_date, :object => failed_proposal, :kind => :failed_proposal}
-    end
-    @timeline.sort!{|a, b| b[:timestamp] <=> a[:timestamp]}
+    @timeline = [
+      Member.all,
+      Proposal.all,
+      Decision.all
+    ].flatten.map(&:to_event).sort{|a, b| b[:timestamp] <=> a[:timestamp]}
     
     render
   end

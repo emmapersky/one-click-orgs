@@ -56,6 +56,10 @@ class Member
       {:member => member, :password => password}
     )
   end  
+  
+  def to_event
+    {:timestamp => self.created_at, :object => self, :kind => :new_member}
+  end
 end
 
 #error class

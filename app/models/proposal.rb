@@ -128,7 +128,7 @@ class Proposal
   end
   
   def self.all_failed
-    all(:close_date.lt => Time.now, :order => [:close_date.desc]).select{|v| !v.accepted}
+    all(:close_date.lt => Time.now, :accepted => false, :order => [:close_date.desc])
   end
   
   
@@ -145,6 +145,10 @@ class Proposal
         {:member => m, :proposal => proposal}
       )
     end
+  end
+  
+  def to_event
+    {:timestamp => self.creation_date, :object => self, :kind => accepted ? :proposal : :failed_proposal }
   end
 end
 
