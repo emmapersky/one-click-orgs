@@ -2,6 +2,7 @@ module VotingPeriods
   PERIODS = [86400, 172800, 259200, 604800, 1209600] # in seconds
   
   def self.name_for_value(value)
+    value = value.to_i
     case value
     when 0..(86400 * 5)
       hours = (value / 3600.0).round
