@@ -25,7 +25,24 @@ describe "everything" do
         @response.should be_successful
       end
     end
+  end
   
+  describe "resource(:proposals)", :given => "a proposal exists"  do
+     describe "GET" do
+
+       before(:each) do
+         @response = request(resource(:proposals))
+       end
+
+       it "responds successfully" do
+         @response.should be_successful
+       end
+
+       it "contains a list of proposals" do
+         pending
+         @response.should have_xpath("//ul")
+       end
+     end
   end
 end
 
