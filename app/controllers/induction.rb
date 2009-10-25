@@ -71,7 +71,7 @@ class Induction < Application
     # Find the first five members after the founding member,
     # creating new empty members as necessary.
     @members = Member.all.active
-    @members.shift
+    @founder = @members.shift
     while @members.length < 5 do
       @members.push(Member.new)
     end
