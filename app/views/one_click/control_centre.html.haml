@@ -17,7 +17,7 @@
 %table.proposals
   %tr
     %th Title
-    %th End in
+    %th Ends
     %th Vote
   - for proposal in @proposals
     %tr{:class => cycle('odd', 'even')}
@@ -30,6 +30,9 @@
         %p= link_to("More details", resource(proposal))
       %td.timestamp
         = time_to_go_in_words(proposal.end_date)
+        (
+        = proposal.end_date.formatted(:long)
+        )
       %td.vote
         = partial 'proposals/vote', :proposal => proposal
   

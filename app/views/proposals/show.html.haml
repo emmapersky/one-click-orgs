@@ -23,6 +23,9 @@
   %p
     Voting on this proposal will end in
     = time_to_go_in_words(@proposal.end_date)
+    (
+    = @proposal.end_date.formatted(:long)
+    )
   %p
     Your vote:
     = partial 'vote', :proposal => @proposal
