@@ -2,11 +2,11 @@ require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
 describe ChangeTextProposal do
   before(:each) do
-    @objectives = Clause.create!(:name => 'objectives', :text_value => "eat all the cheese")
+    @objectives = Clause.set_text('objectives', 'eat all the cheese')
   end
   
   it "should use the constitution voting system" do
-    Clause.create!(:name => 'constitution_voting_system', :text_value => 'Veto')
+    Clause.set_text('constitution_voting_system', 'Veto')
     ChangeTextProposal.new.voting_system.should == VotingSystems::Veto
   end
   
@@ -16,6 +16,6 @@ describe ChangeTextProposal do
     passed_proposal(@p, 'name'=>'objectives', 'value'=>'make all the yoghurt').
       should change(Clause, :count).by(1)
     
-    Clause.get_current('objectives').text_value.should == 'make all the yoghurt'
+    Clause.get_text('objectives').should == 'make all the yoghurt'
   end
 end

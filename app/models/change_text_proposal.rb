@@ -3,7 +3,7 @@
 # organisation objectives.
 class ChangeTextProposal < Proposal
   def enact!(params)
-    Constitution.set_text(params['name'], params['value'])
+    Clause.set_text(params['name'], params['value'])
   end
   
   def voting_system

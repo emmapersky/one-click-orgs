@@ -6,6 +6,7 @@ class MembersMailer < Merb::MailController
     # read more at http://wiki.merbivore.com/pages/mailers
     @member = params[:member]
     @password = params[:password]
+    @organisation_name = Organisation.name
     render_mail
   end
   

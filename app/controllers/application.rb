@@ -31,19 +31,17 @@ class Application < Merb::Controller
   end
   
   def set_up_instance_variables_for_constitution_view
-    # TODO: Replace these direct calls to Clause.get_current and hard-coded values with neater calls to the Constitution uber-brain class
-    @organisation_name = Clause.get_current('organisation_name').text_value
-    @objectives = Clause.get_current('objectives').text_value
-    @assets = Clause.get_current('assets').boolean_value
-    @website = Constitution.domain.blank? ? absolute_url('') : Constitution.domain
+    @organisation_name = Organisation.name
+    @objectives = Organisation.objectives
+    @assets = Organisation.assets
+    @website = Organisation.domain
     
-    @period  = Clause.get_current('voting_period').integer_value
+    @period  = Clause.get_integer('voting_period')
     @voting_period = VotingPeriods.name_for_value(@period)
     
     @general_voting_system = Constitution.voting_system(:general)
     @membership_voting_system = Constitution.voting_system(:membership)
     @constitution_voting_system = Constitution.voting_system(:constitution)
-  end
-  
+  end  
 end
 

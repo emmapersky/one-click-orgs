@@ -2,7 +2,7 @@ require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
 describe ChangeVotingSystemProposal do
   before do
-    @constitution_voting_system = Clause.create!(:name=>'constitution_voting_system', :text_value=>'RelativeMajority')        
+    @constitution_voting_system = Clause.set_text('constitution_voting_system', 'RelativeMajority')        
     @proposed_system = 'Unanimous'
   end
   
