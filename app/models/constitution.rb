@@ -43,7 +43,7 @@ class Constitution
   # VOTING PERIOD
   
   def self.voting_period
-    Clause.get_integer('voting_period') or 3 * 86400 # fixme
+    Clause.get_integer('voting_period')
   end
   
   def self.change_voting_period(new_period)

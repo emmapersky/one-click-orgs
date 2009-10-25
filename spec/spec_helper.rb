@@ -69,7 +69,8 @@ Merb::Test.add_helpers do
   end
 
   def stub_constitution!
-#    Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))                
+    Constitution.stub!(:voting_period).and_return(3 * 86400)
+#    Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))
   end
   
   def stub_organisation!
