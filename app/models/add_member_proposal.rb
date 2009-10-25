@@ -1,6 +1,6 @@
 class AddMemberProposal < Proposal
   def enact!(params)
-    member = Member.create_member(params)
+    Member.create_member(params, true)
   end
   
   def voting_system

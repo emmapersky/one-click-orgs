@@ -5,7 +5,7 @@ class VoteError < RuntimeError; end
 class Member
   include DataMapper::Resource
   include AsyncJobs
-  after :create, :send_welcome 
+  
   has n, :votes
   has n, :proposals, :class_name => 'Proposal', :child_key => [:proposer_member_id]
   
@@ -44,9 +44,10 @@ class Member
     self.password = self.password_confirmation = (1..n).map { chars[rand(chars.size-1)] }.join
   end
   
-  def self.create_member(params)
+  def self.create_member(params, send_welcome=false)
     member = Member.new(params)
     member.new_password!
+    member.send_welcome if send_welcome
     member.save
   end
   

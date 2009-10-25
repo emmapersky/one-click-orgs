@@ -20,13 +20,6 @@ describe "/induction" do
       @response = request('/one_click')
       @response.should redirect_to(url(:controller=>'induction', :action=>'founder'))
     end
-    
-    it "should redirect to organisation details if founder is already present" do
-      Organisation.stub!(:has_founding_member?).and_return(true)
-
-      @response = request(url(:controller=>'induction', :action=>'founder'))
-      @response.should redirect(url(:controller=>'induction', :action=>'organisation_details'))
-    end
   end
   
   describe "pending state (constitution has been setup, emails have been sent)" do

@@ -1,12 +1,14 @@
 require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
 describe Proposal do
+  include MailControllerTestHelper
   
   before(:each) do
     stub_constitution!  
     
     @member = Member.make
-    Merb::Mailer.deliveries.clear
+    clear_mail_deliveries
+    
     Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))
   end
 
@@ -44,6 +46,20 @@ describe Proposal do
 
     mail.to.should ==([@member.email])
     mail.from.should ==(["info@oneclickor.gs"])
+#    mail.subject.first.should == ""         
   end
-    
+
+  it "should send out an email to each member after a Decision has been made" do
+     Member.count.should >0
+
+     p = Proposal.make(:proposer => @member)
+     p.stub!(:passed?).and_return(true)
+     p.close!
+     
+     Merb::Mailer.deliveries.size.should ==(Member.count*2)    
+
+     mail = last_delivered_mail
+     mail.from.should ==(["info@oneclickor.gs"])
+#     mail.subject.first.should == ""
+  end    
 end

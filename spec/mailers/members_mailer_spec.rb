@@ -1,14 +1,5 @@
 require File.join(File.dirname(__FILE__), "..", "spec_helper")
 
-# Move this to your spec_helper.rb.
-module MailControllerTestHelper
-  # Helper to deliver
-  def deliver(action, mail_params = {}, send_params = {})
-    MembersMailer.dispatch_and_deliver(action, { :from => "no-reply@webapp.com", :to => "recepient@person.com" }.merge(mail_params), send_params)
-    @delivery = last_delivered_mail
-  end
-end
-
 describe MembersMailer, "#notify_new_password email template" do
   include MailControllerTestHelper
   
