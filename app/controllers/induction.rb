@@ -22,8 +22,8 @@ class Induction < Application
   
   def create_founder
     # Detect the server domain if not already set
-    if Constitution.domain.blank?
-      Constitution.set_text(:domain, "#{request.protocol}://#{request.host}")
+    if Organisation.domain.blank?
+      Clause.set_text(:domain, "#{request.protocol}://#{request.host}")
     end
     
     @founder = Member.first || Member.new
@@ -38,9 +38,9 @@ class Induction < Application
   end
   
   def organisation_details
-    @organisation_name = (Clause.get_current('organisation_name') ? Clause.get_current('organisation_name').text_value : nil)
-    @objectives = (Clause.get_current('objectives') ? Clause.get_current('objectives').text_value : nil)
-    @assets = (Clause.get_current('assets') ? Clause.get_current('assets').boolean_value : true)
+    @organisation_name = Organisation.name
+    @objectives = Organisation.objectives
+    @assets = Organisation.assets
     render
   end
   
@@ -131,9 +131,9 @@ class Induction < Application
   end
   
   def founding_meeting_details
-    @founding_meeting_date = Clause.get_current('founding_meeting_date') ? Clause.get_current('founding_meeting_date').text_value : nil
-    @founding_meeting_time = Clause.get_current('founding_meeting_time') ? Clause.get_current('founding_meeting_time').text_value : nil
-    @founding_meeting_location = Clause.get_current('founding_meeting_location') ? Clause.get_current('founding_meeting_location').text_value : nil
+    @founding_meeting_date = Clause.get_text('founding_meeting_date')
+    @founding_meeting_time = Clause.get_text('founding_meeting_time')
+    @founding_meeting_location = Clause.get_text('founding_meeting_location')
     render
   end
   
@@ -154,10 +154,10 @@ class Induction < Application
   end
   
   def preview_agenda
-    @organisation_name = Clause.get_current('organisation_name').text_value
-    @founding_meeting_location = Clause.get_current('founding_meeting_location').text_value
-    @founding_meeting_date = Clause.get_current('founding_meeting_date').text_value
-    @founding_meeting_time = Clause.get_current('founding_meeting_time').text_value
+    @organisation_name = Organisation.name
+    @founding_meeting_location = Clause.get_text('founding_meeting_location')
+    @founding_meeting_date = Clause.get_text('founding_meeting_date')
+    @founding_meeting_time = Clause.get_text('founding_meeting_time')
     
     @members = Member.all.active
     
@@ -185,7 +185,7 @@ class Induction < Application
   # Form to confirm that the founding meeting happened,
   # and select which founding members voted in favour.
   def founding_meeting
-    @organisation_name = Clause.get_current('organisation_name').text_value
+    @organisation_name = Organisation.name
     @founding_member = Member.first
     @other_members = Member.all.active; @other_members.shift
     
@@ -245,10 +245,10 @@ private
 public
   
   def self.send_agenda_email(member)
-    organisation_name = Clause.get_current('organisation_name').text_value
-    founding_meeting_location = Clause.get_current('founding_meeting_location').text_value
-    founding_meeting_date = Clause.get_current('founding_meeting_date').text_value
-    founding_meeting_time = Clause.get_current('founding_meeting_time').text_value
+    organisation_name = Organisation.name
+    founding_meeting_location = Clause.get_text('founding_meeting_location')
+    founding_meeting_date = Clause.get_text('founding_meeting_date')
+    founding_meeting_time = Clause.get_text('founding_meeting_time')
     founding_member_name = Member.first.name
     members = Member.all
     

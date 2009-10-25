@@ -56,6 +56,7 @@ end
 Merb::Test.add_helpers do
   def default_user
     stub_constitution!
+    stub_organisation!
       
     Member.first(:email => "krusty@clown.com") || 
       Member.create(:email => "krusty@clown.com",
@@ -64,12 +65,14 @@ Merb::Test.add_helpers do
                    :password_confirmation => "password") or raise "can't create user"
   end
 
-
   def stub_constitution!
-    organisation_is_active
-    Constitution.stub!(:domain).and_return('http://test.com')
-    Constitution.stub!(:organisation_name).and_return('test')
 #    Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))                
+  end
+  
+  def stub_organisation!
+    organisation_is_active
+    Organisation.stub!(:domain).and_return('http://test.com')
+    Organisation.stub!(:name).and_return('test')
   end
   
   def login
@@ -115,9 +118,6 @@ module Merb
   end
 end
 
-
-
-  
 module MailControllerTestHelper          
   def clear_mail_deliveries
     Merb::Mailer.deliveries.clear
@@ -127,5 +127,3 @@ module MailControllerTestHelper
     Merb::Mailer.deliveries.last
   end
 end
-
-          

@@ -66,8 +66,8 @@ describe "/induction" do
   
   it "should detect the domain" do
     organisation_is_under_construction
-    Constitution.domain.should be_blank
+    Organisation.domain.should be_blank
     request("/induction/create_founder", :method => "POST", :params => {:member => {:name => "Bob Smith", :email => "bob@example.com", :password => "qwerty", :password_confirmation => "qwerty"}})
-    Constitution.domain.should == "http://example.org"
+    Organisation.domain.should == "http://example.org"
   end
 end

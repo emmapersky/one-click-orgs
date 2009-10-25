@@ -1,47 +1,5 @@
 class Constitution
   
-  # FREE TEXT FIELDS
-  
-  def self.organisation_name
-    Clause.get_current("organisation_name").text_value
-  end
-  
-  def self.objectives
-    Clause.get_current('objectives').text_value
-  end
-  
-  def self.domain
-    Clause.get_current('domain').text_value
-  end
-  
-  def self.text(name)
-    Clause.get_current(name.to_s).text_value
-  end
-  
-  def self.set_text(name, value)
-    name = name.to_s
-    case name
-    when 'organisation_name'
-      Clause.create!(:name => 'organisation_name', :text_value => value)
-    when 'objectives'
-      Clause.create!(:name => 'objectives', :text_value => value)
-    when 'domain'
-      Clause.create!(:name => 'domain', :text_value => value)
-    else
-      raise ArgumentError, "invalid text field name: #{name}"
-    end
-  end
-  
-  def self.set_boolean(name, value)
-    name = name.to_s
-    case name
-    when 'assets'
-      Clause.create!(:name => 'assets', :boolean_value => value)
-    else
-      raise ArgumentError, "invalid boolean field name: #{name}"
-    end
-  end
-  
   # VOTING SYSTEMS
   
   def self.voting_system(type = :general)     
@@ -79,24 +37,20 @@ class Constitution
     raise ArgumentError, "system #{type} not found" unless ['general', 'membership', 'constitution'].include?(type.to_s)
     raise ArgumentError, "no previous voting system" unless Clause.exists?("#{type}_voting_system")
     raise ArgumentError, "invalid voting system: #{new_system}" unless VotingSystems.get(new_system)
-    Clause.create!(:name=>"#{type}_voting_system", :text_value=> new_system)
-  end
-  
-  def self.domain
-    Clause.get_current('domain') ? Clause.get_current('domain').text_value : ""
+    Clause.set_text("#{type}_voting_system", new_system)
   end
   
   # VOTING PERIOD
   
   def self.voting_period
-    Clause.get_current('voting_period').integer_value rescue 3 * 86400 # fixme
+    Clause.get_integer('voting_period') rescue 3 * 86400 # fixme
   end
   
   def self.change_voting_period(new_period)
     raise ArgumentError, "invalid voting period #{new_period}" unless new_period > 0
     raise ArgumentError, "no previous voting period" unless Clause.exists?('voting_period')
     
-    c = Clause.create!(:name=>'voting_period', :integer_value=>new_period)
+    c = Clause.set_integer('voting_period', new_period)
     c.integer_value = new_period
     c.save!
   end

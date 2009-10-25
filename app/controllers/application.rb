@@ -31,16 +31,15 @@ class Application < Merb::Controller
   end
   
   def set_up_instance_variables_for_constitution_view
-    # TODO: Replace these direct calls to Clause.get_current and hard-coded values with neater calls to the Constitution uber-brain class
-    @organisation_name = Clause.get_current('organisation_name').text_value
-    @objectives = Clause.get_current('objectives').text_value
-    @assets = Clause.get_current('assets').boolean_value
-    @website = Constitution.domain.blank? ? absolute_url('') : Constitution.domain
+    @organisation_name = Organisation.name
+    @objectives = Organisation.objectives
+    @assets = Organisation.assets
+    @website = Organisation.domain
     
-    @period  = Clause.get_current('voting_period').integer_value
+    @period  = Clause.get_integer('voting_period')
     @voting_period = VotingPeriods.name_for_value(@period)
     
-    @general_voting_system = Clause.get_current('general_voting_system').text_value
+    @general_voting_system = Clause.get_text('general_voting_system')
     @general_voting_system_description = case @general_voting_system
     when "RelativeMajority"
       "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
@@ -54,7 +53,7 @@ class Application < Merb::Controller
       "receives Supporting Votes from all Members during the Voting Period."
     end
     
-    @membership_voting_system = Clause.get_current('membership_voting_system').text_value
+    @membership_voting_system = Clause.get_text('membership_voting_system')
     @membership_voting_system_description = case @membership_voting_system
     when "RelativeMajority"
       "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
@@ -68,7 +67,7 @@ class Application < Merb::Controller
       "receives Supporting Votes from all Members during the Voting Period."
     end
     
-    @constitution_voting_system = Clause.get_current('constitution_voting_system').text_value
+    @constitution_voting_system = Clause.get_text('constitution_voting_system')
     @constitution_voting_system_description = case @constitution_voting_system
     when "RelativeMajority"
       "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
