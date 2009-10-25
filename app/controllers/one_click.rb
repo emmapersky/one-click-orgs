@@ -1,11 +1,12 @@
 class OneClick < Application
+  include Merb::ConstitutionHelper
 
   def index
     redirect(url(:action=>'control_centre'))
   end
   
   def constitution
-    set_up_instance_variables_for_constitution_view
+    prepare_constitution_view
     render
   end
   

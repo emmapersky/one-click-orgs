@@ -1,5 +1,6 @@
 class Induction < Application
   include AsyncJobs
+  include Merb::ConstitutionHelper
   
   layout :induction
 
@@ -125,7 +126,7 @@ class Induction < Application
   end
   
   def preview_constitution
-    set_up_instance_variables_for_constitution_view
+    prepare_constitution_view
     render
   end
   
