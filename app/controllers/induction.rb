@@ -21,10 +21,19 @@ class Induction < Application
   end
   
   def create_founder
+    # Detect the server domain if not already set
+    if Constitution.domain.blank?
+      Constitution.set_text(:domain, "#{request.protocol}://#{request.host}")
+    end
+    
     @founder = Member.first || Member.new
     @founder.attributes = params[:member]
-    @founder.save
-    redirect(url(:action => 'organisation_details'))
+    if @founder.save
+      session.user = @founder
+      redirect(url(:action => 'organisation_details'))
+    else
+      redirect(url(:action => 'founder'), :message => {:error => "There was a problem with your details: #{@founder.errors.full_messages.to_sentence}"})
+    end
   end
   
   def organisation_details
@@ -38,7 +47,7 @@ class Induction < Application
     organisation_name = Clause.get_current('organisation_name') || Clause.new(:name => 'organisation_name')
     organisation_name.text_value = params[:organisation_name]
     organisation_name.save
-    
+  
     objectives = Clause.get_current('objectives') || Clause.new(:name => 'objectives')
     objectives.text_value = params[:objectives]
     objectives.save
@@ -47,7 +56,11 @@ class Induction < Application
     assets.boolean_value =  params[:assets] == '1'
     assets.save
     
-    redirect(url(:action => 'members'))
+    if params[:organisation_name].blank? || params[:objectives].blank?
+        redirect(url(:action => 'organisation_details'), :message => {:error => "You must fill in the organisation name and objects."})
+    else
+      redirect(url(:action => 'members'))
+    end
   end
   
   def members
@@ -127,16 +140,20 @@ class Induction < Application
     founding_meeting_date = Clause.get_current('founding_meeting_date') || Clause.new(:name => 'founding_meeting_date')
     founding_meeting_date.text_value = params[:date]
     founding_meeting_date.save
-    
+  
     founding_meeting_time = Clause.get_current('founding_meeting_time') || Clause.new(:name => 'founding_meeting_time')
     founding_meeting_time.text_value = params[:time]
     founding_meeting_time.save
-    
+  
     founding_meeting_location = Clause.get_current('founding_meeting_location') || Clause.new(:name => 'founding_meeting_location')
     founding_meeting_location.text_value = params[:location]
     founding_meeting_location.save
     
-    redirect(url(:action => 'preview_agenda'))
+    if params[:date].blank? || params[:time].blank? || params[:location].blank?
+      redirect(url(:action => 'founding_meeting_details'), :message => {:error => "You must fill in a date, time and location for the founding meeting."})
+    else
+      redirect(url(:action => 'preview_agenda'))
+    end
   end
   
   def preview_agenda
@@ -156,7 +173,6 @@ class Induction < Application
     organisation_state = Clause.get_current('organisation_state') || Clause.new(:name => 'organisation_state')
     organisation_state.text_value = 'pending'
     organisation_state.save!
-    
     
     # Send emails with founding meeting agenda
     Member.all.each do |member|
@@ -182,7 +198,11 @@ class Induction < Application
   # and move organisation to 'active' state.
   def confirm_founding_meeting
     other_members = Member.all.active.to_a[1..-1]
-    confirmed_member_ids = params[:members].keys.map(&:to_i)
+    confirmed_member_ids = if params[:members].respond_to?(:keys)
+      params[:members].keys.map(&:to_i)
+    else
+      []
+    end
     
     other_members.each do |member|
       unless confirmed_member_ids.include?(member.id)

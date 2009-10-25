@@ -32,6 +32,16 @@ class Constitution
     end
   end
   
+  def self.set_boolean(name, value)
+    name = name.to_s
+    case name
+    when 'assets'
+      Clause.create!(:name => 'assets', :boolean_value => value)
+    else
+      raise ArgumentError, "invalid boolean field name: #{name}"
+    end
+  end
+  
   # VOTING SYSTEMS
   
   def self.voting_system(type = :general)     

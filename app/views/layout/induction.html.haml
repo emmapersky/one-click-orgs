@@ -2,7 +2,7 @@
 %html
   %head
     %title
-      One Click Orgs (alpha)
+      One Click Orgs
       
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}            
     = css_include_tag :one_click
@@ -15,7 +15,7 @@
         =link_to 'logout', url('logout')
     %div#doc
       %div#hd
-        %h1.header One Click Orgs (alpha)
+        %h1.header One Click Orgs
         
       %div#bd
         %div#notice
@@ -25,4 +25,5 @@
           
         = catch_content :for_layout
       %div.footer
-        = "One Click Orgs (alpha) - running on merb #{Merb::VERSION}"
+        = "One Click Orgs 0.5 (Beta) - running on merb #{Merb::VERSION}"
+    = get_satisfaction_widget

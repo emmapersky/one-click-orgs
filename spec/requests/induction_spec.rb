@@ -2,11 +2,11 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 describe "/induction" do
   
-  before do
-    organisation_is_under_construction
-  end
-  
   describe "initial creation" do
+    before do
+      organisation_is_under_construction
+    end
+    
     it "should allow creation of founding member if no members exist and organisation is under contruction" do
       Organisation.stub!(:has_founding_member?).and_return(false)
       
@@ -64,4 +64,10 @@ describe "/induction" do
     end
   end
   
+  it "should detect the domain" do
+    organisation_is_under_construction
+    Constitution.domain.should be_blank
+    request("/induction/create_founder", :method => "POST", :params => {:member => {:name => "Bob Smith", :email => "bob@example.com", :password => "qwerty", :password_confirmation => "qwerty"}})
+    Constitution.domain.should == "http://example.org"
+  end
 end

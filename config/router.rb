@@ -42,6 +42,7 @@ Merb::Router.prepare do
   resources :eject_member_proposals, :controller => 'proposals'
   resources :change_voting_system_proposals, :controller=>'proposals'
   resources :change_text_proposals, :controller => 'proposals'
+  resources :change_boolean_proposals, :controller => 'proposals'
   resources :change_voting_period_proposals, :controller=>'proposals'
     
   resources :members

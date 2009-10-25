@@ -7,7 +7,7 @@
     %br
     = text_area(@objectives, :name => 'objectives')
   %p
-    = check_box(:name => 'assets', :checked => @assets, :label => 'The organisation will have the power to hold and transfer assets')
+    = check_box(:name => 'assets', :checked => @assets, :label => 'The organisation will have the power to hold and transfer assets', :value => '1')
   %p
     = submit("Save and move on")
 %p
