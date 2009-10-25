@@ -13,11 +13,11 @@ describe "everything" do
       
   describe "vote casting" do
     it "should cast a 'for' vote" do
-      pending
+      raise "implement me"
     end
   
     it "should cast an 'against' vote" do
-      pending
+      raise "implement me"
     end
   end
 end
