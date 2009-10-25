@@ -28,8 +28,13 @@ class Induction < Application
     
     @founder = Member.first || Member.new
     @founder.attributes = params[:member]
-    @founder.save
-    redirect(url(:action => 'organisation_details'))
+    if @founder.save
+      session.user = @founder
+      redirect(url(:action => 'organisation_details'))
+    else
+      message[:error] = @founder.errors.full_messages.to_sentence
+      redirect(url(:action => 'founder'))
+    end
   end
   
   def organisation_details
