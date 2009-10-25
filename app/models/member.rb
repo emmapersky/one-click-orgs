@@ -5,7 +5,7 @@ class VoteError < RuntimeError; end
 class Member
   include DataMapper::Resource
   include AsyncJobs
-  after :create, :send_welcome 
+  
   has n, :votes
   has n, :proposals, :class_name => 'Proposal', :child_key => [:proposer_member_id]
   
