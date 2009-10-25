@@ -23,3 +23,5 @@ gems/doc
 lib-src
 spec/log
 coverage
+._*
+
