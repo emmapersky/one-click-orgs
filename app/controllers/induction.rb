@@ -97,10 +97,10 @@ class Induction < Application
   end
   
   def voting_settings
-    @voting_period = (Clause.get_current('voting_period') ? Clause.get_current('voting_period').integer_value : 259200)
-    @general_voting_system = (Clause.get_current('general_voting_system') ? Clause.get_current('general_voting_system').text_value : "RelativeMajority")
-    @membership_voting_system = (Clause.get_current('membership_voting_system') ? Clause.get_current('membership_voting_system').text_value : "AbsoluteTwoThirdsMajority")
-    @constitution_voting_system = (Clause.get_current('constitution_voting_system') ? Clause.get_current('constitution_voting_system').text_value : "AbsoluteTwoThirdsMajority")
+    @voting_period = Clause.get_integer(:voting_period) : 259200
+    @general_voting_system = Clause.get_text(:general_voting_system) : 'RelativeMajority'
+    @membership_voting_system = Clause.get_text(:membership_voting_system) : 'AbsoluteTwoThirdsMajority'
+    @constitution_voting_system = Clause.get_text(:constitution_voting_system) : 'AbsoluteTwoThirdsMajority'
     render
   end
   
