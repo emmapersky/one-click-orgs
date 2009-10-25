@@ -53,11 +53,7 @@ class Induction < Application
     objectives.save
     
     assets = Clause.get_current('assets') || Clause.new(:name => 'assets')
-    assets.boolean_value = if params[:assets] == '1'
-      true
-    else
-      false
-    end
+    assets.boolean_value =  params[:assets] == '1'
     assets.save
     
     if params[:organisation_name].blank? || params[:objectives].blank?
@@ -201,17 +197,17 @@ class Induction < Application
   # Remove any founding members that did not vote in favour,
   # and move organisation to 'active' state.
   def confirm_founding_meeting
-    other_members = Member.all.active; other_members.shift
-    
-    if params[:members].respond_to?(:keys)
-      confirmed_member_ids = params[:members].keys.map{|id| id.to_i}
+    other_members = Member.all.active.to_a[1..-1]
+    confirmed_member_ids = if params[:members].respond_to?(:keys)
+      params[:members].keys.map(&:to_i)
     else
-      confirmed_member_ids = []
+      []
     end
     
     other_members.each do |member|
       unless confirmed_member_ids.include?(member.id)
         member.destroy
+        other_members -= [member]
       end
     end
     
@@ -219,6 +215,12 @@ class Induction < Application
     organisation_state.text_value = "active"
     organisation_state.save
     
+    #now, send out emails to confirm creation of all members
+    other_members.each do |m|
+      Merb.logger.info("sending welcome message to #{m}")
+      m.send_welcome
+    end
+      
     redirect(url(:controller => 'one_click', :action => 'control_centre'))
   end
   
