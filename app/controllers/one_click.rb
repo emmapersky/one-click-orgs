@@ -53,6 +53,31 @@ class OneClick < Application
     end
   end
   
+  def propose_assets_amendment
+    if params['new_assets_value'] == '1'
+      title = "Change the constitution to allow holding, transferral and disposal of material assets and intangible assets"
+      new_assets_value = true
+    else
+      title = "Change the constitution to prohibit holding, transferral or disposal of material assets and intangible assets"
+      new_assets_value = false
+    end
+    
+    proposal = ChangeBooleanProposal.new(
+      :title => title,
+      :proposer_member_id => current_user.id,
+      :parameters => ChangeBooleanProposal.serialize_parameters(
+        'name' => 'assets',
+        'value' => new_assets_value
+      )
+    )
+    
+    if proposal.save
+      redirect(url(:controller => 'one_click', :action => 'control_centre'), :message => {:notice => "Constitutional amendment proposal succesfully created"})
+    else
+      redirect('/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
+    end
+  end
+  
   def propose_voting_period_amendment
     if params['new_voting_period']
       proposal = ChangeVotingPeriodProposal.new(
