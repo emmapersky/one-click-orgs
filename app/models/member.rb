@@ -44,9 +44,10 @@ class Member
     self.password = self.password_confirmation = (1..n).map { chars[rand(chars.size-1)] }.join
   end
   
-  def self.create_member(params)
+  def self.create_member(params, send_welcome=false)
     member = Member.new(params)
     member.new_password!
+    member.send_welcome if send_welcome
     member.save
   end
   
