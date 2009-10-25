@@ -40,47 +40,9 @@ class Application < Merb::Controller
     @period  = Clause.get_current('voting_period').integer_value
     @voting_period = VotingPeriods.name_for_value(@period)
     
-    @general_voting_system = Clause.get_current('general_voting_system').text_value
-    @general_voting_system_description = case @general_voting_system
-    when "RelativeMajority"
-      "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
-    when "Veto"
-      "receives no Opposing Votes during the Voting Period."
-    when "AbsoluteMajority"
-      "receives Supporting Votes from more than half of Members during the Voting Period."
-    when "AbsoluteTwoThirdsMajority"
-      "receives Supporting Votes from more than two thirds of Members during the Voting Period."
-    when "Unanimous"
-      "receives Supporting Votes from all Members during the Voting Period."
-    end
-    
-    @membership_voting_system = Clause.get_current('membership_voting_system').text_value
-    @membership_voting_system_description = case @membership_voting_system
-    when "RelativeMajority"
-      "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
-    when "Veto"
-      "receives no Opposing Votes during the Voting Period."
-    when "AbsoluteMajority"
-      "receives Supporting Votes from more than half of Members during the Voting Period."
-    when "AbsoluteTwoThirdsMajority"
-      "receives Supporting Votes from more than two thirds of Members during the Voting Period."
-    when "Unanimous"
-      "receives Supporting Votes from all Members during the Voting Period."
-    end
-    
-    @constitution_voting_system = Clause.get_current('constitution_voting_system').text_value
-    @constitution_voting_system_description = case @constitution_voting_system
-    when "RelativeMajority"
-      "receives Supporting Votes from more than half of the Members during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
-    when "Veto"
-      "receives no Opposing Votes during the Voting Period."
-    when "AbsoluteMajority"
-      "receives Supporting Votes from more than half of Members during the Voting Period."
-    when "AbsoluteTwoThirdsMajority"
-      "receives Supporting Votes from more than two thirds of Members during the Voting Period."
-    when "Unanimous"
-      "receives Supporting Votes from all Members during the Voting Period."
-    end
+    @general_voting_system = Constitution.voting_system(:general)
+    @membership_voting_system = Constitution.voting_system(:membership)
+    @constitution_voting_system = Constitution.voting_system(:constitution)
   end
   
 end

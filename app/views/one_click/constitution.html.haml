@@ -140,19 +140,19 @@
   %li The Constitution may be amended by a constitution decision ("Constitution Decision").
   %li
     =partial 'propose_voting_system_amendment_form', :type=>'general', :description=>'Change the way General Decisions are made:'
-    A General Decision is made when a Proposal that does not concern a change to the membership or an amendment to the Constitution
+    A General Decision is made when a Proposal that does not concern a change to the membership or an amendment to the Constitution receives
     %span{:class=>'dynamic'}
-      = @general_voting_system_description
+      = @general_voting_system.long_description
   %li
     =partial 'propose_voting_system_amendment_form', :type=>'membership', :description=>'Change the way Membership Decisions are made:'
-    A Membership Decision is made when a Proposal concerning a change to the membership
+    A Membership Decision is made when a Proposal concerning a change to the membership receives
     %span{:class=>'dynamic'}
-      = @membership_voting_system_description
+      = @membership_voting_system.long_description
   %li
     =partial 'propose_voting_system_amendment_form', :type=>'constitution', :description=>'Change the way Constitution Decisions are made:'
-    A Constitution Decision is made when a Proposal concerning an amendment to the Constitution
+    A Constitution Decision is made when a Proposal concerning an amendment to the Constitution receives
     %span{:class=>'dynamic'}       
-      = @constitution_voting_system_description
+      = @constitution_voting_system.long_description
   %li Members may view all General Decisions, Membership Decisions and Constitution Decisions on the Management System.
 
 / %h4 Proxies
