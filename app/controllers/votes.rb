@@ -1,9 +1,10 @@
 class Votes < Application
-  # provides :xml, :yaml, :js
-  
-  def vote_for    
+
+  #FIXME duplication  
+  def vote_for
     id, return_to = params[:id], params[:return_to]
-    
+    raise ArgumentError, "need proposal id" unless id    
+        
     begin
       current_user.cast_vote(:for, id)
       redirect return_to, :message => {:notice => "Vote for proposal cast"}
@@ -12,8 +13,10 @@ class Votes < Application
     end
   end
   
+  #FIXME duplication
   def vote_against
     id, return_to = params[:id], params[:return_to]
+    raise ArgumentError, "need proposal id" unless id    
         
     begin
       current_user.cast_vote(:against, id)
@@ -22,6 +25,8 @@ class Votes < Application
       redirect return_to, :message => {:notice => "Error casting vote"}      
     end    
   end
+  
+  
+
 end 
 
-# Votes

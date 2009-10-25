@@ -54,6 +54,9 @@ module DataMapper
 end
 
 Merb::Test.add_helpers do
+  
+  def h(s) CGI.escapeHTML(s.to_s) end
+    
   def default_user
     stub_constitution!
       
@@ -81,6 +84,7 @@ Merb::Test.add_helpers do
         :password => "password"
       }
     }).should redirect_to('/')
+    @user
   end
   
   
@@ -90,18 +94,24 @@ Merb::Test.add_helpers do
   end
   
   def organisation_is_pending
+    # FIXME should be Organistaion.stub!(:state)
+    
     Organisation.stub!(:pending?).and_return(true)      
     Organisation.stub!(:active?).and_return(false)      
     Organisation.stub!(:under_construction?).and_return(false)
   end
   
   def organisation_is_active
+    # FIXME should be Organistaion.stub!(:state)
+    
     Organisation.stub!(:pending?).and_return(false)      
     Organisation.stub!(:active?).and_return(true)      
     Organisation.stub!(:under_construction?).and_return(false)
   end
 
   def organisation_is_under_construction
+    # FIXME should be Organistaion.stub!(:state)
+    
     Organisation.stub!(:pending?).and_return(false)      
     Organisation.stub!(:active?).and_return(false)      
     Organisation.stub!(:under_construction?).and_return(true)
