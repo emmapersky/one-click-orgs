@@ -40,17 +40,17 @@
   %li New Members may be appointed and existing Members may be ejected by a membership decision ("Membership Decision"). 
   %li The Constitution may be amended by a constitution decision ("Constitution Decision").
   %li
-    A General Decision is made when a Proposal that does not concern a change to the membership or an amendment to the Constitution
+    A General Decision is made when a Proposal that does not concern a change to the membership or an amendment to the Constitution receives
     %span{:class=>'dynamic'}
-      = @general_voting_system_description
+      = @general_voting_system.long_description
   %li
-    A Membership Decision is made when a Proposal concerning a change to the membership
+    A Membership Decision is made when a Proposal concerning a change to the membership receives
     %span{:class=>'dynamic'}
-      = @membership_voting_system_description
+      = @membership_voting_system.long_description
   %li
-    A Constitution Decision is made when a Proposal concerning an amendment to the Constitution
+    A Constitution Decision is made when a Proposal concerning an amendment to the Constitution receives
     %span{:class=>'dynamic'}       
-      = @constitution_voting_system_description
+      = @constitution_voting_system.long_description
   %li Members may view all General Decisions, Membership Decisions and Constitution Decisions on the Management System.
 
 / %h4 Proxies
