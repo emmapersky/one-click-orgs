@@ -1,10 +1,17 @@
 module VotingPeriods
-  PERIODS = [86400, 172800, 259200, 604800, 1209600] # in seconds
+  PERIODS = [1800, 86400, 172800, 259200, 604800, 1209600] # in seconds
   
   def self.name_for_value(value)
     value = value.to_i
     case value
-    when 0..(86400 * 5)
+    when 0..3600
+      minutes = (value / 60.0).round
+      if minutes == 1
+        "1 minute"
+      else
+        "#{minute} minutes"
+      end
+    when 3601..(86400 * 5)
       hours = (value / 3600.0).round
       if hours == 1
         "1 hour"
