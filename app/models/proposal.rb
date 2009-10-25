@@ -148,7 +148,7 @@ class Proposal
     
     Member.all.active.each do |m|
       OCOMail.send_mail(ProposalMailer, :notify_creation,
-        {:to => m.email, :from => 'info@oneclickor.gs', :subject => 'new one click proposal'},
+        {:to => m.email, :from => 'info@oneclickor.gs', :subject => "New proposal: #{proposal.title}"},
         {:member => m, :proposal => proposal}
       )
     end

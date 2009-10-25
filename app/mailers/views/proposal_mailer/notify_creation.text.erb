@@ -1,8 +1,8 @@
 Dear <%= @member && @member.name || 'member' %>,
 
-a new proposal has been created.
+a new proposal has been created by <%= @proposal.proposer.name || @proposal.proposer.email %>.
 
-<%= @proposal.title %>, by <%= @proposal.proposer.name || @proposal.proposer.email %>
+<%= @proposal.title %>
 
 <%= @proposal.description %>
 
