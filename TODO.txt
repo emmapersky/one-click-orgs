@@ -1,6 +1,0 @@
-Make the Clause model
-
-Add MembershipProposal and ConstitutionProposal as sub-classes of Proposal
-
-Add VotingSystems, which know how to count votes and declare pass or fail -- one class per voting system (RelativeMajority, Veto, AbsoluteMajority, AbsoluteTwoThirdsMajority, Unanimous)
-
