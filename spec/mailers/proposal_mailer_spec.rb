@@ -5,7 +5,8 @@ describe ProposalMailer, "#notify_creation email template" do
 
   before :each do
     clear_mail_deliveries
-    stub_constitution!    
+    stub_constitution!
+    stub_organisation!
     @member = Member.make
     @proposal = Proposal.make(:proposer_member_id=>@member.id)
   end

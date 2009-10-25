@@ -3,7 +3,10 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 describe Merb::GlobalHelpers do
   include Merb::GlobalHelpers
   
-  before { stub_constitution! } 
+  before do
+    stub_constitution!
+    stub_organisation!
+  end
   
   describe "url generation" do
     it "should return generate an absolute url" do

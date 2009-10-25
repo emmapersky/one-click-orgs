@@ -4,6 +4,7 @@ describe Member do
   
   before(:each) do
     stub_constitution!
+    stub_organisation!
     
     @member = Member.make
     @proposal = Proposal.make(:proposer_member_id => @member.id)

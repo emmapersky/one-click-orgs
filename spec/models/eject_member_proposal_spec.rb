@@ -1,7 +1,10 @@
 require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 
 describe EjectMemberProposal do
-  before { stub_constitution! }
+  before do 
+    stub_constitution!
+    stub_organisation!
+  end
     
   it "should use the membership voting system" do
     Clause.set_text('membership_voting_system', 'Veto')

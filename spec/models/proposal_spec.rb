@@ -5,6 +5,7 @@ describe Proposal do
   
   before(:each) do
     stub_constitution!  
+    stub_organisation!
     
     @member = Member.make
     clear_mail_deliveries

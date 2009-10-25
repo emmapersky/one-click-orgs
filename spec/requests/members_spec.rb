@@ -7,7 +7,8 @@ end
 describe "everything" do
   before(:each) do 
     stub_constitution!
-    login 
+    stub_organisation!
+    login
   end
   
   describe "resource(:members)" do

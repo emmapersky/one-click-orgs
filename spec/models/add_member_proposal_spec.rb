@@ -3,6 +3,7 @@ require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 describe AddMemberProposal do
   before do
     stub_constitution!
+    stub_organisation!
   end
 
   it "should persist type information" do    

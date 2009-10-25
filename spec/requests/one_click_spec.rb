@@ -2,7 +2,8 @@ require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
 
 describe "/one_click" do
   before(:each) do
-    stub_constitution!    
+    stub_constitution!
+    stub_organisation!
   end
   
   describe "proposing text amendments" do

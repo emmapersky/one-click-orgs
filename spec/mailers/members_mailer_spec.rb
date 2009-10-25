@@ -10,6 +10,7 @@ describe MembersMailer, "#notify_new_password email template" do
     @new_password = "foo"
     
     stub_constitution!
+    stub_organisation!
   end
     
   describe "new password email" do
