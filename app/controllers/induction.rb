@@ -39,7 +39,7 @@ class Induction < Application
   def organisation_details
     @organisation_name = Organisation.name
     @objectives = Organisation.objectives
-    @assets = Organisation.assets
+    @assets = Organisation.assets || true
     render
   end
   

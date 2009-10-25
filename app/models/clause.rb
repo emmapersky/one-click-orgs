@@ -52,7 +52,7 @@ class Clause
     Clause.create!(:name => name.to_s, :text_value => value)
   end
   
-  def self.get_text(name, value)
+  def self.get_text(name)
     v = Clause.get_current(name.to_s)
     (v ? v.text_value : nil)
   end
@@ -61,7 +61,7 @@ class Clause
     Clause.create!(:name => name.to_s, :boolean_value => value)
   end
   
-  def self.get_boolean(name, value)
+  def self.get_boolean(name)
     v = Clause.get_current(name.to_s)
     (v ? v.boolean_value : nil)
   end
@@ -70,7 +70,7 @@ class Clause
     Clause.create!(:name => name.to_s, :integer_value => value)
   end
 
-  def self.get_integer(name, value)
+  def self.get_integer(name)
     v = Clause.get_current(name.to_s)
     (v ? v.integer_value : nil)
   end
