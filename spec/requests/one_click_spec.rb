@@ -78,9 +78,9 @@ describe "/one_click" do
   describe "proposing voting system amendments" do
     before do
       login
-      @general_voting_system = Clause.create!(:name=>'general_voting_system', :text_value=>'RelativeMajority')
-      @membership_voting_system = Clause.create!(:name => 'membership_voting_system', :text_value => 'RelativeMajority')
-      @constitution_voting_system = Clause.create!(:name => 'constitution_voting_system', :text_value => 'RelativeMajority')
+      @general_voting_system = Clause.set_text('general_voting_system', 'RelativeMajority')
+      @membership_voting_system = Clause.set_text('membership_voting_system', 'RelativeMajority')
+      @constitution_voting_system = Clause.set_text('constitution_voting_system', 'RelativeMajority')
     end
     
     describe "for general decisions" do

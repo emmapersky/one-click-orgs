@@ -47,4 +47,31 @@ class Clause
   def self.exists?(name)
     !!get_current(name)
   end
+  
+  def self.set_text(name, value)
+    Clause.create!(:name => name.to_s, :text_value => value)
+  end
+  
+  def self.get_text(name)
+    v = Clause.get_current(name.to_s)
+    (v ? v.text_value : nil)
+  end
+  
+  def self.set_boolean(name, value)
+    Clause.create!(:name => name.to_s, :boolean_value => value)
+  end
+  
+  def self.get_boolean(name)
+    v = Clause.get_current(name.to_s)
+    (v ? v.boolean_value : nil)
+  end
+  
+  def self.set_integer(name, value)
+    Clause.create!(:name => name.to_s, :integer_value => value)
+  end
+
+  def self.get_integer(name)
+    v = Clause.get_current(name.to_s)
+    (v ? v.integer_value : nil)
+  end
 end

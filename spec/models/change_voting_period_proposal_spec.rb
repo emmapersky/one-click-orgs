@@ -3,7 +3,7 @@ require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 describe ChangeVotingPeriodProposal do
 
   before do
-    @current_voting_period = Clause.create!(:name=>'voting_period', :integer_value=>300)
+    @current_voting_period = Clause.set_integer('voting_period', 300)
   end
   
   it "should change voting period after successful proposal" do
