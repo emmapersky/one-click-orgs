@@ -4,8 +4,9 @@ class Proposal
   include AsyncJobs
   
   include DataMapper::Resource
-  
+  #TODO: should probably not be in a hook method?
   after :create, :send_email
+  
   has n, :votes
   has 1, :decision
   
@@ -93,17 +94,18 @@ class Proposal
     passed = passed?
     Merb.logger.info("closing proposal #{self}")
         
-    Decision.create!(:proposal_id=>self.id) if passed
     self.open = 0
     self.close_date = Time.now
     self.accepted = passed
-
+    save!
+    
     if passed
+      decision = Decision.create!(:proposal_id=>self.id)
+      decision.send_email
+      
       params = self.parameters ? JSON.parse(self.parameters) : {}      
       enact!(params) 
     end
-    
-    save!
   end
 
 

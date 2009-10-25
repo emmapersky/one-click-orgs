@@ -124,9 +124,6 @@ module Merb
     block.call
   end
 end
-
-
-
   
 module MailControllerTestHelper          
   def clear_mail_deliveries
