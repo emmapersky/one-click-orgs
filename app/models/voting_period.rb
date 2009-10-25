@@ -9,7 +9,7 @@ module VotingPeriods
       if minutes == 1
         "1 minute"
       else
-        "#{minute} minutes"
+        "#{minutes} minutes"
       end
     when 3601..(86400 * 5)
       hours = (value / 3600.0).round
