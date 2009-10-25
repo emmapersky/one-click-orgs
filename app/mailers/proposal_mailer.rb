@@ -9,4 +9,8 @@ class ProposalMailer < Merb::MailController
     render_mail
   end
   
+  def self.get_subject(proposal)
+    "New proposal: #{proposal.title}"
+  end
+  
 end
