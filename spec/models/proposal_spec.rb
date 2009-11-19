@@ -62,5 +62,19 @@ describe Proposal do
      mail = last_delivered_mail
      mail.from.should ==(["info@oneclickor.gs"])
 #     mail.subject.first.should == ""
-  end    
+  end
+  
+  describe "to_event" do
+    it "should list open proposals as 'proposal's" do
+      Proposal.make(:open => true, :accepted => false).to_event[:kind].should == :proposal
+    end
+    
+    it "should list closed, accepted proposals as 'proposal's" do
+      Proposal.make(:open => false, :accepted => true).to_event[:kind].should == :proposal
+    end
+    
+    it "should list closed, rejected proposals as 'failed proposal's" do
+      Proposal.make(:open => false, :accepted => false).to_event[:kind].should == :failed_proposal
+    end
+  end
 end

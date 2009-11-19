@@ -155,7 +155,7 @@ class Proposal
   end
   
   def to_event
-    {:timestamp => self.creation_date, :object => self, :kind => accepted ? :proposal : :failed_proposal }
+    {:timestamp => self.creation_date, :object => self, :kind => (closed? && !accepted) ? :failed_proposal : :proposal }
   end
   
 end
