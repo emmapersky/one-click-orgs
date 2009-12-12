@@ -7,7 +7,7 @@
   %label Email
   = @founder.email
 = form(:action => url(:controller => 'induction', :action => 'create_members')) do
-  - 0.upto(4) do |i|
+  - 0.upto(14) do |i|
     = fields_for(@members[i]) do
       %h4="Member #{i+2}"
       %p
