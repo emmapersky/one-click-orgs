@@ -7,7 +7,8 @@ class ResetPassword < Application
     render
   end
   
-  def reset(email)
+  def reset
+    email = params[:email]
     if m = Member.first(:email => email)      
         new_password = m.new_password!
         if m.save
