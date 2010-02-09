@@ -1,10 +1,10 @@
 %form{ :action => url(:action=>:reset), :method => "POST", "accept-charset" => "utf-8" }
   %input{ :name => "_method", :type => "hidden", :value => "PUT" }
-
-    %label
+  %p
+    %label{:for => 'email'}
       Email
-      %input{ :name => 'email', :type => "text", :id => 'email', :value => "" }
-  .formRow
-    %input#Submit{ :name => "Submit", :type => "submit", :value => "Send" }
+    %input{ :name => 'email', :type => "text", :id => 'email', :value => "" }
+  %p
+    %input#submit{ :name => "submit", :type => "submit", :value => "Send" }
 
   
