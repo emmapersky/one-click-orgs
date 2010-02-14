@@ -23,7 +23,7 @@ class Members < Application
 
   def edit
     only_provides :html
-    raise ::Merb::ControllerExceptions::Unauthorized, 'You are not authorizied to do this' unless current_user.id == params[:id].to_i
+    raise ::Merb::ControllerExceptions::Unauthorized, 'You are not authorized to do this' unless current_user.id == params[:id].to_i
     
     @member = Member.get(params[:id])
     raise NotFound unless @member
