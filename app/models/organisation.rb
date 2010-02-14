@@ -9,7 +9,7 @@ class Organisation
   end
   
   def self.assets
-    Clause.get_text('assets')
+    Clause.get_boolean('assets')
   end
   
   def self.domain
@@ -21,7 +21,7 @@ class Organisation
   end
   
   def self.under_construction?
-    Clause.get_current('organisation_state').nil?
+    Clause.get_text('organisation_state').nil?
   end
 
   def self.pending?
