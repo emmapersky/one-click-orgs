@@ -6,7 +6,7 @@ describe VotingSystems do
     p = mock(Proposal)
     p.stub!(:votes_for).and_return(v_for)
     p.stub!(:votes_against).and_return(v_against)
-    p.stub!(:total_members).and_return(total_m)
+    p.stub!(:member_count).and_return(total_m)
     p
   end
 

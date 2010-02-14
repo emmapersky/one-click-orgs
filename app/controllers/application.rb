@@ -5,6 +5,7 @@ class Application < Merb::Controller
   before :ensure_authenticated
   before :ensure_member_active
   before :ensure_organisation_active
+  before :ensure_member_inducted
    
   def date_format(d)
     d.formatted(:long)
@@ -30,6 +31,13 @@ class Application < Merb::Controller
     end
   end
   
-
+  def ensure_member_inducted
+    throw :halt, :redirect_to_welcome_new_member if Organisation.active? && current_user && !current_user.inducted
+  end
+  
+  def redirect_to_welcome_new_member
+    redirect('/welcome')
+  end
+  
 end
 

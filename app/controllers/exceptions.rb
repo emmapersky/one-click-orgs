@@ -18,6 +18,14 @@ class Exceptions < Merb::Controller
     end
   end
 
+  def not_inducted
+    if Organisation.has_founding_member?
+      render # unauthenticated, login page      
+    else
+      redirect(url(:controller=>'induction', :action=>'founder'))
+    end
+  end
+
   def current_user
     Member.get(current_user_id)
   end

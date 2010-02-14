@@ -1,7 +1,7 @@
 class Members < Application
   include AsyncJobs
   # provides :xml, :yaml, :js
-
+  
   def index
     @members = Member.all.active
     @new_member = Member.new

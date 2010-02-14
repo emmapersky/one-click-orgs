@@ -43,8 +43,8 @@ class Proposal
     Vote.count(:proposal_id => self.id, :for => false)
   end
   
-  def total_members
-     Member.count(:created_at.lt => creation_date)
+  def member_count
+     Member.count(:created_at.lt => creation_date, :active=>true, :inducted=>true)
   end
   
   def abstained
@@ -76,8 +76,7 @@ class Proposal
   
   def majority?
     #FIXME, voting system?
-    num_members = Member.count(:created_at.lt => creation_date)
-    return votes_for >= (num_members / 2.0).ceil
+    return votes_for >= (member_count / 2.0).ceil
   end
 
   def passed?

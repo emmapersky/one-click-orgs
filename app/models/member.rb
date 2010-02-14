@@ -13,10 +13,11 @@ class Member
   property :email, String, :nullable => false
   property :name, String
   property :created_at, DateTime, :default => Proc.new {|r,p| Time.now.to_datetime}
+  property :inducted, Boolean, :nullable => false, :default => false
   property :active, Boolean, :default => true
   
   def self.active
-    all(:active=>true)
+    all(:active=>true, :inducted=>true)
   end
     
   def cast_vote(action, proposal_id)

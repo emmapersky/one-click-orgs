@@ -12,6 +12,7 @@ Member.blueprint do
   password pw
   password_confirmation pw
   active true
+  inducted true
 end
 
 Proposal.blueprint do |bp|
