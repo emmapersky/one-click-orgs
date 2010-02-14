@@ -18,7 +18,8 @@
   %tr
     %th Title
     %th Ends
-    %th Vote
+    %th For/against
+    %th Your Vote
   - for proposal in @proposals
     %tr{:class => cycle('odd', 'even')}
       %td
@@ -33,6 +34,8 @@
         (
         = proposal.end_date.formatted(:long)
         )
+      %td 
+        = partial 'proposals/vote_count', :proposal => proposal
       %td.vote
         = partial 'proposals/vote', :proposal => proposal
   

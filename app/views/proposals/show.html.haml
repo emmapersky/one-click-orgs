@@ -27,6 +27,9 @@
     = @proposal.end_date.formatted(:long)
     )
   %p
+    Number of votes for/against:
+    = partial 'proposals/vote_count', :proposal => @proposal
+  %p
     Your vote:
     = partial 'vote', :proposal => @proposal
 - else
