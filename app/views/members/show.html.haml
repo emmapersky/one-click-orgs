@@ -1,0 +1,56 @@
+%h3
+  = @member.name
+  (
+  %tt
+    = @member.email
+  )
+
+%h5
+  Voting History
+
+%table.proposals
+  %tr
+    %th Title
+    %th Vote
+  - for vote in @member.votes
+    - vote.for ? p = "for" : p = "against"
+    %tr{:class => "vote_#{p}"}
+      %td= link_to(h(vote.proposal.title), resource(vote.proposal))
+      %td.vote= vote.for_or_against
+
+%h5
+  Proposal History
+        
+%table.proposals
+  %tr
+    %th Title
+    %th Outcome
+  - for proposal in @member.proposals
+    - if proposal.close_date < Time.now.to_datetime
+      - proposal.accepted ? p = "for" : p = "against"
+    - else
+      - p = "in_progress"
+    %tr{:class => "vote_#{p}"}
+      %td= link_to(h(proposal.title), resource(proposal))
+      - if proposal.close_date < Time.now.to_datetime
+        %td.vote= proposal.accepted_or_rejected
+      - else
+        %td.vote Vote in Progress
+
+%h5
+  Eject member
+
+%p
+  Create a proposal to eject this member from the organisation.
+
+= form(:action => resource(@member), :method => :delete) do
+  %p
+    = text_area :description, :label => "Description"
+  %p
+    = submit "Create Proposal", :id => 'submit'
+  
+    
+
+/%ul
+/  - for proposal in @member.proposals
+/    %li= proposal.title

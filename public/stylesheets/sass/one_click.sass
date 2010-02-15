@@ -1,0 +1,184 @@
+body
+  :color #666
+  :font-family Myriad,Arial,Helvetica,sans-serif
+  :margin 0
+  :padding 0
+
+.control_bar
+  :position absolute
+  :right .5em
+  :top .2em
+
+h1.header
+  :color #666
+  :font-family Georgia,Times New Roman
+  :font-size 3em
+  :margin 0
+  :padding 0
+  :text-align center
+h2,
+h3,
+h4
+  :color #977c57
+
+h3
+  :font-size 1.5em
+  :margin 20px 0 0
+  :padding 0
+
+#doc,
+#hd #bd .footer
+  :margin auto
+  :width 950px
+
+br,
+form,
+form p,
+h4
+  :clear left
+
+form input#submit
+  :margin-left 16em
+
+a
+  :color #627fc4
+  &:hover
+    :color #69f
+
+#nav
+  :text-align center
+  li
+    :float left
+  a
+    :border-bottom 3px #eee solid
+    :display block
+    :font-family georgia
+    :font-size 17px
+    :margin 0
+    :padding 3px 0
+    :text-decoration none !important
+    :width 170px
+    &:hover
+      :border-bottom 3px #cdeb8b solid
+      :text-decoration none
+
+#navitem
+  :display inline
+  :margin 0
+  :padding 0
+
+#notice
+  :clear both
+
+table
+  :border 1px #ccc solid !important
+
+table.proposals, table.decisions, table.failed_proposals
+  :border 1px #042 solid
+  :margin auto
+  :width 900px
+  td.vote
+    :text-align center
+    :width 12em
+  form
+    :display inline
+  input
+    :margin auto
+    :width 7em
+  td.proposal_ends_in
+    :text-align :center
+    :width 14em
+
+th
+  :background #abc969 !important
+  :color #fff !important
+  :font-family georgia,times new roman
+  :font-weight 400
+  :padding 3px 0
+
+tr.even
+  :background #eee !important
+
+tr.odd
+  :background #fff !important
+
+tr:hover td
+  :background #ffc
+
+tr.vote_for
+  :background-color #6bba70
+  :color #ffffff
+  &:hover
+    :background-color #499850
+
+tr.vote_against
+  :background-color #b02b2c
+  :color #ffffff
+  &:hover
+    :background-color #a0090a
+
+tr.vote_in_progress
+  :background-color #c79810
+  :color #ffffff
+  &:hover
+    :background-color #a57600
+
+tr.vote_for, tr.vote_against, tr.vote_in_progress
+  a
+    :color #ffffff
+
+div.description
+  :font-size .8em
+  :padding-left 1em
+  :padding-right 1em
+  :padding-top 1em
+  :text-align :justify
+
+label, input, textarea
+  :display block
+  :float left
+  :margin-bottom 10px
+  :width 30em
+
+input.checkbox
+  :display inline
+  :margin 5px
+  :width auto
+  :float none
+
+label
+  :padding-right 1em
+  :text-align right
+  :width 10em
+
+textarea
+  :height 10em
+  :width 30em
+
+.footer
+  :font-size .7em
+  :margin-top 20px
+  :text-align center
+  :clear both
+
+ul.constitution li
+  :margin-bottom 0.5em
+  :clear right
+
+div.constitution_proposal
+  :float right
+  :border 1px solid #042
+  :padding 0.5em 0.5em 0
+  :background-color #ddd
+  :margin 0 0 0.5em 0.5em
+  label, input, textarea
+    :float none
+    :width auto
+  p
+    :margin 0 0 0.5em
+
+form div.constitution_proposal input#submit
+  :margin 0
+
+ul.founding_members li
+  :clear left

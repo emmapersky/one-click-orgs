@@ -1,0 +1,16 @@
+%h3
+  Login
+%div
+  = error_messages_for session.authentication
+  - @login_param = Merb::Authentication::Strategies::Basic::Base.login_param
+  - @password_param = Merb::Authentication::Strategies::Basic::Base.password_param
+  = form( :action => slice_url(:merb_auth_slice_password, :perform_login), :method => "POST", "accept-charset" => "utf-8", "class" => "login" ) do
+    %input{ :name => "_method", :type => "hidden", :value => "PUT" }
+    %p
+      = text_field @login_param.to_sym, :label => "email"
+    %p
+      = password_field @password_param.to_sym, :label => "password"
+    %p
+      = submit "login", :id => 'submit'
+    %p
+      = link_to 'forgotten password', url(:controller => :reset_password)

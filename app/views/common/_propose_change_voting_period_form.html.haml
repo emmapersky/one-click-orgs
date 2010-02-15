@@ -1,0 +1,20 @@
+%form{:action=>url(:action=>'propose_voting_period_amendment'), :method=>:post}
+  %div.constitution_proposal
+    %p.reveal_link
+      %a{:href => '#'}
+        Propose an amendment to this clause
+    %div.proposal_form{:style => 'display: none;'}
+      %p
+        %label{:for => 'new_voting_period'}
+          Change the voting period to:
+        %select{:name => 'new_voting_period'}
+          - VotingPeriods.all do |vp|
+            - if vp[:value] == @period
+              %option{:value => vp[:value], :selected => true}= vp[:name]
+            - else
+              %option{:value => vp[:value]}= vp[:name]
+      %p
+        = submit "Propose change", :id => 'submit'
+      %p
+        %a{:href => '#', :class => 'cancel_link'}
+          Cancel

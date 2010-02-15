@@ -2,3 +2,9 @@
 db/*.sqlite3
 log/*.log
 tmp/**/*
+.DS_Store
+log/*
+tmp/*
+*.sqlite
+*.sqlite3
+coverage/*

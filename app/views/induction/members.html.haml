@@ -1,0 +1,21 @@
+%h3 Induction - Members
+%h4 Member 1 (that's you)
+%p
+  %label Name
+  = @founder.name
+%p
+  %label Email
+  = @founder.email
+= form(:action => url(:controller => 'induction', :action => 'create_members')) do
+  - 0.upto(14) do |i|
+    = fields_for(@members[i]) do
+      %h4="Member #{i+2}"
+      %p
+        = text_field(:name => "members[#{i}][name]", :value => @members[i].name, :label => "Name")
+      %p
+        = text_field(:name => "members[#{i}][email]", :value => @members[i].email, :label => "Email")
+      = hidden_field(:name => "members[#{i}][id]", :value => @members[i].id)
+  %p
+    = submit("Save members and move on")
+%p
+  = link_to("Discard changes and go back", url(:controller => 'induction', :action => 'organisation_details'))

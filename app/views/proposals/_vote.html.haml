@@ -1,0 +1,7 @@
+- if proposal.vote_by(current_user)
+  = Vote.for_or_against(proposal.vote_by(current_user).for)
+- else
+  = form(:action => url(:controller => :votes, :action => :vote_for, :id => proposal.id, :return_to => request.full_uri)) do
+    = submit "Support"
+  = form(:action => url(:controller => :votes, :action => :vote_against, :id => proposal.id, :return_to => request.full_uri)) do
+    = submit "Oppose"

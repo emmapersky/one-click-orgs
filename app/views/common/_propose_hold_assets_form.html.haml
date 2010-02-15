@@ -1,0 +1,14 @@
+%form{:action=>url(:action=>'propose_assets_amendment'), :method => :post}
+  %div.constitution_proposal
+    %p.reveal_link
+      %a{:href => '#'}
+        Propose adding a clause to allow holding of assets
+    %div.proposal_form{:style => 'display: none;'}
+      %p
+        Propose that the organisation should be allowed to hold, transfer or dispose of material assets and intangible assets.
+      %input{:type => 'hidden', :name => 'new_assets_value', :value => '1'}
+      %p
+        = submit "Propose change", :id => 'submit'
+      %p
+        %a{:href => '#', :class => 'cancel_link'}
+          Cancel

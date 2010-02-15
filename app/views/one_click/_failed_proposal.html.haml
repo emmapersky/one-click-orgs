@@ -1,0 +1,4 @@
+%td= event[:timestamp].formatted(:long)
+%td
+  A proposal failed:
+  = link_to(h(event[:object].title), resource(event[:object]))

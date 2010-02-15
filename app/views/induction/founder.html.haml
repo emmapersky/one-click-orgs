@@ -1,0 +1,12 @@
+%h3 Induction - Founder
+= form_for(@founder, :action => url(:controller => 'induction', :action => 'create_founder')) do
+  %p
+    = text_field :email, :label => "Email Address "
+  %p
+    = text_field :name, :label => "Name "
+  %p
+    = password_field :password, :label => "Password "
+  %p
+    = password_field :password_confirmation, :label => "Confirm password "
+  %p
+    = submit "Save and move on", :id => 'submit'

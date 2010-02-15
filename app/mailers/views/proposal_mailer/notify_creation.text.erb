@@ -1,0 +1,13 @@
+Dear <%= @member && @member.name || 'member' %>,
+
+a new proposal has been created by <%= @proposal.proposer.name || @proposal.proposer.email %>.
+
+<%= @proposal.title %>
+
+<%= @proposal.description %>
+
+Please visit <%= absolute_oco_resource(@proposal) %> to vote on it.
+
+Thanks
+
+oneclickor.gs

@@ -1,0 +1,21 @@
+%h3 Induction - Voting settings
+= form(:action => url(:controller => 'induction', :action => 'create_voting_settings')) do
+  %p
+    %label{:for => 'voting_period'}
+      Voting period
+    %select{:name => 'voting_period'}
+      - VotingPeriods.all do |vp|
+        - if vp[:value] == @voting_period
+          %option{:value => vp[:value], :selected => true}= vp[:name]
+        - else
+          %option{:value => vp[:value]}= vp[:name]
+    
+  %p
+    = partial 'one_click/voting_system_field', :type => 'general', :description => "How will general decisions be made?"
+  %p
+    = partial 'one_click/voting_system_field', :type => 'membership', :description => "How will membership decisions be made?"
+  %p
+    = partial 'one_click/voting_system_field', :type => 'constitution', :description => "How will constitution decisions be made?"
+  %p= submit("Save settings and move on")
+%p
+  = link_to("Discard and go back", url(:controller => 'induction', :action => 'members'))

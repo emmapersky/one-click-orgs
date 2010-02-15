@@ -1,0 +1,7 @@
+%h3
+  Existing Members
+%ol
+  - for member in @members
+    %li
+      = link_to "#{member.name}", url(:member, member)
+/ = partial :new_member

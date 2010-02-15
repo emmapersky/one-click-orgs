@@ -1,0 +1,6 @@
+%h3 Preview Constitution
+
+=partial 'common/constitution', :allow_changes => false
+  
+%p= link_to("Okay, continue.", url(:controller => 'induction', :action => 'founding_meeting_details'))
+%p= link_to("Go back", url(:controller => 'induction', :action => 'voting_settings'))

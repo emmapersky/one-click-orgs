@@ -1,0 +1,4 @@
+%td= event[:timestamp].formatted(:long)
+%td
+  New member:
+  = link_to(h(event[:object].name), resource(event[:object]))

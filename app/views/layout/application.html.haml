@@ -1,0 +1,39 @@
+!!!
+%html
+  %head
+    %title
+      One Click Orgs
+
+    %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
+    = css_include_tag :one_click
+    = js_include_tag :jquery, :application
+  %body
+    %div.control_bar
+      - if current_user
+        = h current_user.name
+        |
+        =link_to 'my settings', url(:controller => :members, :action => :edit, :id => current_user.id)
+        |
+        =link_to 'logout', url('logout')
+    %div#doc
+      %div#hd
+        %h1.header One Click Orgs
+        
+      %div#bd
+        - if current_user
+          %ul#nav
+            %li#navitem= link_to 'My Control Centre', url(:controller => :one_click, :action => :control_centre)
+            %li#navitem= link_to 'My Member Page', url(:controller => :members, :action => :show, :id => current_user.id)
+            %li#navitem= link_to 'Timeline', url(:controller => :one_click, :action => :timeline)
+            %li#navitem= link_to 'Members', url(:controller => :members)
+            %li#navitem= link_to 'Constitution', url('constitution')
+
+        %div#notice
+          = h(message[:notice])
+        %div#error
+          = h(message[:error])
+          
+        = catch_content :for_layout
+      %div.footer
+        = "One Click Orgs 0.5 (Beta) - running on merb #{Merb::VERSION}"
+    = get_satisfaction_widget
