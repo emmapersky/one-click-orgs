@@ -13,14 +13,14 @@
       %td
         = proposal.title
         (
-        = link_to(h(proposal.proposer.name), resource(proposal.proposer))
+        = link_to(proposal.proposer.name, proposal.proposer)
         )
-        = partial 'proposals/description', :proposal => proposal
-        %p= link_to("More details", resource(proposal))
+        = render 'proposals/description', :proposal => proposal
+        %p= link_to("More details", proposal)
       %td.timestamp
         = distance_of_time_in_words(proposal.end_date)
       %td.vote
-        = partial 'proposals/vote', :proposal => proposal
+        = render 'proposals/vote', :proposal => proposal
   
 %h4 Recent Decisions
 %table.decisions
@@ -34,12 +34,12 @@
       %td
         = decision.proposal.title
         (
-        = link_to(h(decision.proposal.proposer.name), resource(decision.proposal.proposer))
+        = link_to(decision.proposal.proposer.name, decision.proposal.proposer)
         )
-        = partial 'proposals/description', :proposal => decision.proposal
-        %p= link_to("More details", resource(decision.proposal))
+        = render 'proposals/description', :proposal => decision.proposal
+        %p= link_to("More details", decision.proposal)
       %td.timestamp= decision.proposal.close_date.formatted(:long)
-      %td.vote= partial 'proposals/vote_count', :proposal => decision.proposal
+      %td.vote= render 'proposals/vote_count', :proposal => decision.proposal
 
 %h4 Recent Failed Proposals
 %table.failed_proposals
@@ -53,9 +53,9 @@
       %td
         = failed_proposal.title
         (
-        = link_to(h(failed_proposal.proposer.name), resource(failed_proposal.proposer))
+        = link_to(failed_proposal.proposer.name, failed_proposal.proposer)
         )
-        = partial 'proposals/description', :proposal => failed_proposal
-        %p= link_to("More details", resource(failed_proposal))
+        = remder 'proposals/description', :proposal => failed_proposal
+        %p= link_to("More details", failed_proposal)
       %td.timestamp= failed_proposal.close_date.formatted(:long)
-      %td.vote= partial 'proposals/vote_count', :proposal => failed_proposal
+      %td.vote= render 'proposals/vote_count', :proposal => failed_proposal

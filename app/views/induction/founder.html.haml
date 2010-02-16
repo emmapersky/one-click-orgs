@@ -1,12 +1,16 @@
 %h3 Induction - Founder
-= form_for(@founder, :action => url(:controller => 'induction', :action => 'create_founder')) do
+- form_for(@founder, :url => {:controller => 'induction', :action => 'create_founder'}) do |f|
   %p
-    = text_field :email, :label => "Email Address "
+    = f.label :email, "Email Address"
+    = f.text_field :email
   %p
-    = text_field :name, :label => "Name "
+    = f.label :name
+    = f.text_field :name
   %p
-    = password_field :password, :label => "Password "
+    = f.label :password
+    = f.password_field :password
   %p
-    = password_field :password_confirmation, :label => "Confirm password "
+    = f.label :password_confirmation, "Confirm password"
+    = f.password_field :password_confirmation
   %p
-    = submit "Save and move on", :id => 'submit'
+    = submit_tag "Save and move on", :id => 'submit'

@@ -1,14 +1,16 @@
 %h3 Induction - Organisation details
-= form(:action => url(:controller => 'induction', :action => 'create_organisation_details')) do
+- form_tag(:controller => 'induction', :action => 'create_organisation_details') do
   %p
-    = text_field(:name => 'organisation_name', :value => @organisation_name, :label => "The organisation's name")
+    = label_tag(:organisation_name, "The organisation's name")
+    = text_field_tag(:organisation_name, @organisation_name)
   %p
-    = label("The organisation's objectives", :for => 'objectives')
+    = label_tag(:objectives, "The organisation's objectives")
     %br
-    = text_area(@objectives, :name => 'objectives')
+    = text_area_tag(:objectives, @objectives)
   %p
-    = check_box(:name => 'assets', :checked => @assets, :label => 'The organisation will have the power to hold and transfer assets', :value => '1')
+    = check_box_tag(:assets, '1', @assets)
+    = label_tag(:assets, "The organisation will have the power to hold and transfer assets")
   %p
-    = submit("Save and move on")
+    = submit_tag("Save and move on")
 %p
-  = link_to("Discard and go back", url(:controller => 'induction', :action => 'founder'))
+  = link_to("Discard and go back", :controller => 'induction', :action => 'founder')

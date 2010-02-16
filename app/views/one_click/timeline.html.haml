@@ -2,4 +2,4 @@
 %table.timeline
   - for event in @timeline
     %tr
-      = partial event[:kind], :event => event
+      = render :partial => event[:kind], :locals => {:event => event}

@@ -1,10 +1,12 @@
 %h4
   New Member
 %p
-  = form_for(@new_member, :action => url(:members) ) do
+  - form_for(:member, @new_member, :url => members_path) do |f|
     %p
-      = text_field :email, :label => "Email Address "
+      = f.label(:email, "Email Address")
+      = f.text_field :email
     %p
-      = text_field :name, :label => "Name "
+      = f.label(:name)
+      = f.text_field :name
     %p
-      = submit "Add Member", :id => 'submit'
+      = submit_tag "Add Member", :id => 'submit'

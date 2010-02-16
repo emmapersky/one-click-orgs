@@ -1,8 +1,8 @@
 %h3 Induction - Founding Meeting
-= form(:action => url(:controller => 'induction', :action => 'create_founding_meeting_details')) do
-  %p= text_field(:name => 'date', :value => @founding_meeting_date, :label => "Date")
-  %p= text_field(:name => 'time', :value => @founding_meeting_time, :label => "Starting at time")
-  %p= text_field(:name => 'location', :value => @founding_meeting_location, :label => "Location")
-  %p= submit("Save details and move on")
-%p= link_to("Discard changes and go back", url(:controller => 'induction', :action => 'preview_constitution'))
+- form_tag(:controller => 'induction', :action => 'create_founding_meeting_details') do
+  %p= text_field_tag(:name => 'date', :value => @founding_meeting_date, :label => "Date")
+  %p= text_field_tag(:name => 'time', :value => @founding_meeting_time, :label => "Starting at time")
+  %p= text_field_tag(:name => 'location', :value => @founding_meeting_location, :label => "Location")
+  %p= submit_tag("Save details and move on")
+%p= link_to("Discard changes and go back", :controller => 'induction', :action => 'preview_constitution')
 

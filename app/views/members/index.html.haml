@@ -3,5 +3,5 @@
 %ol
   - for member in @members
     %li
-      = link_to "#{member.name}", url(:member, member)
-/ = partial :new_member
+      = link_to "#{member.name}", member_path(member)
+/ = render :new_member

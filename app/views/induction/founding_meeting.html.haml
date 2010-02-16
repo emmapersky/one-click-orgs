@@ -1,16 +1,16 @@
 %h3 Confirm results of founding meeting
 %p Once you have had your founding meeting, you can come back here and confirm who voted in favour of founding the organisation.
 
-= form(:action => url(:controller => 'induction', :action => 'confirm_founding_meeting')) do
+- form_tag(:controller => 'induction', :action => 'confirm_founding_meeting') do
   %p Select the members who voted in favour.
   %ul.founding_members
     %li
-      = check_box(:name => "members[#{@founding_member.id}]", :value => 1, :checked => true, :disabled => true, :label => @founding_member.name)
+      = check_box_tag(:name => "members[#{@founding_member.id}]", :value => 1, :checked => true, :disabled => true, :label => @founding_member.name)
     - @other_members.each do |member|
       %li
-        = check_box(:name => "members[#{member.id}]", :value => 1, :checked => false, :label => member.name)
-  %p= submit("Confirm founding meeting, and found #{@organisation_name}")
+        = check_box_tag(:name => "members[#{member.id}]", :value => 1, :checked => false, :label => member.name)
+  %p= submit_tag("Confirm founding meeting, and found #{@organisation_name}")
 
 %p
   %strong OR
-  = link_to("Cancel this founding meeting, and change the organisation details.", url(:controller => 'induction', :action => 'restart_induction'))
+  = link_to("Cancel this founding meeting, and change the organisation details.", :controller => 'induction', :action => 'restart_induction')

@@ -5,16 +5,17 @@
       One Click Orgs
 
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
-    = css_include_tag :one_click
-    = js_include_tag :jquery, :application
+    = stylesheet_link_tag :one_click
+    = javascript_include_tag :jquery, :application
+    = csrf_meta_tag
   %body
     %div.control_bar
       - if current_user
         = h current_user.name
         |
-        =link_to 'my settings', url(:controller => :members, :action => :edit, :id => current_user.id)
+        =link_to 'my settings', edit_member_path(current_user)
         |
-        =link_to 'logout', url('logout')
+        =link_to 'logout', logout_path
     %div#doc
       %div#hd
         %h1.header One Click Orgs
@@ -22,18 +23,18 @@
       %div#bd
         - if current_user
           %ul#nav
-            %li#navitem= link_to 'My Control Centre', url(:controller => :one_click, :action => :control_centre)
-            %li#navitem= link_to 'My Member Page', url(:controller => :members, :action => :show, :id => current_user.id)
-            %li#navitem= link_to 'Timeline', url(:controller => :one_click, :action => :timeline)
-            %li#navitem= link_to 'Members', url(:controller => :members)
-            %li#navitem= link_to 'Constitution', url('constitution')
+            %li#navitem= link_to 'My Control Centre', :controller => :one_click, :action => :control_centre
+            %li#navitem= link_to 'My Member Page', member_path(current_user)
+            %li#navitem= link_to 'Timeline', timeline_path
+            %li#navitem= link_to 'Members', members_path
+            %li#navitem= link_to 'Constitution', constitution_path
 
         %div#notice
-          = h(message[:notice])
+          = flash[:notice]
         %div#error
-          = h(message[:error])
+          = flash[:error]
           
-        = catch_content :for_layout
+        = yield
       %div.footer
-        = "One Click Orgs 0.5 (Beta) - running on merb #{Merb::VERSION}"
+        = "One Click Orgs 0.5 (Beta) - Running on Rails #{Rails.version}"
     = get_satisfaction_widget
