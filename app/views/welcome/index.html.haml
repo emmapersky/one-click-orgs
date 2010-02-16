@@ -1,0 +1,15 @@
+%h3 
+  Constitution of 
+  = @organisation_name
+
+%p
+  In joining
+  = @organisation_name
+  you agree to abide by their constitution. Please read it carefully before you continue. Note
+  that this constitution is a living document: members of the organisation may propose changes
+  at any time.
+
+=partial 'common/constitution', :allow_changes => false
+  
+%p= link_to("I agree to abide by the constitution of #{@organisation_name}.", url(:action => 'induct_member'))
+%p= link_to("Cancel", url(:action => 'cancel_membership'))

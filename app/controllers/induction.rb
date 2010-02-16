@@ -67,7 +67,7 @@ class Induction < Application
   def members
     # Find the first fifteen members after the founding member,
     # creating new empty members as necessary.
-    @members = Member.all.active
+    @members = Member.all
     @founder = @members.shift
     while @members.length < 15 do
       @members.push(Member.new)
@@ -190,7 +190,7 @@ class Induction < Application
   def founding_meeting
     @organisation_name = Organisation.name
     @founding_member = Member.first
-    @other_members = Member.all.active; @other_members.shift
+    @other_members = Member.all; @other_members.shift
     
     render
   end
@@ -198,7 +198,7 @@ class Induction < Application
   # Remove any founding members that did not vote in favour,
   # and move organisation to 'active' state.
   def confirm_founding_meeting
-    other_members = Member.all.active.to_a[1..-1]
+    other_members = Member.all.to_a[1..-1]
     confirmed_member_ids = if params[:members].respond_to?(:keys)
       params[:members].keys.map(&:to_i)
     else
@@ -236,7 +236,7 @@ class Induction < Application
     
     redirect(url(:action => 'organisation_details'))
   end
-
+  
 private
   def check_active_organisation
     if Organisation.active?

@@ -44,7 +44,7 @@ module VotingSystems
     
     
     def self.can_be_closed_early?(proposal)
-      proposal.votes_for > (proposal.total_members  / 2.0).ceil
+      proposal.votes_for > (proposal.member_count  / 2.0).ceil
     end
     
     def self.passed?(proposal)
@@ -72,7 +72,7 @@ module VotingSystems
     end
     
     def self.passed?(proposal)
-      proposal.votes_for / proposal.total_members.to_f >= @fraction_needed
+      proposal.votes_for / proposal.member_count.to_f >= @fraction_needed
     end
   end
   
