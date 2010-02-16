@@ -1,32 +1,17 @@
-require 'dm-validations'
-
-class VoteError < RuntimeError; end
-
 class Member
-  include DataMapper::Resource
-  include AsyncJobs
+  has_many :votes
+  has_many :proposals, :foreign_key => 'proposer_member_id'
   
-  has n, :votes
-  has n, :proposals, :class_name => 'Proposal', :child_key => [:proposer_member_id]
+  scope :active, where(:active => true)
   
-  property :id, Serial
-  property :email, String, :nullable => false
-  property :name, String
-  property :created_at, DateTime, :default => Proc.new {|r,p| Time.now.to_datetime}
-  property :active, Boolean, :default => true
-  
-  def self.active
-    all(:active=>true)
-  end
-    
   def cast_vote(action, proposal_id)
     raise ArgumentError, "need action and proposal_id" unless action and proposal_id
     
-    existing_vote = Vote.first(:member_id => self.id, :proposal_id => proposal_id)
+    existing_vote = Vote.where(:member_id => self.id, :proposal_id => proposal_id).first
     raise VoteError, "Vote already exists for this proposal" if existing_vote
-
-    #FIXME why not just pass the proposal in?    
-    proposal = Proposal.get(proposal_id)
+    
+    # FIXME why not just pass the proposal in?
+    proposal = Proposal.find(proposal_id)
     raise VoteError, "proposal with id #{proposal_id} not found" unless proposal
     raise VoteError, "Can not vote on proposals created before member created" if proposal.creation_date < self.created_at
     
@@ -52,11 +37,12 @@ class Member
   end
   
   def send_welcome
+    # TODO Convert to new background job system
     async_job :send_new_member_email, self.id, self.password
   end
   
   def self.send_new_member_email(member_id, password)
-    member = Member.get(member_id)
+    member = Member.find(member_id)
     MembersMailer.welcome_new_member(member, password).deliver
   end  
   

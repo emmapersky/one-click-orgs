@@ -1,5 +1,3 @@
-require 'dm-validations'
-
 # Represents the clauses in the constitution which may be modified by the user.
 # 
 # The current necessary clauses are:
@@ -14,31 +12,26 @@ require 'dm-validations'
 # general_voting_system       String -- the class name of the VotingSystem in use
 # membership_voting_system    String -- the class name of the VotingSystem in use
 # constitution_voting_system  String -- the class name of the VotingSystem in use
-
-class Clause
-  include DataMapper::Resource
-  
-  property :id, Serial
-  
-  property :name, String, :nullable => false
-  
-  property :started_at, DateTime, :default => Proc.new {|r,p| Time.now.utc.to_datetime}
-  property :ended_at, DateTime
-  
-  property :text_value, Text
-  property :integer_value, Integer
-  property :boolean_value, Boolean
+class Clause < ActiveRecord::Base
+  before_create, :set_started_at
+  private
+  def set_started_at
+    self.set_started_at = Time.now.utc
+  end
+  public
   
   # Returns the currently active clause for the given name.
   def self.get_current(name)
-    first(:name => name, :started_at.lte => Time.now.utc, :ended_at => nil)
+    where(["name = ? AND started_at <= ? AND ended_at IS NULL", name, Time.now.utc]).first
   end
   
-  after :create, :end_previous
+  after_create, :end_previous
+  private
   # Finds the previous open clauses for this name, and ends them.
   def end_previous
     Clause.all(:name => name, :ended_at => nil, :id.not => self.id).update!(:ended_at => Time.now.utc)
   end
+  public
   
   def to_s
     "#{name}: #{text_value || integer_value || boolean_value}"

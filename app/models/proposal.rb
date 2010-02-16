@@ -1,30 +1,28 @@
-require 'dm-validations'
-
-class Proposal
-  include AsyncJobs
-  
-  include DataMapper::Resource
+class Proposal < ActiveRecord::Base
   #TODO: should probably not be in a hook method?
-  after :create, :send_email
+  after_create, :send_email
   
-  has n, :votes
-  has 1, :decision
+  has_many :votes
+  has_one :decision
   
-  belongs_to :proposer, :class_name => 'Member', :child_key => [:proposer_member_id]
+  belongs_to :proposer, :class_name => 'Member', :foreign_key => 'proposer_member_id'
   
-  property :id, Serial
-  property :title, String, :nullable => false, :length => 255
-  property :description, Text
-  property :creation_date, DateTime, :default => Proc.new {|r,p| Time.now.to_datetime}
-  property :open, Boolean, :default => true
-  property :accepted, Boolean, :default => false
-  property :close_date, DateTime, :default => Proc.new {|r,p| (Time.now + Constitution.voting_period).to_datetime}
-  property :parameters, String, :length => 10000
-  property :type, Discriminator 
+  before_create, :set_creation_date
+  private
+  def set_creation_date
+    self.creation_date = Time.now.utc
+  end
+  public
   
-  validates_present :proposer_member_id
+  before_create, :set_close_date
+  private
+  def set_close_date
+    self.close_date = Time.now.utc + Constitution.voting_period
+  end
+  public
   
   
+  validates_presence_of :proposer_member_id
   
   def end_date
     self.close_date
@@ -32,19 +30,19 @@ class Proposal
   
   # Returns a Vote by the member specified, or Nil
   def vote_by(member)
-    member.votes.first(:proposal_id => self.id)
+    member.votes.where(:proposal_id => self.id).first
   end
   
   def votes_for
-    Vote.count(:proposal_id => self.id, :for => true)
+    Vote.where(:proposal_id => self.id, :for => true).count
   end
   
   def votes_against
-    Vote.count(:proposal_id => self.id, :for => false)
+    Vote.where(:proposal_id => self.id, :for => false).count
   end
   
   def total_members
-     Member.count(:created_at.lt => creation_date)
+    Member.where(["created_at < ?", creation_date]).count
   end
   
   def abstained
@@ -56,7 +54,7 @@ class Proposal
   end
   
   def reject!
-    #do some kind of email notification
+    # TODO do some kind of email notification
   end
   
   def accepted_or_rejected
@@ -76,7 +74,7 @@ class Proposal
   
   def majority?
     #FIXME, voting system?
-    num_members = Member.count(:created_at.lt => creation_date)
+    num_members = Member.where(["created_at < ?", creation_date]).count
     return votes_for >= (num_members / 2.0).ceil
   end
 
@@ -92,7 +90,7 @@ class Proposal
     raise "proposal #{self} already closed" if closed?   
         
     passed = passed?
-    Merb.logger.info("closing proposal #{self}")
+    Rails.logger.info("closing proposal #{self}")
         
     self.open = 0
     self.close_date = Time.now
@@ -114,11 +112,11 @@ class Proposal
   end
   
   def self.find_closed_early_proposals
-    Proposal.all(:close_date.gt => Time.now).select { |p| p.majority? }
+    Proposal.where(["close_date > ?", Time.now.utc]).all.select { |p| p.majority? }
   end
 
   def self.close_due_proposals
-   Proposal.all(:close_date.lt => Time.now, :open=>true).each { |p| p.close! }
+   Proposal.where(["close_date < ? AND open = ?", Time.now.utc, true]).all.each { |p| p.close! }
   end
   
   def self.close_early_proposals
@@ -131,22 +129,19 @@ class Proposal
     close_early_proposals
   end
   
-  def self.all_open
-    all(:open => true, :close_date.gt => Time.now)
-  end
+  scope :open, where(["open = ? AND close_date > ?", true, Time.now.utc])
   
-  def self.all_failed
-    all(:close_date.lt => Time.now, :accepted => false, :order => [:close_date.desc])
-  end
+  scope :failed, where(["close_date < ? AND accepted = ?", Time.now.utc, false]).order('close_date DESC')
   
   def send_email
+    # TODO Convert to new background job system
     async_job :send_email_for, self.id
   end
   
   def self.send_email_for(proposal_id)
-    proposal = Proposal.get(proposal_id)
+    proposal = Proposal.find(proposal_id)
     
-    Member.all.active.each do |m|
+    Member.active.each do |m|
       ProposalMailer.notify_creation(m, proposal).deliver
     end
   end
@@ -158,5 +153,6 @@ class Proposal
 end
 
 # Run the close proposal every 60 seconds
+# TODO Convert to new background job system
 AsyncJobs.periodical Proposal, 60, :close_proposals
 

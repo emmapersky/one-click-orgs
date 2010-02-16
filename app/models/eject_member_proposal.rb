@@ -3,7 +3,7 @@ class EjectMemberProposal < Proposal
     raise "Can not enact a proposal which has not passed" unless passed?
     
     params = JSON.parse(self.parameters)
-    member = Member.get(params['id'])
+    member = Member.find(params['id'])
     member.eject!
   end
   
