@@ -1,24 +1,18 @@
-class Induction < Application
-  include AsyncJobs
-  include Merb::ConstitutionHelper
+class InductionController < ApplicationController
+  skip_before_filter :ensure_organisation_active
+  before_filter :check_active_organisation
   
-  layout :induction
-
-  skip_before :ensure_organisation_active
-  before :check_active_organisation
-  
-  before :ensure_authenticated, :exclude => [:founder, :create_founder]
+  before_filter :ensure_authenticated, :except => [:founder, :create_founder]
 
   PENDING_ACTIONS = [:founding_meeting, :confirm_founding_meeting, :restart_induction]
   CONSTRUCTION_ACTIONS = [:founder, :create_founder, :members, :create_members, :organisation_details, :create_organisation_details, :confirm_agenda]
   
-  before :ensure_organisation_under_construction, :only => CONSTRUCTION_ACTIONS
-  before :ensure_organisation_pending, :only => PENDING_ACTIONS
+  before_filter :ensure_organisation_under_construction, :only => CONSTRUCTION_ACTIONS
+  before_filter :ensure_organisation_pending, :only => PENDING_ACTIONS
 
   # UNDER CONSTRUCTION    
   def founder
     @founder = Member.first || Member.new
-    render
   end
   
   def create_founder
@@ -30,49 +24,49 @@ class Induction < Application
     @founder = Member.first || Member.new
     @founder.attributes = params[:member]
     if @founder.save
+      # TODO Convert to new auth system
       session.user = @founder
-      redirect(url(:action => 'organisation_details'))
+      redirect_to(:action => 'organisation_details')
     else
-      redirect(url(:action => 'founder'), :message => {:error => "There was a problem with your details: #{@founder.errors.full_messages.to_sentence}"})
+      redirect_to({:action => 'founder'}, :flash => {:error => "There was a problem with your details: #{@founder.errors.full_messages.to_sentence}"})
     end
   end
   
   def organisation_details
     @organisation_name = Organisation.name
     @objectives = Organisation.objectives
+    # FIXME This will erroneously revert the assets setting to true if Organisation.assets is already set to false
     @assets = Organisation.assets || true
-    render
   end
   
   def create_organisation_details
     organisation_name = Clause.get_current('organisation_name') || Clause.new(:name => 'organisation_name')
     organisation_name.text_value = params[:organisation_name]
-    organisation_name.save
+    organisation_name.save!
   
     objectives = Clause.get_current('objectives') || Clause.new(:name => 'objectives')
     objectives.text_value = params[:objectives]
-    objectives.save
+    objectives.save!
     
     assets = Clause.get_current('assets') || Clause.new(:name => 'assets')
-    assets.boolean_value =  params[:assets] == '1'
-    assets.save
+    assets.boolean_value = params[:assets] == '1'
+    assets.save!
     
     if params[:organisation_name].blank? || params[:objectives].blank?
-        redirect(url(:action => 'organisation_details'), :message => {:error => "You must fill in the organisation name and objects."})
+        redirect_to({:action => 'organisation_details'}, :flash => {:error => "You must fill in the organisation name and objects."})
     else
-      redirect(url(:action => 'members'))
+      redirect_to(:action => 'members')
     end
   end
   
   def members
     # Find the first fifteen members after the founding member,
     # creating new empty members as necessary.
-    @members = Member.all.active
+    @members = Member.active
     @founder = @members.shift
     while @members.length < 15 do
       @members.push(Member.new)
     end
-    render
   end
   
   def create_members
@@ -82,19 +76,19 @@ class Induction < Application
           member = Member.new
           member.new_password!
         else
-          member = Member.get!(member_params[:id])
+          member = Member.find(member_params[:id])
         end
         member.name = member_params[:name]
         member.email = member_params[:email]
-        member.save
+        member.save!
       elsif !member_params[:id].blank?
         # We get here if the name and email fields have been cleared
         # for a memeber that's already been saved to the database.
         # Treat this as a deletion.
-        Member.get!(member_params[:id]).destroy
+        Member.find(member_params[:id]).destroy
       end
     end
-    redirect(url(:action => 'voting_settings'))
+    redirect_to(:action => 'voting_settings')
   end
   
   def voting_settings
@@ -102,58 +96,55 @@ class Induction < Application
     @general_voting_system = Clause.get_text(:general_voting_system) or 'RelativeMajority'
     @membership_voting_system = Clause.get_text(:membership_voting_system) or 'AbsoluteTwoThirdsMajority'
     @constitution_voting_system = Clause.get_text(:constitution_voting_system) or 'AbsoluteTwoThirdsMajority'
-    render
   end
   
   def create_voting_settings
     voting_period = Clause.get_current('voting_period') || Clause.new(:name => 'voting_period')
     voting_period.integer_value = params[:voting_period]
-    voting_period.save
+    voting_period.save!
     
     general_voting_system = Clause.get_current('general_voting_system') || Clause.new(:name => 'general_voting_system')
     general_voting_system.text_value = params[:general_voting_system]
-    general_voting_system.save
+    general_voting_system.save!
     
     membership_voting_system = Clause.get_current('membership_voting_system') || Clause.new(:name => 'membership_voting_system')
     membership_voting_system.text_value = params[:membership_voting_system]
-    membership_voting_system.save
+    membership_voting_system.save!
     
     constitution_voting_system = Clause.get_current('constitution_voting_system') || Clause.new(:name => 'constitution_voting_system')
     constitution_voting_system.text_value = params[:constitution_voting_system]
-    constitution_voting_system.save
+    constitution_voting_system.save!
     
-    redirect(url(:action => 'preview_constitution'))
+    redirect_to(:action => 'preview_constitution')
   end
   
   def preview_constitution
     prepare_constitution_view
-    render
   end
   
   def founding_meeting_details
     @founding_meeting_date = Clause.get_text('founding_meeting_date')
     @founding_meeting_time = Clause.get_text('founding_meeting_time')
     @founding_meeting_location = Clause.get_text('founding_meeting_location')
-    render
   end
   
   def create_founding_meeting_details
     founding_meeting_date = Clause.get_current('founding_meeting_date') || Clause.new(:name => 'founding_meeting_date')
     founding_meeting_date.text_value = params[:date]
-    founding_meeting_date.save
+    founding_meeting_date.save!
   
     founding_meeting_time = Clause.get_current('founding_meeting_time') || Clause.new(:name => 'founding_meeting_time')
     founding_meeting_time.text_value = params[:time]
-    founding_meeting_time.save
+    founding_meeting_time.save!
   
     founding_meeting_location = Clause.get_current('founding_meeting_location') || Clause.new(:name => 'founding_meeting_location')
     founding_meeting_location.text_value = params[:location]
-    founding_meeting_location.save
+    founding_meeting_location.save!
     
     if params[:date].blank? || params[:time].blank? || params[:location].blank?
-      redirect(url(:action => 'founding_meeting_details'), :message => {:error => "You must fill in a date, time and location for the founding meeting."})
+      redirect_to({:action => 'founding_meeting_details'}, :flash => {:error => "You must fill in a date, time and location for the founding meeting."})
     else
-      redirect(url(:action => 'preview_agenda'))
+      redirect_to(:action => 'preview_agenda')
     end
   end
   
@@ -163,9 +154,7 @@ class Induction < Application
     @founding_meeting_date = Clause.get_text('founding_meeting_date')
     @founding_meeting_time = Clause.get_text('founding_meeting_time')
     
-    @members = Member.all.active
-    
-    render
+    @members = Member.active
   end
     
   # Sends the constitution and agenda to founding members,
@@ -177,10 +166,11 @@ class Induction < Application
     
     # Send emails with founding meeting agenda
     Member.all.each do |member|
+      # TODO Convert to new background jobs system
       async_job :send_agenda_email, member
     end
     
-    redirect(url(:action => 'founding_meeting'))
+    redirect_to(:action => 'founding_meeting')
   end
   
   # PENDING STATE  
@@ -190,15 +180,13 @@ class Induction < Application
   def founding_meeting
     @organisation_name = Organisation.name
     @founding_member = Member.first
-    @other_members = Member.all.active; @other_members.shift
-    
-    render
+    @other_members = Member.active; @other_members.shift
   end
   
   # Remove any founding members that did not vote in favour,
   # and move organisation to 'active' state.
   def confirm_founding_meeting
-    other_members = Member.all.active.to_a[1..-1]
+    other_members = Member.active.to_a[1..-1]
     confirmed_member_ids = if params[:members].respond_to?(:keys)
       params[:members].keys.map(&:to_i)
     else
@@ -214,7 +202,7 @@ class Induction < Application
     
     organisation_state = Clause.get_current('organisation_state')
     organisation_state.text_value = "active"
-    organisation_state.save
+    organisation_state.save!
     
     #now, send out emails to confirm creation of all members
     other_members.each do |m|
@@ -222,7 +210,7 @@ class Induction < Application
       m.send_welcome
     end
       
-    redirect(url(:controller => 'one_click', :action => 'control_centre'))
+    redirect_to(:controller => 'one_click', :action => 'control_centre')
   end
   
   # Moves the organisation back from 'pending' state, to
@@ -234,27 +222,27 @@ class Induction < Application
     
     Clause.get_current('organisation_state').destroy
     
-    redirect(url(:action => 'organisation_details'))
+    redirect_to(:action => 'organisation_details')
   end
 
 private
   def check_active_organisation
     if Organisation.active?
       if Organisation.has_founding_member?
-        throw :halt, redirect(url(:controller => 'one_click', :action => 'control_centre'))
+        redirect_to(:controller => 'one_click', :action => 'control_centre')
       else
         Organisation.under_construction!
-        throw :halt, "ERROR: organisation marked as active but no members present - reset"
+        raise "ERROR: organisation marked as active but no members present - reset"
       end
     end
   end
   
   def ensure_organisation_under_construction
-    throw :halt, redirect(url(:action => 'founding_meeting')) unless Organisation.under_construction?
+    redirect_to(:action => 'founding_meeting') unless Organisation.under_construction?
   end
   
   def ensure_organisation_pending
-    throw :halt, redirect(url(:action => 'founder')) unless Organisation.pending?
+    redirect_to(:action => 'founder') unless Organisation.pending?
   end
 
 public
@@ -267,6 +255,7 @@ public
     founding_member_name = Member.first.name
     members = Member.all
     
+    # TODO Update to use ActionMailer syntax
     send_mail(InductionMailer, :notify_agenda,
       {:to => member.email, :from => 'info@oneclickor.gs', :subject => "Agenda for '#{organisation_name}' founding meeting"},
       {

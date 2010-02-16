@@ -1,31 +1,26 @@
-class OneClick < Application
-  include Merb::ConstitutionHelper
-
+class OneClickController < ApplicationController
   def index
-    redirect(url(:action=>'control_centre'))
+    redirect_to(:action => 'control_centre')
   end
   
   def constitution
     prepare_constitution_view
-    render
   end
   
   def control_centre
-    only_provides :html
-  
+    # only_provides :html
+    
     # Fetch open proposals
-    @proposals = Proposal.all_open
+    @proposals = Proposal.open
     
     # Fetch five most recent decisions
-    @decisions = Decision.all(:limit => 5, :order => [:id.desc])
+    @decisions = Decision.order("id DESC").limit(5)
     
     # Fetch five most recent failed proposals
-    @failed_proposals = Proposal.all_failed[0..4]
+    @failed_proposals = Proposal.failed.limit(5)
     
     @new_proposal = Proposal.new
     @new_member = Member.new
-        
-    render
   end
   
   def timeline
@@ -34,28 +29,27 @@ class OneClick < Application
       Proposal.all,
       Decision.all
     ].flatten.map(&:to_event).sort{|a, b| b[:timestamp] <=> a[:timestamp]}
-    
-    render
   end
   
   def propose_text_amendment
     proposal = ChangeTextProposal.new(
-      :title => "Change #{params['name']} to '#{params['value']}'",
+      :title => "Change #{params[:name]} to '#{params[:value]}'",
+      # TODO Convert to new auth sys
       :proposer_member_id => current_user.id,
       :parameters => ChangeTextProposal.serialize_parameters(
-        'name' => params['name'],
-        'value' => params['value']
+        'name' => params[:name],
+        'value' => params[:value]
       )
     )
     if proposal.save
-      redirect(url(:controller => 'one_click', :action => 'control_centre'), :message => {:notice => "Constitutional amendment proposal succesfully created"})
+      redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Constitutional amendment proposal succesfully created")
     else
-      redirect('/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
+      redirect(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
     end
   end
   
   def propose_assets_amendment
-    if params['new_assets_value'] == '1'
+    if params[:new_assets_value] == '1'
       title = "Change the constitution to allow holding, transferral and disposal of material assets and intangible assets"
       new_assets_value = true
     else
@@ -65,6 +59,7 @@ class OneClick < Application
     
     proposal = ChangeBooleanProposal.new(
       :title => title,
+      # TODO Convert to new auth system
       :proposer_member_id => current_user.id,
       :parameters => ChangeBooleanProposal.serialize_parameters(
         'name' => 'assets',
@@ -73,83 +68,87 @@ class OneClick < Application
     )
     
     if proposal.save
-      redirect(url(:controller => 'one_click', :action => 'control_centre'), :message => {:notice => "Constitutional amendment proposal succesfully created"})
+      redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Constitutional amendment proposal succesfully created")
     else
-      redirect('/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
+      redirect_to(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
     end
   end
   
   def propose_voting_period_amendment
-    if params['new_voting_period']
+    if params[:new_voting_period]
       proposal = ChangeVotingPeriodProposal.new(
-        :title=>"Change voting period to #{VotingPeriods.name_for_value(params['new_voting_period'])}",
+        :title=>"Change voting period to #{VotingPeriods.name_for_value(params[:new_voting_period])}",
+        # TODO Convert to new auth system
         :proposer_member_id => current_user.id,
         :parameters => ChangeVotingSystemProposal.serialize_parameters(
-          'new_voting_period'=>params['new_voting_period'])
+          'new_voting_period'=>params[:new_voting_period])
       )      
       if proposal.save
-        redirect(url(:controller => 'one_click', :action => 'control_centre'), :message => {:notice => "Constitutional amendment proposal succesfully created"})
+        redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Constitutional amendment proposal succesfully created")
       else
-        redirect('/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
+        redirect_to(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
       end
     end
   end
   
   def propose_voting_system_amendment
-    if params['general_voting_system']
-      proposed_system = VotingSystems.get(params['general_voting_system'])      
+    if params[:general_voting_system]
+      proposed_system = VotingSystems.get(params[:general_voting_system])      
       current_system = Constitution.voting_system :general
       
       if current_system != proposed_system           
               
         proposal = ChangeVotingSystemProposal.new(
           :title => "change general voting system to #{proposed_system.description}",
+          # TODO Convert to new auth system
           :proposer_member_id => current_user.id,
           :parameters => ChangeVotingSystemProposal.serialize_parameters('type'=>'general', 'proposed_system'=> proposed_system.simple_name)
         )
 
         if proposal.save
-          redirect url(:controller=>'one_click', :action=>'control_centre'), :message => {:notice=> "Change general voting system proposal successfully created"}
+          redirect_to {:controller=>'one_click', :action=>'control_centre'}, :flash => {:notice=> "Change general voting system proposal successfully created"}
         else
-          redirect '/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"}      
+          redirect_to constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}      
         end
-        
+
         return
       end
-    elsif params['membership_voting_system']
-      proposed_system = VotingSystems.get(params['membership_voting_system'])
+    elsif params[:membership_voting_system]
+      proposed_system = VotingSystems.get(params[:membership_voting_system])
       current_system = Constitution.voting_system :membership
       
       if current_system != proposed_system
         proposal = ChangeVotingSystemProposal.new(
           :title => "change membership voting system to #{proposed_system.description}",
+          # TODO Convert to new auth system
           :proposer_member_id => current_user.id,
           :parameters => ChangeVotingSystemProposal.serialize_parameters('type' => 'membership', 'proposed_system' => proposed_system.simple_name)
         )
         
         if proposal.save
-          redirect url(:controller=>'one_click', :action=>'control_centre'), :message => {:notice=> "Change membership voting system proposal successfully created"}
+          redirect_to {:controller=>'one_click', :action=>'control_centre'}, :flash => {:notice=> "Change membership voting system proposal successfully created"}
         else
-          redirect '/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
+          redirect_to constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
         end
         
         return
       end
-    elsif params['constitution_voting_system']
-      proposed_system = VotingSystems.get(params['constitution_voting_system'])
+    elsif params[:constitution_voting_system]
+      proposed_system = VotingSystems.get(params[:constitution_voting_system])
       current_system = Constitution.voting_system :constitution
       
       if current_system != proposed_system
         proposal = ChangeVotingSystemProposal.new(
           :title => "change constitution voting system to #{proposed_system.description}",
+          # TODO Convert to new auth system
           :proposer_member_id => current_user.id,
           :parameters => ChangeVotingSystemProposal.serialize_parameters('type' => 'constitution', 'proposed_system' => proposed_system.simple_name)
         )
         
         if proposal.save
-          redirect url(:controller=>'one_click', :action=>'control_centre'), :message => {:notice=> "Change constitution voting system proposal successfully created"}
+          redirect_to {:controller=>'one_click', :action=>'control_centre'}, :flash => {:notice=> "Change constitution voting system proposal successfully created"}
         else
-          redirect '/constitution', :message => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
+          redirect_to constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
         end
         
         return
@@ -158,6 +157,6 @@ class OneClick < Application
     
     end
     
-    redirect '/constitution', :message => {:error => "No changes."}                
+    redirect_to constitution_path, :flash => {:error => "No changes."}                
   end
 end

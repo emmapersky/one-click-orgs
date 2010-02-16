@@ -1,15 +1,15 @@
-class Votes < Application
+class VotesController < Application
 
   #FIXME duplication  
   def vote_for
     id, return_to = params[:id], params[:return_to]
-    raise ArgumentError, "need proposal id" unless id    
+    raise ArgumentError, "need proposal id" unless id
         
     begin
       current_user.cast_vote(:for, id)
-      redirect return_to, :message => {:notice => "Vote for proposal cast"}
+      redirect_to return_to, :notice => "Vote for proposal cast"
     rescue Exception => e
-      redirect return_to, :message => {:notice => "Error casting vote:#{e}"}      
+      redirect_to return_to, :notice => "Error casting vote:#{e}"
     end
   end
   
@@ -20,13 +20,9 @@ class Votes < Application
         
     begin
       current_user.cast_vote(:against, id)
-      redirect return_to, :message => {:notice => "Vote against proposal cast"}
+      redirect_to return_to, :notice => "Vote against proposal cast"
     rescue
-      redirect return_to, :message => {:notice => "Error casting vote"}      
+      redirect_to return_to, :notice => "Error casting vote"
     end    
   end
-  
-  
-
 end 
-
