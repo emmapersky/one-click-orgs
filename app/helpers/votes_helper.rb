@@ -1,5 +1,2 @@
-module Merb
-  module VotesHelper
-
-  end
-end # Merb
+module VotesHelper
+end

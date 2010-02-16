@@ -18,7 +18,7 @@
         = partial 'proposals/description', :proposal => proposal
         %p= link_to("More details", resource(proposal))
       %td.timestamp
-        = time_to_go_in_words(proposal.end_date)
+        = distance_of_time_in_words(proposal.end_date)
       %td.vote
         = partial 'proposals/vote', :proposal => proposal
   
