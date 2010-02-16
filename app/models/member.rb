@@ -57,10 +57,7 @@ class Member
   
   def self.send_new_member_email(member_id, password)
     member = Member.get(member_id)
-    OCOMail.send_mail(MembersMailer, :welcome_new_member,
-      {:to => member.email, :from => 'info@oneclickor.gs', :subject => 'Your password'},
-      {:member => member, :password => password}
-    )
+    MembersMailer.welcome_new_member(member, password).deliver
   end  
   
   def eject!

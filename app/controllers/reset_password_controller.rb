@@ -26,12 +26,8 @@ class ResetPasswordController < Application
     end
   end
   
-  # TODO Convert to ActionMailer syntax
   def self.do_reset_email(member_id, new_password)
     member = Member.get(member_id)
-    send_mail(MembersMailer, :notify_new_password,
-      {:to => member.email, :from => 'info@oneclickor.gs', :subject => 'Your password'},
-      {:member => member, :new_password => new_password}
-    )
+    MembersMailer.notify_new_password(member, new_password).deliver
   end
 end

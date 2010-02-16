@@ -1,16 +1,12 @@
-class ProposalMailer < Merb::MailController
-  include Merb::GlobalHelpers
+class ProposalMailer < ActionMailer::Base
+  default :from => "info@oneclickor.gs"
   
-  def notify_creation
-    @member = params[:member]
-    @proposal = params[:proposal]
+  def notify_creation(member, proposal)
+    @member = member
+    @proposal = proposal
     
     raise ArgumentError, "need member and proposal" unless @member and @proposal
-    render_mail
+    
+    mail(:to => @member.email, :subject => "New proposal: #{@proposal.title}")
   end
-  
-  def self.get_subject(proposal)
-    "New proposal: #{proposal.title}"
-  end
-  
 end

@@ -255,9 +255,7 @@ public
     founding_member_name = Member.first.name
     members = Member.all
     
-    # TODO Update to use ActionMailer syntax
-    send_mail(InductionMailer, :notify_agenda,
-      {:to => member.email, :from => 'info@oneclickor.gs', :subject => "Agenda for '#{organisation_name}' founding meeting"},
+    InductionMailer.notify_agenda(
       {
         :member => member,
         :organisation_name => organisation_name,
@@ -267,6 +265,6 @@ public
         :founding_member_name => founding_member_name,
         :members => members
       }
-    )
+    ).deliver
   end
 end

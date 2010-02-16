@@ -19,10 +19,11 @@ class Decision
     decision = Decision.get(decision_id)
     
     Member.all.active.each do |m|
-      OCOMail.send_mail(DecisionMailer, :notify_new_decision,
-        {:to => m.email, :from => 'info@oneclickor.gs', :subject => 'new one click decision'},
-        {:member => m, :decision => decision}
-      )
+      DecisionMailer.notify_new_decision(m, decision).deliver
+      # OCOMail.send_mail(DecisionMailer, :notify_new_decision,
+      #   {:to => m.email, :from => 'info@oneclickor.gs', :subject => 'new one click decision'},
+      #   {:member => m, :decision => decision}
+      # )
     end
   end
 end
