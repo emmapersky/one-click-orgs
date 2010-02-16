@@ -55,4 +55,24 @@ OneClickOrgs::Application.routes.draw do |map|
   # This is a legacy wild controller route that's not recommended for RESTful applications.
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
+  
+  match '/constitution' => 'one_click#constitution', :as => 'constitution'
+  
+  match '/timeline' => 'one_click#timeline', :as => 'timeline'
+  
+  resources :votes
+  resources :decisions
+  resources :proposals
+  
+  # TODO Check if we still need these, and if so, whether they're working properly as-is
+  # resources :add_member_proposals, :controller => 'proposals'
+  # resources :eject_member_proposals, :controller => 'proposals'
+  # resources :change_voting_system_proposals, :controller => 'proposals'
+  # resources :change_text_proposals, :controller => 'proposals'
+  # resources :change_boolean_proposals, :controller => 'proposals'
+  # resources :change_voting_period_proposals, :controller=>'proposals'
+  
+  resources :members
+  
+  root :to => 'one_click#control_centre'
 end
