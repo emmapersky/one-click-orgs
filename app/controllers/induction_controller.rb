@@ -33,7 +33,7 @@ class InductionController < ApplicationController
   end
   
   def organisation_details
-    @organisation_name = Organisation.name
+    @organisation_name = Organisation.organisation_name
     @objectives = Organisation.objectives
     # FIXME This will erroneously revert the assets setting to true if Organisation.assets is already set to false
     @assets = Organisation.assets || true
@@ -149,7 +149,7 @@ class InductionController < ApplicationController
   end
   
   def preview_agenda
-    @organisation_name = Organisation.name
+    @organisation_name = Organisation.organisation_name
     @founding_meeting_location = Clause.get_text('founding_meeting_location')
     @founding_meeting_date = Clause.get_text('founding_meeting_date')
     @founding_meeting_time = Clause.get_text('founding_meeting_time')
@@ -178,7 +178,7 @@ class InductionController < ApplicationController
   # Form to confirm that the founding meeting happened,
   # and select which founding members voted in favour.
   def founding_meeting
-    @organisation_name = Organisation.name
+    @organisation_name = Organisation.organisation_name
     @founding_member = Member.first
     @other_members = Member.active; @other_members.shift
   end
@@ -248,7 +248,7 @@ private
 public
   
   def self.send_agenda_email(member)
-    organisation_name = Organisation.name
+    organisation_name = Organisation.organisation_name
     founding_meeting_location = Clause.get_text('founding_meeting_location')
     founding_meeting_date = Clause.get_text('founding_meeting_date')
     founding_meeting_time = Clause.get_text('founding_meeting_time')

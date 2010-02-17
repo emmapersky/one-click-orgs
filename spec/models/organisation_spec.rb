@@ -10,7 +10,7 @@ describe Organisation do
     end
     
     it "should get the name of the organisation" do
-      Organisation.name.should == ("The Cheese Collective")
+      Organisation.organisation_name.should == ("The Cheese Collective")
     end
 
     it "should get the objectives of the organisation" do
@@ -25,7 +25,7 @@ describe Organisation do
       lambda {
         Clause.set_text(:organisation_name, "The Yoghurt Yurt")
       }.should change(Clause, :count).by(1)
-      Organisation.name.should == "The Yoghurt Yurt"
+      Organisation.organisation_name.should == "The Yoghurt Yurt"
     end
     
     it "should change the objectives of the organisation" do

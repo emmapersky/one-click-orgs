@@ -31,7 +31,7 @@ class Members < Application
 
   def create
     member = params[:member]
-    title = "Add #{member['name']} as a member of #{Organisation.name}" # TODO: should default in model
+    title = "Add #{member['name']} as a member of #{Organisation.organisation_name}" # TODO: should default in model
     proposal = AddMemberProposal.new(
       :title => title,
       :proposer_member_id => current_user.id,
@@ -60,7 +60,7 @@ class Members < Application
   def destroy
     @member = Member.find(params[:id])
     
-    title = "Eject #{@member.name} from #{Organisation.name}"
+    title = "Eject #{@member.name} from #{Organisation.organisation_name}"
     proposal = EjectMemberProposal.new(
       :title => title,
       # TODO Convert to new auth system

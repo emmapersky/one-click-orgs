@@ -4,7 +4,7 @@ class MembersMailer < ActionMailer::Base
   def welcome_new_member(member, password)
     @member = member
     @password = password
-    @organisation_name = Organisation.name
+    @organisation_name = Organisation.organisation_name
     mail(:to => @member.email, :subject => "Your password")
   end
   

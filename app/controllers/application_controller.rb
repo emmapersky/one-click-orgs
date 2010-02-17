@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
   
   def prepare_constitution_view
-    @organisation_name = Organisation.name
+    @organisation_name = Organisation.organisation_name
     @objectives = Organisation.objectives
     @assets = Organisation.assets
     @website = Organisation.domain

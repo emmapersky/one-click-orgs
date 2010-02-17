@@ -1,6 +1,5 @@
 class Organisation
-  
-  def self.name
+  def self.organisation_name
     Clause.get_text('organisation_name')
   end
   
