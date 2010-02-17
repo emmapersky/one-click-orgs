@@ -1,4 +1,8 @@
 module ApplicationHelper
+  # TODO Replace with new auth system
+  def current_user
+  end
+  
   def oco_domain
     Organisation.domain or raise "domain not defined"
   end

@@ -18,6 +18,10 @@ class ApplicationController < ActionController::Base
     return nil
   end
   
+  # TODO Replace with real auth system
+  def current_user=(user)
+  end
+  
   def prepare_constitution_view
     @organisation_name = Organisation.organisation_name
     @objectives = Organisation.objectives

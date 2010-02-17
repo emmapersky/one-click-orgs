@@ -25,7 +25,7 @@ class InductionController < ApplicationController
     @founder.attributes = params[:member]
     if @founder.save
       # TODO Convert to new auth system
-      session.user = @founder
+      current_user = @founder
       redirect_to(:action => 'organisation_details')
     else
       redirect_to({:action => 'founder'}, :flash => {:error => "There was a problem with your details: #{@founder.errors.full_messages.to_sentence}"})

@@ -1,6 +1,6 @@
 %h3 My Control Centre
 
-%p= "Welcome back, #{current_user.name}!"
+%p= "Welcome back, #{current_user.name}!" if current_user
 
 %h4 New Proposal
 - form_for(@new_proposal, :url => proposals_path, 'class' => 'proposal') do |f|

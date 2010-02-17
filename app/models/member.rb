@@ -4,6 +4,9 @@ class Member < ActiveRecord::Base
   
   scope :active, where(:active => true)
   
+  # TODO Replace with real auth system
+  attr_accessor :password, :password_confirmation
+  
   def cast_vote(action, proposal_id)
     raise ArgumentError, "need action and proposal_id" unless action and proposal_id
     
