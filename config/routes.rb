@@ -74,5 +74,8 @@ OneClickOrgs::Application.routes.draw do |map|
   
   resources :members
   
+  match '/one_click(/:action)' => 'one_click'
+  match '/induction(/:action)' => 'induction'
+  
   root :to => 'one_click#control_centre'
 end
