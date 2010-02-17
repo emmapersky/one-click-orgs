@@ -13,7 +13,7 @@
 # membership_voting_system    String -- the class name of the VotingSystem in use
 # constitution_voting_system  String -- the class name of the VotingSystem in use
 class Clause < ActiveRecord::Base
-  before_create, :set_started_at
+  before_create :set_started_at
   private
   def set_started_at
     self.set_started_at = Time.now.utc
@@ -25,7 +25,7 @@ class Clause < ActiveRecord::Base
     where(["name = ? AND started_at <= ? AND ended_at IS NULL", name, Time.now.utc]).first
   end
   
-  after_create, :end_previous
+  after_create :end_previous
   private
   # Finds the previous open clauses for this name, and ends them.
   def end_previous
