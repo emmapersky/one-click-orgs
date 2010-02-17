@@ -1,20 +1,20 @@
 class Proposal < ActiveRecord::Base
   #TODO: should probably not be in a hook method?
-  after_create, :send_email
+  after_create :send_email
   
   has_many :votes
   has_one :decision
   
   belongs_to :proposer, :class_name => 'Member', :foreign_key => 'proposer_member_id'
   
-  before_create, :set_creation_date
+  before_create :set_creation_date
   private
   def set_creation_date
     self.creation_date = Time.now.utc
   end
   public
   
-  before_create, :set_close_date
+  before_create :set_close_date
   private
   def set_close_date
     self.close_date = Time.now.utc + Constitution.voting_period
@@ -131,7 +131,7 @@ class Proposal < ActiveRecord::Base
   
   scope :currently_open, lambda {where(["open = ? AND close_date > ?", true, Time.now.utc])}
   
-  scope :failed, where(["close_date < ? AND accepted = ?", Time.now.utc, false]).order('close_date DESC')
+  scope :failed, lambda {where(["close_date < ? AND accepted = ?", Time.now.utc, false]).order('close_date DESC')}
   
   def send_email
     # TODO Convert to new background job system

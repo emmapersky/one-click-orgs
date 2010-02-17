@@ -16,7 +16,7 @@ class Clause < ActiveRecord::Base
   before_create :set_started_at
   private
   def set_started_at
-    self.set_started_at = Time.now.utc
+    self.started_at = Time.now.utc
   end
   public
   
@@ -29,7 +29,7 @@ class Clause < ActiveRecord::Base
   private
   # Finds the previous open clauses for this name, and ends them.
   def end_previous
-    Clause.all(:name => name, :ended_at => nil, :id.not => self.id).update!(:ended_at => Time.now.utc)
+    Clause.where(["name = ? AND ended_at IS NULL and id != ?", name, self.id]).update_all(:ended_at => Time.now.utc)
   end
   public
   
