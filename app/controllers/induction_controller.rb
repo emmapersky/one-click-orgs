@@ -167,7 +167,8 @@ class InductionController < ApplicationController
     # Send emails with founding meeting agenda
     Member.all.each do |member|
       # TODO Convert to new background jobs system
-      async_job :send_agenda_email, member
+      # async_job :send_agenda_email, member
+      InductionController.send_agenda_email(member)
     end
     
     redirect_to(:action => 'founding_meeting')
