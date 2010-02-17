@@ -106,7 +106,7 @@ class OneClickController < ApplicationController
         )
 
         if proposal.save
-          redirect_to {:controller=>'one_click', :action=>'control_centre'}, :flash => {:notice=> "Change general voting system proposal successfully created"}
+          redirect_to({:controller=>'one_click', :action=>'control_centre'}, :flash => {:notice=> "Change general voting system proposal successfully created"})
         else
           redirect_to constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}      
         end
@@ -126,7 +126,7 @@ class OneClickController < ApplicationController
         )
         
         if proposal.save
-          redirect_to {:controller=>'one_click', :action=>'control_centre'}, :flash => {:notice=> "Change membership voting system proposal successfully created"}
+          redirect_to({:controller=>'one_click', :action=>'control_centre'}, :flash => {:notice=> "Change membership voting system proposal successfully created"})
         else
           redirect_to constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
         end
@@ -146,7 +146,7 @@ class OneClickController < ApplicationController
         )
         
         if proposal.save
-          redirect_to {:controller=>'one_click', :action=>'control_centre'}, :flash => {:notice=> "Change constitution voting system proposal successfully created"}
+          redirect_to({:controller=>'one_click', :action=>'control_centre'}, :flash => {:notice=> "Change constitution voting system proposal successfully created"})
         else
           redirect_to constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
         end
