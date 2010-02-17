@@ -1,4 +1,4 @@
-class Member
+class Member < ActiveRecord::Base
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
   
