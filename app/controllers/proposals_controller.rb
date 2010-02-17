@@ -3,7 +3,7 @@ class ProposalsController < ApplicationController
   
   def index
     # Fetch open proposals
-    @proposals = Proposal.open
+    @proposals = Proposal.currently_open
     
     # Fetch five most recent decisions
     @decisions = Decision.order("id DESC").limit(5)
