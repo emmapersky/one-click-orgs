@@ -1,8 +1,6 @@
 namespace :users do 
   desc "create default users"
-  task :create => :merb_env do
-#    DataMapper.auto_migrate!
-
+  task :create => :environment do
     [['jan.berkel@gmail.com', 'Jan Berkel'],
     ['emma@trampolinesystems.com', 'Emma Persky'],
     ['charles@circus-foundation.org', 'Charles Armstrong'],

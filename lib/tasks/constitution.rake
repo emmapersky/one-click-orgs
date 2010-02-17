@@ -1,6 +1,6 @@
 namespace :constitution do 
   desc "Create clauses for a default constitution. Set ORGANISATION_NAME to specify the organisation name, and OBJECTIVES to specify the objectives."
-  task :create => :merb_env do
+  task :create => :environment do
     organisation_name = ENV['ORGANISATION_NAME'] || "My Organisation"
     objectives = ENV['OBJECTIVES'] || ""
     domain = ENV['DOMAIN'] || "http://oco.example.com"
@@ -16,11 +16,11 @@ namespace :constitution do
     Clause.create(:name => 'constitution_voting_system', :text_value => "RelativeMajority")
   end
   
-  task :destroy => :merb_env do
+  task :destroy => :environment do
     Clause.all.each { |c| c.destroy }
   end
   
-  task :display => :merb_env do
+  task :display => :environment do
     Clause.all.each { |c| puts c }
   end
 end
