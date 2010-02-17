@@ -5,10 +5,12 @@
   %p Select the members who voted in favour.
   %ul.founding_members
     %li
-      = check_box_tag(:name => "members[#{@founding_member.id}]", :value => 1, :checked => true, :disabled => true, :label => @founding_member.name)
+      = label_tag("members[#{@founding_member.id}]", @founding_member.name)
+      = check_box_tag("members[#{@founding_member.id}]", 1, true, :disabled => true)
     - @other_members.each do |member|
       %li
-        = check_box_tag(:name => "members[#{member.id}]", :value => 1, :checked => false, :label => member.name)
+        = label_tag("members[#{member.id}]", member.name)
+        = check_box_tag("members[#{member.id}]", 1, false)
   %p= submit_tag("Confirm founding meeting, and found #{@organisation_name}")
 
 %p

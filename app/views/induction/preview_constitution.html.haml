@@ -1,6 +1,6 @@
 %h3 Preview Constitution
 
-= render 'common/constitution', :allow_changes => false
+= render 'shared/constitution', :allow_changes => false
   
 %p= link_to("Okay, continue.", :controller => 'induction', :action => 'founding_meeting_details')
 %p= link_to("Go back", :controller => 'induction', :action => 'voting_settings')
