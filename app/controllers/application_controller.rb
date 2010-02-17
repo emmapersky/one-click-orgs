@@ -14,7 +14,8 @@ class ApplicationController < ActionController::Base
   
   def current_user
     # TODO Convert to new auth system
-    session.user
+    # session.user
+    return nil
   end
   
   def prepare_constitution_view
@@ -32,6 +33,10 @@ class ApplicationController < ActionController::Base
   end
   
   protected
+  
+  # TODO Replace with actual auth system
+  def ensure_authenticated
+  end
   
   def ensure_member_active
     # TODO Convert to new auth system
