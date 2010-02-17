@@ -207,7 +207,7 @@ class InductionController < ApplicationController
     
     #now, send out emails to confirm creation of all members
     other_members.each do |m|
-      Merb.logger.info("sending welcome message to #{m}")
+      Rails.logger.info("sending welcome message to #{m}")
       m.send_welcome
     end
       
