@@ -4,11 +4,11 @@ dependencies:
     group: 
     - :default
     version: = 3.0.0.beta
-  haml: 
+  mysql: 
     group: 
     - :default
     version: ">= 0"
-  mysql: 
+  haml: 
     group: 
     - :default
     version: ">= 0"
@@ -26,21 +26,23 @@ specs:
 - i18n: 
     version: 0.3.3
 - bundler: 
-    version: 0.9.5
+    version: 0.9.7
 - arel: 
     version: 0.2.1
 - activemodel: 
     version: 3.0.0.beta
-- abstract: 
-    version: 1.0.0
-- erubis: 
-    version: 2.6.5
 - mime-types: 
     version: "1.16"
 - mail: 
     version: 2.1.2
+- abstract: 
+    version: 1.0.0
+- erubis: 
+    version: 2.6.5
 - thor: 
-    version: 0.13.1
+    version: 0.13.3
+- haml: 
+    version: 2.2.20
 - memcache-client: 
     version: 1.7.8
 - rack: 
@@ -53,23 +55,17 @@ specs:
     version: 0.4.7
 - actionpack: 
     version: 3.0.0.beta
-- haml: 
-    version: 2.2.19
 - rake: 
     version: 0.8.7
 - railties: 
     version: 3.0.0.beta
 - mysql: 
     version: 2.8.1
+- activerecord: 
+    version: 3.0.0.beta
 - text-format: 
     version: 1.0.0
 - actionmailer: 
-    version: 3.0.0.beta
-- activerecord: 
-    version: 3.0.0.beta
-- tzinfo: 
-    version: 0.3.16
-- activesupport: 
     version: 3.0.0.beta
 - activeresource: 
     version: 3.0.0.beta
@@ -85,6 +81,10 @@ specs:
     version: 2.0.0.a6
 - rspec-rails: 
     version: 2.0.0.a7
+- tzinfo: 
+    version: 0.3.16
+- activesupport: 
+    version: 3.0.0.beta
 hash: 770bbab502e5a3418eada5721dfdb724d57195bc
 sources: 
 - Rubygems: 
