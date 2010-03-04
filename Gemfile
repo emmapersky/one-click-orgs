@@ -27,5 +27,5 @@ gem "mysql"
 gem "haml"
 
 group :test do
-  gem "rspec-rails", ">=2.0.0.a7"
+  gem "rspec-rails", ">=2.0.0.beta.2"
 end

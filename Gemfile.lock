@@ -15,7 +15,7 @@ dependencies:
   rspec-rails: 
     group: 
     - :test
-    version: ">= 2.0.0.a7"
+    version: ">= 2.0.0.beta.2"
 specs: 
 - nokogiri: 
     version: 1.4.1
@@ -41,14 +41,6 @@ specs:
     version: 2.6.5
 - thor: 
     version: 0.13.4
-- haml: 
-    version: 2.2.20
-- rake: 
-    version: 0.8.7
-- railties: 
-    version: 3.0.0.beta
-- mysql: 
-    version: 2.8.1
 - memcache-client: 
     version: 1.7.8
 - rack: 
@@ -61,11 +53,19 @@ specs:
     version: 0.4.7
 - actionpack: 
     version: 3.0.0.beta
-- activerecord: 
+- mysql: 
+    version: 2.8.1
+- rake: 
+    version: 0.8.7
+- railties: 
     version: 3.0.0.beta
+- haml: 
+    version: 2.2.20
 - text-format: 
     version: 1.0.0
 - actionmailer: 
+    version: 3.0.0.beta
+- activerecord: 
     version: 3.0.0.beta
 - tzinfo: 
     version: 0.3.16
@@ -85,7 +85,7 @@ specs:
     version: 2.0.0.beta.2
 - rspec-rails: 
     version: 2.0.0.beta.2
-hash: 770bbab502e5a3418eada5721dfdb724d57195bc
+hash: c7409c4464c1b4d21f8d04690ca18028617ead00
 sources: 
 - Rubygems: 
     uri: http://gemcutter.org
