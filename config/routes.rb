@@ -60,7 +60,9 @@ OneClickOrgs::Application.routes.draw do |map|
   
   match '/timeline' => 'one_click#timeline', :as => 'timeline'
   
-  resources :votes
+  match '/votes/vote_for/:id' => 'votes#vote_for', :conditions => {:method => :post}
+  match '/votes/vote_against/:id' => 'votes#vote_against', :conditions => {:method => :post}
+  
   resources :decisions
   resources :proposals
   
