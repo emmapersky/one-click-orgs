@@ -18,7 +18,7 @@ class InductionController < ApplicationController
   def create_founder
     # Detect the server domain if not already set
     if Organisation.domain.blank?
-      Clause.set_text(:domain, "#{request.protocol}://#{request.host}")
+      Clause.set_text(:domain, "#{request.protocol}#{request.host}")
     end
     
     @founder = Member.first || Member.new
