@@ -58,14 +58,10 @@ class Proposal < ActiveRecord::Base
   end
   
   def accepted_or_rejected
-    accepted ? "accepted" : "rejected"
+    accepted? ? "accepted" : "rejected"
   end
   
   def enact!(params={})
-  end
-  
-  def open?
-    self.open
   end
   
   def closed?
@@ -148,7 +144,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def to_event
-    {:timestamp => self.creation_date, :object => self, :kind => (closed? && !accepted) ? :failed_proposal : :proposal }
+    {:timestamp => self.creation_date, :object => self, :kind => (closed? && !accepted?) ? :failed_proposal : :proposal }
   end
   
 end

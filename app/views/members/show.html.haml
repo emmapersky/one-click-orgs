@@ -27,7 +27,7 @@
     %th Outcome
   - for proposal in @member.proposals
     - if proposal.close_date < Time.now.to_datetime
-      - proposal.accepted ? p = "for" : p = "against"
+      - proposal.accepted? ? p = "for" : p = "against"
     - else
       - p = "in_progress"
     %tr{:class => "vote_#{p}"}

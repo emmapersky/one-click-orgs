@@ -45,7 +45,7 @@ describe Member do
   
   describe "ejection" do
     it "should toggle active flag after ejection" do
-      lambda { @member.eject! }.should change(@member, :active).from(true).to(false)      
+      lambda { @member.eject! }.should change(@member, :active?).from(true).to(false)      
     end
   end
   
