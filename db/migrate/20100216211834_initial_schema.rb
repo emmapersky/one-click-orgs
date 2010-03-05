@@ -30,7 +30,7 @@ class InitialSchema < ActiveRecord::Migration
       t.integer  "accepted",           :limit => 1,     :default => 0
       t.datetime "close_date"
       t.string   "parameters",         :limit => 10000
-      t.string   "type",               :limit => 50,                   :null => false
+      t.string   "type",               :limit => 50
       t.integer  "proposer_member_id"
     end
 
