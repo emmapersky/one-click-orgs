@@ -82,5 +82,7 @@ OneClickOrgs::Application.routes.draw do |map|
   # TODO Update for new auth system
   match '/login' => 'login#login', :as => 'login'
   
+  match '/reset_password(/:action)' => 'reset_password'
+  
   root :to => 'one_click#control_centre'
 end
