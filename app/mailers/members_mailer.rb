@@ -1,7 +1,11 @@
 class MembersMailer < ActionMailer::Base
+  helper :application
+  
   default :from => "info@oneclickor.gs"
   
   def welcome_new_member(member, password)
+    default_url_options[:host] = Organisation.domain
+    
     @member = member
     @password = password
     @organisation_name = Organisation.organisation_name
@@ -9,6 +13,8 @@ class MembersMailer < ActionMailer::Base
   end
   
   def notify_new_password(member, new_password)
+    default_url_options[:host] = Organisation.domain
+    
     @member = member
     @new_password = new_password
     mail(:to => @member.email, :subject => "Your password")

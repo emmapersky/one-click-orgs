@@ -6,7 +6,7 @@ a new proposal has been created by <%= @proposal.proposer.name || @proposal.prop
 
 <%= @proposal.description %>
 
-Please visit <%= absolute_oco_resource(@proposal) %> to vote on it.
+Please visit <%= proposal_url(@proposal) %> to vote on it.
 
 Thanks
 

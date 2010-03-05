@@ -1,7 +1,11 @@
 class InductionMailer < ActionMailer::Base
+  helper :application
+  
   default :from => "info@oneclickor.gs"
   
   def notify_agenda(options={})
+    default_url_options[:host] = Organisation.domain
+    
     @member = options[:member]
     @organisation_name = options[:organisation_name]
     @founding_meeting_location = options[:founding_meeting_location]
