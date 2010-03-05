@@ -50,7 +50,7 @@ class MembersController < ApplicationController
     id, member = params[:id], params[:member]
     @member = Member.find(id)
     if @member.update_attributes(member)
-       redirect member_path(@member), :notice => "Member updated"
+       redirect_to member_path(@member), :notice => "Member updated"
     else
       flash[:error] = @member.errors.inspect
       render(:action => :edit)

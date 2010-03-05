@@ -38,7 +38,7 @@
         )
         = render 'proposals/description', :proposal => decision.proposal
         %p= link_to("More details", decision.proposal)
-      %td.timestamp= decision.proposal.close_date.formatted(:long)
+      %td.timestamp= decision.proposal.close_date.to_s(:long)
       %td.vote= render 'proposals/vote_count', :proposal => decision.proposal
 
 %h4 Recent Failed Proposals
@@ -57,5 +57,5 @@
         )
         = remder 'proposals/description', :proposal => failed_proposal
         %p= link_to("More details", failed_proposal)
-      %td.timestamp= failed_proposal.close_date.formatted(:long)
+      %td.timestamp= failed_proposal.close_date.to_s(:long)
       %td.vote= render 'proposals/vote_count', :proposal => failed_proposal

@@ -1,4 +1,4 @@
-class ResetPasswordController < Application
+class ResetPasswordController < ApplicationController
   # include AsyncJobs
   
   skip_before_filter :ensure_authenticated
@@ -27,7 +27,7 @@ class ResetPasswordController < Application
   end
   
   def self.do_reset_email(member_id, new_password)
-    member = Member.get(member_id)
+    member = Member.find(member_id)
     MembersMailer.notify_new_password(member, new_password).deliver
   end
 end

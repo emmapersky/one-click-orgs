@@ -1,4 +1,4 @@
-class VotesController < Application
+class VotesController < ApplicationController
 
   #FIXME duplication  
   def vote_for
