@@ -12,9 +12,9 @@ class Decision < ActiveRecord::Base
   end
   
   def self.send_email_for(decision_id)
-    decision = Decision.get(decision_id)
+    decision = Decision.find(decision_id)
     
-    Member.all.active.each do |m|
+    Member.active.each do |m|
       DecisionMailer.notify_new_decision(m, decision).deliver
     end
   end
