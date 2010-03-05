@@ -22,13 +22,8 @@ end
 
 def login
   @user = default_user
-  request("/login", {
-    :method => "PUT",
-    :params => {
-      :email => @user.email,
-      :password => "password"
-    }
-  }).should redirect_to('/')
+  # TODO Replace with new auth system
+  # put "/login", {:email => @user.email, :password => "password"}
   @user
 end
 
