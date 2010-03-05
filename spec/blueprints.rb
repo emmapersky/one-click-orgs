@@ -1,3 +1,5 @@
+require 'machinist/active_record'
+require 'sham'
 require 'faker'
 
 Sham.name     { Faker::Name.name }
@@ -17,7 +19,7 @@ end
 Proposal.blueprint do |bp|
   bp.title "a proposal title"
   bp.open "1"
-  bp.proposer Member.make  
+  bp.proposer {Member.make}
 end
 
 Decision.blueprint do |d|

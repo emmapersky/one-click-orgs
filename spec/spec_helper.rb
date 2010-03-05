@@ -4,6 +4,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require File.dirname(__FILE__) + "/../config/environment" unless defined?(RAILS_ROOT)
 require 'rspec/rails'
 
+# Require blueprints for Machinist
+require File.expand_path(File.dirname(__FILE__) + "/blueprints")
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.
@@ -54,4 +56,8 @@ Rspec.configure do |config|
   # == Notes
   #
   # For more information take a look at Rspec::Core::Configuration
+  
+  # Sham setup and teardown
+  config.before(:all)  { Sham.reset(:before_all) }
+  config.before(:each) { Sham.reset(:before_each) }
 end
