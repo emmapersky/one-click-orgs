@@ -16,7 +16,7 @@ class Clause < ActiveRecord::Base
   before_create :set_started_at
   private
   def set_started_at
-    self.started_at = Time.now.utc
+    self.started_at ||= Time.now.utc
   end
   public
   

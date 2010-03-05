@@ -10,14 +10,14 @@ class Proposal < ActiveRecord::Base
   before_create :set_creation_date
   private
   def set_creation_date
-    self.creation_date = Time.now.utc
+    self.creation_date ||= Time.now.utc
   end
   public
   
   before_create :set_close_date
   private
   def set_close_date
-    self.close_date = Time.now.utc + Constitution.voting_period
+    self.close_date ||= Time.now.utc + Constitution.voting_period
   end
   public
   
