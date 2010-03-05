@@ -28,4 +28,6 @@ gem "haml"
 
 group :test do
   gem "rspec-rails", ">=2.0.0.beta.2"
+  gem "machinist", ">=1.0.6"
+  gem "faker", '>=0.3.1'
 end
