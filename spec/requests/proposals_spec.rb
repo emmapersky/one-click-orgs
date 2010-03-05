@@ -1,24 +1,28 @@
-require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
+require 'spec_helper'
 
-given "a proposal exists" do
-  Proposal.all.destroy!  
-  login    
-  request(resource(:proposals), :method => "POST", 
-    :params => { :proposal => 
-        { :id => nil, :proposer_member_id => Member.first.id, :title=>'proposal' }
-               })   
+module ProposalsSpecHelper
+  def a_proposal_exists
+    Proposal.destroy_all
+    login
+    post(proposals_path, {:proposal => {:id => nil, :proposer_member_id => Member.first.id, :title => 'proposal'}})
+  end
 end
 
 describe "everything" do
+  include ProposalsSpecHelper
+  
   before do 
     login
   end
   
-  describe "resource(@proposal)", :given => "a proposal exists" do
-  
+  describe "/proposals/1, given a proposal exists" do
+    before(:each) do
+      a_proposal_exists
+    end
+    
     describe "GET" do
       before(:each) do
-        @response = request(resource(Proposal.first))
+        get(proposal_path(Proposal.first))
       end
   
       it "responds successfully" do
@@ -27,11 +31,14 @@ describe "everything" do
     end
   end
   
-  describe "resource(:proposals)", :given => "a proposal exists"  do
+  describe "/proposals, given a proposal exists"  do
+    before(:each) do
+      a_proposal_exists
+    end
+    
      describe "GET" do
-
        before(:each) do
-         @response = request(resource(:proposals))
+         get(proposals_path)
        end
 
        it "responds successfully" do
@@ -39,7 +46,7 @@ describe "everything" do
        end
 
        it "contains a list of proposals" do
-         pending
+         # pending
          @response.should have_xpath("//ul")
        end
      end

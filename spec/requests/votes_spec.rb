@@ -1,7 +1,4 @@
-require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
-
-given "a vote exists" do
-end
+require 'spec_helper'
 
 describe "everything" do
   before do 
@@ -13,24 +10,16 @@ describe "everything" do
       #FIXME
       #@user.should_receive(:cast_vote).with(:for, 1)
       
-      request(url(
-      :controller=>'votes', 
-        :action=>'vote_for',
-        :id=>1),
-        :method=>'POST', :params=>{:return_to=>'/foo'}).should redirect_to("/foo")
-        
-
+      post('/votes/vote_for/1', {:return_to => '/foo'})
+      response.should redirect_to('/foo')
     end
   
     it "should cast an 'against' vote" do
       #FIXME
       #@user.should_receive(:cast_vote).with(:against, 1)
-            
-      request(url(
-        :controller=>'votes', 
-        :action=>'vote_against',
-        :id => 1),
-        :method=>'POST', :params=>{:return_to=>'/foo'}).should redirect_to("/foo")        
+      
+      post(url_for(:controller => 'votes', :action => 'vote_against', :id => 1), {:return_to => '/foo'})
+      response.should redirect_to '/foo'
     end
   end
 end

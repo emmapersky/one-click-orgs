@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
+require 'spec_helper'
 
 describe "/one_click" do
   before(:each) do
@@ -24,12 +24,8 @@ describe "/one_click" do
         :proposer_member_id => @user.id
       ).and_return(@proposal)
       
-      @response = request(
-        url(:controller => 'one_click', :action => 'propose_text_amendment'),
-        :method => 'POST',
-        :params => {'name' => 'organisation_name', 'value' => 'The Yoghurt Yurt'}
-      )
-      
+      post(url_for(:controller => 'one_click', :action => 'propose_text_amendment'), {'name' => 'organisation_name', 'value' => 'The Yoghurt Yurt'})
+
       @response.should redirect_to('/one_click/control_centre')
     end
     
@@ -45,11 +41,7 @@ describe "/one_click" do
         :proposer_member_id => @user.id
       ).and_return(@proposal)
       
-      @response = request(
-        url(:controller => 'one_click', :action => 'propose_text_amendment'),
-        :method => 'POST',
-        :params => {'name' => 'objectives', 'value' => 'make all the yoghurt'}
-      )
+      post(url_for(:controller => 'one_click', :action => 'propose_text_amendment'), {'name' => 'objectives', 'value' => 'make all the yoghurt'})
       
       @response.should redirect_to('/one_click/control_centre')
     end
@@ -66,11 +58,7 @@ describe "/one_click" do
         :proposer_member_id => @user.id
       ).and_return(@proposal)
       
-      @response = request(
-        url(:controller => 'one_click', :action => 'propose_text_amendment'),
-        :method => 'POST',
-        :params => {'name' => 'domain', 'value' => 'yaourt.com'}
-      )
+      post(url_for(:controller => 'one_click', :action => 'propose_text_amendment'), {'name' => 'domain', 'value' => 'yaourt.com'})
       
       @response.should redirect_to('/one_click/control_centre')
     end
@@ -86,16 +74,14 @@ describe "/one_click" do
     
     describe "for general decisions" do
       it "should add the proposal" do
-        @response = request(url(:controller=>'one_click', 
-          :action=>'propose_voting_system_amendment'),
-          :method=>'POST', :params=>{:general_voting_system=>'Unanimous'})
+        post(url_for(:controller => 'one_click', :action => 'propose_voting_system_amendment'), {:general_voting_system => 'Unanimous'})
 
         puts @response.body if @response.status != 302
 
         @response.should redirect_to("/one_click/control_centre")
       
         ChangeVotingSystemProposal.count.should == 1
-        ChangeVotingSystemProposal.all.first.title.should == 'change general voting system to Supporting votes from every single member'
+        ChangeVotingSystemProposal.first.title.should == 'change general voting system to Supporting votes from every single member'
         proposal_parameters = ActiveSupport::JSON.decode(ChangeVotingSystemProposal.all.first.parameters)
         proposal_parameters['type'].should == 'general'
         proposal_parameters['proposed_system'].should == 'Unanimous'
@@ -104,9 +90,7 @@ describe "/one_click" do
     
     describe "for membership decisions" do
       it "should add the proposal" do
-        @response = request(url(:controller=>'one_click', 
-          :action=>'propose_voting_system_amendment'),
-          :method=>'POST', :params=>{:membership_voting_system=>'Veto'})
+        post(url_for(:controller=>'one_click', :action=>'propose_voting_system_amendment'), {:membership_voting_system=>'Veto'})
 
         puts @response.body if @response.status != 302
 
@@ -122,9 +106,7 @@ describe "/one_click" do
     
     describe "for constitution decisions" do
       it "should add the proposal" do
-        @response = request(url(:controller=>'one_click', 
-          :action=>'propose_voting_system_amendment'),
-          :method=>'POST', :params=>{:constitution_voting_system=>'AbsoluteMajority'})
+        post(url_for(:controller=>'one_click', :action=>'propose_voting_system_amendment'), {:constitution_voting_system=>'AbsoluteMajority'})
 
         puts @response.body if @response.status == 500
         @response.should redirect_to("/one_click/control_centre")
@@ -139,9 +121,7 @@ describe "/one_click" do
     
     describe "voting period amendments" do
       it "should add the proposal" do
-        @response = request(url(:controller=>'one_click', 
-          :action=>'propose_voting_period_amendment'),
-          :method=>'POST', :params=>{:new_voting_period=>'86400'})
+        post(url_for(:controller=>'one_click', :action=>'propose_voting_period_amendment'), {:new_voting_period=>'86400'})
 
         puts @response.body if @response.status == 500
         @response.should redirect_to("/one_click/control_centre")
@@ -164,7 +144,7 @@ describe "/one_click" do
       Decision.make_n(10)
       Proposal.make_n(10)
       
-      @response = request(url(:controller=>'one_click', :action=>'timeline'))
+      get url_for(:controller => 'one_click', :action => 'timeline')
       @response.should be_successful
       @response.should have_xpath("//table[@class='timeline']")
     end
