@@ -135,7 +135,8 @@ class Proposal < ActiveRecord::Base
   
   def send_email
     # TODO Convert to new background job system
-    async_job :send_email_for, self.id
+    #async_job :send_email_for, self.id
+    Proposal.send_email_for(self.id)
   end
   
   def self.send_email_for(proposal_id)

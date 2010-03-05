@@ -2,7 +2,7 @@ def default_user
   stub_constitution!
   stub_organisation!
     
-  Member.first(:email => "krusty@clown.com") || 
+  Member.where(:email => "krusty@clown.com").first || 
     Member.create(:email => "krusty@clown.com",
                  :name => "Krusty the clown",
                  :password => "password",
