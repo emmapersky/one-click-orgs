@@ -1,5 +1,5 @@
-class Members < Application
-  # respond_to :xml, :yaml, :js
+class MembersController < ApplicationController
+  respond_to :html
 
   def index
     @members = Member.active
