@@ -5,3 +5,4 @@ tmp/**/*
 .DS_Store
 coverage/*
 spec/mailers/log
+config/initializers/cookie_verification_secret.rb

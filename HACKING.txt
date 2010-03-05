@@ -38,8 +38,18 @@ INSTRUCTIONS
 
   $ bundle exec rake db:setup
 
-5. Start the server:
+5. Set up a secret key for the cookie session store. Copy the sample config file:
+  
+  $ cp config/initializers/cookie_verification_secret.rb.sample config/initializers/cookie_verification_secret.rb
+
+then generate your own secret key:
+
+  $ bundle exec rake secret
+
+and copy the result into your config/initializers/cookie_verification_secret.rb.
+
+6. Start the server:
 
   $ bundle exec rails server
 
-6. Visit http://localhost:3000/
+7. Visit http://localhost:3000/
