@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe MembersMailer do
   before :each do
-    @member = mock(Member,
+    @member = mock_model(Member,
       :name => "Peter Pan",
       :email => "peter@example.com"
     )

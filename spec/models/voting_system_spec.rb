@@ -3,7 +3,7 @@ require File.join( File.dirname(__FILE__), '..', "spec_helper" )
 describe VotingSystems do
 
   def make_proposal(v_for, v_against, total_m=v_for+v_against)
-    p = mock(Proposal)
+    p = mock_model(Proposal)
     p.stub!(:votes_for).and_return(v_for)
     p.stub!(:votes_against).and_return(v_against)
     p.stub!(:total_members).and_return(total_m)
