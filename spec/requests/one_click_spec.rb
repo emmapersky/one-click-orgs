@@ -96,7 +96,7 @@ describe "/one_click" do
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.all.first.title.should == 'change general voting system to Supporting votes from every single member'
-        proposal_parameters = JSON.parse(ChangeVotingSystemProposal.all.first.parameters)
+        proposal_parameters = ActiveSupport::JSON.decode(ChangeVotingSystemProposal.all.first.parameters)
         proposal_parameters['type'].should == 'general'
         proposal_parameters['proposed_system'].should == 'Unanimous'
       end
@@ -114,7 +114,7 @@ describe "/one_click" do
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.all.first.title.should == 'change membership voting system to No opposing votes'
-        proposal_parameters = JSON.parse(ChangeVotingSystemProposal.all.first.parameters)
+        proposal_parameters = ActiveSupport::JSON.decode(ChangeVotingSystemProposal.all.first.parameters)
         proposal_parameters['type'].should == 'membership'
         proposal_parameters['proposed_system'].should == 'Veto'
       end
@@ -131,7 +131,7 @@ describe "/one_click" do
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.all.first.title.should == 'change constitution voting system to Supporting votes from more than half the members'
-        proposal_parameters = JSON.parse(ChangeVotingSystemProposal.all.first.parameters)
+        proposal_parameters = ActiveSupport::JSON.decode(ChangeVotingSystemProposal.all.first.parameters)
         proposal_parameters['type'].should == 'constitution'
         proposal_parameters['proposed_system'].should == 'AbsoluteMajority'
       end
@@ -148,7 +148,7 @@ describe "/one_click" do
 
         ChangeVotingPeriodProposal.count.should == 1
         ChangeVotingPeriodProposal.all.first.title.should == 'Change voting period to 24 hours'
-        proposal_parameters = JSON.parse(ChangeVotingPeriodProposal.all.first.parameters)
+        proposal_parameters = ActiveSupport::JSON.decode(ChangeVotingPeriodProposal.all.first.parameters)
         proposal_parameters['new_voting_period'].to_i.should == 86400
       end
     end

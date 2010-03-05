@@ -97,7 +97,7 @@ class Proposal < ActiveRecord::Base
       decision = Decision.create!(:proposal_id=>self.id)
       decision.send_email
       
-      params = self.parameters ? JSON.parse(self.parameters) : {}      
+      params = self.parameters ? ActiveSupport::JSON.decode(self.parameters) : {}      
       enact!(params) 
     end
   end
