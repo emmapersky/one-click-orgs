@@ -12,7 +12,8 @@ class ResetPasswordController < ApplicationController
         new_password = m.new_password!
         if m.save
           # TODO Convert to new background job system
-          async_job :do_reset_email, m.id, new_password
+          # async_job :do_reset_email, m.id, new_password
+          ResetPasswordController.do_reset_email(m.id, new_password)
           
           Rails.logger.debug("reset password for #{email} to '#{new_password}'")
           redirect_to({:action=>:index}, :flash => { :notice => "New password was sent to #{email}" })
