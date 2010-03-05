@@ -1,16 +1,19 @@
-require File.join( File.dirname(__FILE__), '..', "spec_helper" )
+require 'spec_helper'
 
 describe Proposal do
-  include MailControllerTestHelper
   
   before(:each) do
     stub_constitution!  
     stub_organisation!
     
     @member = Member.make
-    clear_mail_deliveries
     
     Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))
+    
+    @mail = mock('mail', :deliver => nil)
+    
+    ProposalMailer.stub!(:notify_creation).and_return(@mail)
+    DecisionMailer.stub!(:notify_new_decision).and_return(@mail)
   end
 
   it "should close early proposals" do
@@ -38,30 +41,20 @@ describe Proposal do
   it "should send out an email to each member after a Proposal has been made" do
     Member.count.should >0
     
-    p = Proposal.make(:proposer => @member)
-  
-    deliveries = Merb::Mailer.deliveries
-    deliveries.size.should ==(Member.count)    
+    ProposalMailer.should_receive(:notify_creation).exactly(Member.count).times.and_return(@mail)
     
-    mail = deliveries.first
-
-    mail.to.should ==([@member.email])
-    mail.from.should ==(["info@oneclickor.gs"])
-#    mail.subject.first.should == ""         
+    p = Proposal.make(:proposer => @member)
   end
-
+  
+  # FIXME Decision internals should be in the Decision spec, not here
   it "should send out an email to each member after a Decision has been made" do
      Member.count.should >0
-
+     
+     DecisionMailer.should_receive(:notify_new_decision).exactly(Member.count).times.and_return(@mail)
+     
      p = Proposal.make(:proposer => @member)
      p.stub!(:passed?).and_return(true)
      p.close!
-     
-     Merb::Mailer.deliveries.size.should ==(Member.count*2)    
-
-     mail = last_delivered_mail
-     mail.from.should ==(["info@oneclickor.gs"])
-#     mail.subject.first.should == ""
   end
   
   describe "to_event" do
