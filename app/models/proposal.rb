@@ -151,5 +151,5 @@ end
 
 # Run the close proposal every 60 seconds
 # TODO Convert to new background job system
-AsyncJobs.periodical Proposal, 60, :close_proposals
+# AsyncJobs.periodical Proposal, 60, :close_proposals
 
