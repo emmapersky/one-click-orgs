@@ -41,8 +41,8 @@ class Proposal < ActiveRecord::Base
     Vote.where(:proposal_id => self.id, :for => false).count
   end
   
-  def total_members
-    Member.where(["created_at < ?", creation_date]).count
+  def member_count
+    Member.where(["created_at < ? AND active = ? AND inducted = ?", creation_date, true, true]).count
   end
   
   def abstained
@@ -70,8 +70,7 @@ class Proposal < ActiveRecord::Base
   
   def majority?
     #FIXME, voting system?
-    num_members = Member.where(["created_at < ?", creation_date]).count
-    return votes_for >= (num_members / 2.0).ceil
+    return votes_for >= (member_count / 2.0).ceil
   end
 
   def passed?

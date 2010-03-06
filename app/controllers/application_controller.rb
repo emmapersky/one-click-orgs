@@ -7,6 +7,7 @@ class ApplicationController < ActionController::Base
   before_filter :ensure_authenticated
   before_filter :ensure_member_active
   before_filter :ensure_organisation_active
+  before_filter :ensure_member_inducted
    
   def date_format(d)
     d.to_s(:long)
@@ -55,6 +56,14 @@ class ApplicationController < ActionController::Base
     else
       redirect_to(:controller => 'induction', :action => 'founder')
     end
+  end
+  
+  def ensure_member_inducted
+    redirect_to_welcome_member if Organisation.active? && current_user && !current_user.inducted?
+  end
+  
+  def redirect_to_welcome_member
+    redirect_to('/welcome')
   end
   
   # EXCEPTIONS

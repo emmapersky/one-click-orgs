@@ -2,7 +2,7 @@ class Member < ActiveRecord::Base
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
   
-  scope :active, where(:active => true)
+  scope :active, where(:active => true, :inducted => true)
   
   # TODO Replace with real auth system
   attr_accessor :password, :password_confirmation

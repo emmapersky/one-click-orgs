@@ -6,7 +6,8 @@ def default_user
     Member.create(:email => "krusty@clown.com",
                  :name => "Krusty the clown",
                  :password => "password",
-                 :password_confirmation => "password") or raise "can't create user"
+                 :password_confirmation => "password",
+                 :inducted => true) or raise "can't create user"
 end
 
 def stub_constitution!

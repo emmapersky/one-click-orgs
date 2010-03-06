@@ -10,7 +10,8 @@ The One Click Orgs platform will give you:
  * A voting system to help make group decisions
  * A record of every decision that's been made
  * Easy ways to modify the constitution as your group develops
- * Right now we're busy building the system and testing it out with the first few groups. If your group is interested in using One Click Orgs please contact us and we'll let you know when it's ready.
+
+Right now we're busy building the system and testing it out with the first few groups. If your group is interested in using One Click Orgs please contact us and we'll let you know when it's ready.
 
 For more information visit our web site: [oneclickor.gs](http://oneclickor.gs).
 
