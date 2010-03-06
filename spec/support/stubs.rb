@@ -18,7 +18,7 @@ end
 def stub_organisation!
   organisation_is_active
   Organisation.stub!(:domain).and_return('http://test.com')
-  Organisation.stub!(:name).and_return('test')
+  Organisation.stub!(:organisation_name).and_return('test')
 end
 
 def login
