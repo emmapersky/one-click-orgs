@@ -37,7 +37,7 @@ $ mv config/local_config_sample.rb config/local_config.rb
 
 5. Create default users (which also migrates the db):
 
-$ ./bin/rake users:create
+$ ./bin/rake db:automigrate users:create
 
 6. Start the server:
 
