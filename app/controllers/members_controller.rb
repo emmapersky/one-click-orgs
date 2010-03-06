@@ -63,7 +63,6 @@ class MembersController < ApplicationController
     title = "Eject #{@member.name} from #{Organisation.organisation_name}"
     proposal = EjectMemberProposal.new(
       :title => title,
-      # TODO Convert to new auth system
       :proposer_member_id => current_user.id,
       :parameters => EjectMemberProposal.serialize_parameters('id' => @member.id)
     )

@@ -1,11 +1,46 @@
+require 'digest/sha1'
+
 class Member < ActiveRecord::Base
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
   
   scope :active, where(:active => true, :inducted => true)
   
-  # TODO Replace with real auth system
+  # AUTHENTICATION
+  
   attr_accessor :password, :password_confirmation
+  
+  # Encrypts some data with the salt
+  def self.encrypt(password, salt)
+    Digest::SHA1.hexdigest("--#{salt}--#{password}--")
+  end
+  
+  def self.authenticate(login, password)
+    member = where(:email => login).first
+    member && member.authenticated?(password) ? member : nil
+  end
+  
+  def authenticated?(password)
+    crypted_password == encrypt(password)
+  end
+  
+  def encrypt(password)
+    self.class.encrypt(password, salt)
+  end
+  
+  def password_required?
+    crypted_password.blank? || !password.blank?
+  end
+  
+  def encrypt_password
+    return if password.blank?
+    self.salt = Digest::SHA1.hexdigest("--#{Time.now.to_s}--:email--") if new_record?
+    self.crypted_password = encrypt(password)
+  end
+  
+  before_save :encrypt_password
+  
+  # END AUTHENTICATION
   
   def cast_vote(action, proposal_id)
     raise ArgumentError, "need action and proposal_id" unless action and proposal_id

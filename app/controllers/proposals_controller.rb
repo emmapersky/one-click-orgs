@@ -19,7 +19,6 @@ class ProposalsController < ApplicationController
 
   def create
     @proposal = Proposal.new(params[:proposal])
-    # TODO Convert to new auth system
     @proposal.proposer_member_id = current_user.id #fixme
         
     if @proposal.save

@@ -13,14 +13,32 @@ class ApplicationController < ActionController::Base
     d.to_s(:long)
   end
   
+  helper_method :current_user
   def current_user
-    # TODO Convert to new auth system
-    # session.user
-    return nil
+    @current_user if user_logged_in?
   end
   
-  # TODO Replace with real auth system
+  # Returns true if a user is logged in; false otherwise.
+  def user_logged_in?
+    current_user = @current_user
+    current_user ||= session[:user] ? Member.find_by_id(session[:user]) : false
+    @current_user = current_user
+    current_user.is_a?(Member)
+  end
+  
+  # Stores the given user as the 'current user', thus marking them as logged in.
   def current_user=(user)
+    session[:user] = (user.nil? || user.is_a?(Symbol)) ? nil : user.id
+    @current_user = user
+  end
+  
+  def store_location
+    session[:return_to] = request.request_uri
+  end
+  
+  def redirect_back_or_default(default = root_path)
+    session[:return_to] ? redirect_to(session[:return_to]) : redirect_to(default)
+    session[:return_to] = nil
   end
   
   def prepare_constitution_view
@@ -39,12 +57,15 @@ class ApplicationController < ActionController::Base
   
   protected
   
-  # TODO Replace with actual auth system
   def ensure_authenticated
+    if user_logged_in?
+      true
+    else
+      raise Unauthenticated
+    end
   end
   
   def ensure_member_active
-    # TODO Convert to new auth system
     raise Unauthenticated if current_user && !current_user.active?
   end
   
@@ -63,7 +84,7 @@ class ApplicationController < ActionController::Base
   end
   
   def redirect_to_welcome_member
-    redirect_to('/welcome')
+    redirect_to(:controller => 'welcome', :action => 'index')
   end
   
   # EXCEPTIONS
@@ -77,8 +98,8 @@ class ApplicationController < ActionController::Base
   rescue_from Unauthenticated, :with => :handle_unauthenticated
   def handle_unauthenticated
     if Organisation.has_founding_member?
-      # TODO Convert to new auth system
-      render # unauthenticated, login page      
+      store_location
+      redirect_to login_path
     else
       redirect_to(:controller => 'induction', :action => 'founder')
     end

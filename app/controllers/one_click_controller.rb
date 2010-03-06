@@ -34,7 +34,6 @@ class OneClickController < ApplicationController
   def propose_text_amendment
     proposal = ChangeTextProposal.new(
       :title => "Change #{params[:name]} to '#{params[:value]}'",
-      # TODO Convert to new auth sys
       :proposer_member_id => current_user.id,
       :parameters => ChangeTextProposal.serialize_parameters(
         'name' => params[:name],
@@ -59,7 +58,6 @@ class OneClickController < ApplicationController
     
     proposal = ChangeBooleanProposal.new(
       :title => title,
-      # TODO Convert to new auth system
       :proposer_member_id => current_user.id,
       :parameters => ChangeBooleanProposal.serialize_parameters(
         'name' => 'assets',
@@ -78,7 +76,6 @@ class OneClickController < ApplicationController
     if params[:new_voting_period]
       proposal = ChangeVotingPeriodProposal.new(
         :title=>"Change voting period to #{VotingPeriods.name_for_value(params[:new_voting_period])}",
-        # TODO Convert to new auth system
         :proposer_member_id => current_user.id,
         :parameters => ChangeVotingSystemProposal.serialize_parameters(
           'new_voting_period'=>params[:new_voting_period])
@@ -100,7 +97,6 @@ class OneClickController < ApplicationController
               
         proposal = ChangeVotingSystemProposal.new(
           :title => "change general voting system to #{proposed_system.description}",
-          # TODO Convert to new auth system
           :proposer_member_id => current_user.id,
           :parameters => ChangeVotingSystemProposal.serialize_parameters('type'=>'general', 'proposed_system'=> proposed_system.simple_name)
         )
@@ -120,7 +116,6 @@ class OneClickController < ApplicationController
       if current_system != proposed_system
         proposal = ChangeVotingSystemProposal.new(
           :title => "change membership voting system to #{proposed_system.description}",
-          # TODO Convert to new auth system
           :proposer_member_id => current_user.id,
           :parameters => ChangeVotingSystemProposal.serialize_parameters('type' => 'membership', 'proposed_system' => proposed_system.simple_name)
         )
@@ -140,7 +135,6 @@ class OneClickController < ApplicationController
       if current_system != proposed_system
         proposal = ChangeVotingSystemProposal.new(
           :title => "change constitution voting system to #{proposed_system.description}",
-          # TODO Convert to new auth system
           :proposer_member_id => current_user.id,
           :parameters => ChangeVotingSystemProposal.serialize_parameters('type' => 'constitution', 'proposed_system' => proposed_system.simple_name)
         )

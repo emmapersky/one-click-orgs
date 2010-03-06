@@ -44,7 +44,7 @@ describe "/induction" do
     it "should require login if organisation is active and not logged in" do
       Organisation.stub!(:has_founding_member?).and_return(true)      
       get('/one_click')
-      @response.status.should == 401
+      response.should redirect_to(login_path)
     end
     
     it "should redirect to control centre if organisation is active and any induction action is requested" do

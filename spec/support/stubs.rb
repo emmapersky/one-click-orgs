@@ -23,8 +23,7 @@ end
 
 def login
   @user = default_user
-  # TODO Replace with new auth system
-  # put "/login", {:email => @user.email, :password => "password"}
+  post "/member_session", {:email => @user.email, :password => "password"}
   @user
 end
 

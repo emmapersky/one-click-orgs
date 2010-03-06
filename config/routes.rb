@@ -79,10 +79,12 @@ OneClickOrgs::Application.routes.draw do |map|
   match '/one_click(/:action)' => 'one_click'
   match '/induction(/:action)' => 'induction'
   
-  # TODO Update for new auth system
-  match '/login' => 'login#login', :as => 'login'
+  match '/login' => 'member_session#new', :as => 'login'
+  resource :member_session, :only => [:new, :create, :destroy]
   
   match '/reset_password(/:action)' => 'reset_password'
+  
+  match '/welcome(/:action)' => 'welcome'
   
   root :to => 'one_click#control_centre'
 end

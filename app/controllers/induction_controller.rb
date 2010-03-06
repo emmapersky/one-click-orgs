@@ -24,7 +24,6 @@ class InductionController < ApplicationController
     @founder = Member.first || Member.new
     @founder.attributes = params[:member]
     if @founder.save
-      # TODO Convert to new auth system
       current_user = @founder
       redirect_to(:action => 'organisation_details')
     else

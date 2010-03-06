@@ -15,7 +15,7 @@
         |
         =link_to 'my settings', edit_member_path(current_user)
         |
-        =link_to 'logout', logout_path
+        =link_to 'logout', member_session_path, :method => :delete
     %div#doc
       %div#hd
         %h1.header One Click Orgs
