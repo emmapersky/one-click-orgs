@@ -22,7 +22,7 @@ class MembersController < ApplicationController
   def edit
     # only_provides :html
     unless current_user.id == params[:id].to_i
-      redirect_to(:back, :flash => {:error => "You are not authorized to do this."})
+      redirect_to(:back, :flash => {:error => "You are not authorized to do this."}) and return
     end
     
     @member = Member.find(params[:id])
