@@ -18,7 +18,7 @@
         = render 'proposals/description', :proposal => proposal
         %p= link_to("More details", proposal)
       %td.timestamp
-        = distance_of_time_in_words(proposal.end_date)
+        = distance_of_time_in_words_to_now(proposal.end_date)
       %td.vote
         = render 'proposals/vote', :proposal => proposal
   

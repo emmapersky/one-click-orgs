@@ -22,7 +22,7 @@
 -if @proposal.open?
   %p
     Voting on this proposal will end in
-    = distance_of_time_in_words(@proposal.end_date)
+    = distance_of_time_in_words_to_now(@proposal.end_date)
     (
     = @proposal.end_date.to_s(:long)
     )
