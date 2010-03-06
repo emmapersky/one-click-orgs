@@ -48,7 +48,7 @@ describe "everything" do
       end
       
       it "should set a notice flash" do
-        flash[:notice].should == "member was successfully created"
+        flash[:notice].should_not be_blank
       end
     end
   end
@@ -93,8 +93,8 @@ describe "everything" do
     end
 
     it "responds unauthorized if resource != current_user" do
-      get(edit_member_path(@member))
-      @response.status.should == 401
+      get(edit_member_path(@member), {}, {'HTTP_REFERER' => 'http://www.example.com/'})
+      response.should redirect_to '/'
     end  
   end
 
