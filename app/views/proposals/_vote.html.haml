@@ -4,4 +4,4 @@
   - form_tag(:controller => :votes, :action => :vote_for, :id => proposal.id, :return_to => request.url) do
     = submit_tag "Support"
   - form_tag(:controller => :votes, :action => :vote_against, :id => proposal.id, :return_to => request.url) do
-    = submit "Oppose"
+    = submit_tag "Oppose"
