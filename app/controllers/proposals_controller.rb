@@ -1,5 +1,5 @@
 class ProposalsController < ApplicationController
-  # respond_to :xml, :yaml, :js
+  respond_to :html
   
   def index
     # Fetch open proposals
