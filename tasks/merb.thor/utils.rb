@@ -1,3 +1,5 @@
+require 'pathname'
+
 class String
   def /(other)
     (Pathname.new(self) + other).to_s
