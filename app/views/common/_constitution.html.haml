@@ -23,20 +23,21 @@
       - if allow_changes
         =partial 'common/propose_hold_assets_form'
       The Organisation does not hold material assets or intangible assets.
-  %li The Organisation uses an electronic management system to automate clerical processes ("Management System"). 
+  %li The Organisation uses an electronic system to carry out its governance ("Governance System").
   %li The Organisation has one or more members ("Members") who support its Objectives. 
   %li Each Member nominates an email address at which they will receive important notices from the Organisation ("Nominated Email Address"). 
   %li
-    Members may access the Management System at the website
+    Members may access the Governance System at the website
     %span{:class => 'dynamic'}
       = @website
-  %li Members may view the current Constitution on the Management Systems. 
-  %li Members may view a register of current Members together with their Nominated Email Addresses on the Management System. 
-  %li Members may resign their membership via the Management System.
+  %li Members may view the current Constitution on the Governance System. 
+  %li Members may view a register of current Members together with their Nominated Email Addresses on the Governance System. 
+  %li Members may resign their membership via the Governance System.
 
 %h4 Proposals & Decisions
 %ul.constitution
-  %li Members may submit a proposal ("Proposal") on the Management System. 
+  %li Members may jointly make a decision ("Decision") relating to any aspect of the Organisation's activities as follows:
+  %li Any member may submit a proposal ("Proposal") on the Governance System. 
   %li
     - if allow_changes
       =partial 'common/propose_change_voting_period_form'
@@ -44,31 +45,30 @@
     %span{:class=>'dynamic'}
       = @voting_period
     starting with its submission ("Voting Period").
-  %li Members may view all current Proposals on the Management System. 
-  %li Members may vote to support ("Supporting Vote") or vote to oppose ("Opposing Vote") a Proposal on the Management System during the Proposal's Voting Period. 
-  %li Members may only vote on Proposals submitted during their membership of the Organisation. 
-  %li All aspects of the Organisation's activity other than a change to the membership or an amendment to the constitution may be governed by a general decision ("General Decision"). 
-  %li New Members may be appointed and existing Members may be ejected by a membership decision ("Membership Decision"). 
-  %li The Constitution may be amended by a constitution decision ("Constitution Decision").
+  %li Members may view all current Proposals on the Governance System. 
+  %li Members may vote to support ("Supporting Vote") or vote to oppose ("Opposing Vote") a Proposal on the Governance System during the Proposal's Voting Period. 
+  %li Members may only vote on Proposals submitted during their membership of the Organisation.
   %li
     - if allow_changes
       =partial 'common/propose_voting_system_amendment_form', :type=>'general', :description=>'Change the way General Decisions are made:'
-    A General Decision is made when a Proposal that does not concern a change to the membership or an amendment to the Constitution receives
+    A Decision is made if a Proposal receives
     %span{:class=>'dynamic'}
       = @general_voting_system.long_description
-  %li
-    - if allow_changes
-      =partial 'common/propose_voting_system_amendment_form', :type=>'membership', :description=>'Change the way Membership Decisions are made:'
-    A Membership Decision is made when a Proposal concerning a change to the membership receives
-    %span{:class=>'dynamic'}
-      = @membership_voting_system.long_description
+  %li except that:
   %li
     - if allow_changes
       =partial 'common/propose_voting_system_amendment_form', :type=>'constitution', :description=>'Change the way Constitution Decisions are made:'
-    A Constitution Decision is made when a Proposal concerning an amendment to the Constitution receives
+    The Constitution may only be amended by a Decision where
     %span{:class=>'dynamic'}       
-      = @constitution_voting_system.long_description
-  %li Members may view all General Decisions, Membership Decisions and Constitution Decisions on the Management System.
+      = @constitution_voting_system.long_description(:include_received => true)
+  %li and
+  %li
+    - if allow_changes
+      =partial 'common/propose_voting_system_amendment_form', :type=>'membership', :description=>'Change the way Membership Decisions are made:'
+    New Members may be appointed (and existing Members ejected) only by a Decision
+    %span{:class=>'dynamic'}
+      = @membership_voting_system.long_description(:include_received => true)
+  %li Members may view all Decsions on the Governance System.
 
 / %h4 Proxies
 / %ul.constitution
