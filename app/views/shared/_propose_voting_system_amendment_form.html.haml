@@ -5,7 +5,7 @@
         Propose an amendment to this clause
     %div.proposal_form{:style => 'display: none;'}
       %p
-        =render 'voting_system_field', :type => type, :description => description
+        =render :partial => 'voting_system_field', :locals => {:type => type, :description => description}
       %p
         =submit_tag "Propose change", :id => 'submit'
       %p

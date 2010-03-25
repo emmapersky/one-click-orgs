@@ -1,8 +1,8 @@
-class WelcomeController < Application
+class WelcomeController < ApplicationController
   skip_before_filter :ensure_member_inducted
 
   def index
-    @organisation_name = Organisation.name
+    @organisation_name = Organisation.organisation_name
     prepare_constitution_view
   end
 
@@ -14,6 +14,6 @@ class WelcomeController < Application
   end
 
   def cancel_membership
-    @organisation_name = Organisation.name
+    @organisation_name = Organisation.organisation_name
   end
 end

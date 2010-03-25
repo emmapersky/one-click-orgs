@@ -2,14 +2,14 @@
 %ul.constitution
   %li
     - if allow_changes
-      =render 'common/propose_change_org_name_form'
+      =render :partial => 'shared/propose_change_org_name_form'
     This is the constitution ("Constitution") of
     %span{:class=>'dynamic'}
       = @organisation_name
     ("The Organisation").  
   %li
     - if allow_changes
-      =render 'common/propose_change_objectives_form'
+      =render :partial => 'shared/propose_change_objectives_form'
     The Organisation has the objectives of
     %span{:class=>'dynamic'}
       = @objectives
@@ -17,11 +17,11 @@
   %li
     - if @assets
       - if allow_changes
-        =render 'common/propose_hold_no_assets_form'
+        =render :partial => 'shared/propose_hold_no_assets_form'
       The Organisation may hold, transfer and dispose of material assets and intangible assets.
     - else
       - if allow_changes
-        =render 'common/propose_hold_assets_form'
+        =render :partial => 'shared/propose_hold_assets_form'
       The Organisation does not hold material assets or intangible assets.
   %li The Organisation uses an electronic management system to automate clerical processes ("Management System"). 
   %li The Organisation has one or more members ("Members") who support its Objectives. 
@@ -39,7 +39,7 @@
   %li Members may submit a proposal ("Proposal") on the Management System. 
   %li
     - if allow_changes
-      =render 'common/propose_change_voting_period_form'
+      =render :partial => 'shared/propose_change_voting_period_form'
     A Proposal may be voted on for a period of
     %span{:class=>'dynamic'}
       = @voting_period
@@ -52,19 +52,19 @@
   %li The Constitution may be amended by a constitution decision ("Constitution Decision").
   %li
     - if allow_changes
-      =render 'common/propose_voting_system_amendment_form', :type=>'general', :description=>'Change the way General Decisions are made:'
+      =render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type=>'general', :description=>'Change the way General Decisions are made:'}
     A General Decision is made when a Proposal that does not concern a change to the membership or an amendment to the Constitution receives
     %span{:class=>'dynamic'}
       = @general_voting_system.long_description
   %li
     - if allow_changes
-      =render 'common/propose_voting_system_amendment_form', :type=>'membership', :description=>'Change the way Membership Decisions are made:'
+      =render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type=>'membership', :description=>'Change the way Membership Decisions are made:'}
     A Membership Decision is made when a Proposal concerning a change to the membership receives
     %span{:class=>'dynamic'}
       = @membership_voting_system.long_description
   %li
     - if allow_changes
-      =render 'common/propose_voting_system_amendment_form', :type=>'constitution', :description=>'Change the way Constitution Decisions are made:'
+      =render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type=>'constitution', :description=>'Change the way Constitution Decisions are made:'}
     A Constitution Decision is made when a Proposal concerning an amendment to the Constitution receives
     %span{:class=>'dynamic'}       
       = @constitution_voting_system.long_description
