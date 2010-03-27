@@ -79,7 +79,7 @@ OneClickOrgs::Application.routes.draw do |map|
   match '/one_click(/:action)' => 'one_click'
   match '/induction(/:action)' => 'induction'
   
-  match '/login' => 'member_session#new', :as => 'login'
+  match '/login' => 'member_sessions#new', :as => 'login'
   resource :member_session, :only => [:new, :create, :destroy]
   
   match '/reset_password(/:action)' => 'reset_password'
