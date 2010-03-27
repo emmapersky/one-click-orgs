@@ -16,14 +16,12 @@ module VotingSystems
       self.name.split('::').last
     end
     
-    def self.description(text=nil)
-      @description = text if text
-      @description
+    def self.description(options={})
+      raise "description must be defined in subclasses of VotingSystem"
     end
     
-    def self.long_description(text=nil)
-      @long_description = text if text
-      @long_description
+    def self.long_description(options={})
+      raise "long_description must be defined in subclasses of VotingSystem"
     end
     
     def self.can_be_closed_early?(proposal)
@@ -38,10 +36,14 @@ module VotingSystems
   
   
   class RelativeMajority < VotingSystem
-    description "More supporting votes than opposing votes"
-    long_description "Supporting Votes from more than half of the Members during the Voting Period; " +
-      "or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
+    def self.description(options={})
+      "More supporting votes than opposing votes"
+    end
     
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "Supporting Votes from more than half of the Members#{are_received} during the Voting Period; or when more Supporting Votes than Opposing Votes have been received for the Proposal at the end of the Voting Period."
+    end
     
     def self.can_be_closed_early?(proposal)
       proposal.votes_for > (proposal.member_count  / 2.0).ceil
@@ -53,8 +55,14 @@ module VotingSystems
   end
   
   class Veto < VotingSystem
-    description "No opposing votes"
-    long_description "no Opposing Votes during the Voting Period."
+    def self.description(options={})
+      "No opposing votes"
+    end
+    
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "no Opposing Votes#{are_received} during the Voting Period."
+    end
     
     def self.passed?(proposal)
       proposal.votes_against == 0
@@ -77,22 +85,41 @@ module VotingSystems
   end
   
   class AbsoluteMajority < Majority
-    description "Supporting votes from more than half the members"
-    long_description"Supporting Votes from more than half of Members during the Voting Period."
+    def self.description(options={})
+      "Supporting votes from more than half the members"
+    end
+    
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "Supporting Votes#{are_received} from more than half of Members during the Voting Period."
+    end
     
     self.fraction_needed = 0.5
   end
   
   class AbsoluteTwoThirdsMajority < Majority
-    description "Supporting votes from more than two thirds of the members"
-    long_description "Supporting Votes from more than two thirds of Members during the Voting Period."
+    def self.description(options={})
+      "Supporting votes from more than two thirds of the members"
+    end
+    
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "Supporting Votes#{are_received} from more than two thirds of Members during the Voting Period."
+    end
     
     self.fraction_needed = 2.0/3.0
   end
   
   class Unanimous < Majority
-    description "Supporting votes from every single member"
-    long_description "Supporting Votes from all Members during the Voting Period."
+    def self.description(options={})
+      "Supporting votes from every single member"
+    end
+    
+    def self.long_description(options={})
+      are_received = options[:include_received] ? " are received" : ""
+      "Supporting Votes#{are_received} from all Members during the Voting Period."
+    end
+    
     self.fraction_needed = 1.0
   end
   
