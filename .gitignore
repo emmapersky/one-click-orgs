@@ -10,3 +10,4 @@ tmp
 log
 ._*
 config/database.yml
+vendor
