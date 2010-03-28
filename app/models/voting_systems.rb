@@ -28,7 +28,6 @@ module VotingSystems
       false
     end
     
-    
     def self.passed?(proposal)
       raise NotImplementedError      
     end
@@ -46,7 +45,7 @@ module VotingSystems
     end
     
     def self.can_be_closed_early?(proposal)
-      proposal.votes_for > (proposal.member_count  / 2.0).ceil
+      [proposal.votes_for, proposal.votes_against].max > (proposal.member_count  / 2.0)
     end
     
     def self.passed?(proposal)
@@ -64,24 +63,42 @@ module VotingSystems
       "no Opposing Votes#{are_received} during the Voting Period."
     end
     
+    def self.can_be_closed_early?(proposal)
+      proposal.votes_against > 0
+    end
+    
     def self.passed?(proposal)
-      proposal.votes_against == 0
+      proposal.votes_for > 0 && proposal.votes_against == 0
     end
   end
   
 
-  class Majority < VotingSystem      
+  # Base class for voting systems where a proposal needs to surpass a
+  # treshold of votes (in relation to member count) to be accepted.
+  class Majority < VotingSystem
     def self.fraction_needed=(f)
       @fraction_needed = f
     end
     
-    def self.initialize(fraction_needed)
-      @fraction_needed = fraction_needed
+    def self.can_be_closed_early?(proposal)
+      (current_fraction_for(proposal) >= @fraction_needed) || 
+      (current_fraction_against(proposal) > (1.0 - @fraction_needed)) 
     end
     
     def self.passed?(proposal)
-      proposal.votes_for / proposal.member_count.to_f >= @fraction_needed
+      current_fraction_for(proposal) >= @fraction_needed
     end
+
+    private
+
+    def self.current_fraction_for(proposal)
+      proposal.votes_for / proposal.member_count.to_f
+    end
+    
+    def self.current_fraction_against(proposal)
+      proposal.votes_against / proposal.member_count.to_f
+    end
+    
   end
   
   class AbsoluteMajority < Majority
