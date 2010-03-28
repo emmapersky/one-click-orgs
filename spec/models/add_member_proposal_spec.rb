@@ -6,6 +6,7 @@ describe AddMemberProposal do
     stub_organisation!
   end
 
+
   it "should persist type information" do    
     @proposal = AddMemberProposal.make
     AddMemberProposal.find(@proposal.id).should be_kind_of(AddMemberProposal)
