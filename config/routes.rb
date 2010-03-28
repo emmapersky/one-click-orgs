@@ -66,14 +66,6 @@ OneClickOrgs::Application.routes.draw do |map|
   resources :decisions
   resources :proposals
   
-  # TODO Check if we still need these, and if so, whether they're working properly as-is
-  # resources :add_member_proposals, :controller => 'proposals'
-  # resources :eject_member_proposals, :controller => 'proposals'
-  # resources :change_voting_system_proposals, :controller => 'proposals'
-  # resources :change_text_proposals, :controller => 'proposals'
-  # resources :change_boolean_proposals, :controller => 'proposals'
-  # resources :change_voting_period_proposals, :controller=>'proposals'
-  
   resources :members
   
   match '/one_click(/:action)' => 'one_click'

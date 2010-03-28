@@ -2,7 +2,7 @@ def default_user
   stub_constitution!
   stub_organisation!
     
-  Member.where(:email => "krusty@clown.com").first || 
+  @default_user = Member.where(:email => "krusty@clown.com").first || 
     Member.create(:email => "krusty@clown.com",
                  :name => "Krusty the clown",
                  :password => "password",
@@ -12,7 +12,10 @@ end
 
 def stub_constitution!
   Constitution.stub!(:voting_period).and_return(3 * 86400)
-  # Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))
+end
+
+def stub_voting_systems!
+  Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))
 end
 
 def stub_organisation!
