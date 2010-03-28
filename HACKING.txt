@@ -50,6 +50,7 @@ and copy the result into your config/initializers/cookie_verification_secret.rb.
 
 6. Start the server:
 
+  $ mkdir -p tmp/pids
   $ bundle exec rails server
 
 7. Visit http://localhost:3000/
