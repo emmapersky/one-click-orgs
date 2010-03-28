@@ -64,7 +64,7 @@
   %li and
   %li
     - if allow_changes
-      = render :partial => 'common/propose_voting_system_amendment_form', :locals => {:type=>'membership', :description=>'Change the way Membership Decisions are made:'}
+      = render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type=>'membership', :description=>'Change the way Membership Decisions are made:'}
     New Members may be appointed (and existing Members ejected) only by a Decision
     %span{:class=>'dynamic'}
       = @membership_voting_system.long_description(:include_received => true)
