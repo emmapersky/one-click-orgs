@@ -6,9 +6,7 @@ class Decision < ActiveRecord::Base
   end 
   
   def send_email
-    # TODO Convert to new background job system
-    #async_job :send_email_for, self.id
-    Decision.send_email_for(self.id)
+    Decision.send_later(:send_email_for, self.id)
   end
   
   def self.send_email_for(decision_id)

@@ -41,7 +41,7 @@ describe Proposal do
   it "should send out an email to each member after a Proposal has been made" do
     Member.count.should >0
     
-    ProposalMailer.should_receive(:notify_creation).exactly(Member.count).times.and_return(@mail)
+    Proposal.should_receive(:send_later).with(:send_email_for, anything)
     
     p = Proposal.make(:proposer => @member)
   end
@@ -50,7 +50,7 @@ describe Proposal do
   it "should send out an email to each member after a Decision has been made" do
      Member.count.should >0
      
-     DecisionMailer.should_receive(:notify_new_decision).exactly(Member.count).times.and_return(@mail)
+     Decision.should_receive(:send_later).with(:send_email_for, anything)
      
      p = Proposal.make(:proposer => @member)
      p.stub!(:passed?).and_return(true)

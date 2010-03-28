@@ -123,9 +123,7 @@ class Proposal < ActiveRecord::Base
   scope :failed, lambda {where(["close_date < ? AND accepted = ?", Time.now.utc, false]).order('close_date DESC')}
   
   def send_email
-    # TODO Convert to new background job system
-    #async_job :send_email_for, self.id
-    Proposal.send_email_for(self.id)
+    Proposal.send_later(:send_email_for, self.id)
   end
   
   def self.send_email_for(proposal_id)

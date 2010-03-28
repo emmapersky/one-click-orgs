@@ -44,10 +44,8 @@ describe Member do
   end
 
   describe "creation" do
-    it "should send out an email after membes has been created" do
-      mailer = mock("mailer")
-      mailer.stub!(:deliver)
-      MembersMailer.should_receive(:welcome_new_member).and_return(mailer)
+    it "should send out an email after member has been created" do
+      Member.should_receive(:send_later).with(:send_new_member_email, anything, anything)
       Member.create_member({:email=> 'foo@example.com'}, true)
     end
   end

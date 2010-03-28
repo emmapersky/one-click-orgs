@@ -76,9 +76,7 @@ class Member < ActiveRecord::Base
   end
 
   def send_welcome
-    # TODO Convert to new background job system
-    #async_job :send_new_member_email, self.id, self.password
-    Member.send_new_member_email(self.id, self.password)
+    Member.send_later(:send_new_member_email, self.id, self.password)
   end
 
   def self.send_new_member_email(member_id, password)
