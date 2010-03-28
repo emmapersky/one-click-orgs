@@ -107,11 +107,17 @@ describe "everything" do
     
     describe "GET" do
       before(:each) do
-        get(member_path(default_user))
+        get(member_path(@member))
       end
   
       it "responds successfully" do
         @response.should be_successful
+      end
+      
+      it "should display a form to eject the member" do
+        @response.should have_selector("form[action='/members/#{@member.id}']") do |form|
+          form.should have_selector "input[type=hidden][name=_method][value=delete]"
+        end
       end
     end
   

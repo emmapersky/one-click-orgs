@@ -43,7 +43,7 @@
 %p
   Create a proposal to eject this member from the organisation.
 
-- form_tag(member_path(@member), :html => {:method => :delete}) do
+- form_tag(member_path(@member), :method => :delete) do
   %p
     = label_tag(:description)
     = text_area_tag :description
