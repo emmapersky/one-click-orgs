@@ -68,19 +68,14 @@ class Proposal < ActiveRecord::Base
     ! self.open?
   end
   
-  def majority?
-    #FIXME, voting system?
-    return votes_for >= (member_count / 2.0).ceil
-  end
-
-  def passed?
-    voting_system.passed?(self)
-  end
-  
   def voting_system
     Constitution.voting_system(:general)
   end
     
+  def passed?
+    voting_system.passed?(self)
+  end
+  
   def close!
     raise "proposal #{self} already closed" if closed?   
         
@@ -101,13 +96,12 @@ class Proposal < ActiveRecord::Base
     end
   end
 
-
   def self.serialize_parameters(params)
     params.to_json
   end
   
-  def self.find_closed_early_proposals
-    Proposal.where(["close_date > ?", Time.now.utc]).all.select { |p| p.majority? }
+  def self.find_closeable_early_proposals
+    Proposal.currently_open.all.select { |p| p.voting_system.can_be_closed_early?(p) }
   end
 
   def self.close_due_proposals
@@ -115,7 +109,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def self.close_early_proposals
-    find_closed_early_proposals.each { |p| p.close! }
+    find_closeable_early_proposals.each { |p| p.close! }
   end
   
   # Called every 60 seconds in the worker process (set up at end of file)
