@@ -109,7 +109,7 @@ describe "everything" do
       before(:each) do
         get(member_path(@member))
       end
-  
+      
       it "responds successfully" do
         @response.should be_successful
       end

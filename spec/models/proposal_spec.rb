@@ -70,4 +70,20 @@ describe Proposal do
       Proposal.make(:open => false, :accepted => false).to_event[:kind].should == :failed_proposal
     end
   end
+  
+  describe "vote counting" do
+    before(:each) do
+      @proposal = Proposal.create
+      3.times{Vote.create(:proposal => @proposal, :for => true)}
+      4.times{Vote.create(:proposal => @proposal, :for => false)}
+    end
+    
+    it "should count the for votes" do
+      @proposal.votes_for.should == 3
+    end
+    
+    it "should count the against votes" do
+      @proposal.votes_against.should == 4
+    end
+  end
 end

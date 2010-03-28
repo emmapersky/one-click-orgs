@@ -1,5 +1,5 @@
 - if proposal.vote_by(current_user)
-  = Vote.for_or_against(proposal.vote_by(current_user).for)
+  = proposal.vote_by(current_user).for_or_against
 - else
   - form_tag(:controller => :votes, :action => :vote_for, :id => proposal.id, :return_to => request.url) do
     = submit_tag "Support"
