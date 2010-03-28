@@ -27,7 +27,12 @@ INSTRUCTIONS
 
   $ bundle install
 
-3. Edit config/database.yml as desired. If your database user doesn't have CREATE DATABASE permissions, create the databases manually, e.g.:
+3. Set up your database connection settings.
+
+  $ cp config/database.yml.sample config/database.yml
+
+Then edit config/database.yml as desired. 
+If your database user doesn't have CREATE DATABASE permissions, create the databases manually, e.g.:
 
   $ mysql -u root -p
   mysql> create database one_click_development;
