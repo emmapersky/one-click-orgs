@@ -21,6 +21,14 @@ describe VotingSystems do
   def should_not_pass(proposal)
      @system.passed?(proposal).should be_false
   end
+  
+  def should_close_early(proposal)
+     @system.can_be_closed_early?(proposal).should be_true
+  end
+
+  def should_not_close_early(proposal)
+     @system.can_be_closed_early?(proposal).should be_false
+  end
 
   describe VotingSystems do
     it "should return all voting systems" do
@@ -34,9 +42,15 @@ describe VotingSystems do
     end
 
     it "relative majority" do
-      should_not_pass make_proposal(0, 0)
+      should_not_pass make_proposal(0, 0, 1)
       should_pass make_proposal(5, 4)
       should_not_pass make_proposal(4, 5)
+
+      should_not_close_early make_proposal(0, 0, 1)
+      should_close_early make_proposal(5, 4)
+      should_not_close_early make_proposal(5, 4, 11)
+      should_close_early make_proposal(4, 5)
+      should_not_close_early make_proposal(4, 5, 11)
     end
   end
 
@@ -50,9 +64,14 @@ describe VotingSystems do
     end
     
     it "veto" do
-      should_pass make_proposal(0, 0)
+      should_not_pass make_proposal(0, 0, 1)
       should_not_pass make_proposal(5, 4)
       should_not_pass make_proposal(4, 5)
+
+      should_not_close_early make_proposal(0, 0, 1)
+      should_close_early make_proposal(5, 4)
+      should_close_early make_proposal(4, 5)
+      should_not_close_early make_proposal(5, 0, 9)
     end
   end
 
@@ -64,6 +83,9 @@ describe VotingSystems do
     it "absolute" do
       should_pass make_proposal(10, 9)
       should_not_pass make_proposal(9, 10)
+
+      should_close_early make_proposal(10, 9)
+      should_close_early make_proposal(9, 10)
     end
   end
 
@@ -77,6 +99,10 @@ describe VotingSystems do
       should_pass make_proposal(67, 33)
       should_not_pass make_proposal(4, 5)
       should_not_pass make_proposal(51, 49)            
+
+      should_close_early make_proposal(67, 33)
+      should_close_early make_proposal(4, 5)
+      should_not_close_early make_proposal(3, 4, 20)            
     end
   end
 
@@ -87,9 +113,13 @@ describe VotingSystems do
     end
     
     it "unanimous" do
-      should_not_pass make_proposal(0, 0)
+      should_not_pass make_proposal(0, 0, 1)
       should_pass make_proposal(5, 0)
       should_not_pass make_proposal(10, 1)
+
+      should_not_close_early make_proposal(0, 0, 1)
+      should_close_early make_proposal(5, 0)
+      should_close_early make_proposal(10, 1)
     end
   end
 
