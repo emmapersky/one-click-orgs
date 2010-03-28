@@ -27,7 +27,12 @@ INSTRUCTIONS
 
   $ bundle install
 
-3. Edit config/database.yml as desired. If your database user doesn't have CREATE DATABASE permissions, create the databases manually, e.g.:
+3. Set up your database connection settings.
+
+  $ cp config/database.yml.sample config/database.yml
+
+Then edit config/database.yml as desired. 
+If your database user doesn't have CREATE DATABASE permissions, create the databases manually, e.g.:
 
   $ mysql -u root -p
   mysql> create database one_click_development;
@@ -54,3 +59,10 @@ and copy the result into your config/initializers/cookie_verification_secret.rb.
   $ bundle exec rails server
 
 7. Visit http://localhost:3000/
+
+CONTRIBUTING
+
+Before you submit any patches make sure that no tests fail:
+
+  $ bundle exec rake spec
+

@@ -8,3 +8,5 @@ spec/mailers/log
 config/initializers/cookie_verification_secret.rb
 tmp
 log
+._*
+config/database.yml
