@@ -58,3 +58,10 @@ and copy the result into your config/initializers/cookie_verification_secret.rb.
   $ bundle exec rails server
 
 7. Visit http://localhost:3000/
+
+CONTRIBUTING
+
+Before you submit any patches make sure that no tests fail:
+
+  $ bundle exec rake spec
+
