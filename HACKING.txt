@@ -25,7 +25,11 @@ INSTRUCTIONS
 
 2. Install the required gems using Bundler:
 
-  $ bundle install
+  $ bundle install  # installs gem system-wide
+
+or
+
+  $ bundle install vendor --disable-shared-gems # vendors everything, no system gems
 
 3. Set up your database connection settings.
 
