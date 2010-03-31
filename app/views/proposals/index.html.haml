@@ -13,10 +13,10 @@
       %td
         = proposal.title
         (
-        = link_to(proposal.proposer.name, proposal.proposer)
+        = link_to(proposal.proposer.name, member_path(proposal.proposer))
         )
         = render 'proposals/description', :proposal => proposal
-        %p= link_to("More details", proposal)
+        %p= link_to("More details", proposal_path(proposal))
       %td.timestamp
         = distance_of_time_in_words_to_now(proposal.end_date)
       %td.vote
@@ -34,10 +34,10 @@
       %td
         = decision.proposal.title
         (
-        = link_to(decision.proposal.proposer.name, decision.proposal.proposer)
+        = link_to(decision.proposal.proposer.name, member_path(decision.proposal.proposer))
         )
         = render 'proposals/description', :proposal => decision.proposal
-        %p= link_to("More details", decision.proposal)
+        %p= link_to("More details", proposal_path(decision.proposal))
       %td.timestamp= decision.proposal.close_date.to_s(:long)
       %td.vote= render 'proposals/vote_count', :proposal => decision.proposal
 
@@ -53,9 +53,9 @@
       %td
         = failed_proposal.title
         (
-        = link_to(failed_proposal.proposer.name, failed_proposal.proposer)
+        = link_to(failed_proposal.proposer.name, member_path(failed_proposal.proposer))
         )
-        = remder 'proposals/description', :proposal => failed_proposal
-        %p= link_to("More details", failed_proposal)
+        = render 'proposals/description', :proposal => failed_proposal
+        %p= link_to("More details", proposal_path(failed_proposal))
       %td.timestamp= failed_proposal.close_date.to_s(:long)
       %td.vote= render 'proposals/vote_count', :proposal => failed_proposal
