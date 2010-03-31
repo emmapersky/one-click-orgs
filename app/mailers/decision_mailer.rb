@@ -4,7 +4,7 @@ class DecisionMailer < ActionMailer::Base
   default :from => "info@oneclickor.gs"
   
   def notify_new_decision(member, decision)
-    default_url_options[:host] = Organisation.domain
+    default_url_options[:host] = Organisation.domain(:only_host => true)
     
     @decision = decision
     @proposal = @decision.proposal

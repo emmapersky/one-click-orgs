@@ -4,7 +4,7 @@ class MembersMailer < ActionMailer::Base
   default :from => "info@oneclickor.gs"
   
   def welcome_new_member(member, password)
-    default_url_options[:host] = Organisation.domain
+    default_url_options[:host] = Organisation.domain(:only_host => true)
     
     @member = member
     @password = password
@@ -13,7 +13,7 @@ class MembersMailer < ActionMailer::Base
   end
   
   def notify_new_password(member, new_password)
-    default_url_options[:host] = Organisation.domain
+    default_url_options[:host] = Organisation.domain(:only_host => true)
     
     @member = member
     @new_password = new_password

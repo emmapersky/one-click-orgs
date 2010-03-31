@@ -42,4 +42,28 @@ describe Organisation do
       Organisation.domain.should == "yaourt.org"
     end
   end
+  
+  describe "domain" do
+    it "should return the domain clause" do
+      Clause.stub!(:get_text).with('domain').and_return("http://oneclickorgs.com")
+      Organisation.domain.should == "http://oneclickorgs.com"
+    end
+    
+    describe "only_host option" do
+      it "should remove an http://" do
+        Clause.stub!(:get_text).with('domain').and_return("http://oneclickorgs.com/")
+        Organisation.domain(:only_host => true).should == "oneclickorgs.com"
+      end
+    
+      it "should remove an https://" do
+        Clause.stub!(:get_text).with('domain').and_return("https://oneclickorgs.com/")
+        Organisation.domain(:only_host => true).should == "oneclickorgs.com"
+      end
+    
+      it "should leave a naked domain alone" do
+        Clause.stub!(:get_text).with('domain').and_return("oneclickorgs.com")
+        Organisation.domain(:only_host => true).should == "oneclickorgs.com"
+      end
+    end
+  end
 end

@@ -11,8 +11,15 @@ class Organisation
     Clause.get_boolean('assets')
   end
   
-  def self.domain
-    Clause.get_text('domain')
+  # Returns the base URL for this instance of OCO.
+  # Pass the :only_host => true option to just get the host name.
+  def self.domain(options={})
+    raw_domain = Clause.get_text('domain')
+    if options[:only_host]
+      raw_domain.gsub(%r{^.*?://}, '').gsub(%r{/$}, '')
+    else
+      raw_domain
+    end
   end
   
   def self.has_founding_member?
