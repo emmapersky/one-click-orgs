@@ -15,7 +15,7 @@ Additionally, on Debian:
  * libxml2
  * libxslt
 
-INSTRUCTIONS
+SETUP
 
 1. Grab the source:
 
@@ -57,16 +57,21 @@ then generate your own secret key:
 
 and copy the result into your config/initializers/cookie_verification_secret.rb.
 
-6. Start the server:
+RUNNING
+
+1. Start the web server:
 
   $ mkdir -p tmp/pids
   $ bundle exec rails server
 
-7. Visit http://localhost:3000/
+2. (Optional) In another shell, start the job server (which sends emails and closes proposals):
+
+  $ bundle exec rake job:work
+
+3. Visit http://localhost:3000/
 
 CONTRIBUTING
 
 Before you submit any patches make sure that no tests fail:
 
   $ bundle exec rake spec
-
