@@ -66,7 +66,7 @@ RUNNING
 
 2. (Optional) In another shell, start the job server (which sends emails and closes proposals):
 
-  $ bundle exec rake job:work
+  $ bundle exec rake jobs:work
 
 3. Visit http://localhost:3000/
 
