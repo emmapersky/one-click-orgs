@@ -13,10 +13,11 @@
     %th Title
     %th Vote
   - for vote in @member.votes
-    - vote.for? ? p = "for" : p = "against"
-    %tr{:class => "vote_#{p}"}
-      %td= link_to(vote.proposal.title, proposal_path(vote.proposal))
-      %td.vote= vote.for_or_against
+    - if vote.proposal.closed? || (@member == current_user)
+      - vote.for? ? p = "for" : p = "against"
+      %tr{:class => "vote_#{p}"}
+        %td= link_to(vote.proposal.title, proposal_path(vote.proposal))
+        %td.vote= vote.for_or_against
 
 %h5
   Proposal History
