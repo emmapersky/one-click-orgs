@@ -1,20 +1,20 @@
-Dear <%= @member.name || 'member' %>,
+Dear <%=raw(  @member.name || 'member'  )%>,
 
-<%= @founding_member_name %> has called a meeting to discuss the founding of '<%= @organisation_name %>'.
+<%=raw(  @founding_member_name  )%> has called a meeting to discuss the founding of '<%=raw(  @organisation_name  )%>'.
 
-<%= @organisation_name %>:
+<%=raw(  @organisation_name  )%>:
 Agenda for the Founding Meeting
 
-To be held at <%= @founding_meeting_location %> on <%= @founding_meeting_date %> starting at <%= @founding_meeting_time %>.
+To be held at <%=raw(  @founding_meeting_location  )%> on <%=raw(  @founding_meeting_date  )%> starting at <%=raw(  @founding_meeting_time  )%>.
 
 Invited:
 <% @members.each do |member| -%>
-<%= member.name %> <<%= member.email %>>
+<%=raw(  member.name  )%> <<%=raw(  member.email  )%>>
 <% end -%>
 
 Agenda:
-1. Presentation and discussion of the Draft Constitution for <%= @organisation_name %> making any necessary revisions.
-2. Founding vote to form <%= @organisation_name %>.
+1. Presentation and discussion of the Draft Constitution for <%=raw(  @organisation_name  )%> making any necessary revisions.
+2. Founding vote to form <%=raw(  @organisation_name  )%>.
 3. Any other business.
 
 

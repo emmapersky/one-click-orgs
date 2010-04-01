@@ -1,12 +1,12 @@
-Dear <%= @member && @member.name || 'member' %>,
+Dear <%=raw(  @member && @member.name || 'member'  )%>,
 
-a new proposal has been created by <%= @proposal.proposer.name || @proposal.proposer.email %>.
+a new proposal has been created by <%=raw(  @proposal.proposer.name || @proposal.proposer.email  )%>.
 
-<%= @proposal.title %>
+<%=raw(  @proposal.title  )%>
 
-<%= @proposal.description %>
+<%=raw(  @proposal.description  )%>
 
-Please visit <%= proposal_url(@proposal) %> to vote on it.
+Please visit <%=raw(  proposal_url(@proposal)  )%> to vote on it.
 
 Thanks
 

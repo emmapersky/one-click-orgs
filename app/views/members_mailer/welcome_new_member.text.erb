@@ -1,10 +1,10 @@
-Dear <%= @member.name || 'member' %>,
+Dear <%=raw(  @member.name || 'member'  )%>,
 
-you are now member of <%= @organisation_name %>. Your password is
-<%= @password %>
+you are now member of <%=raw(  @organisation_name  )%>. Your password is
+<%=raw(  @password  )%>
 
 
-Please visit <%= login_url %> to log in.
+Please visit <%=raw(  login_url  )%> to log in.
 
 Thanks
 
