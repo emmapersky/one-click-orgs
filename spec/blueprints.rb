@@ -7,9 +7,9 @@ Sham.email    { Faker::Internet.email }
 Sham.password { Faker::Name.first_name }
 
 Member.blueprint do
-  email "foo@example.com"
-  name {Sham.name}
-  created_at Time.now - 1.day
+  email
+  name
+  created_at {Time.now - 1.day}
   pw = Sham.password
   password pw
   password_confirmation pw
@@ -17,24 +17,26 @@ Member.blueprint do
   inducted true
 end
 
-Proposal.blueprint do |bp|
-  bp.title "a proposal title"
-  bp.open "1"
-  bp.proposer {Member.make}
+Proposal.blueprint do
+  title "a proposal title"
+  # Every object inherits Kernel.open, so just calling 'open' doesn't work.
+  # This line hacks into Machinist to manually set the 'open' attribute.
+  self.send(:assign_attribute, :open, 1)
+  proposer {Member.make}
 end
 
-Decision.blueprint do |d|
-  d.proposal {Proposal.make}
+Decision.blueprint do
+  proposal {Proposal.make}
 end
 
-AddMemberProposal.blueprint do |bp|
-  bp.title "a proposal title"
-  bp.open "1"
-  bp.proposer {Member.make}
+AddMemberProposal.blueprint do
+  title "a proposal title"
+  self.send(:assign_attribute, :open, 1)
+  proposer {Member.make}
 end
 
-Clause.blueprint do |bp|
-  bp.name 'objectives'
-  bp.text_value 'consuming doughnuts'
-  bp.started_at {Time.now - 1.day}
+Clause.blueprint do
+  name 'objectives'
+  text_value 'consuming doughnuts'
+  started_at {Time.now - 1.day}
 end
