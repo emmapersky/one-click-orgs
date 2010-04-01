@@ -205,6 +205,8 @@ class InductionController < ApplicationController
     #now, send out emails to confirm creation of all members
     other_members.each do |m|
       Rails.logger.info("sending welcome message to #{m}")
+      m.new_password!
+      m.save
       m.send_welcome
     end
       
