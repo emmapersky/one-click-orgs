@@ -19,7 +19,7 @@ SETUP
 
 1. Grab the source:
 
-  $ git clone git://github.com/chrismear/one-click-orgs.git
+  $ git clone git://github.com/emmapersky/one-click-orgs.git
   $ cd one-click-orgs
   $ git checkout -b rails3 origin/rails3
 
