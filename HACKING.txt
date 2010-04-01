@@ -47,15 +47,18 @@ If your database user doesn't have CREATE DATABASE permissions, create the datab
 
   $ bundle exec rake db:setup
 
-5. Set up a secret key for the cookie session store. Copy the sample config file:
+5. Copy the sample local settings file:
   
-  $ cp config/initializers/cookie_verification_secret.rb.sample config/initializers/cookie_verification_secret.rb
+  $ cp config/initializers/local_settings.rb.sample config/initializers/local_settings.rb
 
-then generate your own secret key:
+then generate two secret keys for cookie storage:
 
   $ bundle exec rake secret
+  $ bundle exec rake secret
 
-and copy the result into your config/initializers/cookie_verification_secret.rb.
+and copy the results into your config/initializers/local_settings.rb.
+
+You can also add custom SMTP settings here if 'localhost' won't do the job.
 
 RUNNING
 

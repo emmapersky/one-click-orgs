@@ -5,7 +5,7 @@ tmp/**/*
 .DS_Store
 coverage/*
 spec/mailers/log
-config/initializers/cookie_verification_secret.rb
+config/initializers/local_settings.rb
 tmp
 log
 ._*
