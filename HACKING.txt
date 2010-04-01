@@ -31,11 +31,12 @@ or
 
   $ bundle install vendor --disable-shared-gems # vendors everything, no system gems
 
-3. Set up your database connection settings.
+3. Create your local config files:
 
-  $ cp config/database.yml.sample config/database.yml
+  $ bundle exec rake oco:generate_config
 
-Then edit config/database.yml as desired. 
+4. Set up your database connection settings, by editing config/database.yml as desired.
+
 If your database user doesn't have CREATE DATABASE permissions, create the databases manually, e.g.:
 
   $ mysql -u root -p
@@ -46,19 +47,6 @@ If your database user doesn't have CREATE DATABASE permissions, create the datab
 4. (Create and) migrate the database:
 
   $ bundle exec rake db:setup
-
-5. Copy the sample local settings file:
-  
-  $ cp config/initializers/local_settings.rb.sample config/initializers/local_settings.rb
-
-then generate two secret keys for cookie storage:
-
-  $ bundle exec rake secret
-  $ bundle exec rake secret
-
-and copy the results into your config/initializers/local_settings.rb.
-
-You can also add custom SMTP settings here if 'localhost' won't do the job.
 
 RUNNING
 
