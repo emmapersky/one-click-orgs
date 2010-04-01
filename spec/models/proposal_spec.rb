@@ -67,7 +67,12 @@ describe Proposal do
     end
     
     it "should list closed, rejected proposals as 'failed proposal's" do
-      Proposal.make(:open => false, :accepted => false).to_event[:kind].should == :failed_proposal
+      proposal = Proposal.make(:accepted => false)
+      proposal.open = false
+      proposal.save
+      proposal.open?.should be_false
+      
+      proposal.to_event[:kind].should == :failed_proposal
     end
   end
   
