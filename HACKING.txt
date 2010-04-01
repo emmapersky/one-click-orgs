@@ -29,7 +29,7 @@ SETUP
 
 or
 
-  $ bundle install vendor --disable-shared-gems # vendors everything, no system gems
+  $ bundle install vendor/bundle --disable-shared-gems # vendors everything, no system gems
 
 3. Create your local config files:
 
