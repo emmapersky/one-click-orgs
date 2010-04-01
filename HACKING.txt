@@ -52,7 +52,6 @@ RUNNING
 
 1. Start the web server:
 
-  $ mkdir -p tmp/pids
   $ bundle exec rails server
 
 2. (Optional) In another shell, start the job server (which sends emails and closes proposals):
