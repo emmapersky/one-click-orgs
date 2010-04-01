@@ -140,6 +140,9 @@ label, input, textarea
   :margin-bottom 10px
   :width 30em
 
+input[type=hidden]
+  :display inline
+
 input.checkbox
   :display inline
   :margin 5px
@@ -162,8 +165,12 @@ textarea
   :clear both
 
 ul.constitution li
-  :margin-bottom 0.5em
+  :margin 0 0 0.5em
   :clear right
+  
+  input[type=hidden]
+    :float right
+    :width 0
 
 div.constitution_proposal
   :float right
