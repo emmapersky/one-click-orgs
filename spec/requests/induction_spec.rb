@@ -1,7 +1,70 @@
 require 'spec_helper'
 
-describe "induction" do
-  describe "state guarding" do
+describe "induction process" do
+  # This is just a very rough spec of the entire induction process, to make sure that this key flow
+  # isn't inadvertently broken.
+  # 
+  # This kind of thing would be better done in Cucumber with Webrat so that it's more readable and less brittle.
+  it "should work" do
+    get '/'
+    
+    follow_redirect!
+    response.should have_selector("form[action='/induction/create_founder']")
+    
+    post '/induction/create_founder', :member => {:email => "bob@example.com", :name => "Bob Smith", :password => "letmein", :password_confirmation => "letmein"}
+    
+    follow_redirect!
+    
+    # This login step should be removed.
+    post member_session_path, :email => 'bob@example.com', :password => 'letmein'
+    follow_redirect!
+    
+    response.should have_selector("form[action='/induction/create_organisation_details']")
+    
+    post '/induction/create_organisation_details', :organisation_name => "The Yak Shack", :objectives => "rehabilitating yaks.", :assets => '1'
+    
+    follow_redirect!
+    response.should have_selector("form[action='/induction/create_members']")
+    
+    post '/induction/create_members', 'members' => {'0' => {'id' => '', 'name' => "Erin Baker", 'email' => "erin@example.com"}}
+    
+    second_member_id = Member.last.id
+    
+    follow_redirect!
+    response.should have_selector("form[action='/induction/create_voting_settings']")
+    
+    post '/induction/create_voting_settings', "constitution_voting_system"=>"RelativeMajority", "voting_period"=>"1800", "general_voting_system"=>"RelativeMajority", "membership_voting_system"=>"RelativeMajority"
+    
+    follow_redirect!
+    response.should have_selector("a[href='/induction/founding_meeting_details']")
+    
+    get '/induction/founding_meeting_details'
+    response.should have_selector("form[action='/induction/create_founding_meeting_details']")
+    
+    post '/induction/create_founding_meeting_details', "location"=>"The Horse and Cart", "time"=>"6pm", "date"=>"1 April 2010"
+    
+    follow_redirect!
+    response.should have_selector("a[href='/induction/confirm_agenda']")
+    
+    get('/induction/confirm_agenda')
+    follow_redirect!
+    response.should have_selector("form[action='/induction/confirm_founding_meeting']")
+    
+    post '/induction/confirm_founding_meeting', :members => {second_member_id.to_s => '1'}
+    response.should redirect_to '/one_click/control_centre'
+    
+    Organisation.active?.should be_true
+    Member.count.should == 2
+    Organisation.organisation_name.should == "The Yak Shack"
+    Organisation.objectives.should == "rehabilitating yaks."
+    Organisation.assets.should be_true
+    Constitution.voting_period.should == 1800
+    Constitution.voting_system(:general).should == VotingSystems::RelativeMajority
+    Constitution.voting_system(:membership).should == VotingSystems::RelativeMajority
+    Constitution.voting_system(:constitution).should == VotingSystems::RelativeMajority
+  end
+  
+  describe "guarding access based on state" do
     describe "when organisation is under construction" do
       before do
         organisation_is_under_construction
@@ -22,7 +85,7 @@ describe "induction" do
       end
     end
     
-    describe "pending state (constitution has been setup, emails have been sent)" do
+    describe "when organisation is pending" do
       before do
         login
         organisation_is_pending
