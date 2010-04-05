@@ -9,3 +9,4 @@ log/*
 spec/mailers/log
 tmp/**/*
 vendor/bundle/*
+doc/app
