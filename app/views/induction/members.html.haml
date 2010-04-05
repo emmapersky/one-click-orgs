@@ -6,9 +6,9 @@
 %p
   %label Email
   = @founder.email
-- form_tag(:controller => 'induction', :action => 'create_members') do
+= form_tag(:controller => 'induction', :action => 'create_members') do
   - 0.upto(14) do |i|
-    - fields_for(:members, @members[i], :index => i) do |f|
+    = fields_for(:members, @members[i], :index => i) do |f|
       %h4="Member #{i+2}"
       %p
         = f.label(:name)

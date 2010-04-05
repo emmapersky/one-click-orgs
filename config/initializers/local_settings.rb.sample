@@ -1,33 +1,31 @@
 # Be sure to restart your server when you modify this file.
 
-# SMTP server settings
-
 OneClickOrgs::Application.configure do
+  # SMTP server settings
   config.action_mailer.smtp_settings = {
-    :address        => 'localhost'
-#    :port           => '587',
-#    :user_name      => 'info@oneclickor.gs',
-#    :password       => 'XXXX',
-#    :authentication => :plain
+    :address        => 'smtp.gmail.com',
+    :port           => '587',
+    :user_name      => 'info@oneclickor.gs',
+    :password       => 'XXXX',
+    :authentication => :plain
+  }
+  
+  # Your secret key for verifying the integrity of signed cookies.
+  # If you change this key, all old signed cookies will become invalid!
+  # Make sure the secret is at least 30 characters and all random, 
+  # no regular words or you'll be exposed to dictionary attacks.
+  config.cookie_secret = 'FIRST_SECRET_HERE'
+  
+  # Your secret key for verifying cookie session data integrity.
+  # If you change this key, all old sessions will become invalid!
+  # Make sure the secret is at least 30 characters and all random, 
+  # no regular words or you'll be exposed to dictionary attacks.
+  config.session_store :cookie_store, {
+    :key    => '_oneclickorgs_session',
+    :secret => 'SECOND_SECRET_HERE'
   }
 end
 
-# Your secret key for verifying the integrity of signed cookies.
-# If you change this key, all old signed cookies will become invalid!
-# Make sure the secret is at least 30 characters and all random,
-# no regular words or you'll be exposed to dictionary attacks.
-
-ActionController::Base.cookie_verifier_secret = 'FIRST_SECRET_HERE'
-
-# Your secret key for verifying cookie session data integrity.
-# If you change this key, all old sessions will become invalid!
-# Make sure the secret is at least 30 characters and all random,
-# no regular words or you'll be exposed to dictionary attacks.
-ActionController::Base.session = {
-  :key    => '_oneclickorgs_session',
-  :secret => 'SECOND_SECRET_HERE'
-}
-
-# Generate secrets by running
+# You can generate secrets by running
 #   bundle exec rake secret
 # at the command line.

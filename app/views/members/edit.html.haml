@@ -2,7 +2,7 @@
   Edit Profile
 
 %p
-  - form_for(@member, :url => member_path(@member), :html => {'class' => 'member'}) do |f|
+  = form_for(@member, :url => member_path(@member), :html => {'class' => 'member'}) do |f|
     %p
       = f.label(:email, "Email Address")
       = f.text_field :email

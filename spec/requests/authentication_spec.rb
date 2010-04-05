@@ -8,7 +8,7 @@ describe "authentication" do
   describe "getting login form" do
     it "should display a login form" do
       get '/login'
-      response.should render_template('member_sessions/new')
+      response.should have_selector("form[action='/member_session']")
     end
   end
   
@@ -35,8 +35,8 @@ describe "authentication" do
       session[:user].should be_nil
     end
     
-    it "should render the login page" do
-      response.should render_template('member_sessions/new')
+    it "should render the login form" do
+      response.should have_selector("form[action='/member_session']")
     end
     
     it "should set an error flash" do

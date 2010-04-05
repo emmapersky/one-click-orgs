@@ -86,7 +86,7 @@ describe "induction process" do
     end
     
     describe "when organisation is pending" do
-      before do
+      before(:each) do
         login
         organisation_is_pending
       end

@@ -37,26 +37,14 @@ def passed_proposal(p, args={})
 end
 
 def organisation_is_pending
-  # FIXME should be Organistaion.stub!(:state)
-  
-  Organisation.stub!(:pending?).and_return(true)      
-  Organisation.stub!(:active?).and_return(false)      
-  Organisation.stub!(:under_construction?).and_return(false)
+  Clause.set_text('organisation_state', "pending")
 end
 
 def organisation_is_active
-  # FIXME should be Organistaion.stub!(:state)
-  
-  Organisation.stub!(:pending?).and_return(false)      
-  Organisation.stub!(:active?).and_return(true)      
-  Organisation.stub!(:under_construction?).and_return(false)
+  Clause.set_text('organisation_state', "active")
 end
 
 def organisation_is_under_construction
-  # FIXME should be Organistaion.stub!(:state)
-  
-  Organisation.stub!(:pending?).and_return(false)      
-  Organisation.stub!(:active?).and_return(false)      
-  Organisation.stub!(:under_construction?).and_return(true)
-end  
-
+  clause = Clause.get_current('organisation_state')
+  clause.destroy if clause
+end

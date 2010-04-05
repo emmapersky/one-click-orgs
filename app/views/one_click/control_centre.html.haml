@@ -3,7 +3,7 @@
 %p= "Welcome back, #{current_user.name}!" if current_user
 
 %h4 New Proposal
-- form_for(@new_proposal, :url => proposals_path, 'class' => 'proposal') do |f|
+= form_for(@new_proposal, :url => proposals_path, 'class' => 'proposal') do |f|
   %p
     = f.label(:title)
     = f.text_field :title
