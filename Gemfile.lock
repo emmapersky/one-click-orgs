@@ -8,11 +8,11 @@ dependencies:
     group: 
     - :default
     version: = 3.0.0.beta2
-  mysql: 
+  haml: 
     group: 
     - :default
     version: ">= 0"
-  haml: 
+  mysql: 
     group: 
     - :default
     version: ">= 0"
@@ -24,6 +24,10 @@ dependencies:
     group: 
     - :test
     version: ">= 2.0.0.beta.5"
+  rcov: 
+    group: 
+    - :test
+    version: ~> 0.9.8
 specs: 
 - rake: 
     version: 0.8.7
@@ -36,7 +40,7 @@ specs:
 - memcache-client: 
     version: 1.8.2
 - tzinfo: 
-    version: 0.3.18
+    version: 0.3.19
 - activesupport: 
     version: 3.0.0.beta2
 - activemodel: 
@@ -89,6 +93,8 @@ specs:
     version: 3.0.0.beta2
 - rails: 
     version: 3.0.0.beta2
+- rcov: 
+    version: 0.9.8
 - rspec-core: 
     version: 2.0.0.beta.5
 - rspec-expectations: 
@@ -101,7 +107,7 @@ specs:
     version: 0.7.0
 - rspec-rails: 
     version: 2.0.0.beta.5
-hash: bc1cabe77a4751ed4e02b25f30a8dfe99ea9788b
+hash: 50d198dbdc0894b8495102c9b08e59cc0b0f9e6c
 sources: 
 - Rubygems: 
     uri: http://rubygems.org

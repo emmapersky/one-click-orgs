@@ -45,7 +45,15 @@ namespace :spec do
       t.pattern = "./spec/#{sub}/**/*_spec.rb"
     end
   end
-
+  
+  # This will probably be provided natively by rspec/rspec-rails at some point,
+  # as it was in version 1 of rspec.
+  desc "Run all specs in spec directory with RCov (excluding plugin specs)"
+  Rspec::Core::RakeTask.new(:rcov) do |t|
+    t.rcov = true
+    t.rcov_opts = IO.readlines("#{Rails.root}/spec/rcov.opts").map {|l| l.chomp}.join(' ') + " --exclude \"#{ENV['BUNDLE_PATH']}\""
+  end
+  
   task :statsetup do
     require 'rails/code_statistics'
     ::STATS_DIRECTORIES << %w(Model\ specs spec/models) if File.exist?('spec/models')
