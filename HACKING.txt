@@ -44,7 +44,7 @@ If your database user doesn't have CREATE DATABASE permissions, create the datab
   mysql> create database one_click_test;
   mysql> exit;
 
-4. (Create and) migrate the database:
+5. (Create and) migrate the database:
 
   $ bundle exec rake db:setup
 
