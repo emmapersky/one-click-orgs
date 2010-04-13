@@ -7,7 +7,7 @@ dependencies:
   rails: 
     group: 
     - :default
-    version: = 3.0.0.beta2
+    version: = 3.0.0.beta3
   haml: 
     group: 
     - :default
@@ -23,7 +23,7 @@ dependencies:
   rspec-rails: 
     group: 
     - :test
-    version: ">= 2.0.0.beta.5"
+    version: ">= 2.0.0.beta.6"
   rcov: 
     group: 
     - :test
@@ -42,9 +42,9 @@ specs:
 - tzinfo: 
     version: 0.3.19
 - activesupport: 
-    version: 3.0.0.beta2
+    version: 3.0.0.beta3
 - activemodel: 
-    version: 3.0.0.beta2
+    version: 3.0.0.beta3
 - erubis: 
     version: 2.6.5
 - rack: 
@@ -54,7 +54,7 @@ specs:
 - rack-test: 
     version: 0.5.3
 - actionpack: 
-    version: 3.0.0.beta2
+    version: 3.0.0.beta3
 - mime-types: 
     version: "1.16"
 - polyglot: 
@@ -62,25 +62,25 @@ specs:
 - treetop: 
     version: 1.4.5
 - mail: 
-    version: 2.1.5.3
+    version: 2.2.0
 - text-hyphen: 
     version: 1.0.0
 - text-format: 
     version: 1.0.0
 - actionmailer: 
-    version: 3.0.0.beta2
+    version: 3.0.0.beta3
 - arel: 
     version: 0.3.3
 - activerecord: 
-    version: 3.0.0.beta2
+    version: 3.0.0.beta3
 - activeresource: 
-    version: 3.0.0.beta2
+    version: 3.0.0.beta3
 - bundler: 
-    version: 0.9.16
+    version: 0.9.19
 - faker: 
     version: 0.3.1
 - haml: 
-    version: 2.2.22
+    version: 2.2.23
 - machinist: 
     version: 1.0.6
 - mysql: 
@@ -90,24 +90,24 @@ specs:
 - thor: 
     version: 0.13.4
 - railties: 
-    version: 3.0.0.beta2
+    version: 3.0.0.beta3
 - rails: 
-    version: 3.0.0.beta2
+    version: 3.0.0.beta3
 - rcov: 
     version: 0.9.8
 - rspec-core: 
-    version: 2.0.0.beta.5
+    version: 2.0.0.beta.6
 - rspec-expectations: 
-    version: 2.0.0.beta.5
+    version: 2.0.0.beta.6
 - rspec-mocks: 
-    version: 2.0.0.beta.5
+    version: 2.0.0.beta.6
 - rspec: 
-    version: 2.0.0.beta.5
+    version: 2.0.0.beta.6
 - webrat: 
     version: 0.7.0
 - rspec-rails: 
-    version: 2.0.0.beta.5
-hash: 50d198dbdc0894b8495102c9b08e59cc0b0f9e6c
+    version: 2.0.0.beta.6
+hash: 00bf767dd36c12882b1fbb5eaa311c868c1ef996
 sources: 
 - Rubygems: 
     uri: http://rubygems.org
