@@ -28,4 +28,11 @@ namespace :oco do
       File.open(config_dir('initializers', 'local_settings.rb'), 'w'){|file| file << code}
     end
   end
+
+  desc "Generate a list of contributors"
+  task :contributors do
+    File.open('doc/CONTRIBUTORS.txt', 'w') do |file|
+      file << `git shortlog -nse`.gsub(/^\s+\d+\s+/, '')
+    end
+  end
 end
