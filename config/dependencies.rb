@@ -32,6 +32,7 @@ dependency "do_mysql", "0.9.11"
 dependency "merb_datamapper", merb_gems_version
 
 dependency "faker", "0.3.1"
+dependency "webrat", "~> 0.3.1"
 dependency "haml", ">= 2.2.5"
 dependency "erubis", ">= 2.6.5"
 dependency "extlib", ">= 0.9.13"
