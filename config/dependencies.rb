@@ -37,7 +37,7 @@ dependency "haml", ">= 2.2.5"
 dependency "erubis", ">= 2.6.5"
 dependency "extlib", ">= 0.9.13"
 dependency "rspec", "1.2.8", :require_as => nil
-dependency "rack", "1.0.0"
+dependency "rack", "1.1.0"
 dependency "fastthread", ">= 1.0.7"
 dependency "gem_plugin", "0.2.3"
 dependency "cgi_multipart_eof_fix", "2.5.0"
