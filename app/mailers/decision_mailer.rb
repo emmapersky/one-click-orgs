@@ -1,14 +1,17 @@
-class DecisionMailer < Merb::MailController
-  include Merb::GlobalHelpers
+class DecisionMailer < ActionMailer::Base
+  helper :application
   
-  def notify_new_decision
-    @decision = params[:decision]    
+  default :from => "info@oneclickor.gs"
+  
+  def notify_new_decision(member, decision)
+    default_url_options[:host] = Organisation.domain(:only_host => true)
+    
+    @decision = decision
     @proposal = @decision.proposal
-    @member = params[:member]    
-        
+    @member = member
+    
     raise ArgumentError, "need decision" unless @decision and @member
     raise ArgumentError, "decision has no attached propsoal" unless @proposal
-    render_mail
+    mail(:to => @member.email, :subject => "new one click decision")
   end
-  
 end

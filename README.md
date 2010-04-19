@@ -17,6 +17,8 @@ For more information visit our web site: [oneclickor.gs](http://oneclickor.gs).
 
 The main repository is hosted on github: [github.com/emmapersky/one-click-orgs](http://github.com/emmapersky/one-click-orgs/tree/master)
 
+For installation instructions, see HACKING.txt.
+
 ## License
 
 One Click Orgs is licensed under the [GNU Affero General Public License, Version 3](http://www.fsf.org/licensing/licenses/agpl-3.0.html).

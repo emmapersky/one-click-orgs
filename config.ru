@@ -1,17 +1,4 @@
-require 'rubygems'
-if File.join(File.dirname(__FILE__), "bin", "common.rb")
-  require File.join(File.dirname(__FILE__), "bin", "common")
-end
-require 'merb-core'
- 
-Merb::Config.setup(:merb_root   => ".",
-                   :environment => ENV['RACK_ENV'],
-		   :log_file => "./log/#{ENV['RACK_ENV']}.log")
+# This file is used by Rack-based servers to start the application.
 
-Merb.environment = Merb::Config[:environment]
-Merb.root = Merb::Config[:merb_root]
-#Merb.log_file = Merb::Config[:log_file]
-
-Merb::BootLoader.run
- 
-run Merb::Rack::Application.new
+require ::File.expand_path('../config/environment',  __FILE__)
+run OneClickOrgs::Application

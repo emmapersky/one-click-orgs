@@ -1,0 +1,40 @@
+!!!
+%html
+  %head
+    %title
+      One Click Orgs
+
+    %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
+    = stylesheet_link_tag 'one_click'
+    = javascript_include_tag 'jquery', 'rails', 'application'
+    = csrf_meta_tag
+  %body
+    %div.control_bar
+      - if current_user
+        = h current_user.name
+        |
+        =link_to 'my settings', edit_member_path(current_user)
+        |
+        =link_to 'logout', member_session_path, :method => :delete
+    %div#doc
+      %div#hd
+        %h1.header One Click Orgs
+        
+      %div#bd
+        - if current_user
+          %ul#nav
+            %li#navitem= link_to 'My Control Centre', :controller => :one_click, :action => :control_centre
+            %li#navitem= link_to 'My Member Page', member_path(current_user)
+            %li#navitem= link_to 'Timeline', timeline_path
+            %li#navitem= link_to 'Members', members_path
+            %li#navitem= link_to 'Constitution', constitution_path
+
+        %div#notice
+          = flash[:notice]
+        %div#error
+          = flash[:error]
+          
+        = yield
+      %div.footer
+        = "One Click Orgs #{OneClickOrgs.version} (Beta) - Running on Rails #{Rails.version}"
+    = get_satisfaction_widget

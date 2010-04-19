@@ -6,16 +6,18 @@
 %p
   %label Email
   = @founder.email
-= form(:action => url(:controller => 'induction', :action => 'create_members')) do
+= form_tag(:controller => 'induction', :action => 'create_members') do
   - 0.upto(14) do |i|
-    = fields_for(@members[i]) do
+    = fields_for(:members, @members[i], :index => i) do |f|
       %h4="Member #{i+2}"
       %p
-        = text_field(:name => "members[#{i}][name]", :value => @members[i].name, :label => "Name")
+        = f.label(:name)
+        = f.text_field(:name)
       %p
-        = text_field(:name => "members[#{i}][email]", :value => @members[i].email, :label => "Email")
-      = hidden_field(:name => "members[#{i}][id]", :value => @members[i].id)
+        = f.label(:email)
+        = f.text_field(:email)
+      = f.hidden_field(:id)
   %p
-    = submit("Save members and move on")
+    = submit_tag("Save members and move on")
 %p
-  = link_to("Discard changes and go back", url(:controller => 'induction', :action => 'organisation_details'))
+  = link_to("Discard changes and go back", :controller => 'induction', :action => 'organisation_details')

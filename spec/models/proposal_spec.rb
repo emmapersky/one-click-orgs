@@ -1,16 +1,19 @@
-require File.join( File.dirname(__FILE__), '..', "spec_helper" )
+require 'spec_helper'
 
 describe Proposal do
-  include MailControllerTestHelper
   
   before(:each) do
     stub_constitution!  
     stub_organisation!
     
     @member = Member.make
-    clear_mail_deliveries
     
     Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))
+    
+    @mail = mock('mail', :deliver => nil)
+    
+    ProposalMailer.stub!(:notify_creation).and_return(@mail)
+    DecisionMailer.stub!(:notify_new_decision).and_return(@mail)
   end
 
   it "should close early proposals" do
@@ -38,30 +41,20 @@ describe Proposal do
   it "should send out an email to each member after a Proposal has been made" do
     Member.count.should >0
     
-    p = Proposal.make(:proposer => @member)
-  
-    deliveries = Merb::Mailer.deliveries
-    deliveries.size.should ==(Member.count)    
+    Proposal.should_receive(:send_later).with(:send_email_for, anything)
     
-    mail = deliveries.first
-
-    mail.to.should ==([@member.email])
-    mail.from.should ==(["info@oneclickor.gs"])
-#    mail.subject.first.should == ""         
+    p = Proposal.make(:proposer => @member)
   end
-
+  
+  # FIXME Decision internals should be in the Decision spec, not here
   it "should send out an email to each member after a Decision has been made" do
      Member.count.should >0
-
+     
+     Decision.should_receive(:send_later).with(:send_email_for, anything)
+     
      p = Proposal.make(:proposer => @member)
      p.stub!(:passed?).and_return(true)
      p.close!
-     
-     Merb::Mailer.deliveries.size.should ==(Member.count*2)    
-
-     mail = last_delivered_mail
-     mail.from.should ==(["info@oneclickor.gs"])
-#     mail.subject.first.should == ""
   end
   
   describe "to_event" do
@@ -74,7 +67,28 @@ describe Proposal do
     end
     
     it "should list closed, rejected proposals as 'failed proposal's" do
-      Proposal.make(:open => false, :accepted => false).to_event[:kind].should == :failed_proposal
+      proposal = Proposal.make(:accepted => false)
+      proposal.open = false
+      proposal.save
+      proposal.open?.should be_false
+      
+      proposal.to_event[:kind].should == :failed_proposal
+    end
+  end
+  
+  describe "vote counting" do
+    before(:each) do
+      @proposal = Proposal.create
+      3.times{Vote.create(:proposal => @proposal, :for => true)}
+      4.times{Vote.create(:proposal => @proposal, :for => false)}
+    end
+    
+    it "should count the for votes" do
+      @proposal.votes_for.should == 3
+    end
+    
+    it "should count the against votes" do
+      @proposal.votes_against.should == 4
     end
   end
 end

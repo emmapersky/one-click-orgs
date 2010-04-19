@@ -1,0 +1,12 @@
+Dear <%=raw( @member && @member.name || 'member' )%>,
+
+a new decision has been made.
+
+<%=raw( @proposal.title )%>, by <%=raw( @proposal.proposer.name || @proposal.proposer.email )%>
+
+<%=raw( @proposal.description )%>
+
+
+Thanks
+
+oneclickor.gs

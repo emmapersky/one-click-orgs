@@ -1,4 +1,4 @@
-%td= event[:timestamp].formatted(:long)
+%td= event[:timestamp].to_s(:long)
 %td
   A decision was made:
-  = link_to(h(event[:object].proposal.title), resource(event[:object].proposal))
+  = link_to(event[:object].proposal.title, proposal_path(event[:object].proposal))

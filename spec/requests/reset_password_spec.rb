@@ -1,8 +1,4 @@
-require File.join(File.dirname(__FILE__), '..', 'spec_helper.rb')
-
-given "a member exists" do
-  @member = Member.make
-end
+require 'spec_helper'
 
 describe "ResetPassword" do
   before(:each) do
@@ -10,9 +6,11 @@ describe "ResetPassword" do
     stub_organisation!
   end
   
-  describe "resetting a password", :given => "a member exists" do
+  describe "resetting a password" do
     before(:each) do
-      Member.stub!(:first).and_return(@member)
+      @member = Member.make
+      Member.stub!(:where).with(:email => @member.email).and_return(@members_relation = mock('members relation'))
+      @members_relation.stub!(:first).and_return(@member)
       @member.stub!(:new_password!).and_return("letmein")
       @member.stub!(:save).and_return(true)
     end
@@ -24,11 +22,11 @@ describe "ResetPassword" do
   
     it "should redirect to the index page" do
       post_reset
-      @response.should redirect_to(url(:controller => 'reset_password', :action => 'index'))
+      @response.should redirect_to(:controller => 'reset_password', :action => 'index')
     end
     
     def post_reset
-      @response = request('/reset_password/reset', :method => "POST", :params => {:email => @member.email})
+      post('/reset_password/reset', {:email => @member.email})
     end
   end
 end

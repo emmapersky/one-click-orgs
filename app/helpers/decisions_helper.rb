@@ -1,5 +1,2 @@
-module Merb
-  module DecisionsHelper
-
-  end
-end # Merb
+module DecisionsHelper
+end

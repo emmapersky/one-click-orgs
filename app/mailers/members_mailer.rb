@@ -1,19 +1,22 @@
-class MembersMailer < Merb::MailController
-  include Merb::GlobalHelpers
+class MembersMailer < ActionMailer::Base
+  helper :application
   
-  def welcome_new_member
-    # use params[] passed to this controller to get data
-    # read more at http://wiki.merbivore.com/pages/mailers
-    @member = params[:member]
-    @password = params[:password]
-    @organisation_name = Organisation.name
-    render_mail
+  default :from => "info@oneclickor.gs"
+  
+  def welcome_new_member(member, password)
+    default_url_options[:host] = Organisation.domain(:only_host => true)
+    
+    @member = member
+    @password = password
+    @organisation_name = Organisation.organisation_name
+    mail(:to => @member.email, :subject => "Your password")
   end
   
-  def notify_new_password
-    @member = params[:member]
-    @new_password = params[:new_password]
-    render_mail
+  def notify_new_password(member, new_password)
+    default_url_options[:host] = Organisation.domain(:only_host => true)
+    
+    @member = member
+    @new_password = new_password
+    mail(:to => @member.email, :subject => "Your password")
   end
-  
 end

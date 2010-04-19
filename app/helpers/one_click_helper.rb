@@ -1,5 +1,2 @@
-module Merb
-  module OneClickHelper
-
-  end
-end # Merb
+module OneClickHelper
+end

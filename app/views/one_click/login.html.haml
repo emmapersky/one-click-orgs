@@ -1,9 +1,11 @@
 %h3 Please Login
 
-= form(:action => url(:controller => :one_click, :action => :authenticate)) do
-  = text_field :email, :label => "Email"
+= form_tag(:controller => :one_click, :action => :authenticate) do
+  = label_tag(:email)
+  = text_field_tag :email
   %br
-  = password_field :password, :label => "type 'oneclick'"
+  = label_tag(:password)
+  = password_field_tag :password
   %br
-  = submit "Login", :id => 'submit'
+  = submit_tag "Login", :id => 'submit'
   %br

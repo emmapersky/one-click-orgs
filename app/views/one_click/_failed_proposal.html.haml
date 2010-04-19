@@ -1,4 +1,4 @@
-%td= event[:timestamp].formatted(:long)
+%td= event[:timestamp].to_s(:long)
 %td
   A proposal failed:
-  = link_to(h(event[:object].title), resource(event[:object]))
+  = link_to(event[:object].title, proposal_path(event[:object]))

@@ -2,8 +2,8 @@ class EjectMemberProposal < Proposal
   def enact!(args={})
     raise "Can not enact a proposal which has not passed" unless passed?
     
-    params = JSON.parse(self.parameters)
-    member = Member.get(params['id'])
+    params = ActiveSupport::JSON.decode(self.parameters)
+    member = Member.find(params['id'])
     member.eject!
   end
   

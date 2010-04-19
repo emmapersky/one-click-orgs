@@ -1,5 +1,4 @@
-%form{ :action => url(:action=>:reset), :method => "POST", "accept-charset" => "utf-8" }
-  %input{ :name => "_method", :type => "hidden", :value => "PUT" }
+= form_tag({:action => :reset}, :method => :put, 'accept-charset' => 'utf-8') do
   %p
     %label{:for => 'email'}
       Email

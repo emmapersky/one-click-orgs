@@ -1,48 +1,44 @@
-require File.join(File.dirname(__FILE__), "..", "spec_helper")
+require 'spec_helper'
 
-describe MembersMailer, "#notify_new_password email template" do
-  include MailControllerTestHelper
-  
+describe MembersMailer do
   before :each do
-    clear_mail_deliveries
-    @member = mock(Member)
-    @member.stub!(:name).and_return("Peter Pan")
+    @member = mock_model(Member,
+      :name => "Peter Pan",
+      :email => "peter@example.com"
+    )
     @new_password = "foo"
-    
+  
     stub_constitution!
     stub_organisation!
   end
-    
-  describe "new password email" do
-    
+  
+  describe "notify_new_password" do
     before do
-      MembersMailer.dispatch_and_deliver(:notify_new_password, {}, { :member =>  @member, :new_password=>@new_password})
+      @mail = MembersMailer.notify_new_password(@member, @new_password)
     end
       
-    it "includes welcome phrase and password in email text" do    
-      last_delivered_mail.text.should =~ /Dear #{@member.name}/
-      last_delivered_mail.text.should =~ /#{@new_password}/            
+    it "should include welcome phrase and password in email text" do    
+      @mail.body.should =~ /Dear #{@member.name}/
+      @mail.body.should =~ /#{@new_password}/            
     end
-    
-    it "includes login link in email text" do
-      last_delivered_mail.text.should =~ %r{http://test.com/login}            
+  
+    it "should include login link in email text" do
+      @mail.body.should =~ %r{http://test.com/login}            
     end
   end
   
-  describe "new member email" do
+  describe "welcome_new_member" do
     before do
-      MembersMailer.dispatch_and_deliver(:welcome_new_member, {}, { :member =>  @member, :password=>@new_password})
-    end
-      
-    it "includes welcome phrase and password in email text" do          
-      last_delivered_mail.text.should =~ /Dear #{@member.name}/
-      last_delivered_mail.text.should =~ /#{@new_password}/            
+      @mail = MembersMailer.welcome_new_member(@member, @new_password)
     end
     
-    it "includes login link in email text" do
-      last_delivered_mail.text.should =~ %r{http://test.com/login}            
+    it "should include welcome phrase and password in email text" do          
+      @mail.body.should =~ /Dear #{@member.name}/
+      @mail.body.should =~ /#{@new_password}/            
     end
-      
+  
+    it "should include login link in email text" do
+      @mail.body.should =~ %r{http://test.com/login}            
+    end
   end
-
 end

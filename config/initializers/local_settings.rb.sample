@@ -1,0 +1,29 @@
+# Be sure to restart your server when you modify this file.
+
+OneClickOrgs::Application.configure do
+  # SMTP server settings
+  config.action_mailer.smtp_settings = {
+    :address        => 'smtp.gmail.com',
+    :port           => '587',
+    :user_name      => 'info@oneclickor.gs',
+    :password       => 'XXXX',
+    :authentication => :plain
+  }
+  
+  # Your secret key for verifying the integrity of signed cookies.
+  # If you change this key, all old signed cookies will become invalid!
+  # Make sure the secret is at least 30 characters and all random, 
+  # no regular words or you'll be exposed to dictionary attacks.
+  config.secret_token = 'YOUR_SECRET_HERE'
+  
+  config.session_store :cookie_store, :key => '_oneclickorgs_session'
+  
+  # Use the database for sessions instead of the cookie-based default,
+  # which shouldn't be used to store highly confidential information
+  # (create the session table with "rake db:sessions:create")
+  # config.session_store :active_record_store
+end
+
+# You can generate secrets by running
+#   bundle exec rake secret
+# at the command line.

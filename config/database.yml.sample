@@ -1,0 +1,20 @@
+---
+development: &defaults
+  adapter:  mysql
+  database: one_click_development
+  encoding: utf8
+  username: root
+  password: 
+  host:     localhost
+ 
+test:
+  <<:       *defaults
+  database: one_click_test
+ 
+production:
+  adapter:  mysql
+  database: one_click_production
+  encoding: utf8
+  username: oneclick
+  password: themis
+  host:     localhost  

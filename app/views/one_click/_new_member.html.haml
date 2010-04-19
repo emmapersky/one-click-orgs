@@ -1,4 +1,4 @@
-%td= event[:timestamp].formatted(:long)
+%td= event[:timestamp].to_s(:long)
 %td
   New member:
-  = link_to(h(event[:object].name), resource(event[:object]))
+  = link_to(event[:object].name, member_path(event[:object]))

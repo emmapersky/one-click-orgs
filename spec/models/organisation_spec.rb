@@ -1,4 +1,4 @@
-require File.join( File.dirname(__FILE__), '..', "spec_helper" )
+require 'spec_helper'
 
 describe Organisation do
   
@@ -10,7 +10,7 @@ describe Organisation do
     end
     
     it "should get the name of the organisation" do
-      Organisation.name.should == ("The Cheese Collective")
+      Organisation.organisation_name.should == ("The Cheese Collective")
     end
 
     it "should get the objectives of the organisation" do
@@ -25,7 +25,7 @@ describe Organisation do
       lambda {
         Clause.set_text(:organisation_name, "The Yoghurt Yurt")
       }.should change(Clause, :count).by(1)
-      Organisation.name.should == "The Yoghurt Yurt"
+      Organisation.organisation_name.should == "The Yoghurt Yurt"
     end
     
     it "should change the objectives of the organisation" do
@@ -40,6 +40,30 @@ describe Organisation do
         Clause.set_text(:domain, "yaourt.org")
       }.should change(Clause, :count).by(1)
       Organisation.domain.should == "yaourt.org"
+    end
+  end
+  
+  describe "domain" do
+    it "should return the domain clause" do
+      Clause.stub!(:get_text).with('domain').and_return("http://oneclickorgs.com")
+      Organisation.domain.should == "http://oneclickorgs.com"
+    end
+    
+    describe "only_host option" do
+      it "should remove an http://" do
+        Clause.stub!(:get_text).with('domain').and_return("http://oneclickorgs.com/")
+        Organisation.domain(:only_host => true).should == "oneclickorgs.com"
+      end
+    
+      it "should remove an https://" do
+        Clause.stub!(:get_text).with('domain').and_return("https://oneclickorgs.com/")
+        Organisation.domain(:only_host => true).should == "oneclickorgs.com"
+      end
+    
+      it "should leave a naked domain alone" do
+        Clause.stub!(:get_text).with('domain').and_return("oneclickorgs.com")
+        Organisation.domain(:only_host => true).should == "oneclickorgs.com"
+      end
     end
   end
 end
