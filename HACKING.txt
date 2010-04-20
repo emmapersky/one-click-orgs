@@ -1,5 +1,4 @@
 Basic get-you-up-and-running instructions.
-(Temporary version for Rails 3 beta port)
 
 REQUIREMENTS
 
@@ -22,7 +21,6 @@ SETUP
 
   $ git clone git://github.com/emmapersky/one-click-orgs.git
   $ cd one-click-orgs
-  $ git checkout -b rails3 origin/rails3
 
 2. Install the required gems using Bundler:
 
