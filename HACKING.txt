@@ -1,4 +1,5 @@
 Basic get-you-up-and-running instructions.
+(v0.5.x, Merb)
 
 Requirements:
 
@@ -20,7 +21,7 @@ Also note:
 
 1. Grab the source:
 
-$ git clone git://github.com/emmapersky/one-click-orgs.git
+$ git clone -b v0.5.x git://github.com/emmapersky/one-click-orgs.git
 $ cd one-click-orgs
 
 2. Install the necessary gems locally:
