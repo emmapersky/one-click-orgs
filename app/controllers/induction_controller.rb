@@ -24,7 +24,7 @@ class InductionController < ApplicationController
     @founder = Member.first || Member.new
     @founder.attributes = params[:member]
     if @founder.save
-      current_user = @founder
+      self.current_user = @founder
       redirect_to(:action => 'organisation_details')
     else
       redirect_to({:action => 'founder'}, :flash => {:error => "There was a problem with your details: #{@founder.errors.full_messages.to_sentence}"})

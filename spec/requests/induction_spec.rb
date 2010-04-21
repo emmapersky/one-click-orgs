@@ -15,10 +15,6 @@ describe "induction process" do
     
     follow_redirect!
     
-    # This login step should be removed.
-    post member_session_path, :email => 'bob@example.com', :password => 'letmein'
-    follow_redirect!
-    
     response.should have_selector("form[action='/induction/create_organisation_details']")
     
     post '/induction/create_organisation_details', :organisation_name => "The Yak Shack", :objectives => "rehabilitating yaks.", :assets => '1'
@@ -62,6 +58,15 @@ describe "induction process" do
     Constitution.voting_system(:general).should == VotingSystems::RelativeMajority
     Constitution.voting_system(:membership).should == VotingSystems::RelativeMajority
     Constitution.voting_system(:constitution).should == VotingSystems::RelativeMajority
+  end
+  
+  it "should automatically log the initial user in" do
+    get '/induction/founder'
+    post '/induction/create_founder', :member => {:email => "bob@example.com", :name => "Bob Smith", :password => "letmein", :password_confirmation => "letmein"}
+    follow_redirect!
+    response.should have_selector("div.control_bar") do |control_bar|
+      control_bar.should have_selector("a[href='/member_session'][data-method=delete]")
+    end
   end
   
   describe "guarding access based on state" do
