@@ -11,7 +11,7 @@ dependencies:
   haml: 
     group: 
     - :default
-    version: ">= 0"
+    version: ~> 2.2.24
   mysql: 
     group: 
     - :default
@@ -23,7 +23,7 @@ dependencies:
   rspec-rails: 
     group: 
     - :test
-    version: ">= 2.0.0.beta.7"
+    version: ">= 2.0.0.beta.8"
   rcov: 
     group: 
     - :test
@@ -38,7 +38,7 @@ specs:
 - i18n: 
     version: 0.3.7
 - memcache-client: 
-    version: 1.8.2
+    version: 1.8.3
 - tzinfo: 
     version: 0.3.20
 - activesupport: 
@@ -76,11 +76,11 @@ specs:
 - activeresource: 
     version: 3.0.0.beta3
 - bundler: 
-    version: 0.9.21
+    version: 0.9.24
 - faker: 
     version: 0.3.1
 - haml: 
-    version: 2.2.23
+    version: 2.2.24
 - machinist: 
     version: 1.0.6
 - mysql: 
@@ -96,18 +96,18 @@ specs:
 - rcov: 
     version: 0.9.8
 - rspec-core: 
-    version: 2.0.0.beta.7
+    version: 2.0.0.beta.8
 - rspec-expectations: 
-    version: 2.0.0.beta.7
+    version: 2.0.0.beta.8
 - rspec-mocks: 
-    version: 2.0.0.beta.7
+    version: 2.0.0.beta.8
 - rspec: 
-    version: 2.0.0.beta.7
+    version: 2.0.0.beta.8
 - webrat: 
-    version: 0.7.0
+    version: 0.7.1
 - rspec-rails: 
-    version: 2.0.0.beta.7
-hash: 44920b349fe151091009b700a0fff06c10b1b232
+    version: 2.0.0.beta.8
+hash: 34f4dfb993fba9663d315690c90e1e8a4721a113
 sources: 
 - Rubygems: 
     uri: http://rubygems.org

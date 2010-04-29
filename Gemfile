@@ -17,7 +17,7 @@ gem "mysql"
 # gem "sqlite3-ruby", :require => "sqlite3"
 # gem "aws-s3", :require => "aws/s3"
 
-gem "haml"
+gem "haml", "~>2.2.24"
 
 ## Bundle gems used only in certain environments:
 # gem "rspec", :group => :test
@@ -26,7 +26,7 @@ gem "haml"
 # end
 
 group :test do
-  gem "rspec-rails", ">=2.0.0.beta.7"
+  gem "rspec-rails", ">=2.0.0.beta.8"
   gem "machinist", ">=1.0.6"
   gem "faker", '>=0.3.1'
   gem "rcov", "~>0.9.8"

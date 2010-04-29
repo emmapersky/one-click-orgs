@@ -28,7 +28,7 @@ end
 
 Rake.application.instance_variable_get('@tasks').delete('default')
 
-spec_prereq = File.exist?(File.join(Rails.root, 'config', 'database.yml')) ? "db:test:prepare" : :noop
+spec_prereq = Rails.root.join('config', 'database.yml').exist? ? "db:test:prepare" : :noop
 task :noop do
 end
 
@@ -53,7 +53,7 @@ namespace :spec do
     t.rcov = true
     t.rcov_opts = IO.readlines("#{Rails.root}/spec/rcov.opts").map {|l| l.chomp}.join(' ') + " --exclude \"#{ENV['BUNDLE_PATH']}\""
   end
-  
+
   task :statsetup do
     require 'rails/code_statistics'
     ::STATS_DIRECTORIES << %w(Model\ specs spec/models) if File.exist?('spec/models')
