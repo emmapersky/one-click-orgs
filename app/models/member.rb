@@ -5,6 +5,7 @@ class Member < ActiveRecord::Base
   has_many :proposals, :foreign_key => 'proposer_member_id'
 
   scope :active, where(:active => true, :inducted => true)
+  scope :pending, where(:inducted => false)
 
   # AUTHENTICATION
 
