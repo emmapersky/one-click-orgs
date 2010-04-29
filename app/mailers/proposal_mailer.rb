@@ -1,7 +1,7 @@
 class ProposalMailer < ActionMailer::Base
   helper :application
   
-  default :from => "info@oneclickor.gs"
+  default :from => "info@oneclickorgs.com"
   
   def notify_creation(member, proposal)
     default_url_options[:host] = Organisation.domain(:only_host => true)

@@ -13,7 +13,7 @@ The One Click Orgs platform will give you:
 
 Right now we're busy building the system and testing it out with the first few groups. If your group is interested in using One Click Orgs please contact us and we'll let you know when it's ready.
 
-For more information visit our web site: [oneclickor.gs](http://oneclickor.gs).
+For more information visit our web site: [oneclickorgs.com](http://oneclickorgs.com).
 
 The main repository is hosted on github: [github.com/emmapersky/one-click-orgs](http://github.com/emmapersky/one-click-orgs/tree/master)
 

@@ -1,7 +1,7 @@
 class MembersMailer < ActionMailer::Base
   helper :application
   
-  default :from => "info@oneclickor.gs"
+  default :from => "info@oneclickorgs.com"
   
   def welcome_new_member(member, password)
     default_url_options[:host] = Organisation.domain(:only_host => true)
