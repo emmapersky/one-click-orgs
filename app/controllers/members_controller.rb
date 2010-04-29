@@ -3,6 +3,7 @@ class MembersController < ApplicationController
 
   def index
     @members = Member.active
+    @pending_members = Member.pending
     @new_member = Member.new
     respond_with @members
   end

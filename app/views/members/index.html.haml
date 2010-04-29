@@ -4,4 +4,12 @@
   - for member in @members
     %li
       = link_to "#{member.name}", member_path(member)
+%h3
+  Pending Members
+%p
+  These members still need to agree to the constitution
+%ol
+  - for member in @pending_members
+    %li
+      = link_to "#{member.name}", member_path(member)
 / = render :new_member
