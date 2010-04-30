@@ -15,6 +15,20 @@ Additionally, on Debian:
  * libxml2
  * libxslt
 
+DEBIAN INSTRUCTIONS
+
+First obtain a set of required packages from apt:
+apt-get install build-essential git-core ruby1.8 ruby1.8-dev rubygems1.8 mysql-server-5.0 libmysqlclient15-dev libxml2 libxml2-dev libxslt1-dev libxslt1.1 libopenssl-ruby1.8
+
+The version of RubyGems in apt is unfortunately out of date. This can be remedied with:
+gem install rubygems-update
+cd /var/lib/gems/1.8/bin
+./update_rubygems
+
+Now, install required gems:
+gem install bundler
+gem install rake
+
 SETUP
 
 1. Grab the source:
