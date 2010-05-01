@@ -6,8 +6,8 @@ describe Member do
     stub_constitution!
     stub_organisation!
 
-    @member = Member.make
-    @proposal = Proposal.make(:proposer_member_id => @member.id)
+    @member = @organisation.members.make
+    @proposal = @organisation.proposals.make(:proposer_member_id => @member.id)
   end
 
 
@@ -18,7 +18,7 @@ describe Member do
   end
 
   it "should not allow votes on members created before proposals" do
-    new_member = Member.make(:created_at => Time.now + 1.day)
+    new_member = @organisation.members.make(:created_at => Time.now + 1.day)
     lambda {
       new_member.cast_vote(:for, @proposal.id)
     }.should raise_error(VoteError)
@@ -46,7 +46,7 @@ describe Member do
   describe "creation" do
     it "should send out an email after member has been created" do
       Member.should_receive(:send_later).with(:send_new_member_email, anything, anything)
-      Member.create_member({:email=> 'foo@example.com'}, true)
+      @organisation.members.create_member({:email=> 'foo@example.com'}, true)
     end
   end
 
@@ -59,9 +59,9 @@ describe Member do
 
   describe "finders" do
     it "should return only active members" do
-      Member.active.should == Member.all
-      disabled = Member.make(:active=>false)
-      Member.active.should == Member.all - [disabled]
+      @organisation.members.active.should == @organisation.members.all
+      disabled = @organisation.members.make(:active=>false)
+      @organisation.members.active.should == @organisation.members.all - [disabled]
     end
   end
 

@@ -2,21 +2,21 @@ class MembersController < ApplicationController
   respond_to :html
 
   def index
-    @members = Member.active
-    @pending_members = Member.pending
-    @new_member = Member.new
+    @members = co.members.active
+    @pending_members = co.members.pending
+    @new_member = co.members.new
     respond_with @members
   end
 
   def show
-    @member = Member.find(params[:id])
+    @member = co.members.find(params[:id])
     raise NotFound unless @member
     respond_with @member
   end
 
   def new
     # only_provides :html
-    @member = Member.new
+    @member = co.members.new
     respond_with @member
   end
 
@@ -26,14 +26,14 @@ class MembersController < ApplicationController
       redirect_to(:back, :flash => {:error => "You are not authorized to do this."}) and return
     end
     
-    @member = Member.find(params[:id])
+    @member = co.members.find(params[:id])
     respond_with @member
   end
 
   def create
     member = params[:member]
-    title = "Add #{member['name']} as a member of #{Organisation.organisation_name}" # TODO: should default in model
-    proposal = AddMemberProposal.new(
+    title = "Add #{member['name']} as a member of #{current_organisation.organisation_name}" # TODO: should default in model
+    proposal = co.add_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
       :parameters => AddMemberProposal.serialize_parameters(member)
@@ -49,7 +49,7 @@ class MembersController < ApplicationController
 
   def update
     id, member = params[:id], params[:member]
-    @member = Member.find(id)
+    @member = co.members.find(id)
     if @member.update_attributes(member)
        redirect_to member_path(@member), :notice => "Member updated"
     else
@@ -59,10 +59,10 @@ class MembersController < ApplicationController
   end
 
   def destroy
-    @member = Member.find(params[:id])
+    @member = co.members.find(params[:id])
     
-    title = "Eject #{@member.name} from #{Organisation.organisation_name}"
-    proposal = EjectMemberProposal.new(
+    title = "Eject #{@member.name} from #{current_organisation.organisation_name}"
+    proposal = co.eject_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
       :parameters => EjectMemberProposal.serialize_parameters('id' => @member.id)

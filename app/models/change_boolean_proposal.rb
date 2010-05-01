@@ -2,10 +2,10 @@
 # in the constitution; e.g. the assets-holding
 class ChangeBooleanProposal < Proposal
   def enact!(params)
-    Clause.set_boolean(params['name'], params['value'])
+    organisation.clauses.set_boolean(params['name'], params['value'])
   end
   
   def voting_system
-    Constitution.voting_system(:constitution)
+    organisation.constitution.voting_system(:constitution)
   end
 end

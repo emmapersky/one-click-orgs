@@ -3,11 +3,11 @@ class EjectMemberProposal < Proposal
     raise "Can not enact a proposal which has not passed" unless passed?
     
     params = ActiveSupport::JSON.decode(self.parameters)
-    member = Member.find(params['id'])
+    member = organisation.members.find(params['id'])
     member.eject!
   end
   
   def voting_system
-    Constitution.voting_system(:membership)
+    organisation.constitution.voting_system(:membership)
   end
 end

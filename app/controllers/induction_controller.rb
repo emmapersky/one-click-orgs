@@ -12,16 +12,17 @@ class InductionController < ApplicationController
 
   # UNDER CONSTRUCTION    
   def founder
-    @founder = Member.first || Member.new
+    @founder = co.members.first || co.members.new
   end
   
   def create_founder
     # Detect the server domain if not already set
-    if Organisation.domain.blank?
-      Clause.set_text(:domain, "#{request.protocol}#{request.host}")
-    end
+    # TODO fix for multi-tenancy
+    # if co.domain.blank?
+    #   co.clauses.set_text(:domain, "#{request.protocol}#{request.host}")
+    # end
     
-    @founder = Member.first || Member.new
+    @founder = co.members.first || co.members.new
     @founder.attributes = params[:member]
     if @founder.save
       self.current_user = @founder
@@ -32,22 +33,22 @@ class InductionController < ApplicationController
   end
   
   def organisation_details
-    @organisation_name = Organisation.organisation_name
-    @objectives = Organisation.objectives
-    # FIXME This will erroneously revert the assets setting to true if Organisation.assets is already set to false
-    @assets = Organisation.assets || true
+    @organisation_name = co.organisation_name
+    @objectives = co.objectives
+    # FIXME This will erroneously revert the assets setting to true if co.assets is already set to false
+    @assets = co.assets || true
   end
   
   def create_organisation_details
-    organisation_name = Clause.get_current('organisation_name') || Clause.new(:name => 'organisation_name')
+    organisation_name = co.clauses.get_current('organisation_name') || co.clauses.new(:name => 'organisation_name')
     organisation_name.text_value = params[:organisation_name]
     organisation_name.save!
   
-    objectives = Clause.get_current('objectives') || Clause.new(:name => 'objectives')
+    objectives = co.clauses.get_current('objectives') || co.clauses.new(:name => 'objectives')
     objectives.text_value = params[:objectives]
     objectives.save!
     
-    assets = Clause.get_current('assets') || Clause.new(:name => 'assets')
+    assets = co.clauses.get_current('assets') || co.clauses.new(:name => 'assets')
     assets.boolean_value = params[:assets] == '1'
     assets.save!
     
@@ -61,10 +62,10 @@ class InductionController < ApplicationController
   def members
     # Find the first fifteen members after the founding member,
     # creating new empty members as necessary.
-    @members = Member.all
+    @members = co.members.all
     @founder = @members.shift
     while @members.length < 15 do
-      @members.push(Member.new)
+      @members.push(co.members.new)
     end
   end
   
@@ -72,10 +73,10 @@ class InductionController < ApplicationController
     params[:members].each_value do |member_params|
       if !member_params[:name].blank? && !member_params[:email].blank?
         if member_params[:id].blank?
-          member = Member.new
+          member = co.members.new
           member.new_password!
         else
-          member = Member.find(member_params[:id])
+          member = co.members.find(member_params[:id])
         end
         member.name = member_params[:name]
         member.email = member_params[:email]
@@ -84,33 +85,33 @@ class InductionController < ApplicationController
         # We get here if the name and email fields have been cleared
         # for a memeber that's already been saved to the database.
         # Treat this as a deletion.
-        Member.find(member_params[:id]).destroy
+        co.members.find(member_params[:id]).destroy
       end
     end
     redirect_to(:action => 'voting_settings')
   end
   
   def voting_settings
-    @voting_period = Clause.get_integer(:voting_period) or 259200
-    @general_voting_system = Clause.get_text(:general_voting_system) or 'RelativeMajority'
-    @membership_voting_system = Clause.get_text(:membership_voting_system) or 'AbsoluteTwoThirdsMajority'
-    @constitution_voting_system = Clause.get_text(:constitution_voting_system) or 'AbsoluteTwoThirdsMajority'
+    @voting_period = co.clauses.get_integer(:voting_period) or 259200
+    @general_voting_system = co.clauses.get_text(:general_voting_system) or 'RelativeMajority'
+    @membership_voting_system = co.clauses.get_text(:membership_voting_system) or 'AbsoluteTwoThirdsMajority'
+    @constitution_voting_system = co.clauses.get_text(:constitution_voting_system) or 'AbsoluteTwoThirdsMajority'
   end
   
   def create_voting_settings
-    voting_period = Clause.get_current('voting_period') || Clause.new(:name => 'voting_period')
+    voting_period = co.clauses.get_current('voting_period') || co.clauses.new(:name => 'voting_period')
     voting_period.integer_value = params[:voting_period]
     voting_period.save!
     
-    general_voting_system = Clause.get_current('general_voting_system') || Clause.new(:name => 'general_voting_system')
+    general_voting_system = co.clauses.get_current('general_voting_system') || co.clauses.new(:name => 'general_voting_system')
     general_voting_system.text_value = params[:general_voting_system]
     general_voting_system.save!
     
-    membership_voting_system = Clause.get_current('membership_voting_system') || Clause.new(:name => 'membership_voting_system')
+    membership_voting_system = co.clauses.get_current('membership_voting_system') || co.clauses.new(:name => 'membership_voting_system')
     membership_voting_system.text_value = params[:membership_voting_system]
     membership_voting_system.save!
     
-    constitution_voting_system = Clause.get_current('constitution_voting_system') || Clause.new(:name => 'constitution_voting_system')
+    constitution_voting_system = co.clauses.get_current('constitution_voting_system') || co.clauses.new(:name => 'constitution_voting_system')
     constitution_voting_system.text_value = params[:constitution_voting_system]
     constitution_voting_system.save!
     
@@ -122,21 +123,21 @@ class InductionController < ApplicationController
   end
   
   def founding_meeting_details
-    @founding_meeting_date = Clause.get_text('founding_meeting_date')
-    @founding_meeting_time = Clause.get_text('founding_meeting_time')
-    @founding_meeting_location = Clause.get_text('founding_meeting_location')
+    @founding_meeting_date = co.clauses.get_text('founding_meeting_date')
+    @founding_meeting_time = co.clauses.get_text('founding_meeting_time')
+    @founding_meeting_location = co.clauses.get_text('founding_meeting_location')
   end
   
   def create_founding_meeting_details
-    founding_meeting_date = Clause.get_current('founding_meeting_date') || Clause.new(:name => 'founding_meeting_date')
+    founding_meeting_date = co.clauses.get_current('founding_meeting_date') || co.clauses.new(:name => 'founding_meeting_date')
     founding_meeting_date.text_value = params[:date]
     founding_meeting_date.save!
   
-    founding_meeting_time = Clause.get_current('founding_meeting_time') || Clause.new(:name => 'founding_meeting_time')
+    founding_meeting_time = co.clauses.get_current('founding_meeting_time') || co.clauses.new(:name => 'founding_meeting_time')
     founding_meeting_time.text_value = params[:time]
     founding_meeting_time.save!
   
-    founding_meeting_location = Clause.get_current('founding_meeting_location') || Clause.new(:name => 'founding_meeting_location')
+    founding_meeting_location = co.clauses.get_current('founding_meeting_location') || co.clauses.new(:name => 'founding_meeting_location')
     founding_meeting_location.text_value = params[:location]
     founding_meeting_location.save!
     
@@ -148,23 +149,23 @@ class InductionController < ApplicationController
   end
   
   def preview_agenda
-    @organisation_name = Organisation.organisation_name
-    @founding_meeting_location = Clause.get_text('founding_meeting_location')
-    @founding_meeting_date = Clause.get_text('founding_meeting_date')
-    @founding_meeting_time = Clause.get_text('founding_meeting_time')
+    @organisation_name = co.organisation_name
+    @founding_meeting_location = co.clauses.get_text('founding_meeting_location')
+    @founding_meeting_date = co.clauses.get_text('founding_meeting_date')
+    @founding_meeting_time = co.clauses.get_text('founding_meeting_time')
     
-    @members = Member.active
+    @members = co.members.active
   end
     
   # Sends the constitution and agenda to founding members,
   # and moves the organisation to 'pending' state.
   def confirm_agenda
-    organisation_state = Clause.get_current('organisation_state') || Clause.new(:name => 'organisation_state')
+    organisation_state = co.clauses.get_current('organisation_state') || co.clauses.new(:name => 'organisation_state')
     organisation_state.text_value = 'pending'
     organisation_state.save!
     
     # Send emails with founding meeting agenda
-    Member.all.each do |member|
+    co.members.all.each do |member|
       InductionController.send_later(:send_agenda_email, member)
     end
     
@@ -176,15 +177,15 @@ class InductionController < ApplicationController
   # Form to confirm that the founding meeting happened,
   # and select which founding members voted in favour.
   def founding_meeting
-    @organisation_name = Organisation.organisation_name
-    @founding_member = Member.first
-    @other_members = Member.all; @other_members.shift
+    @organisation_name = co.organisation_name
+    @founding_member = co.members.first
+    @other_members = co.members.all; @other_members.shift
   end
   
   # Remove any founding members that did not vote in favour,
   # and move organisation to 'active' state.
   def confirm_founding_meeting
-    other_members = Member.all.to_a[1..-1]
+    other_members = co.members.all.to_a[1..-1]
     confirmed_member_ids = if params[:members].respond_to?(:keys)
       params[:members].keys.map(&:to_i)
     else
@@ -198,7 +199,7 @@ class InductionController < ApplicationController
       end
     end
     
-    organisation_state = Clause.get_current('organisation_state')
+    organisation_state = co.clauses.get_current('organisation_state')
     organisation_state.text_value = "active"
     organisation_state.save!
     
@@ -216,44 +217,44 @@ class InductionController < ApplicationController
   # Moves the organisation back from 'pending' state, to
   # allow editing of org details.
   def restart_induction
-    Clause.get_current('founding_meeting_date').destroy
-    Clause.get_current('founding_meeting_time').destroy
-    Clause.get_current('founding_meeting_location').destroy
+    co.clauses.get_current('founding_meeting_date').destroy
+    co.clauses.get_current('founding_meeting_time').destroy
+    co.clauses.get_current('founding_meeting_location').destroy
     
-    Clause.get_current('organisation_state').destroy
+    co.clauses.get_current('organisation_state').destroy
     
     redirect_to(:action => 'organisation_details')
   end
   
 private
   def check_active_organisation
-    if Organisation.active?
-      if Organisation.has_founding_member?
+    if co.active?
+      if co.has_founding_member?
         redirect_to(:controller => 'one_click', :action => 'control_centre')
       else
-        Organisation.under_construction!
+        co.under_construction!
         raise "ERROR: organisation marked as active but no members present - reset"
       end
     end
   end
   
   def ensure_organisation_under_construction
-    redirect_to(:action => 'founding_meeting') unless Organisation.under_construction?
+    redirect_to(:action => 'founding_meeting') unless co.under_construction?
   end
   
   def ensure_organisation_pending
-    redirect_to(:action => 'founder') unless Organisation.pending?
+    redirect_to(:action => 'founder') unless co.pending?
   end
 
 public
   
   def self.send_agenda_email(member)
-    organisation_name = Organisation.organisation_name
-    founding_meeting_location = Clause.get_text('founding_meeting_location')
-    founding_meeting_date = Clause.get_text('founding_meeting_date')
-    founding_meeting_time = Clause.get_text('founding_meeting_time')
-    founding_member_name = Member.first.name
-    members = Member.all
+    organisation_name = co.organisation_name
+    founding_meeting_location = co.clauses.get_text('founding_meeting_location')
+    founding_meeting_date = co.clauses.get_text('founding_meeting_date')
+    founding_meeting_time = co.clauses.get_text('founding_meeting_time')
+    founding_member_name = co.members.first.name
+    members = co.members.all
     
     InductionMailer.notify_agenda(
       {

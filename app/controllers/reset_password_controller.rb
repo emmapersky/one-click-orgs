@@ -6,7 +6,7 @@ class ResetPasswordController < ApplicationController
   
   def reset
     email = params[:email]
-    if m = Member.where(:email => email).first
+    if m = co.members.where(:email => email).first
         new_password = m.new_password!
         if m.save
           ResetPasswordController.send_later(:do_reset_email, m.id, new_password)

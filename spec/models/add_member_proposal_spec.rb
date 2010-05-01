@@ -8,12 +8,12 @@ describe AddMemberProposal do
 
 
   it "should persist type information" do    
-    @proposal = AddMemberProposal.make
-    AddMemberProposal.find(@proposal.id).should be_kind_of(AddMemberProposal)
+    @proposal = @organisation.add_member_proposals.make
+    @organisation.add_member_proposals.find(@proposal.id).should be_kind_of(AddMemberProposal)
   end
   
   it "should send an email to the new member if proposal passes" do
-    @proposal = AddMemberProposal.new
+    @proposal = @organisation.add_member_proposals.new
     Member.should_receive(:create_member).with(hash_including(:name=>"Paul"), true)
     @proposal.enact!(:name=>"Paul")
   end

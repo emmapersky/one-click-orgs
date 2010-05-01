@@ -1,6 +1,8 @@
 require 'digest/sha1'
 
 class Member < ActiveRecord::Base
+  belongs_to :organisation
+  
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
 
@@ -50,7 +52,7 @@ class Member < ActiveRecord::Base
     raise VoteError, "Vote already exists for this proposal" if existing_vote
 
     # FIXME why not just pass the proposal in?
-    proposal = Proposal.find(proposal_id)
+    proposal = organisation.proposals.find(proposal_id)
     raise VoteError, "proposal with id #{proposal_id} not found" unless proposal
     raise VoteError, "Can not vote on proposals created before member created" if proposal.creation_date < self.created_at
 

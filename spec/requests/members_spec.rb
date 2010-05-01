@@ -56,7 +56,7 @@ describe "everything" do
   describe "/members/1" do 
     describe "a successful DELETE, given a member exists" do
       before(:each) do
-        @member = Member.make
+        @member = @organisation.members.make
       end
       
       it "should create the proposal to eject the member" do
@@ -102,7 +102,7 @@ describe "everything" do
 
   describe "/members/1, given a member exists" do
     before(:each) do
-      @member = Member.make
+      @member = @organisation.members.make
     end
     
     describe "GET" do

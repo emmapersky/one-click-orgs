@@ -21,8 +21,8 @@ describe "everything" do
   
   describe "/proposals/1, given a proposal exists" do
     before(:each) do
-      @member_two = Member.make
-      @member_three = Member.make
+      @member_two = @organisation.members.make
+      @member_three = @organisation.members.make
       a_proposal_exists
       
     end

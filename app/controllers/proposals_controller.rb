@@ -3,22 +3,22 @@ class ProposalsController < ApplicationController
   
   def index
     # Fetch open proposals
-    @proposals = Proposal.currently_open
+    @proposals = co.proposals.currently_open
     
     # Fetch five most recent decisions
-    @decisions = Decision.order("id DESC").limit(5)
+    @decisions = co.decisions.order("id DESC").limit(5)
     
     # Fetch five most recent failed proposals
-    @failed_proposals = Proposal.failed.limit(5)
+    @failed_proposals = co.proposals.failed.limit(5)
   end
 
   def show
-    @proposal = Proposal.find(params[:id])
+    @proposal = co.proposals.find(params[:id])
     respond_with @proposal
   end
 
   def create
-    @proposal = Proposal.new(params[:proposal])
+    @proposal = co.proposals.new(params[:proposal])
     @proposal.proposer_member_id = current_user.id #fixme
         
     if @proposal.save

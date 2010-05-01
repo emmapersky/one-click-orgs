@@ -67,9 +67,9 @@ describe "/one_click" do
   describe "proposing voting system amendments" do
     before do
       login
-      @general_voting_system = Clause.set_text('general_voting_system', 'RelativeMajority')
-      @membership_voting_system = Clause.set_text('membership_voting_system', 'RelativeMajority')
-      @constitution_voting_system = Clause.set_text('constitution_voting_system', 'RelativeMajority')
+      @general_voting_system = @organisation.clauses.set_text('general_voting_system', 'RelativeMajority')
+      @membership_voting_system = @organisation.clauses.set_text('membership_voting_system', 'RelativeMajority')
+      @constitution_voting_system = @organisation.clauses.set_text('constitution_voting_system', 'RelativeMajority')
     end
     
     describe "for general decisions" do
@@ -140,9 +140,9 @@ describe "/one_click" do
     end
     
     it "should display a timeline with past events" do
-      Member.make_n(10) 
-      Decision.make_n(10)
-      Proposal.make_n(10)
+      @organisation.members.make_n(10) 
+      @organisation.proposals.make_n(10)
+      @organisation.proposals.make_n(10).each{|p| p.create_decision}
       
       get url_for(:controller => 'one_click', :action => 'timeline')
       @response.should be_successful
@@ -157,7 +157,7 @@ describe "/one_click" do
     
     describe "with an 'add member' proposal recently decided" do
       before(:each) do
-        @proposal = AddMemberProposal.create!(
+        @proposal = @organisation.add_member_proposals.create!(
           :title => "Add new member",
           :proposer_member_id => default_user.id,
           :parameters => AddMemberProposal.serialize_parameters(:email => "new@example.com", :name => "James Nouveau")

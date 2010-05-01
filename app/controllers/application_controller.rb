@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   # Returns true if a user is logged in; false otherwise.
   def user_logged_in?
     current_user = @current_user
-    current_user ||= session[:user] ? Member.find_by_id(session[:user]) : false
+    current_user ||= session[:user] ? co.members.find_by_id(session[:user]) : false
     @current_user = current_user
     current_user.is_a?(Member)
   end
@@ -47,17 +47,17 @@ class ApplicationController < ActionController::Base
   end
   
   def prepare_constitution_view
-    @organisation_name = Organisation.organisation_name
-    @objectives = Organisation.objectives
-    @assets = Organisation.assets
-    @website = Organisation.domain
+    @organisation_name = co.organisation_name
+    @objectives = co.objectives
+    @assets = co.assets
+    @website = co.domain
 
-    @period  = Clause.get_integer('voting_period')
+    @period  = co.clauses.get_integer('voting_period')
     @voting_period = VotingPeriods.name_for_value(@period)
 
-    @general_voting_system = Constitution.voting_system(:general)
-    @membership_voting_system = Constitution.voting_system(:membership)
-    @constitution_voting_system = Constitution.voting_system(:constitution)
+    @general_voting_system = co.constitution.voting_system(:general)
+    @membership_voting_system = co.constitution.voting_system(:membership)
+    @constitution_voting_system = co.constitution.voting_system(:constitution)
   end
   
   protected
@@ -81,9 +81,9 @@ class ApplicationController < ActionController::Base
   end
   
   def ensure_organisation_active
-    return if Organisation.active?
+    return if co.active?
     
-    if Organisation.pending?
+    if co.pending?
       redirect_to(:controller => 'induction', :action => 'founding_meeting')
     else
       redirect_to(:controller => 'induction', :action => 'founder')
@@ -91,7 +91,7 @@ class ApplicationController < ActionController::Base
   end
   
   def ensure_member_inducted
-    redirect_to_welcome_member if Organisation.active? && current_user && !current_user.inducted?
+    redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
   end
   
   def redirect_to_welcome_member
@@ -108,7 +108,7 @@ class ApplicationController < ActionController::Base
   
   rescue_from Unauthenticated, :with => :handle_unauthenticated
   def handle_unauthenticated
-    if Organisation.has_founding_member?
+    if co.has_founding_member?
       store_location
       redirect_to login_path
     else

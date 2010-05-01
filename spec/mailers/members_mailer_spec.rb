@@ -2,14 +2,15 @@ require 'spec_helper'
 
 describe MembersMailer do
   before :each do
-    @member = mock_model(Member,
-      :name => "Peter Pan",
-      :email => "peter@example.com"
-    )
-    @new_password = "foo"
-  
     stub_constitution!
     stub_organisation!
+    
+    @member = mock_model(Member,
+      :name => "Peter Pan",
+      :email => "peter@example.com",
+      :organisation => @organisation
+    )
+    @new_password = "foo"
   end
   
   describe "notify_new_password" do
@@ -23,7 +24,7 @@ describe MembersMailer do
     end
   
     it "should include login link in email text" do
-      @mail.body.should =~ %r{http://test.com/login}            
+      @mail.body.should =~ %r{http://test.oneclickorgs.com/login}            
     end
   end
   
@@ -38,7 +39,7 @@ describe MembersMailer do
     end
   
     it "should include login link in email text" do
-      @mail.body.should =~ %r{http://test.com/login}            
+      @mail.body.should =~ %r{http://test.oneclickorgs.com/login}            
     end
   end
 end

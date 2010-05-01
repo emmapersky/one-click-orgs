@@ -11,28 +11,28 @@ class OneClickController < ApplicationController
     # only_provides :html
     
     # Fetch open proposals
-    @proposals = Proposal.currently_open
+    @proposals = co.proposals.currently_open
     
     # Fetch five most recent decisions
-    @decisions = Decision.order("id DESC").limit(5)
+    @decisions = co.decisions.order("id DESC").limit(5)
     
     # Fetch five most recent failed proposals
-    @failed_proposals = Proposal.failed.limit(5)
+    @failed_proposals = co.proposals.failed.limit(5)
     
-    @new_proposal = Proposal.new
-    @new_member = Member.new
+    @new_proposal = co.proposals.new
+    @new_member = co.members.new
   end
   
   def timeline
     @timeline = [
-      Member.all,
-      Proposal.all,
-      Decision.all
+      co.members.all,
+      co.proposals.all,
+      co.decisions.all
     ].flatten.map(&:to_event).sort{|a, b| b[:timestamp] <=> a[:timestamp]}
   end
   
   def propose_text_amendment
-    proposal = ChangeTextProposal.new(
+    proposal = co.change_text_proposals.new(
       :title => "Change #{params[:name]} to '#{params[:value]}'",
       :proposer_member_id => current_user.id,
       :parameters => ChangeTextProposal.serialize_parameters(
@@ -56,7 +56,7 @@ class OneClickController < ApplicationController
       new_assets_value = false
     end
     
-    proposal = ChangeBooleanProposal.new(
+    proposal = co.change_boolean_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
       :parameters => ChangeBooleanProposal.serialize_parameters(
@@ -74,10 +74,10 @@ class OneClickController < ApplicationController
   
   def propose_voting_period_amendment
     if params[:new_voting_period]
-      proposal = ChangeVotingPeriodProposal.new(
+      proposal = co.change_voting_period_proposals.new(
         :title=>"Change voting period to #{VotingPeriods.name_for_value(params[:new_voting_period])}",
         :proposer_member_id => current_user.id,
-        :parameters => ChangeVotingSystemProposal.serialize_parameters(
+        :parameters => ChangeVotingPeriodProposal.serialize_parameters(
           'new_voting_period'=>params[:new_voting_period])
       )      
       if proposal.save
@@ -91,11 +91,11 @@ class OneClickController < ApplicationController
   def propose_voting_system_amendment
     if params[:general_voting_system]
       proposed_system = VotingSystems.get(params[:general_voting_system])      
-      current_system = Constitution.voting_system :general
+      current_system = co.constitution.voting_system :general
       
       if current_system != proposed_system           
               
-        proposal = ChangeVotingSystemProposal.new(
+        proposal = co.change_voting_system_proposals.new(
           :title => "change general voting system to #{proposed_system.description}",
           :proposer_member_id => current_user.id,
           :parameters => ChangeVotingSystemProposal.serialize_parameters('type'=>'general', 'proposed_system'=> proposed_system.simple_name)
@@ -111,10 +111,10 @@ class OneClickController < ApplicationController
       end
     elsif params[:membership_voting_system]
       proposed_system = VotingSystems.get(params[:membership_voting_system])
-      current_system = Constitution.voting_system :membership
+      current_system = co.constitution.voting_system :membership
       
       if current_system != proposed_system
-        proposal = ChangeVotingSystemProposal.new(
+        proposal = co.change_voting_system_proposals.new(
           :title => "change membership voting system to #{proposed_system.description}",
           :proposer_member_id => current_user.id,
           :parameters => ChangeVotingSystemProposal.serialize_parameters('type' => 'membership', 'proposed_system' => proposed_system.simple_name)
@@ -130,10 +130,10 @@ class OneClickController < ApplicationController
       end
     elsif params[:constitution_voting_system]
       proposed_system = VotingSystems.get(params[:constitution_voting_system])
-      current_system = Constitution.voting_system :constitution
+      current_system = co.constitution.voting_system :constitution
       
       if current_system != proposed_system
-        proposal = ChangeVotingSystemProposal.new(
+        proposal = co.change_voting_system_proposals.new(
           :title => "change constitution voting system to #{proposed_system.description}",
           :proposer_member_id => current_user.id,
           :parameters => ChangeVotingSystemProposal.serialize_parameters('type' => 'constitution', 'proposed_system' => proposed_system.simple_name)

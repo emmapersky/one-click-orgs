@@ -1,4 +1,6 @@
 class Proposal < ActiveRecord::Base
+  belongs_to :organisation
+  
   #TODO: should probably not be in a hook method?
   after_create :send_email
   
@@ -17,7 +19,7 @@ class Proposal < ActiveRecord::Base
   before_create :set_close_date
   private
   def set_close_date
-    self.close_date ||= Time.now.utc + Constitution.voting_period
+    self.close_date ||= Time.now.utc + organisation.constitution.voting_period
   end
   public
   
@@ -42,7 +44,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def member_count
-    Member.where(["created_at < ? AND active = ? AND inducted = ?", creation_date, true, true]).count
+    organisation.members.where(["created_at < ? AND active = ? AND inducted = ?", creation_date, true, true]).count
   end
   
   def abstained
@@ -69,7 +71,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def voting_system
-    Constitution.voting_system(:general)
+    organisation.constitution.voting_system(:general)
   end
     
   def passed?
@@ -88,7 +90,7 @@ class Proposal < ActiveRecord::Base
     save!
     
     if passed
-      decision = Decision.create!(:proposal_id=>self.id)
+      decision = self.create_decision
       decision.send_email
       
       params = self.parameters ? ActiveSupport::JSON.decode(self.parameters) : {}      
@@ -101,11 +103,11 @@ class Proposal < ActiveRecord::Base
   end
   
   def self.find_closeable_early_proposals
-    Proposal.currently_open.all.select { |p| p.voting_system.can_be_closed_early?(p) }
+    currently_open.all.select { |p| p.voting_system.can_be_closed_early?(p) }
   end
 
   def self.close_due_proposals
-   Proposal.where(["close_date < ? AND open = ?", Time.now.utc, true]).all.each { |p| p.close! }
+    where(["close_date < ? AND open = ?", Time.now.utc, true]).all.each { |p| p.close! }
   end
   
   def self.close_early_proposals
@@ -129,7 +131,7 @@ class Proposal < ActiveRecord::Base
   def self.send_email_for(proposal_id)
     proposal = Proposal.find(proposal_id)
     
-    Member.active.each do |m|
+    proposal.organisation.members.active.each do |m|
       ProposalMailer.notify_creation(m, proposal).deliver
     end
   end
