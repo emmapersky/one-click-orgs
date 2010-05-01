@@ -1,6 +1,4 @@
 class ResetPasswordController < ApplicationController
-  # include AsyncJobs
-  
   skip_before_filter :ensure_authenticated
   
   def index
