@@ -9,15 +9,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100328155642) do
+ActiveRecord::Schema.define(:version => 20100429205015) do
 
   create_table "clauses", :force => true do |t|
-    t.string   "name",          :limit => 50, :null => false
+    t.string   "name",            :limit => 50, :null => false
     t.datetime "started_at"
     t.datetime "ended_at"
     t.text     "text_value"
     t.integer  "integer_value"
-    t.integer  "boolean_value", :limit => 1
+    t.integer  "boolean_value",   :limit => 1
+    t.integer  "organisation_id"
   end
 
   create_table "decisions", :force => true do |t|
@@ -45,6 +46,13 @@ ActiveRecord::Schema.define(:version => 20100328155642) do
     t.string   "crypted_password", :limit => 50
     t.string   "salt",             :limit => 50
     t.boolean  "inducted",                       :default => false, :null => false
+    t.integer  "organisation_id"
+  end
+
+  create_table "organisations", :force => true do |t|
+    t.string   "subdomain"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "proposals", :force => true do |t|
@@ -57,6 +65,14 @@ ActiveRecord::Schema.define(:version => 20100328155642) do
     t.string   "parameters",         :limit => 10000
     t.string   "type",               :limit => 50
     t.integer  "proposer_member_id"
+    t.integer  "organisation_id"
+  end
+
+  create_table "settings", :force => true do |t|
+    t.string   "key"
+    t.string   "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "votes", :force => true do |t|

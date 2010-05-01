@@ -1,27 +1,41 @@
+def stub_setup!
+  Setting[:base_domain] = "oneclickorgs.com"
+end
+
 def default_user
   stub_constitution!
   stub_organisation!
     
-  @default_user = Member.where(:email => "krusty@clown.com").first || 
-    Member.create(:email => "krusty@clown.com",
-                 :name => "Krusty the clown",
-                 :password => "password",
-                 :password_confirmation => "password",
-                 :inducted => true) or raise "can't create user"
+  @default_user = @organisation.members.where(:email => "krusty@clown.com").first || 
+    @organisation.members.create(
+      :email => "krusty@clown.com",
+      :name => "Krusty the clown",
+      :password => "password",
+      :password_confirmation => "password",
+      :inducted => true) or raise "can't create user"
 end
 
 def stub_constitution!
-  Constitution.stub!(:voting_period).and_return(3 * 86400)
+  stub_organisation!
+  @organisation.clauses.set_integer(:voting_period, 3 * 86400)
 end
 
 def stub_voting_systems!
-  Constitution.stub!(:voting_system).and_return(VotingSystems.get(:RelativeMajority))
+  stub_constitution!
+  @organisation.clauses.set_text(:general_voting_system, 'RelativeMajority')
+  @organisation.clauses.set_text(:constitution_voting_system, 'RelativeMajority')
+  @organisation.clauses.set_text(:membership_voting_system, 'RelativeMajority')
 end
 
-def stub_organisation!
-  organisation_is_active
-  Organisation.stub!(:domain).and_return('http://test.com')
-  Organisation.stub!(:organisation_name).and_return('test')
+def stub_organisation!(active=true)
+  stub_setup!
+  @organisation ||= Organisation.make(:subdomain => 'test')
+  @organisation.clauses.set_text(:domain, 'test.oneclickorgs.com')
+  @organisation.clauses.set_text(:organisation_name, 'test')
+  
+  organisation_is_active if active
+  
+  Organisation.stub!(:find_by_host).and_return(@organisation)
 end
 
 def login
@@ -37,14 +51,17 @@ def passed_proposal(p, args={})
 end
 
 def organisation_is_pending
-  Clause.set_text('organisation_state', "pending")
+  stub_organisation!(false)
+  @organisation.clauses.set_text('organisation_state', "pending")
 end
 
 def organisation_is_active
-  Clause.set_text('organisation_state', "active")
+  stub_organisation!(false)
+  @organisation.clauses.set_text('organisation_state', "active")
 end
 
 def organisation_is_under_construction
-  clause = Clause.get_current('organisation_state')
+  stub_organisation!(false)
+  clause = @organisation.clauses.get_current('organisation_state')
   clause.destroy if clause
 end

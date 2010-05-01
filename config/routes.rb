@@ -78,5 +78,7 @@ OneClickOrgs::Application.routes.draw do |map|
   
   match '/welcome(/:action)' => 'welcome'
   
+  match '/setup(/:action)' => 'setup'
+  
   root :to => 'one_click#control_centre'
 end

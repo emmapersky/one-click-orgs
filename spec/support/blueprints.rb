@@ -40,3 +40,12 @@ Clause.blueprint do
   text_value 'consuming doughnuts'
   started_at {Time.now - 1.day}
 end
+
+Setting.blueprint do
+  key 'base_domain'
+  value 'oneclickorgs.com'
+end
+
+Organisation.blueprint do
+  subdomain 'test'
+end

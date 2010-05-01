@@ -1,11 +1,19 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
+  before_filter :ensure_set_up
   before_filter :ensure_authenticated
   before_filter :ensure_member_active
   before_filter :ensure_organisation_active
   before_filter :ensure_member_inducted
-   
+  
+  # Returns the organisation corresponding to the subdomain that the current
+  # request has been made on
+  def current_organisation
+    @current_organisation ||= Organisation.find_by_host(request.host)
+  end
+  alias :co :current_organisation
+  
   def date_format(d)
     d.to_s(:long)
   end
@@ -53,6 +61,12 @@ class ApplicationController < ActionController::Base
   end
   
   protected
+  
+  def ensure_set_up
+    unless OneClickOrgs::Setup.complete?
+      redirect_to(:controller => 'setup')
+    end
+  end
   
   def ensure_authenticated
     if user_logged_in?
