@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
   
   before_filter :ensure_set_up
+  before_filter :ensure_organisation_exists
   before_filter :ensure_authenticated
   before_filter :ensure_member_active
   before_filter :ensure_organisation_active
@@ -65,6 +66,12 @@ class ApplicationController < ActionController::Base
   def ensure_set_up
     unless OneClickOrgs::Setup.complete?
       redirect_to(:controller => 'setup')
+    end
+  end
+  
+  def ensure_organisation_exists
+    unless current_organisation
+      redirect_to(new_organisation_url(:host => Setting[:base_domain]))
     end
   end
   

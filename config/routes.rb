@@ -80,5 +80,7 @@ OneClickOrgs::Application.routes.draw do |map|
   
   match '/setup(/:action)' => 'setup'
   
+  resources :organisations
+  
   root :to => 'one_click#control_centre'
 end

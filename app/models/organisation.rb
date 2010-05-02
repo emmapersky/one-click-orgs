@@ -48,6 +48,10 @@ class Organisation < ActiveRecord::Base
     end
   end
   
+  def host
+    [subdomain, Setting[:base_domain]].join('.')
+  end
+  
   def has_founding_member?
     Member.count > 0
   end

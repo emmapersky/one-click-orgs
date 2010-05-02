@@ -1,5 +1,7 @@
+# TODO Overhaul this
+
 def stub_setup!
-  Setting[:base_domain] = "oneclickorgs.com"
+  Setting[:base_domain] ||= "oneclickorgs.com"
 end
 
 def default_user
@@ -27,15 +29,20 @@ def stub_voting_systems!
   @organisation.clauses.set_text(:membership_voting_system, 'RelativeMajority')
 end
 
-def stub_organisation!(active=true)
+def stub_organisation!(active=true, name='test', stub_host_lookup=true, new_organisation=false)
   stub_setup!
-  @organisation ||= Organisation.make(:subdomain => 'test')
-  @organisation.clauses.set_text(:domain, 'test.oneclickorgs.com')
-  @organisation.clauses.set_text(:organisation_name, 'test')
+  if new_organisation || !@organisation
+    @organisation = Organisation.make(:subdomain => name)
+    @organisation.clauses.set_text(:domain, "#{name}.oneclickorgs.com")
+    @organisation.clauses.set_text(:organisation_name, name)
   
-  organisation_is_active if active
+    organisation_is_active if active
   
-  Organisation.stub!(:find_by_host).and_return(@organisation)
+    if stub_host_lookup
+      Organisation.stub!(:find_by_host).and_return(@organisation)
+    end
+  end
+  @organisation
 end
 
 def login
@@ -51,17 +58,17 @@ def passed_proposal(p, args={})
 end
 
 def organisation_is_pending
-  stub_organisation!(false)
+  stub_organisation!(false) unless @organisation
   @organisation.clauses.set_text('organisation_state', "pending")
 end
 
 def organisation_is_active
-  stub_organisation!(false)
+  stub_organisation!(false) unless @organisation
   @organisation.clauses.set_text('organisation_state', "active")
 end
 
 def organisation_is_under_construction
-  stub_organisation!(false)
+  stub_organisation!(false) unless @organisation
   clause = @organisation.clauses.get_current('organisation_state')
   clause.destroy if clause
 end
