@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on
   def current_organisation
-    @current_organisation ||= Organisation.find_by_host(request.host)
+    @current_organisation ||= Organisation.find_by_host(request.host_with_port)
   end
   alias :co :current_organisation
   

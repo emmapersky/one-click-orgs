@@ -9,7 +9,7 @@ class SetupController < ApplicationController
   layout 'setup'
   
   def index
-    @base_domain = request.host
+    @base_domain = request.host_with_port
   end
   
   def create_base_domain
