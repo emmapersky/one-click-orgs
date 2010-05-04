@@ -1,0 +1,25 @@
+!!!
+%html
+  %head
+    %title
+      One Click Orgs Setup
+      
+    %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}            
+    = stylesheet_link_tag 'one_click'
+    = javascript_include_tag 'jquery', 'rails', 'application'
+    = csrf_meta_tag
+  %body
+    %div#doc
+      %div#hd
+        %h1.header One Click Orgs
+        
+      %div#bd
+        %div#notice
+          = flash[:notice]
+        %div#error
+          = flash[:error]
+          
+        = yield
+      %div.footer
+        = "One Click Orgs #{OneClickOrgs.version} - Running on Rails #{Rails.version}"
+    = get_satisfaction_widget

@@ -6,6 +6,8 @@ class SetupController < ApplicationController
   skip_before_filter :ensure_organisation_active
   skip_before_filter :ensure_member_inducted
   
+  layout 'setup'
+  
   def index
     @base_domain = request.host
   end
