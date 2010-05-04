@@ -26,15 +26,15 @@ class Organisation < ActiveRecord::Base
   end
   
   def organisation_name
-    Clause.get_text('organisation_name')
+    clauses.get_text('organisation_name')
   end
   
   def objectives
-    Clause.get_text('objectives')
+    clauses.get_text('objectives')
   end
   
   def assets
-    Clause.get_boolean('assets')
+    clauses.get_boolean('assets')
   end
   
   # Returns the base URL for this instance of OCO.
@@ -53,23 +53,23 @@ class Organisation < ActiveRecord::Base
   end
   
   def has_founding_member?
-    Member.count > 0
+    members.count > 0
   end
   
   def under_construction?
-    Clause.get_text('organisation_state').nil?
+    clauses.get_text('organisation_state').nil?
   end
 
   def pending?
-    Clause.get_text('organisation_state') == 'pending'
+    clauses.get_text('organisation_state') == 'pending'
   end
     
   def active?
-    Clause.get_text('organisation_state') == 'active'
+    clauses.get_text('organisation_state') == 'active'
   end
   
   def under_construction!
-    clause = Clause.get_current('organisation_state')
+    clause = clauses.get_current('organisation_state')
     clause && clause.destroy    
   end
   
