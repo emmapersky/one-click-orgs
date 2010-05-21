@@ -62,7 +62,7 @@ specs:
 - treetop: 
     version: 1.4.5
 - mail: 
-    version: 2.2.0
+    version: 2.2.1
 - text-hyphen: 
     version: 1.0.0
 - text-format: 
@@ -76,7 +76,7 @@ specs:
 - activeresource: 
     version: 3.0.0.beta3
 - bundler: 
-    version: 0.9.24
+    version: 0.9.25
 - faker: 
     version: 0.3.1
 - haml: 
@@ -88,7 +88,7 @@ specs:
 - nokogiri: 
     version: 1.4.1
 - thor: 
-    version: 0.13.4
+    version: 0.13.6
 - railties: 
     version: 3.0.0.beta3
 - rails: 
