@@ -1,5 +1,4 @@
 class Proposal < ActiveRecord::Base
-  #TODO: should probably not be in a hook method?
   after_create :send_email
   
   has_many :votes
@@ -123,15 +122,15 @@ class Proposal < ActiveRecord::Base
   scope :failed, lambda {where(["close_date < ? AND accepted = ?", Time.now.utc, false]).order('close_date DESC')}
   
   def send_email
-    Proposal.send_later(:send_email_for, self.id)
-  end
-  
-  def self.send_email_for(proposal_id)
-    proposal = Proposal.find(proposal_id)
-    
     Member.active.each do |m|
-      ProposalMailer.notify_creation(m, proposal).deliver
+      ProposalMailer.notify_creation(m, self).deliver
     end
+  end
+  handle_asynchronously :send_email
+  
+  # only to be backwards compatible with systems running older versions of delayed job
+  def self.send_email_for(proposal_id)
+    Proposal.find(proposal_id).send_email_without_send_later
   end
   
   def to_event
@@ -139,8 +138,3 @@ class Proposal < ActiveRecord::Base
   end
   
 end
-
-# Run the close proposal every 60 seconds
-# TODO Convert to new background job system
-# AsyncJobs.periodical Proposal, 60, :close_proposals
-
