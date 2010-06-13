@@ -11,6 +11,6 @@ describe "proposal_mailer/notify_creation.text.erb" do
   
   it "should not HTML-escape the proposal details" do
     render
-    response.should contain "We're running low & they're cheap."
+    rendered.should contain "We're running low & they're cheap."
   end
 end

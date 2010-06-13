@@ -26,7 +26,7 @@ gem "haml", "~>2.2.24"
 # end
 
 group :test do
-  gem "rspec-rails", ">=2.0.0.beta.8"
+  gem "rspec-rails", "2.0.0.beta.10"
   gem "machinist", ">=1.0.6"
   gem "faker", '>=0.3.1'
   gem "rcov", "~>0.9.8"
