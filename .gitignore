@@ -9,4 +9,5 @@ log/*
 spec/mailers/log
 tmp/**/*
 vendor/bundle/*
+vendor/gems/*
 doc/app
