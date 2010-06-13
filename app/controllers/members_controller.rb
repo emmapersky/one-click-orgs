@@ -2,7 +2,7 @@ class MembersController < ApplicationController
 
   respond_to :html
   
-  before_filter :require_membership_proposal_permission, :only => [:new, :edit, :create, :update, :destroy]
+  before_filter :require_membership_proposal_permission, :only => [:new, :create, :update, :destroy]
 
   def index
     @members = Member.active

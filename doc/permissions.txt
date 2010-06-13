@@ -22,13 +22,28 @@ particular member class the default is to _not_ grant access.)
 
 # TODO
 
+Here's the current ghetto version:
+
+mysql> INSERT INTO member_classes(name) VALUES("Director");
+mysql> INSERT INTO member_classes(name) VALUES("Member");
+
+$ ./script/rails console
+> directors = MemberClass.where(:name=>'Director').first
+> directors.set_permission(:constitution_proposal, true)
+> directors.set_permission(:membership_proposal, true)
+> directors.set_permission(:freeform_proposal, true)
+> members = MemberClass.where(:name=>'Member').first
+> members.set_permission(:constitution_proposal, false)
+> members.set_permission(:membership_proposal, true)
+> members.set_permission(:freeform_proposal, true)
+
  =======================
  = List of Permissions =
  =======================
 
-* DONE: constitution_proposal -- create proposals for any kind of constitutional change
-* :constitution_vote -- vote on such a proposal
-* DONE: :membership_proposal -- create proposals for adding or ejecting members, or changing their member class
-* :membership_vote -- vote on such a proposal
+* :constitution_proposal -- create proposals for any kind of constitutional change
+* TODO :constitution_vote -- vote on such a proposal
+* :membership_proposal -- create proposals for adding or ejecting members, or changing their member class
+* TODO :membership_vote -- vote on such a proposal
 * :freeform_proposal -- create freeform proposals
-* :freeform_vote -- vote on such a proposal
+* TODO :freeform_vote -- vote on such a proposal

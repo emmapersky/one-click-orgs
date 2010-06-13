@@ -2,6 +2,8 @@ class ProposalsController < ApplicationController
 
   respond_to :html
   
+  before_filter :require_freeform_proposal_permission, :only => [:create]
+  
   before_filter :require_constitutional_proposal_permission, :only => [
     :create_text_amendment, :create_assets_amendment, :create_voting_period_amendment,
     :create_voting_system_amendment]
@@ -158,6 +160,12 @@ class ProposalsController < ApplicationController
 
 private
 
+  def require_freeform_proposal_permission
+    if !current_user.has_permission(:freeform_proposal)
+      redirect_to(:back, :flash => {:error => "You do not have sufficient permissions to create such a proposal!"})
+    end
+  end
+  
   def require_constitutional_proposal_permission
     if !current_user.has_permission(:constitution_proposal)
       redirect_to(:back, :flash => {:error => "You do not have sufficient permissions to create such a proposal!"})
