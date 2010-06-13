@@ -1,33 +1,8 @@
 --- 
-dependencies: 
-  faker: 
-    group: 
-    - :test
-    version: ">= 0.3.1"
-  rails: 
-    group: 
-    - :default
-    version: = 3.0.0.beta3
-  haml: 
-    group: 
-    - :default
-    version: ~> 2.2.24
-  mysql: 
-    group: 
-    - :default
-    version: ">= 0"
-  machinist: 
-    group: 
-    - :test
-    version: ">= 1.0.6"
-  rspec-rails: 
-    group: 
-    - :test
-    version: = 2.0.0.beta.10
-  rcov: 
-    group: 
-    - :test
-    version: ~> 0.9.8
+hash: 2c8855bfc463ee7c0791a83e0b0e02733d615822
+sources: 
+- Rubygems: 
+    uri: http://rubygems.org
 specs: 
 - rake: 
     version: 0.8.7
@@ -50,7 +25,7 @@ specs:
 - rack: 
     version: 1.1.0
 - rack-mount: 
-    version: 0.6.3
+    version: 0.6.4
 - rack-test: 
     version: 0.5.4
 - actionpack: 
@@ -62,7 +37,7 @@ specs:
 - treetop: 
     version: 1.4.8
 - mail: 
-    version: 2.2.1
+    version: 2.2.4
 - text-hyphen: 
     version: 1.0.0
 - text-format: 
@@ -77,6 +52,10 @@ specs:
     version: 3.0.0.beta3
 - bundler: 
     version: 0.9.25
+- daemons: 
+    version: 1.0.10
+- delayed_job: 
+    version: 2.0.3
 - diff-lcs: 
     version: 1.1.2
 - faker: 
@@ -109,7 +88,36 @@ specs:
     version: 0.7.1
 - rspec-rails: 
     version: 2.0.0.beta.10
-hash: e80d1da1df11f815e7c7ec5fc9b4b35e9ccff817
-sources: 
-- Rubygems: 
-    uri: http://rubygems.org
+dependencies: 
+  rails: 
+    version: = 3.0.0.beta3
+    group: 
+    - :default
+  mysql: 
+    version: ">= 0"
+    group: 
+    - :default
+  haml: 
+    version: ~> 2.2.24
+    group: 
+    - :default
+  delayed_job: 
+    version: = 2.0.3
+    group: 
+    - :default
+  rspec-rails: 
+    version: = 2.0.0.beta.10
+    group: 
+    - :test
+  machinist: 
+    version: ">= 1.0.6"
+    group: 
+    - :test
+  faker: 
+    version: ">= 0.3.1"
+    group: 
+    - :test
+  rcov: 
+    version: ~> 0.9.8
+    group: 
+    - :test

@@ -19,6 +19,8 @@ gem "mysql"
 
 gem "haml", "~>2.2.24"
 
+gem "delayed_job", "2.0.3"
+
 ## Bundle gems used only in certain environments:
 # gem "rspec", :group => :test
 # group :test do

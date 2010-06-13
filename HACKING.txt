@@ -67,7 +67,10 @@ RUNNING
 
 2. (Optional) In another shell, start the job server (which sends emails and closes proposals):
 
-  $ bundle exec rake jobs:work
+  $ ./script/delayed_job run       # run in foreground
+  $ ./script/delayed_job start     # start as daemon (check log/delayed_job.log)
+  $ bundle exec rails jobs:work    # forground, from rake
+  $ bundle exec rails jobs:clear   # clear queue
 
 3. Visit http://localhost:3000/
 
