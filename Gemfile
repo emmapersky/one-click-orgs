@@ -18,6 +18,7 @@ gem "mysql"
 # gem "aws-s3", :require => "aws/s3"
 
 gem "haml", "~>2.2.24"
+gem "daemons", "~>1.0.10"
 
 ## Bundle gems used only in certain environments:
 # gem "rspec", :group => :test

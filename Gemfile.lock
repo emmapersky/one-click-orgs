@@ -8,14 +8,14 @@ dependencies:
     group: 
     - :default
     version: = 3.0.0.beta3
-  haml: 
-    group: 
-    - :default
-    version: ~> 2.2.24
   mysql: 
     group: 
     - :default
     version: ">= 0"
+  haml: 
+    group: 
+    - :default
+    version: ~> 2.2.24
   machinist: 
     group: 
     - :test
@@ -28,6 +28,10 @@ dependencies:
     group: 
     - :test
     version: ~> 0.9.8
+  daemons: 
+    group: 
+    - :default
+    version: ~> 1.0.10
 specs: 
 - rake: 
     version: 0.8.7
@@ -50,7 +54,7 @@ specs:
 - rack: 
     version: 1.1.0
 - rack-mount: 
-    version: 0.6.3
+    version: 0.6.4
 - rack-test: 
     version: 0.5.4
 - actionpack: 
@@ -62,7 +66,7 @@ specs:
 - treetop: 
     version: 1.4.8
 - mail: 
-    version: 2.2.1
+    version: 2.2.4
 - text-hyphen: 
     version: 1.0.0
 - text-format: 
@@ -77,6 +81,8 @@ specs:
     version: 3.0.0.beta3
 - bundler: 
     version: 0.9.25
+- daemons: 
+    version: 1.0.10
 - diff-lcs: 
     version: 1.1.2
 - faker: 
@@ -109,7 +115,7 @@ specs:
     version: 0.7.1
 - rspec-rails: 
     version: 2.0.0.beta.10
-hash: e80d1da1df11f815e7c7ec5fc9b4b35e9ccff817
+hash: 1f2d26e368b2df07793d66fd6d563f9847c818f4
 sources: 
 - Rubygems: 
     uri: http://rubygems.org
