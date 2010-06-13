@@ -9,7 +9,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100328155642) do
+ActiveRecord::Schema.define(:version => 20100613135756) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",          :limit => 50, :null => false
@@ -37,6 +37,11 @@ ActiveRecord::Schema.define(:version => 20100328155642) do
     t.datetime "updated_at"
   end
 
+  create_table "member_classes", :force => true do |t|
+    t.string "name",        :null => false
+    t.string "description"
+  end
+
   create_table "members", :force => true do |t|
     t.string   "email",            :limit => 50,                    :null => false
     t.string   "name",             :limit => 50
@@ -45,7 +50,14 @@ ActiveRecord::Schema.define(:version => 20100328155642) do
     t.string   "crypted_password", :limit => 50
     t.string   "salt",             :limit => 50
     t.boolean  "inducted",                       :default => false, :null => false
+    t.integer  "member_class_id"
   end
+
+  create_table "migration_info", :id => false, :force => true do |t|
+    t.string "migration_name"
+  end
+
+  add_index "migration_info", ["migration_name"], :name => "migration_name", :unique => true
 
   create_table "proposals", :force => true do |t|
     t.string   "title",                                              :null => false
@@ -57,6 +69,11 @@ ActiveRecord::Schema.define(:version => 20100328155642) do
     t.string   "parameters",         :limit => 10000
     t.string   "type",               :limit => 50
     t.integer  "proposer_member_id"
+  end
+
+  create_table "sessions", :primary_key => "session_id", :force => true do |t|
+    t.text     "data"
+    t.datetime "created_at"
   end
 
   create_table "votes", :force => true do |t|

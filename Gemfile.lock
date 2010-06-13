@@ -50,7 +50,7 @@ specs:
 - rack: 
     version: 1.1.0
 - rack-mount: 
-    version: 0.6.3
+    version: 0.6.4
 - rack-test: 
     version: 0.5.4
 - actionpack: 
@@ -62,7 +62,7 @@ specs:
 - treetop: 
     version: 1.4.8
 - mail: 
-    version: 2.2.1
+    version: 2.2.4
 - text-hyphen: 
     version: 1.0.0
 - text-format: 
@@ -76,7 +76,7 @@ specs:
 - activeresource: 
     version: 3.0.0.beta3
 - bundler: 
-    version: 0.9.25
+    version: 0.9.26
 - diff-lcs: 
     version: 1.1.2
 - faker: 

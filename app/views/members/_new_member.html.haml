@@ -1,12 +1,13 @@
-%h4
-  New Member
-%p
-  = form_for(:member, @new_member, :url => members_path) do |f|
-    %p
-      = f.label(:email, "Email Address")
-      = f.text_field :email
-    %p
-      = f.label(:name)
-      = f.text_field :name
-    %p
-      = submit_tag "Add Member", :id => 'submit'
+- if current_user.has_permission(:membership_proposal)
+  %h4
+    New Member
+  %p
+    = form_for(:member, @new_member, :url => members_path) do |f|
+      %p
+        = f.label(:email, "Email Address")
+        = f.text_field :email
+      %p
+        = f.label(:name)
+        = f.text_field :name
+      %p
+        = submit_tag "Add Member", :id => 'submit'

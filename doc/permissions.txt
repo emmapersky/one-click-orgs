@@ -1,0 +1,34 @@
+The OCO permissions system allows setting up membership classes, and to define
+the level of access a membership class has to the system.
+
+Each member class is associated with a list of permission flags which turn
+individual features on or off. These are stored as Clauses in the constitution,
+which means membership class permission changes are made in the form of a
+change to the constitution.
+
+(Implementation detail: permissions are stored as boolean flags in the 
+"clauses" database table; in the absence of such a permission entry for a 
+particular member class the default is to _not_ grant access.)
+
+ ==============================
+ = Setting up an Organisation =
+ ==============================
+
+# TODO
+
+ =============================
+ = Adding new Member Classes =
+ =============================
+
+# TODO
+
+ =======================
+ = List of Permissions =
+ =======================
+
+* DONE: constitution_proposal -- create proposals for any kind of constitutional change
+* :constitution_vote -- vote on such a proposal
+* DONE: :membership_proposal -- create proposals for adding or ejecting members, or changing their member class
+* :membership_vote -- vote on such a proposal
+* :freeform_proposal -- create freeform proposals
+* :freeform_vote -- vote on such a proposal

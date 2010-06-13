@@ -65,7 +65,7 @@ OneClickOrgs::Application.routes.draw do |map|
   
   resources :decisions
   resources :proposals
-  
+  match '/proposals(/:action)' => 'proposals'
   resources :members
   
   match '/one_click(/:action)' => 'one_click'

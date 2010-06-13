@@ -3,6 +3,7 @@ require 'digest/sha1'
 class Member < ActiveRecord::Base
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
+  belongs_to :member_class
 
   scope :active, where(:active => true, :inducted => true)
   scope :pending, where(:inducted => false)
@@ -92,6 +93,10 @@ class Member < ActiveRecord::Base
 
   def to_event
     {:timestamp => self.created_at, :object => self, :kind => :new_member}
+  end
+  
+  def has_permission(type)
+    member_class.has_permission(type)
   end
 end
 

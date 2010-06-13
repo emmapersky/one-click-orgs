@@ -1,5 +1,8 @@
 class MembersController < ApplicationController
+
   respond_to :html
+  
+  before_filter :require_membership_proposal_permission, :only => [:new, :edit, :create, :update, :destroy]
 
   def index
     @members = Member.active
@@ -72,6 +75,14 @@ class MembersController < ApplicationController
       redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Ejection proposal successfully created")
     else
       redirect member_path(@member), :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
+    end
+  end
+
+private
+
+  def require_membership_proposal_permission
+    if !current_user.has_permission(:membership_proposal)
+      redirect_to(:back, :flash => {:error => "You do not have sufficient permissions to create such a proposal!"})
     end
   end
 
