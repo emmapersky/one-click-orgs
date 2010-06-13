@@ -27,7 +27,7 @@ dependencies:
   rspec-rails: 
     group: 
     - :test
-    version: = 2.0.0.beta.10
+    version: = 2.0.0.beta.11
   rcov: 
     group: 
     - :test
@@ -104,18 +104,18 @@ specs:
 - rcov: 
     version: 0.9.8
 - rspec-core: 
-    version: 2.0.0.beta.10
+    version: 2.0.0.beta.11
 - rspec-expectations: 
-    version: 2.0.0.beta.10
+    version: 2.0.0.beta.11
 - rspec-mocks: 
-    version: 2.0.0.beta.10
+    version: 2.0.0.beta.11
 - rspec: 
-    version: 2.0.0.beta.10
+    version: 2.0.0.beta.11
 - webrat: 
     version: 0.7.1
 - rspec-rails: 
-    version: 2.0.0.beta.10
-hash: 57f43eadf2d029db6e5cb0211a388b1d434520e8
+    version: 2.0.0.beta.11
+hash: a76ecc645e49e2b8f487621b3a4b1c5405bd76a6
 sources: 
 - Rubygems: 
     uri: http://rubygems.org
