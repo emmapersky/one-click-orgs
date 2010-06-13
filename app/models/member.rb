@@ -78,14 +78,15 @@ class Member < ActiveRecord::Base
   end
 
   def send_welcome
-    Member.send_later(:send_new_member_email, self.id, self.password)
+    MembersMailer.welcome_new_member(self, self.password).deliver
   end
+  handle_asynchronously :send_welcome
 
+  # only to be backwards compatible with systems running older versions of delayed job
   def self.send_new_member_email(member_id, password)
-    member = Member.find(member_id)
-    MembersMailer.welcome_new_member(member, password).deliver
+    Member.find(member_id).send_welcome_without_send_later
   end
-
+    
   def eject!
     self.active = false
     save

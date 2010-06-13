@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Proposal do
   
   before(:each) do
+    Delayed::Job.delete_all 
+        
     stub_constitution!  
     stub_organisation!
     
@@ -40,21 +42,25 @@ describe Proposal do
   
   it "should send out an email to each member after a Proposal has been made" do
     Member.count.should >0
-    
-    Proposal.should_receive(:send_later).with(:send_email_for, anything)
-    
-    p = Proposal.make(:proposer => @member)
+    lambda do
+      Proposal.make(:proposer => @member)
+    end.should change { Delayed::Job.count }.by(1)
+
+    job = Delayed::Job.first
+    job.payload_object.class.should   == Delayed::PerformableMethod
+    job.payload_object.method.should  == :send_email_without_send_later
+    job.payload_object.args.should    == []
   end
   
   # FIXME Decision internals should be in the Decision spec, not here
   it "should send out an email to each member after a Decision has been made" do
      Member.count.should >0
-     
-     Decision.should_receive(:send_later).with(:send_email_for, anything)
-     
-     p = Proposal.make(:proposer => @member)
-     p.stub!(:passed?).and_return(true)
-     p.close!
+
+     lambda do
+       p = Proposal.make(:proposer => @member)
+       p.stub!(:passed?).and_return(true)
+       p.close!
+     end.should change { Delayed::Job.count }.by(2) #Decision + proposal
   end
   
   describe "to_event" do

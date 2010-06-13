@@ -20,6 +20,10 @@ dependencies:
     group: 
     - :test
     version: ">= 1.0.6"
+  delayed_job: 
+    group: 
+    - :default
+    version: = 2.0.3
   rspec-rails: 
     group: 
     - :test
@@ -28,6 +32,10 @@ dependencies:
     group: 
     - :test
     version: ~> 0.9.8
+  daemons: 
+    group: 
+    - :default
+    version: ~> 1.0.10
 specs: 
 - rake: 
     version: 0.8.7
@@ -77,6 +85,10 @@ specs:
     version: 3.0.0.beta3
 - bundler: 
     version: 0.9.26
+- daemons: 
+    version: 1.0.10
+- delayed_job: 
+    version: 2.0.3
 - diff-lcs: 
     version: 1.1.2
 - faker: 
@@ -109,7 +121,7 @@ specs:
     version: 0.7.1
 - rspec-rails: 
     version: 2.0.0.beta.10
-hash: e80d1da1df11f815e7c7ec5fc9b4b35e9ccff817
+hash: f4c305b09d4ea14142a800c9b9a56b33f8844d9c
 sources: 
 - Rubygems: 
     uri: http://rubygems.org

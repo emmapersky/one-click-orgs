@@ -35,7 +35,7 @@ class ProposalsController < ApplicationController
   
   def create_text_amendment
     proposal = ChangeTextProposal.new(
-      :title => "Change #{params[:name]} to '#{params[:value]}'",
+      :title => "Change #{params[:name].humanize.downcase} to '#{params[:value]}'",
       :proposer_member_id => current_user.id,
       :parameters => ChangeTextProposal.serialize_parameters(
         'name' => params[:name],

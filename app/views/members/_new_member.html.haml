@@ -2,7 +2,7 @@
   %h4
     New Member
   %p
-    = form_for(:member, @new_member, :url => members_path) do |f|
+    = form_for(@new_member, :as => :member, :url => members_path) do |f|
       %p
         = f.label(:email, "Email Address")
         = f.text_field :email
