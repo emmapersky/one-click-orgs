@@ -29,9 +29,13 @@
   %p
     Number of votes for/against:
     = render 'proposals/vote_count', :proposal => @proposal
-  %p
-    Your vote:
-    = render 'vote', :proposal => @proposal
+  - if current_user.has_permission(:vote)
+    %p
+      Your vote:
+      = render 'vote', :proposal => @proposal
+  - else
+    %p
+      You cannot vote on this proposal.
 - else
   %p
     Voting on this proposal ended

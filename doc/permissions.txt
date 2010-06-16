@@ -35,18 +35,21 @@ $ ./script/rails console
 > directors.set_permission(:constitution_proposal, true)
 > directors.set_permission(:membership_proposal, true)
 > directors.set_permission(:freeform_proposal, true)
+> directors.set_permission(:vote, true)
 > members = MemberClass.find_or_create_by_name('Member')
 > members.set_permission(:constitution_proposal, false)
 > members.set_permission(:membership_proposal, true)
 > members.set_permission(:freeform_proposal, true)
+> members.set_permission(:vote, true)
 
  =======================
  = List of Permissions =
  =======================
 
 * :constitution_proposal -- create proposals for any kind of constitutional change
-* TODO :constitution_vote -- vote on such a proposal
 * :membership_proposal -- create proposals for adding or ejecting members, or changing their member class
-* TODO :membership_vote -- vote on such a proposal
 * :freeform_proposal -- create freeform proposals
+* :vote -- voting on proposals: constitution change, membership change, freeform proposals
+* TODO :constitution_vote -- vote on such a proposal
+* TODO :membership_vote -- vote on such a proposal
 * TODO :freeform_vote -- vote on such a proposal
