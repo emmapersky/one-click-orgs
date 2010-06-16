@@ -10,6 +10,12 @@ change to the constitution.
 "clauses" database table; in the absence of such a permission entry for a 
 particular member class the default is to _not_ grant access.)
 
+ ============================
+ = The Membership Lifecycle =
+ ============================
+
+# TODO
+
  ==============================
  = Setting up an Organisation =
  ==============================
@@ -24,15 +30,12 @@ particular member class the default is to _not_ grant access.)
 
 Here's the current ghetto version:
 
-mysql> INSERT INTO member_classes(name) VALUES("Director");
-mysql> INSERT INTO member_classes(name) VALUES("Member");
-
 $ ./script/rails console
-> directors = MemberClass.where(:name=>'Director').first
+> directors = MemberClass.find_or_create_by_name('Director')
 > directors.set_permission(:constitution_proposal, true)
 > directors.set_permission(:membership_proposal, true)
 > directors.set_permission(:freeform_proposal, true)
-> members = MemberClass.where(:name=>'Member').first
+> members = MemberClass.find_or_create_by_name('Member')
 > members.set_permission(:constitution_proposal, false)
 > members.set_permission(:membership_proposal, true)
 > members.set_permission(:freeform_proposal, true)
