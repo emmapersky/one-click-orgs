@@ -19,12 +19,6 @@ http://github.com/emmapersky/one-click-orgs/issues/62
 
 # TODO
 
- =============================
- = Adding new Member Classes =
- =============================
-
-# TODO
-
 We can pre-populate the system with a set of classes, e.g. "Director" and 
 "Member", along with instructions on how to customise them.
 
@@ -45,6 +39,12 @@ $ ./script/rails console
 > members.set_permission(:freeform_proposal, true)
 > members.set_permission(:vote, true)
 
+ =============================
+ = Adding new Member Classes =
+ =============================
+
+# TODO
+
  ============================
  = The Membership Lifecycle =
  ============================
@@ -60,32 +60,28 @@ There are a limited number of ways in which a member gets added:
 * DONE: list of founding members during induction (this may get removed later)
 ** TODO: validate form input
 
-Members can only change their class via proposal.
-* new proposal type: change membership class
-** UI: members/show -> add form here
-** model: new change_member_class_poposal class
-** ...I think that's it.
--> easy
+DONE: Members can only change their class via proposal.
+** TODO: validate form input (the comment)
 
  ================================
  = The Member Classes Lifecycle =
  ================================
 
-Member classes can get added via a proposal.
+TODO: Member classes can get added via a proposal.
 * new proposal type: add member class
 ** UI: add Member Classes section at one_click/constitution -> new member class form (with a list of permissions)
 ** model: new add_member_class_proposal class
 ** ...I think that's it.
 -> easy
 
-Member classes can get modified via a proposal.
+TODO: Member classes can get modified via a proposal.
 * new proposal type: modify member class
 ** UI: add Member Classes section at one_click/constitution -> modify member class form (with a list of permissions)
 ** model: new modify_member_class_proposal class
 ** ...I think that's it.
 -> easy
 
-Member classes can get deleted via a proposal.
+TODO: Member classes can get deleted via a proposal.
 * new proposal type: delete member class
 ** UI: add Member Classes section at one_click/constitution -> delete member class form (with the name of the member class that users get migrated to)
 ** model: new delete_member_class_proposal class
@@ -96,10 +92,13 @@ Member classes can get deleted via a proposal.
  = List of Permissions =
  =======================
 
+Currently we can manage access to several kinds of proposals:
 * :constitution_proposal -- create proposals for any kind of constitutional change
 * :membership_proposal -- create proposals for adding or ejecting members, or changing their member class
 * :freeform_proposal -- create freeform proposals
+
+The permission to vote on proposals is not yet broken down by subtypes:
 * :vote -- voting on proposals: constitution change, membership change, freeform proposals
-* TODO :constitution_vote -- vote on such a proposal
-* TODO :membership_vote -- vote on such a proposal
-* TODO :freeform_vote -- vote on such a proposal
+* TODO :constitution_vote -- vote on a constitutional proposal
+* TODO :membership_vote -- vote on a membership proposal
+* TODO :freeform_vote -- vote on a freeform proposal

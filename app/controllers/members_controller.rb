@@ -2,7 +2,7 @@ class MembersController < ApplicationController
 
   respond_to :html
   
-  before_filter :require_membership_proposal_permission, :only => [:new, :create, :update, :destroy]
+  before_filter :require_membership_proposal_permission, :only => [:new, :create, :update, :destroy, :change_class]
 
   def index
     @members = Member.active
@@ -75,6 +75,27 @@ class MembersController < ApplicationController
       redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Ejection proposal successfully created")
     else
       redirect member_path(@member), :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
+    end
+  end
+  
+  def change_class
+    @member = Member.find(params[:id])
+    @new_member_class = MemberClass.find(params[:member][:member_class_id])
+    
+    title = "Change member class of #{@member.name} from #{@member.member_class.name} to #{@new_member_class.name}"
+    proposal = ChangeMemberClassProposal.new(
+      :title => title,
+      :proposer_member_id => current_user.id,
+      :description => params[:description],
+      :parameters => ChangeMemberClassProposal.serialize_parameters(
+        'id' => @member.id, 
+        'member_class_id' => @new_member_class.id)
+    )
+    
+    if proposal.save
+      redirect_to(:back, :notice => "Membership class proposal successfully created")
+    else
+      redirect_to(:back, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
     end
   end
 
