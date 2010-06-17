@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(:version => 20100731171543) do
     t.integer  "active",           :limit => 1,  :default => 1
     t.string   "crypted_password", :limit => 50
     t.string   "salt",             :limit => 50
-    t.datetime "inducted_at"
     t.integer  "member_class_id"
+    t.datetime "inducted_at"
   end
 
   create_table "proposals", :force => true do |t|
@@ -64,11 +64,6 @@ ActiveRecord::Schema.define(:version => 20100731171543) do
     t.string   "parameters",         :limit => 10000
     t.string   "type",               :limit => 50
     t.integer  "proposer_member_id"
-  end
-
-  create_table "sessions", :primary_key => "session_id", :force => true do |t|
-    t.text     "data"
-    t.datetime "created_at"
   end
 
   create_table "votes", :force => true do |t|
