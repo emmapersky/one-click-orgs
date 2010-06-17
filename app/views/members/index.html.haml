@@ -1,3 +1,4 @@
+<<<<<<< HEAD:app/views/members/index.html.haml
 %h2
   Existing Members
 %table.members
@@ -28,3 +29,5 @@
       %tr
         %td
           = link_to "#{member.name}", member_path(member)
+
+= render :partial => 'shared/propose_new_member_form'

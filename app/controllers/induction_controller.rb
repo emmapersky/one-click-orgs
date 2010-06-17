@@ -1,6 +1,6 @@
 class InductionController < ApplicationController
   before_filter :assign_organisation
-  skip_before_filter :ensure_organisation_active
+  #skip_before_filter :ensure_organisation_active
   before_filter :check_active_organisation
   
   before_filter :ensure_authenticated, :except => [:founder, :create_founder]

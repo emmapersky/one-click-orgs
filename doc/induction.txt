@@ -1,0 +1,48 @@
+2010-08-21 14:34:53
+
+http://github.com/emmapersky/one-click-orgs/issues#issue/118 "Update induction process to use interface closer to core app"
+
+A new organisation is in a "pending" state until the founder marks it as "complete". i
+In this state:
+- the founder can modify the organisation/consitution without making proposals
+- the founder can add new founding members without making proposals
+- there is a prominent message that highlights this, and a button to finalise
+- founding members can log in and view the consitution, but cannot make changes
+
+Once the founder marks the organisation as "complete":
+- Changes now require a proposal
+- Members have full access to the system
+
+http://github.com/emmapersky/one-click-orgs/issues/#issue/58 "Multi-org templating: allow the one codebase to support multiple types of organisation"
+
+tbd. 
+
+(For now let's do a quick implementation of #118 and use this to highlight more
+detailed requirements for #58.)
+
+
+ =====================
+ = Induction Process =
+ =====================
+
+Member class: "founder"
+Founder has all possible perms
+Founder has new perm: "make changes without proposal"
+Founder has new perm: "create proposal to found org"
+
+Member class: "founding member"
+Founding member has only one, new perm: "vote on 'found org' proposal"
+
+new banner: "pending org" message, and "found org now" button
+-> Confirmation dialogue
+- create 'found org' proposal
+- migrate founder to 'founding member' class' to prevent org changes
+
+when 'found org' proposal failed:
+- founding members can log in, view the constitution, will see a 'founding vote failed' message
+
+when 'found org' proposal succeeded:
+- all founding members who voted 'yes' or who abstained get migrated to full 'member' status
+- all other founding members receive an email 'sorry that you don't want to be a part of this'
+  - do we need/want to disable these accounts?
+

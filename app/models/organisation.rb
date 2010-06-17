@@ -88,11 +88,26 @@ class Organisation < ActiveRecord::Base
   end
   
   def create_default_member_classes
-    # Set up a simple organisation: all members are equal
     members = member_classes.find_or_create_by_name('Member')
     members.set_permission(:constitution_proposal, true)
     members.set_permission(:membership_proposal, true)
     members.set_permission(:freeform_proposal, true)
     members.set_permission(:vote, true)
+    
+    founder = member_classes.find_or_create_by_name('Founder')
+    founder.set_permission(:direct_edit, true)
+    founder.set_permission(:constitution_proposal, false)
+    founder.set_permission(:membership_proposal, false)
+    founder.set_permission(:freeform_proposal, false)
+    founder.set_permission(:found_organisation_proposal, true)
+    founder.set_permission(:vote, true)
+    
+    founding_member = member_classes.find_or_create_by_name('Founding Member')
+    founding_member.set_permission(:direct_edit, false)
+    founding_member.set_permission(:constitution_proposal, false)
+    founding_member.set_permission(:membership_proposal, false)
+    founding_member.set_permission(:freeform_proposal, false)
+    founding_member.set_permission(:found_organisation_proposal, false)
+    founding_member.set_permission(:vote, true)
   end
 end

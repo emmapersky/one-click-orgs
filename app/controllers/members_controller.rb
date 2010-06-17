@@ -5,8 +5,10 @@ class MembersController < ApplicationController
   respond_to :html
   
   before_filter :require_membership_proposal_permission, :only => [:new, :create, :update, :destroy, :change_class]
+  before_filter :require_direct_edit_permission, :only => [:create_founding_member]
 
   def index
+    @organisation = co
     @members = co.members.active
     @pending_members = co.members.pending
     @new_member = co.members.new
@@ -58,7 +60,14 @@ class MembersController < ApplicationController
       redirect_to root_path, :flash => {:error => "Error creating proposal: #{proposal.errors.full_messages.to_sentence}"}      
     end
   end
-
+  
+  def create_founding_member
+    member = params[:member]
+    member[:member_class_id] = MemberClass.find_by_name('Founding Member').id.to_s
+    # raise member.to_json
+    co.members.create_member(member, true)
+    redirect_to members_path, :notice => "Added a new founding member."
+  end
 
   def update
     id, member = params[:id], params[:member]
@@ -112,6 +121,13 @@ class MembersController < ApplicationController
   end
 
 private
+
+  def require_direct_edit_permission
+    if !current_user.has_permission(:direct_edit)
+      flash[:error] = "You do not have sufficient permissions to make changes!"
+      redirect_back_or_default
+    end
+  end
 
   def require_membership_proposal_permission
     if !current_user.has_permission(:membership_proposal)

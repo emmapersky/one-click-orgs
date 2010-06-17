@@ -1,22 +1,45 @@
 - if current_user.has_permission(:membership_proposal)
-  %h3
-    Propose a new member
-  %p
-    = form_for(@new_member, :as => :member, :url => members_path) do |f|
-      %p
-        = f.label(:email, "Email Address")
-        = f.text_field :email
-      %p
-        = f.label(:first_name)
-        = f.text_field :first_name
-      %p
-        = f.label(:last_name)
-        = f.text_field :last_name
-      - if co.member_classes.count == 1
-        = f.hidden_field :member_class_id
-      - else
+  - if @organisation.pending?
+    %h3
+      Invite a founding member
+    %p
+      = form_for(@new_member, :as => :member, :url => { :controller => :members, :action => :create_founding_member }) do |f|
         %p
-          = f.label(:class)
-          = f.collection_select(:member_class_id, co.member_classes.all, :id, :name)
-      %p
-        = submit_tag "Invite member", :id => 'submit'
+          = f.label(:email, "Email Address")
+          = f.text_field :email
+        %p
+          = f.label(:first_name)
+          = f.text_field :first_name
+        %p
+          = f.label(:last_name)
+          = f.text_field :last_name
+        - if co.member_classes.count == 1
+          = f.hidden_field :member_class_id
+        - else
+          %p
+            = f.label(:class)
+            = f.collection_select(:member_class_id, co.member_classes.all, :id, :name)
+        %p
+          = submit_tag "Invite member", :id => 'submit'
+- else
+    %h3
+      Propose a new member
+    %p
+      = form_for(@new_member, :as => :member, :url => members_path) do |f|
+        %p
+          = f.label(:email, "Email Address")
+          = f.text_field :email
+        %p
+          = f.label(:first_name)
+          = f.text_field :first_name
+        %p
+          = f.label(:last_name)
+          = f.text_field :last_name
+        - if co.member_classes.count == 1
+          = f.hidden_field :member_class_id
+        - else
+          %p
+            = f.label(:class)
+            = f.collection_select(:member_class_id, co.member_classes.all, :id, :name)
+        %p
+          = submit_tag "Invite member", :id => 'submit'
