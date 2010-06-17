@@ -79,6 +79,7 @@ class InductionController < ApplicationController
         end
         member.name = member_params[:name]
         member.email = member_params[:email]
+        member.member_class = MemberClass.find(member_params[:member_class_id])
         member.save!
       elsif !member_params[:id].blank?
         # We get here if the name and email fields have been cleared

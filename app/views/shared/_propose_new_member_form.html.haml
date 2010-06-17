@@ -10,4 +10,7 @@
         = f.label(:name)
         = f.text_field :name
       %p
+        = f.label(:class)
+        = collection_select(:member, :member_class_id, MemberClass.all, :id, :name)
+      %p
         = submit_tag "Add Member", :id => 'submit'

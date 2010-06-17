@@ -10,11 +10,8 @@ change to the constitution.
 "clauses" database table; in the absence of such a permission entry for a 
 particular member class the default is to _not_ grant access.)
 
- ============================
- = The Membership Lifecycle =
- ============================
-
-# TODO
+Progress for this work is being tracked at:
+http://github.com/emmapersky/one-click-orgs/issues/62
 
  ==============================
  = Setting up an Organisation =
@@ -27,6 +24,12 @@ particular member class the default is to _not_ grant access.)
  =============================
 
 # TODO
+
+We can pre-populate the system with a set of classes, e.g. "Director" and 
+"Member", along with instructions on how to customise them.
+
+At the moment this still needs to be done manually after the DB schema has been
+set up, but before the induction process.
 
 Here's the current ghetto version:
 
@@ -41,6 +44,53 @@ $ ./script/rails console
 > members.set_permission(:membership_proposal, true)
 > members.set_permission(:freeform_proposal, true)
 > members.set_permission(:vote, true)
+
+ ============================
+ = The Membership Lifecycle =
+ ============================
+
+There are a limited number of ways in which a member gets added:
+
+* DONE: as the founding member who sets up the organisation
+** TODO: validate form input
+
+* DONE: an existing member creates a "New Member" proposal, this passes
+** TODO: validate form input (atm empty values still result in a proposal)
+
+* DONE: list of founding members during induction (this may get removed later)
+** TODO: validate form input
+
+Members can only change their class via proposal.
+* new proposal type: change membership class
+** UI: members/show -> add form here
+** model: new change_member_class_poposal class
+** ...I think that's it.
+-> easy
+
+ ================================
+ = The Member Classes Lifecycle =
+ ================================
+
+Member classes can get added via a proposal.
+* new proposal type: add member class
+** UI: add Member Classes section at one_click/constitution -> new member class form (with a list of permissions)
+** model: new add_member_class_proposal class
+** ...I think that's it.
+-> easy
+
+Member classes can get modified via a proposal.
+* new proposal type: modify member class
+** UI: add Member Classes section at one_click/constitution -> modify member class form (with a list of permissions)
+** model: new modify_member_class_proposal class
+** ...I think that's it.
+-> easy
+
+Member classes can get deleted via a proposal.
+* new proposal type: delete member class
+** UI: add Member Classes section at one_click/constitution -> delete member class form (with the name of the member class that users get migrated to)
+** model: new delete_member_class_proposal class
+** ...I think that's it.
+-> easy
 
  =======================
  = List of Permissions =
