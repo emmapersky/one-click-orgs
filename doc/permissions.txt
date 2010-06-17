@@ -35,7 +35,7 @@ $ ./script/rails console
 > directors.set_permission(:vote, true)
 > members = MemberClass.find_or_create_by_name('Member')
 > members.set_permission(:constitution_proposal, false)
-> members.set_permission(:membership_proposal, true)
+> members.set_permission(:membership_proposal, false)
 > members.set_permission(:freeform_proposal, true)
 > members.set_permission(:vote, true)
 
