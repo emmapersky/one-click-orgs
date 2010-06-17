@@ -17,15 +17,14 @@ http://github.com/emmapersky/one-click-orgs/issues/62
  = Setting up an Organisation =
  ==============================
 
-# TODO
-
 We can pre-populate the system with a set of classes, e.g. "Director" and 
 "Member", along with instructions on how to customise them.
 
-At the moment this still needs to be done manually after the DB schema has been
-set up, but before the induction process.
+Setting up the database via 'rake db:setup' will set up a simple organisation 
+where all members are equal. (Check ./db/seeds.rb if you want to change this.)
 
-Here's the current ghetto version:
+You can customise your organisation by changing that script, or via the Rails 
+console:
 
 $ ./script/rails console
 > directors = MemberClass.find_or_create_by_name('Director')
@@ -39,9 +38,9 @@ $ ./script/rails console
 > members.set_permission(:freeform_proposal, true)
 > members.set_permission(:vote, true)
 
- =============================
- = Adding new Member Classes =
- =============================
+ ============================
+ = Migrating Member Classes =
+ ============================
 
 # TODO
 
