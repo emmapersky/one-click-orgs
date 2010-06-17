@@ -5,8 +5,8 @@ class Member < ActiveRecord::Base
   has_many :proposals, :foreign_key => 'proposer_member_id'
   belongs_to :member_class
 
-  scope :active, where(:active => true, :inducted => true)
-  scope :pending, where(:inducted => false)
+  scope :active, where(["active = ? AND inducted_at IS NOT NULL", true])
+  scope :pending, where("inducted_at IS NULL")
 
   # AUTHENTICATION
 
@@ -53,7 +53,9 @@ class Member < ActiveRecord::Base
     # FIXME why not just pass the proposal in?
     proposal = Proposal.find(proposal_id)
     raise VoteError, "proposal with id #{proposal_id} not found" unless proposal
-    raise VoteError, "Can not vote on proposals created before member created" if proposal.creation_date < self.created_at
+    if !self.inducted? || proposal.creation_date < self.inducted_at
+      raise VoteError, "Can not vote on proposals created before member inducted"
+    end
 
     case action
     when :for
@@ -92,8 +94,14 @@ class Member < ActiveRecord::Base
     save
   end
 
+  def inducted?
+    !inducted_at.nil?
+  end
+
   def to_event
-    {:timestamp => self.created_at, :object => self, :kind => :new_member}
+    if self.inducted?
+      {:timestamp => self.inducted_at, :object => self, :kind => :new_member}
+    end
   end
   
   def has_permission(type)

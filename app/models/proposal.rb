@@ -44,7 +44,7 @@ class Proposal < ActiveRecord::Base
   def member_count
     # TODO: find out how to do the following in one query
     count = 0
-    Member.where(["created_at < ? AND active = ? AND inducted = ?", creation_date, true, true]).each do |m|
+    Member.where(["created_at < ? AND active = ? AND inducted_at IS NOT NULL", creation_date, true]).each do |m|
       count += 1 if m.has_permission(:vote)
     end
     count
