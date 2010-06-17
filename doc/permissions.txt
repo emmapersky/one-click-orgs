@@ -20,11 +20,9 @@ http://github.com/emmapersky/one-click-orgs/issues/62
 We can pre-populate the system with a set of classes, e.g. "Director" and 
 "Member", along with instructions on how to customise them.
 
-Setting up the database via 'rake db:setup' will set up a simple organisation 
-where all members are equal. (Check ./db/seeds.rb if you want to change this.)
-
-You can customise your organisation by changing that script, or via the Rails 
-console:
+You can customise your organisation by editing the 
+create_default_member_classes function in the Organisation model, or via the 
+Rails console:
 
 $ ./script/rails console
 > directors = MemberClass.find_or_create_by_name('Director')
@@ -37,6 +35,32 @@ $ ./script/rails console
 > members.set_permission(:membership_proposal, false)
 > members.set_permission(:freeform_proposal, true)
 > members.set_permission(:vote, true)
+
+ ======================
+ = Adding Permissions =
+ ======================
+
+In all places where member classes get created: add your new permission
+flag to all member classes and set it to an appropriate state.
+
+Organisation model:
+- in def create_default_member_classes add:
+  members.set_permission(:my_new_permission, true)
+
+In controllers:
+- where applicable add:
+  before_filter :require_my_new_permission
+- write a private def require_my_new_permission
+
+In models:
+- where applicable add checks: 
+  if current_member.has_permission(:my_new_permission)
+
+In views:
+- where applicable add checks: 
+  - if current_user.has_permission(:my_new_permission)
+
+Done.
 
  ============================
  = Migrating Member Classes =
