@@ -3,9 +3,11 @@ require 'spec_helper'
 module ProposalsSpecHelper
   def a_proposal_exists
     Proposal.destroy_all
-    login
-    post(proposals_path, {:proposal => {:id => nil, :proposer_member_id => Member.first.id, :title => 'proposal'}})
-    @proposal = Proposal.first
+    user = login
+    
+    set_permission(user, :freeform_proposal, true)
+    post(proposals_path, {:proposal => {:id => nil, :proposer_member_id => user.id, :title => 'proposal'}})
+    @proposal = Proposal.first or raise "can't create a proposal"
   end
 end
 
@@ -15,13 +17,12 @@ describe "everything" do
   before(:each) do 
     stub_organisation!
     stub_constitution!
-    default_user
-    set_permission(default_user, :vote, true)
-    login
+    @user = login
   end
   
   describe "/proposals/1, given a proposal exists" do
     before(:each) do
+      set_permission(@user, :vote, true)
       @member_two = Member.make
       set_permission(@member_two, :vote, true)
       @member_three = Member.make
@@ -33,7 +34,7 @@ describe "everything" do
     describe "GET" do
       before(:each) do
         @proposal = Proposal.first
-        default_user.cast_vote(:for, @proposal.id)
+        @user.cast_vote(:for, @proposal.id)
         @member_two.cast_vote(:for, @proposal.id)
         @member_three.cast_vote(:against, @proposal.id)
 
@@ -73,7 +74,8 @@ describe "everything" do
   
   describe "proposing text amendments" do
     before(:each) do
-      login
+      @user = login
+      set_permission(@user, :constitution_proposal, true)
       @proposal = mock('proposal', :save => true)
     end
     
@@ -129,9 +131,23 @@ describe "everything" do
     end
   end
   
+  describe "proposing text amendments without having permission" do
+    before(:each) do
+      @user = login
+      set_permission(@user, :constitution_proposal, false)
+    end
+    
+    it "should fail" do      
+      post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'organisation_name', 'value' => 'The Yoghurt Yurt'})
+      @response.should redirect_to('/')
+      Proposal.where(:proposer_member_id => @user.id).should be_empty
+    end
+  end
+  
   describe "proposing voting system amendments" do
     before do
       login
+      set_permission(@user, :constitution_proposal, true)
       @general_voting_system = Clause.set_text('general_voting_system', 'RelativeMajority')
       @membership_voting_system = Clause.set_text('membership_voting_system', 'RelativeMajority')
       @constitution_voting_system = Clause.set_text('constitution_voting_system', 'RelativeMajority')
@@ -196,6 +212,19 @@ describe "everything" do
         proposal_parameters = ActiveSupport::JSON.decode(ChangeVotingPeriodProposal.all.first.parameters)
         proposal_parameters['new_voting_period'].to_i.should == 86400
       end
+    end
+  end
+  
+  describe "proposing voting system amendments without having permission" do
+    before(:each) do
+      @user = login
+      set_permission(@user, :constitution_proposal, false)
+    end
+    
+    it "should fail" do      
+      post(url_for(:controller => 'proposals', :action => 'create_voting_period_amendment'), {:new_voting_period=>'666'})
+      @response.should redirect_to('/')
+      Proposal.where(:proposer_member_id => @user.id).should be_empty
     end
   end
 end
