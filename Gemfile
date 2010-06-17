@@ -1,7 +1,7 @@
 # Edit this Gemfile to bundle your application's dependencies.
 source 'http://rubygems.org'
 
-gem "rails", "3.0.0.beta3"
+gem "rails", "3.0.0.rc"
 
 ## Bundle edge rails:
 # gem "rails", :git => "git://github.com/rails/rails.git"
@@ -17,7 +17,7 @@ gem "mysql"
 # gem "sqlite3-ruby", :require => "sqlite3"
 # gem "aws-s3", :require => "aws/s3"
 
-gem "haml", "~>2.2.24"
+gem "haml", "~>3.0.14"
 gem "daemons", "~>1.0.10"
 
 gem "delayed_job", "2.0.3"
@@ -29,7 +29,11 @@ gem "delayed_job", "2.0.3"
 # end
 
 group :test do
-  gem "rspec-rails", "2.0.0.beta.10"
+  gem "rspec-rails", "2.0.0.beta.18"
+  gem "rspec-core", "2.0.0.beta.18"
+  gem "rspec-expectations", "2.0.0.beta.18"
+  gem "rspec-mocks", "2.0.0.beta.18"
+  gem "rspec", "2.0.0.beta.18"
   gem "machinist", ">=1.0.6"
   gem "faker", '>=0.3.1'
   gem "rcov", "~>0.9.8"

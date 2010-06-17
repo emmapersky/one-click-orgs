@@ -11,7 +11,7 @@
       %li
         = label_tag("members[#{member.id}]", member.name)
         = check_box_tag("members[#{member.id}]", 1, false)
-  %p= submit_tag("Confirm founding meeting, and found #{@organisation_name}")
+  %p= submit_tag("Confirm founding meeting, and found #{@organisation_name}", :confirm => "Are you sure you are ready to found the organisation? There is no undo.")
 
 %p
   %strong OR

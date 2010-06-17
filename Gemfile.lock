@@ -1,127 +1,108 @@
---- 
-dependencies: 
-  faker: 
-    group: 
-    - :test
-    version: ">= 0.3.1"
-  rails: 
-    group: 
-    - :default
-    version: = 3.0.0.beta3
-  haml: 
-    group: 
-    - :default
-    version: ~> 2.2.24
-  mysql: 
-    group: 
-    - :default
-    version: ">= 0"
-  machinist: 
-    group: 
-    - :test
-    version: ">= 1.0.6"
-  delayed_job: 
-    group: 
-    - :default
-    version: = 2.0.3
-  rspec-rails: 
-    group: 
-    - :test
-    version: = 2.0.0.beta.10
-  rcov: 
-    group: 
-    - :test
-    version: ~> 0.9.8
-  daemons: 
-    group: 
-    - :default
-    version: ~> 1.0.10
-specs: 
-- rake: 
-    version: 0.8.7
-- abstract: 
-    version: 1.0.0
-- builder: 
-    version: 2.1.2
-- i18n: 
-    version: 0.3.7
-- memcache-client: 
-    version: 1.8.3
-- tzinfo: 
-    version: 0.3.22
-- activesupport: 
-    version: 3.0.0.beta3
-- activemodel: 
-    version: 3.0.0.beta3
-- erubis: 
-    version: 2.6.5
-- rack: 
-    version: 1.1.0
-- rack-mount: 
-    version: 0.6.4
-- rack-test: 
-    version: 0.5.4
-- actionpack: 
-    version: 3.0.0.beta3
-- mime-types: 
-    version: "1.16"
-- polyglot: 
-    version: 0.3.1
-- treetop: 
-    version: 1.4.8
-- mail: 
-    version: 2.2.4
-- text-hyphen: 
-    version: 1.0.0
-- text-format: 
-    version: 1.0.0
-- actionmailer: 
-    version: 3.0.0.beta3
-- arel: 
-    version: 0.3.3
-- activerecord: 
-    version: 3.0.0.beta3
-- activeresource: 
-    version: 3.0.0.beta3
-- bundler: 
-    version: 0.9.26
-- daemons: 
-    version: 1.0.10
-- delayed_job: 
-    version: 2.0.3
-- diff-lcs: 
-    version: 1.1.2
-- faker: 
-    version: 0.3.1
-- haml: 
-    version: 2.2.24
-- machinist: 
-    version: 1.0.6
-- mysql: 
-    version: 2.8.1
-- nokogiri: 
-    version: 1.4.2
-- thor: 
-    version: 0.13.6
-- railties: 
-    version: 3.0.0.beta3
-- rails: 
-    version: 3.0.0.beta3
-- rcov: 
-    version: 0.9.8
-- rspec-core: 
-    version: 2.0.0.beta.10
-- rspec-expectations: 
-    version: 2.0.0.beta.10
-- rspec-mocks: 
-    version: 2.0.0.beta.10
-- rspec: 
-    version: 2.0.0.beta.10
-- webrat: 
-    version: 0.7.1
-- rspec-rails: 
-    version: 2.0.0.beta.10
-hash: f4c305b09d4ea14142a800c9b9a56b33f8844d9c
-sources: 
-- Rubygems: 
-    uri: http://rubygems.org
+GEM
+  remote: http://rubygems.org/
+  specs:
+    abstract (1.0.0)
+    actionmailer (3.0.0.rc)
+      actionpack (= 3.0.0.rc)
+      mail (~> 2.2.5)
+    actionpack (3.0.0.rc)
+      activemodel (= 3.0.0.rc)
+      activesupport (= 3.0.0.rc)
+      builder (~> 2.1.2)
+      erubis (~> 2.6.6)
+      i18n (~> 0.4.1)
+      rack (~> 1.2.1)
+      rack-mount (~> 0.6.9)
+      rack-test (~> 0.5.4)
+      tzinfo (~> 0.3.22)
+    activemodel (3.0.0.rc)
+      activesupport (= 3.0.0.rc)
+      builder (~> 2.1.2)
+      i18n (~> 0.4.1)
+    activerecord (3.0.0.rc)
+      activemodel (= 3.0.0.rc)
+      activesupport (= 3.0.0.rc)
+      arel (~> 0.4.0)
+      tzinfo (~> 0.3.22)
+    activeresource (3.0.0.rc)
+      activemodel (= 3.0.0.rc)
+      activesupport (= 3.0.0.rc)
+    activesupport (3.0.0.rc)
+    arel (0.4.0)
+      activesupport (>= 3.0.0.beta)
+    builder (2.1.2)
+    daemons (1.0.10)
+    delayed_job (2.0.3)
+      daemons
+    diff-lcs (1.1.2)
+    erubis (2.6.6)
+      abstract (>= 1.0.0)
+    faker (0.3.1)
+    haml (3.0.14)
+    i18n (0.4.1)
+    machinist (1.0.6)
+    mail (2.2.5)
+      activesupport (>= 2.3.6)
+      mime-types
+      treetop (>= 1.4.5)
+    mime-types (1.16)
+    mysql (2.8.1)
+    nokogiri (1.4.2)
+    polyglot (0.3.1)
+    rack (1.2.1)
+    rack-mount (0.6.9)
+      rack (>= 1.0.0)
+    rack-test (0.5.4)
+      rack (>= 1.0)
+    rails (3.0.0.rc)
+      actionmailer (= 3.0.0.rc)
+      actionpack (= 3.0.0.rc)
+      activerecord (= 3.0.0.rc)
+      activeresource (= 3.0.0.rc)
+      activesupport (= 3.0.0.rc)
+      bundler (>= 1.0.0.rc.1)
+      railties (= 3.0.0.rc)
+    railties (3.0.0.rc)
+      actionpack (= 3.0.0.rc)
+      activesupport (= 3.0.0.rc)
+      rake (>= 0.8.3)
+      thor (~> 0.14.0)
+    rake (0.8.7)
+    rcov (0.9.8)
+    rspec (2.0.0.beta.18)
+      rspec-core (= 2.0.0.beta.18)
+      rspec-expectations (= 2.0.0.beta.18)
+      rspec-mocks (= 2.0.0.beta.18)
+    rspec-core (2.0.0.beta.18)
+    rspec-expectations (2.0.0.beta.18)
+      diff-lcs (>= 1.1.2)
+    rspec-mocks (2.0.0.beta.18)
+    rspec-rails (2.0.0.beta.18)
+      rspec (>= 2.0.0.beta.14)
+      webrat (>= 0.7.0)
+    thor (0.14.0)
+    treetop (1.4.8)
+      polyglot (>= 0.3.1)
+    tzinfo (0.3.22)
+    webrat (0.7.1)
+      nokogiri (>= 1.2.0)
+      rack (>= 1.0)
+      rack-test (>= 0.5.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  daemons (~> 1.0.10)
+  delayed_job (= 2.0.3)
+  faker (>= 0.3.1)
+  haml (~> 3.0.14)
+  machinist (>= 1.0.6)
+  mysql
+  rails (= 3.0.0.rc)
+  rcov (~> 0.9.8)
+  rspec (= 2.0.0.beta.18)
+  rspec-core (= 2.0.0.beta.18)
+  rspec-expectations (= 2.0.0.beta.18)
+  rspec-mocks (= 2.0.0.beta.18)
+  rspec-rails (= 2.0.0.beta.18)
