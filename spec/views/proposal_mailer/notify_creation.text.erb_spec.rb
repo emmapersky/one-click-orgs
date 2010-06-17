@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "proposal_mailer/notify_creation.text.erb" do
   before(:each) do
-    @member = mock_model(Member, :name => "Bob Smith")
+    @member = Member.make
     assigns[:member] = @member
     
     @proposal = mock_model(Proposal, :title => "Buy more yaks", :description => "We're running low & they're cheap.", :to_param => '1', :proposer => mock_model(Member, :name => "Emma Baker"))

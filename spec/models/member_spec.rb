@@ -48,7 +48,7 @@ describe Member do
   describe "creation" do
     it "should schedule a welcome email delivery after member has been created" do
       lambda do
-        Member.create_member({:email=> 'foo@example.com'}, true)
+        Member.create_member({:email=>'foo@example.com', :member_class=>MemberClass.make}, true)
       end.should change { Delayed::Job.count }.by(1)
       
       job = Delayed::Job.first

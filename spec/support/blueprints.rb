@@ -6,6 +6,10 @@ Sham.name     { Faker::Name.name }
 Sham.email    { Faker::Internet.email }
 Sham.password { Faker::Name.first_name }
 
+MemberClass.blueprint do
+  name "Director"
+end
+
 Member.blueprint do
   email
   name
@@ -15,6 +19,7 @@ Member.blueprint do
   password_confirmation pw
   active true
   inducted true
+  member_class {MemberClass.make}
 end
 
 Proposal.blueprint do

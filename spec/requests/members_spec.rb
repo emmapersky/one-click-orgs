@@ -103,6 +103,7 @@ describe "everything" do
   describe "/members/1, given a member exists" do
     before(:each) do
       @member = Member.make
+      set_permission(:membership_proposal, true) # sets @user perms
     end
     
     describe "GET" do

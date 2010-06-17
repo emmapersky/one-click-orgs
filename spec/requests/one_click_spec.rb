@@ -24,7 +24,7 @@ describe "/one_click" do
         :proposer_member_id => @user.id
       ).and_return(@proposal)
       
-      post(url_for(:controller => 'one_click', :action => 'propose_text_amendment'), {'name' => 'organisation_name', 'value' => 'The Yoghurt Yurt'})
+      post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'organisation_name', 'value' => 'The Yoghurt Yurt'})
 
       @response.should redirect_to('/one_click/control_centre')
     end
@@ -41,7 +41,7 @@ describe "/one_click" do
         :proposer_member_id => @user.id
       ).and_return(@proposal)
       
-      post(url_for(:controller => 'one_click', :action => 'propose_text_amendment'), {'name' => 'objectives', 'value' => 'make all the yoghurt'})
+      post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'objectives', 'value' => 'make all the yoghurt'})
       
       @response.should redirect_to('/one_click/control_centre')
     end
@@ -58,7 +58,7 @@ describe "/one_click" do
         :proposer_member_id => @user.id
       ).and_return(@proposal)
       
-      post(url_for(:controller => 'one_click', :action => 'propose_text_amendment'), {'name' => 'domain', 'value' => 'yaourt.com'})
+      post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'domain', 'value' => 'yaourt.com'})
       
       @response.should redirect_to('/one_click/control_centre')
     end
@@ -74,7 +74,7 @@ describe "/one_click" do
     
     describe "for general decisions" do
       it "should add the proposal" do
-        post(url_for(:controller => 'one_click', :action => 'propose_voting_system_amendment'), {:general_voting_system => 'Unanimous'})
+        post(url_for(:controller => 'proposals', :action => 'create_voting_system_amendment'), {:general_voting_system => 'Unanimous'})
 
         puts @response.body if @response.status != 302
 
@@ -90,7 +90,7 @@ describe "/one_click" do
     
     describe "for membership decisions" do
       it "should add the proposal" do
-        post(url_for(:controller=>'one_click', :action=>'propose_voting_system_amendment'), {:membership_voting_system=>'Veto'})
+        post(url_for(:controller=>'proposals', :action=>'create_voting_system_amendment'), {:membership_voting_system=>'Veto'})
 
         puts @response.body if @response.status != 302
 
@@ -106,7 +106,7 @@ describe "/one_click" do
     
     describe "for constitution decisions" do
       it "should add the proposal" do
-        post(url_for(:controller=>'one_click', :action=>'propose_voting_system_amendment'), {:constitution_voting_system=>'AbsoluteMajority'})
+        post(url_for(:controller=>'proposals', :action=>'create_voting_system_amendment'), {:constitution_voting_system=>'AbsoluteMajority'})
 
         puts @response.body if @response.status == 500
         @response.should redirect_to("/one_click/control_centre")
@@ -121,7 +121,7 @@ describe "/one_click" do
     
     describe "voting period amendments" do
       it "should add the proposal" do
-        post(url_for(:controller=>'one_click', :action=>'propose_voting_period_amendment'), {:new_voting_period=>'86400'})
+        post(url_for(:controller=>'proposals', :action=>'create_voting_period_amendment'), {:new_voting_period=>'86400'})
 
         puts @response.body if @response.status == 500
         @response.should redirect_to("/one_click/control_centre")
