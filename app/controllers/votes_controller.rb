@@ -32,7 +32,8 @@ private
 
   def require_vote_permission
     if !current_user.has_permission(:vote)
-      redirect_to(:back, :flash => {:error => "You do not have sufficient permissions to vote!"})
+      flash[:error] = "You do not have sufficient permissions to vote!"
+      redirect_back_or_default
     end
   end
 end 

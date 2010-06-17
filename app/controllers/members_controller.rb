@@ -25,11 +25,12 @@ class MembersController < ApplicationController
 
   def edit
     # only_provides :html
-    unless current_user.id == params[:id].to_i
-      redirect_to(:back, :flash => {:error => "You are not authorized to do this."}) and return
-    end
-    
     @member = Member.find(params[:id])
+    unless current_user.id == params[:id].to_i
+      flash[:error] = "You are not authorized to do this."
+      redirect_back_or_default
+      return
+    end
     respond_with @member
   end
 
@@ -93,9 +94,11 @@ class MembersController < ApplicationController
     )
     
     if proposal.save
-      redirect_to(:back, :notice => "Membership class proposal successfully created")
+      flash[:notice] = "Membership class proposal successfully created"
+      redirect_back_or_default(member_path(@member))
     else
-      redirect_to(:back, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
+      flash[:error] = "Error creating proposal: #{proposal.errors.inspect}"
+      redirect_back_or_default(member_path(@member))
     end
   end
 
@@ -103,7 +106,8 @@ private
 
   def require_membership_proposal_permission
     if !current_user.has_permission(:membership_proposal)
-      redirect_to(:back, :flash => {:error => "You do not have sufficient permissions to create such a proposal!"})
+      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
+      redirect_back_or_default
     end
   end
 

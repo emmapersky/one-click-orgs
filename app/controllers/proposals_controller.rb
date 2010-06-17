@@ -162,13 +162,15 @@ private
 
   def require_freeform_proposal_permission
     if !current_user.has_permission(:freeform_proposal)
-      redirect_to(:back, :flash => {:error => "You do not have sufficient permissions to create such a proposal!"})
+      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
+      redirect_back_or_default
     end
   end
   
   def require_constitutional_proposal_permission
     if !current_user.has_permission(:constitution_proposal)
-      redirect_to(:back, :flash => {:error => "You do not have sufficient permissions to create such a proposal!"})
+      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
+      redirect_back_or_default
     end
   end
 

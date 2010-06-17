@@ -36,9 +36,9 @@ def login
   @user
 end
 
-def set_permission(perm, value)
-  @user.member_class.set_permission(perm, value)
-  @user.member_class.save
+def set_permission(user, perm, value)
+  user.member_class.set_permission(perm, value)
+  user.member_class.save
 end
 
 def passed_proposal(p, args={})
