@@ -15,7 +15,7 @@ Right now we're busy building the system and testing it out with the first few g
 
 For more information visit our web site: [oneclickorgs.com](http://oneclickorgs.com).
 
-The main repository is hosted on github: [github.com/emmapersky/one-click-orgs](http://github.com/emmapersky/one-click-orgs/tree/master)
+The main repository is hosted on github: [github.com/oneclickorgs/one-click-orgs](http://github.com/oneclickorgs/one-click-orgs/tree/master)
 
 For installation instructions, see HACKING.txt.
 
