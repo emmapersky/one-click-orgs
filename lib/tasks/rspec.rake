@@ -1,8 +1,8 @@
 begin
   require 'rspec/core'
   require 'rspec/core/rake_task'
-rescue MissingSourceFile 
-  module Rspec
+rescue MissingSourceFile
+  module RSpec
     module Core
       class RakeTask
         def initialize(name)
@@ -36,12 +36,12 @@ task :default => :spec
 task :stats => "spec:statsetup"
 
 desc "Run all specs in spec directory (excluding plugin specs)"
-Rspec::Core::RakeTask.new(:spec => spec_prereq)
+RSpec::Core::RakeTask.new(:spec => spec_prereq)
 
 namespace :spec do
   [:requests, :models, :controllers, :views, :helpers, :mailers, :lib].each do |sub|
     desc "Run the code examples in spec/#{sub}"
-    Rspec::Core::RakeTask.new(sub => spec_prereq) do |t|
+    RSpec::Core::RakeTask.new(sub => spec_prereq) do |t|
       t.pattern = "./spec/#{sub}/**/*_spec.rb"
     end
   end
@@ -49,11 +49,11 @@ namespace :spec do
   # This will probably be provided natively by rspec/rspec-rails at some point,
   # as it was in version 1 of rspec.
   desc "Run all specs in spec directory with RCov (excluding plugin specs)"
-  Rspec::Core::RakeTask.new(:rcov) do |t|
+  RSpec::Core::RakeTask.new(:rcov) do |t|
     t.rcov = true
     t.rcov_opts = IO.readlines("#{Rails.root}/spec/rcov.opts").map {|l| l.chomp}.join(' ') + " --exclude \"#{ENV['BUNDLE_PATH']}\""
   end
-
+  
   task :statsetup do
     require 'rails/code_statistics'
     ::STATS_DIRECTORIES << %w(Model\ specs spec/models) if File.exist?('spec/models')

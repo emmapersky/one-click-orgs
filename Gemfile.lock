@@ -7,7 +7,7 @@ dependencies:
   rails: 
     group: 
     - :default
-    version: = 3.0.0.beta3
+    version: = 3.0.0.beta4
   haml: 
     group: 
     - :default
@@ -27,7 +27,7 @@ dependencies:
   rspec-rails: 
     group: 
     - :test
-    version: = 2.0.0.beta.10
+    version: = 2.0.0.beta.17
   rcov: 
     group: 
     - :test
@@ -41,28 +41,26 @@ specs:
     version: 0.8.7
 - abstract: 
     version: 1.0.0
+- activesupport: 
+    version: 3.0.0.beta4
 - builder: 
     version: 2.1.2
 - i18n: 
-    version: 0.3.7
-- memcache-client: 
-    version: 1.8.3
-- tzinfo: 
-    version: 0.3.22
-- activesupport: 
-    version: 3.0.0.beta3
+    version: 0.4.1
 - activemodel: 
-    version: 3.0.0.beta3
+    version: 3.0.0.beta4
 - erubis: 
-    version: 2.6.5
+    version: 2.6.6
 - rack: 
     version: 1.1.0
 - rack-mount: 
-    version: 0.6.4
+    version: 0.6.9
 - rack-test: 
     version: 0.5.4
+- tzinfo: 
+    version: 0.3.22
 - actionpack: 
-    version: 3.0.0.beta3
+    version: 3.0.0.beta4
 - mime-types: 
     version: "1.16"
 - polyglot: 
@@ -70,21 +68,17 @@ specs:
 - treetop: 
     version: 1.4.8
 - mail: 
-    version: 2.2.4
-- text-hyphen: 
-    version: 1.0.0
-- text-format: 
-    version: 1.0.0
+    version: 2.2.5
 - actionmailer: 
-    version: 3.0.0.beta3
+    version: 3.0.0.beta4
 - arel: 
-    version: 0.3.3
+    version: 0.4.0
 - activerecord: 
-    version: 3.0.0.beta3
+    version: 3.0.0.beta4
 - activeresource: 
-    version: 3.0.0.beta3
+    version: 3.0.0.beta4
 - bundler: 
-    version: 0.9.25
+    version: 0.9.26
 - daemons: 
     version: 1.0.10
 - delayed_job: 
@@ -102,26 +96,26 @@ specs:
 - nokogiri: 
     version: 1.4.2
 - thor: 
-    version: 0.13.6
+    version: 0.13.8
 - railties: 
-    version: 3.0.0.beta3
+    version: 3.0.0.beta4
 - rails: 
-    version: 3.0.0.beta3
+    version: 3.0.0.beta4
 - rcov: 
     version: 0.9.8
 - rspec-core: 
-    version: 2.0.0.beta.10
+    version: 2.0.0.beta.17
 - rspec-expectations: 
-    version: 2.0.0.beta.10
+    version: 2.0.0.beta.17
 - rspec-mocks: 
-    version: 2.0.0.beta.10
+    version: 2.0.0.beta.17
 - rspec: 
-    version: 2.0.0.beta.10
+    version: 2.0.0.beta.17
 - webrat: 
     version: 0.7.1
 - rspec-rails: 
-    version: 2.0.0.beta.10
-hash: f4c305b09d4ea14142a800c9b9a56b33f8844d9c
+    version: 2.0.0.beta.17
+hash: e16c0c4d4271b4d3bb368afd3dd6bedb10ed1800
 sources: 
 - Rubygems: 
     uri: http://rubygems.org
