@@ -27,7 +27,7 @@ dependencies:
   rspec-rails: 
     group: 
     - :test
-    version: = 2.0.0.beta.11
+    version: = 2.0.0.beta.17
   rcov: 
     group: 
     - :test
@@ -50,11 +50,11 @@ specs:
 - activemodel: 
     version: 3.0.0.beta4
 - erubis: 
-    version: 2.6.5
+    version: 2.6.6
 - rack: 
     version: 1.1.0
 - rack-mount: 
-    version: 0.6.4
+    version: 0.6.9
 - rack-test: 
     version: 0.5.4
 - tzinfo: 
@@ -68,7 +68,7 @@ specs:
 - treetop: 
     version: 1.4.8
 - mail: 
-    version: 2.2.4
+    version: 2.2.5
 - actionmailer: 
     version: 3.0.0.beta4
 - arel: 
@@ -96,7 +96,7 @@ specs:
 - nokogiri: 
     version: 1.4.2
 - thor: 
-    version: 0.13.6
+    version: 0.13.8
 - railties: 
     version: 3.0.0.beta4
 - rails: 
@@ -104,18 +104,18 @@ specs:
 - rcov: 
     version: 0.9.8
 - rspec-core: 
-    version: 2.0.0.beta.11
+    version: 2.0.0.beta.17
 - rspec-expectations: 
-    version: 2.0.0.beta.11
+    version: 2.0.0.beta.17
 - rspec-mocks: 
-    version: 2.0.0.beta.11
+    version: 2.0.0.beta.17
 - rspec: 
-    version: 2.0.0.beta.11
+    version: 2.0.0.beta.17
 - webrat: 
     version: 0.7.1
 - rspec-rails: 
-    version: 2.0.0.beta.11
-hash: a76ecc645e49e2b8f487621b3a4b1c5405bd76a6
+    version: 2.0.0.beta.17
+hash: e16c0c4d4271b4d3bb368afd3dd6bedb10ed1800
 sources: 
 - Rubygems: 
     uri: http://rubygems.org
