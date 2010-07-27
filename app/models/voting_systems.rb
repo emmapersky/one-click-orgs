@@ -141,15 +141,13 @@ module VotingSystems
   end
   
   def self.all(&block)
-    returning(
-      [
-        RelativeMajority,
-        AbsoluteMajority,
-        AbsoluteTwoThirdsMajority,
-        Unanimous,
-        Veto
-      ]
-      ) do |systems|
+    [
+      RelativeMajority,
+      AbsoluteMajority,
+      AbsoluteTwoThirdsMajority,
+      Unanimous,
+      Veto
+    ].tap do |systems|
       systems.each(&block) if block
     end      
   end

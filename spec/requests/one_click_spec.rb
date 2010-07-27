@@ -19,7 +19,7 @@ describe "/one_click" do
       ).and_return(@serialized_parameters = mock('serialized_parameters'))
       
       ChangeTextProposal.should_receive(:new).with(
-        :title => "Change organisation_name to 'The Yoghurt Yurt'",
+        :title => "Change organisation name to 'The Yoghurt Yurt'",
         :parameters => @serialized_parameters,
         :proposer_member_id => @user.id
       ).and_return(@proposal)

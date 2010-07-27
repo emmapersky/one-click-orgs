@@ -49,7 +49,9 @@ describe "induction process" do
     
     get('/induction/confirm_agenda')
     follow_redirect!
-    response.should have_selector("form[action='/induction/confirm_founding_meeting']")
+    response.should have_selector("form[action='/induction/confirm_founding_meeting']") do |form|
+      form.should have_selector("input[type=submit][data-confirm]")
+    end
     
     post '/induction/confirm_founding_meeting', :members => {second_member_id.to_s => '1'}
     response.should redirect_to '/one_click/control_centre'
@@ -129,7 +131,7 @@ describe "induction process" do
       end
     end
   end
-  # 
+  
   # it "should detect the domain" do
   #   organisation_is_under_construction
   #   @organisation.domain.should be_blank

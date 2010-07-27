@@ -15,13 +15,12 @@ describe DecisionMailer do
       mail.body.should =~ /Dear #{@member.name}/
       mail.body.should =~ /a new decision has been made/
       mail.body.should =~ /#{@proposal.title}/
-      mail.body.should =~ /#{@proposal.description}/            
+      mail.body.should =~ /#{@proposal.description}/           
     end
 
     it "should include correct decision link in email text" do
-      # TODO
-      # mail = ProposalMailer.notify_new_decision(@member, @decision)
-      # mail.body.should =~ %r{http://test.com/decisions/\d+}
+      mail = DecisionMailer.notify_new_decision(@member, @decision)
+      mail.body.should =~ %r{http://test.oneclickorgs.com/decisions/\d+}
     end
   end
 end

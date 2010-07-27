@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Member do
 
   before(:each) do
+    Delayed::Job.delete_all 
+    
     stub_constitution!
     stub_organisation!
 
@@ -44,9 +46,15 @@ describe Member do
   end
 
   describe "creation" do
-    it "should send out an email after member has been created" do
-      Member.should_receive(:send_later).with(:send_new_member_email, anything, anything)
-      @organisation.members.create_member({:email=> 'foo@example.com'}, true)
+    it "should schedule a welcome email delivery after member has been created" do
+      lambda do
+        @organisation.members.create_member({:email=> 'foo@example.com'}, true)
+      end.should change { Delayed::Job.count }.by(1)
+      
+      job = Delayed::Job.first
+      job.payload_object.class.should   == Delayed::PerformableMethod
+      job.payload_object.method.should  == :send_email_without_send_later
+      job.payload_object.args.should    == []
     end
   end
 
