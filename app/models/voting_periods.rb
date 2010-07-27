@@ -29,9 +29,7 @@ module VotingPeriods
   end
   
   def self.all(&block)
-    returning(
-      PERIODS.map{|p| {:name => name_for_value(p), :value => p}}
-    ) do |periods|
+    PERIODS.map{|p| {:name => name_for_value(p), :value => p}}.tap do |periods|
       periods.each(&block) if block
     end      
   end
