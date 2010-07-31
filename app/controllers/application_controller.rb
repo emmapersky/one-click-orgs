@@ -63,7 +63,10 @@ class ApplicationController < ActionController::Base
   end
   
   def ensure_member_active
-    raise Unauthenticated if current_user && !current_user.active?
+    if current_user && !current_user.active?
+      session[:user] = nil
+      raise Unauthenticated
+    end
   end
   
   def ensure_organisation_active
