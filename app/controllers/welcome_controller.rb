@@ -8,7 +8,7 @@ class WelcomeController < ApplicationController
 
   def induct_member
     member = current_user
-    member.inducted_at = Time.now.utc
+    member.inducted = true
     member.save
     redirect_to root_path
   end

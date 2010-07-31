@@ -14,7 +14,7 @@ Member.blueprint do
   password pw
   password_confirmation pw
   active true
-  inducted_at {Time.now - 23.hours}
+  inducted true
 end
 
 Proposal.blueprint do

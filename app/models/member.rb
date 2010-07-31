@@ -4,8 +4,8 @@ class Member < ActiveRecord::Base
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
 
-  scope :active, where(["active = ? AND inducted_at IS NOT NULL", true])
-  scope :pending, where("inducted_at IS NULL")
+  scope :active, where(:active => true, :inducted => true)
+  scope :pending, where(:inducted => false)
 
   # AUTHENTICATION
 
@@ -91,14 +91,8 @@ class Member < ActiveRecord::Base
     save
   end
 
-  def inducted?
-    !inducted_at.nil?
-  end
-
   def to_event
-    if self.inducted?
-      {:timestamp => self.inducted_at, :object => self, :kind => :new_member}
-    end
+    {:timestamp => self.created_at, :object => self, :kind => :new_member}
   end
 end
 
