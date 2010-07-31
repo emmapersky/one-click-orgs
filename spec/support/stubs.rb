@@ -7,7 +7,7 @@ def default_user
                  :name => "Krusty the clown",
                  :password => "password",
                  :password_confirmation => "password",
-                 :inducted => true) or raise "can't create user"
+                 :inducted_at => (Time.now.utc - 1.day)) or raise "can't create user"
 end
 
 def stub_constitution!
