@@ -3,6 +3,7 @@ require 'digest/sha1'
 class Member < ActiveRecord::Base
   has_many :votes
   has_many :proposals, :foreign_key => 'proposer_member_id'
+  belongs_to :member_class
 
   scope :active, where(["active = ? AND inducted_at IS NOT NULL", true])
   scope :pending, where("inducted_at IS NULL")
@@ -101,6 +102,10 @@ class Member < ActiveRecord::Base
     if self.inducted?
       {:timestamp => self.inducted_at, :object => self, :kind => :new_member}
     end
+  end
+  
+  def has_permission(type)
+    member_class.has_permission(type)
   end
 end
 

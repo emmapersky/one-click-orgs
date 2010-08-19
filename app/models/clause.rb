@@ -56,7 +56,7 @@ class Clause < ActiveRecord::Base
   
   def self.get_boolean(name)
     v = Clause.get_current(name.to_s)
-    (v ? v.boolean_value : nil)
+    (v ? v.boolean_value != 0 : nil)
   end
   
   def self.set_integer(name, value)

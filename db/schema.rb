@@ -38,6 +38,11 @@ ActiveRecord::Schema.define(:version => 20100731171543) do
     t.datetime "updated_at"
   end
 
+  create_table "member_classes", :force => true do |t|
+    t.string "name",        :null => false
+    t.string "description"
+  end
+
   create_table "members", :force => true do |t|
     t.string   "email",            :limit => 50,                :null => false
     t.string   "name",             :limit => 50
@@ -45,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20100731171543) do
     t.integer  "active",           :limit => 1,  :default => 1
     t.string   "crypted_password", :limit => 50
     t.string   "salt",             :limit => 50
+    t.integer  "member_class_id"
     t.datetime "inducted_at"
   end
 

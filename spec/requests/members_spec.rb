@@ -5,6 +5,7 @@ describe "everything" do
     stub_constitution!
     stub_organisation!
     login
+    set_permission(default_user, :membership_proposal, true)
   end
   
   describe "/members" do
@@ -40,7 +41,7 @@ describe "everything" do
     describe "a successful POST" do
       before(:each) do
 
-        post(members_path, { :member => { :id => nil, :email=>'anemail@example.com', :name=>"test" }})
+        post(members_path, { :member => Member.make })
       end
       
       it "redirects to resource(:members)" do
@@ -103,6 +104,7 @@ describe "everything" do
   describe "/members/1, given a member exists" do
     before(:each) do
       @member = Member.make
+      set_permission(@user, :membership_proposal, true)
     end
     
     describe "GET" do

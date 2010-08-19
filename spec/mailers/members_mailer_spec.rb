@@ -2,10 +2,7 @@ require 'spec_helper'
 
 describe MembersMailer do
   before :each do
-    @member = mock_model(Member,
-      :name => "Peter Pan",
-      :email => "peter@example.com"
-    )
+    @member = Member.make
     @new_password = "foo"
   
     stub_constitution!

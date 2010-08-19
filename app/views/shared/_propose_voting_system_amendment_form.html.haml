@@ -1,13 +1,14 @@
-=form_tag(:controller => 'one_click', :action => 'propose_voting_system_amendment') do
-  %div.constitution_proposal
-    %p.reveal_link
-      %a{:href => '#'}
-        Propose an amendment to this clause
-    %div.proposal_form{:style => 'display: none;'}
-      %p
-        =render :partial => 'voting_system_field', :locals => {:type => type, :description => description}
-      %p
-        =submit_tag "Propose change", :id => 'submit'
-      %p
-        %a{:href => '#', :class => 'cancel_link'}
-          Cancel
+- if current_user.has_permission(:constitution_proposal)
+  =form_tag(:controller => 'proposals', :action => 'create_voting_system_amendment') do
+    %div.constitution_proposal
+      %p.reveal_link
+        %a{:href => '#'}
+          Propose an amendment to this clause
+      %div.proposal_form{:style => 'display: none;'}
+        %p
+          =render :partial => 'voting_system_field', :locals => {:type => type, :description => description}
+        %p
+          =submit_tag "Propose change", :id => 'submit'
+        %p
+          %a{:href => '#', :class => 'cancel_link'}
+            Cancel

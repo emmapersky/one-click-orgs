@@ -2,18 +2,9 @@
 
 %p= "Welcome back, #{current_user.name}!" if current_user
 
-%h4 New Proposal
-= form_for(@new_proposal, :url => proposals_path, 'class' => 'proposal') do |f|
-  %p
-    = f.label(:title)
-    = f.text_field :title
-  %p
-    = f.label(:description)
-    = f. text_area :description
-  %p
-  = submit_tag "Create Proposal", :id => 'submit'
+= render :partial => 'shared/propose_freeform_form'
   
-= render 'members/new_member'
+= render :partial => 'shared/propose_new_member_form'
 
 %h4 Open Proposals
 %table.proposals
