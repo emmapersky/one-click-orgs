@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100613144812) do
+ActiveRecord::Schema.define(:version => 20100731171543) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -40,14 +40,14 @@ ActiveRecord::Schema.define(:version => 20100613144812) do
   end
 
   create_table "members", :force => true do |t|
-    t.string   "email",            :limit => 50,                    :null => false
+    t.string   "email",            :limit => 50,                :null => false
     t.string   "name",             :limit => 50
     t.datetime "created_at"
     t.integer  "active",           :limit => 1,  :default => 1
     t.string   "crypted_password", :limit => 50
     t.string   "salt",             :limit => 50
-    t.boolean  "inducted",                       :default => false, :null => false
     t.integer  "organisation_id"
+    t.datetime "inducted_at"
   end
 
   create_table "organisations", :force => true do |t|

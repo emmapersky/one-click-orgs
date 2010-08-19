@@ -9,12 +9,11 @@ def default_user
   stub_organisation!
     
   @default_user = @organisation.members.where(:email => "krusty@clown.com").first || 
-    @organisation.members.create(
-      :email => "krusty@clown.com",
-      :name => "Krusty the clown",
-      :password => "password",
-      :password_confirmation => "password",
-      :inducted => true) or raise "can't create user"
+    @organisation.members.create(:email => "krusty@clown.com",
+                 :name => "Krusty the clown",
+                 :password => "password",
+                 :password_confirmation => "password",
+                 :inducted_at => (Time.now.utc - 1.day)) or raise "can't create user"
 end
 
 def stub_constitution!
@@ -65,6 +64,7 @@ end
 def organisation_is_active
   stub_organisation!(false) unless @organisation
   @organisation.clauses.set_text('organisation_state', "active")
+  @organisation.should be_active
 end
 
 def organisation_is_under_construction

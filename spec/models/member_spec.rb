@@ -19,8 +19,8 @@ describe Member do
     end
   end
 
-  it "should not allow votes on members created before proposals" do
-    new_member = @organisation.members.make(:created_at => Time.now + 1.day)
+  it "should not allow votes on members inducted after proposal was made" do
+    new_member = @organisation.members.make(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
     lambda {
       new_member.cast_vote(:for, @proposal.id)
     }.should raise_error(VoteError)

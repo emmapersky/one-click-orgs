@@ -43,7 +43,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def member_count
-    organisation.members.where(["created_at < ? AND active = ? AND inducted = ?", creation_date, true, true]).count
+    organisation.members.where(["created_at < ? AND active = ? AND inducted_at IS NOT NULL", creation_date, true]).count
   end
   
   def abstained
