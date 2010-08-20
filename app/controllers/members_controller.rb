@@ -1,5 +1,8 @@
 class MembersController < ApplicationController
+
   respond_to :html
+  
+  before_filter :require_membership_proposal_permission, :only => [:new, :create, :update, :destroy, :change_class]
 
   def index
     @members = co.members.active
@@ -22,11 +25,12 @@ class MembersController < ApplicationController
 
   def edit
     # only_provides :html
-    unless current_user.id == params[:id].to_i
-      redirect_to(:back, :flash => {:error => "You are not authorized to do this."}) and return
-    end
-    
     @member = co.members.find(params[:id])
+    unless current_user.id == params[:id].to_i
+      flash[:error] = "You are not authorized to do this."
+      redirect_back_or_default
+      return
+    end
     respond_with @member
   end
 
@@ -72,6 +76,38 @@ class MembersController < ApplicationController
       redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Ejection proposal successfully created")
     else
       redirect member_path(@member), :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
+    end
+  end
+  
+  def change_class
+    @member = Member.find(params[:id])
+    @new_member_class = MemberClass.find(params[:member][:member_class_id])
+    
+    title = "Change member class of #{@member.name} from #{@member.member_class.name} to #{@new_member_class.name}"
+    proposal = ChangeMemberClassProposal.new(
+      :title => title,
+      :proposer_member_id => current_user.id,
+      :description => params[:description],
+      :parameters => ChangeMemberClassProposal.serialize_parameters(
+        'id' => @member.id, 
+        'member_class_id' => @new_member_class.id)
+    )
+    
+    if proposal.save
+      flash[:notice] = "Membership class proposal successfully created"
+      redirect_back_or_default(member_path(@member))
+    else
+      flash[:error] = "Error creating proposal: #{proposal.errors.inspect}"
+      redirect_back_or_default(member_path(@member))
+    end
+  end
+
+private
+
+  def require_membership_proposal_permission
+    if !current_user.has_permission(:membership_proposal)
+      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
+      redirect_back_or_default
     end
   end
 

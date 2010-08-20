@@ -5,11 +5,7 @@ describe MembersMailer do
     stub_constitution!
     stub_organisation!
     
-    @member = mock_model(Member,
-      :name => "Peter Pan",
-      :email => "peter@example.com",
-      :organisation => @organisation
-    )
+    @member = Member.make
     @new_password = "foo"
   end
   

@@ -42,8 +42,14 @@ class Proposal < ActiveRecord::Base
     Vote.where(:proposal_id => self.id, :for => false).count
   end
   
+  # returns the number of members who are eligible to vote on this proposal
   def member_count
-    organisation.members.where(["created_at < ? AND active = ? AND inducted_at IS NOT NULL", creation_date, true]).count
+    # TODO: find out how to do the following in one query
+    count = 0
+    organisation.members.where(["created_at < ? AND active = ? AND inducted_at IS NOT NULL", creation_date, true]).each do |m|
+      count += 1 if m.has_permission(:vote)
+    end
+    count
   end
   
   def abstained
@@ -125,7 +131,8 @@ class Proposal < ActiveRecord::Base
   
   def send_email
     self.organisation.members.active.each do |m|
-      ProposalMailer.notify_creation(m, self).deliver
+      # only notify members who can vote
+      ProposalMailer.notify_creation(m, self).deliver if m.has_permission(:vote)
     end
   end
   handle_asynchronously :send_email

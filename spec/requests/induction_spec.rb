@@ -10,13 +10,18 @@ describe "induction process" do
   # isn't inadvertently broken.
   # 
   # This kind of thing would be better done in Cucumber with Webrat so that it's more readable and less brittle.
+  
+  before(:each) do
+    @member_class = MemberClass.make
+  end
+  
   it "should work" do
     get '/'
     
     follow_redirect!
     response.should have_selector("form[action='/induction/create_founder']")
     
-    post '/induction/create_founder', :member => {:email => "bob@example.com", :name => "Bob Smith", :password => "letmein", :password_confirmation => "letmein"}
+    post '/induction/create_founder', :member => {:email => "bob@example.com", :name => "Bob Smith", :password => "letmein", :password_confirmation => "letmein", :member_class_id => @member_class.id}
     
     follow_redirect!
     
@@ -27,7 +32,7 @@ describe "induction process" do
     follow_redirect!
     response.should have_selector("form[action='/induction/create_members']")
     
-    post '/induction/create_members', 'members' => {'0' => {'id' => '', 'name' => "Erin Baker", 'email' => "erin@example.com"}}
+    post '/induction/create_members', 'members' => {'0' => {'id' => '', 'name' => "Erin Baker", 'email' => "erin@example.com", 'member_class_id' => @member_class.id }}
     
     second_member_id = Member.last.id
     

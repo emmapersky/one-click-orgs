@@ -4,6 +4,11 @@ def stub_setup!
   Setting[:base_domain] ||= "oneclickorgs.com"
 end
 
+def default_member_class
+  @default_member_class = MemberClass.where(:name => "Clown").first || 
+    MemberClass.create(:name => "Clown") or raise "can't create member class"
+end
+
 def default_user
   stub_constitution!
   stub_organisation!
@@ -13,7 +18,8 @@ def default_user
                  :name => "Krusty the clown",
                  :password => "password",
                  :password_confirmation => "password",
-                 :inducted_at => (Time.now.utc - 1.day)) or raise "can't create user"
+                 :inducted_at => (Time.now.utc - 1.day),
+                 :member_class => default_member_class) or raise "can't create user"
 end
 
 def stub_constitution!
@@ -50,6 +56,10 @@ def login
   @user
 end
 
+def set_permission(user, perm, value)
+  user.member_class.set_permission(perm, value)
+  user.member_class.save
+end
 
 def passed_proposal(p, args={})
   p.stub!(:passed?).and_return(true)

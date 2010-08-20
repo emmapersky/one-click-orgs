@@ -12,4 +12,5 @@
   - for member in @pending_members
     %li
       = link_to "#{member.name}", member_path(member)
-/ = render :new_member
+
+= render :partial => 'shared/propose_new_member_form'
