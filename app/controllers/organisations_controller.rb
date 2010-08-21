@@ -5,6 +5,8 @@ class OrganisationsController < ApplicationController
   skip_before_filter :ensure_organisation_active
   skip_before_filter :ensure_member_inducted
   
+  before_filter :ensure_not_single_organisation_mode
+  
   def new
     @organisation = Organisation.new
   end
@@ -15,6 +17,14 @@ class OrganisationsController < ApplicationController
       redirect_to(:host => @organisation.host, :controller => 'induction', :action => 'founder')
     else
       render(:action => :new)
+    end
+  end
+
+protected
+
+  def ensure_not_single_organisation_mode
+    if Setting[:single_organisation_mode] == "true"
+      redirect_to root_path
     end
   end
 end

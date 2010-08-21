@@ -23,4 +23,10 @@ class SetupController < ApplicationController
       render(:action => :index)
     end
   end
+  
+  def set_single_organisation_mode
+    Setting[:single_organisation_mode] = "true"
+    @organisation = Organisation.create
+    redirect_to(:controller => 'induction', :action => 'founder')
+  end
 end

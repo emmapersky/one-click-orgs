@@ -14,9 +14,16 @@ class ApplicationController < ActionController::Base
   before_filter :ensure_member_inducted
   
   # Returns the organisation corresponding to the subdomain that the current
-  # request has been made on
+  # request has been made on (or just returns the organisation if the app
+  # is running in single organisation mode).
   def current_organisation
-    @current_organisation ||= Organisation.find_by_host(request.host_with_port)
+    @current_organisation ||= (
+      if Setting[:single_organisation_mode]
+        Organisation.first
+      else
+        Organisation.find_by_host(request.host_with_port)
+      end
+    )
   end
   alias :co :current_organisation
   

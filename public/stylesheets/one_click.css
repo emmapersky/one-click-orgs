@@ -1,17 +1,17 @@
 body {
-  color: #666;
-  font-family: Myriad,Arial,Helvetica,sans-serif;
+  color: #666666;
+  font-family: Myriad, Arial, Helvetica, sans-serif;
   margin: 0;
   padding: 0; }
 
 .control_bar {
   position: absolute;
-  right: .5em;
-  top: .2em; }
+  right: 0.5em;
+  top: 0.2em; }
 
 h1.header {
-  color: #666;
-  font-family: Georgia,Times New Roman;
+  color: #666666;
+  font-family: Georgia, Times New Roman;
   font-size: 3em;
   margin: 0;
   padding: 0;
@@ -35,6 +35,7 @@ h3 {
 br,
 form,
 form p,
+h2,
 h4 {
   clear: left; }
 
@@ -44,14 +45,14 @@ form input#submit {
 a {
   color: #627fc4; }
   a:hover {
-    color: #69f; }
+    color: #6699ff; }
 
 #nav {
   text-align: center; }
   #nav li {
     float: left; }
   #nav a {
-    border-bottom: 3px #eee solid;
+    border-bottom: 3px #eeeeee solid;
     display: block;
     font-family: georgia;
     font-size: 17px;
@@ -72,10 +73,10 @@ a {
   clear: both; }
 
 table {
-  border: 1px #ccc solid !important; }
+  border: 1px #cccccc solid !important; }
 
 table.proposals, table.decisions, table.failed_proposals {
-  border: 1px #042 solid;
+  border: 1px #004422 solid;
   margin: auto;
   width: 900px; }
   table.proposals td.vote, table.decisions td.vote, table.failed_proposals td.vote {
@@ -87,52 +88,52 @@ table.proposals, table.decisions, table.failed_proposals {
     margin: auto;
     width: 7em; }
   table.proposals td.proposal_ends_in, table.decisions td.proposal_ends_in, table.failed_proposals td.proposal_ends_in {
-    text-align: :center;
+    text-align: center;
     width: 14em; }
 
 th {
   background: #abc969 !important;
-  color: #fff !important;
-  font-family: georgia,times new roman;
+  color: white !important;
+  font-family: georgia, times new roman;
   font-weight: 400;
   padding: 3px 0; }
 
 tr.even {
-  background: #eee !important; }
+  background: #eeeeee !important; }
 
 tr.odd {
-  background: #fff !important; }
+  background: white !important; }
 
 tr:hover td {
-  background: #ffc; }
+  background: #ffffcc; }
 
 tr.vote_for {
   background-color: #6bba70;
-  color: #ffffff; }
+  color: white; }
   tr.vote_for:hover {
     background-color: #499850; }
 
 tr.vote_against {
   background-color: #b02b2c;
-  color: #ffffff; }
+  color: white; }
   tr.vote_against:hover {
     background-color: #a0090a; }
 
 tr.vote_in_progress {
   background-color: #c79810;
-  color: #ffffff; }
+  color: white; }
   tr.vote_in_progress:hover {
     background-color: #a57600; }
 
 tr.vote_for a, tr.vote_against a, tr.vote_in_progress a {
-  color: #ffffff; }
+  color: white; }
 
 div.description {
-  font-size: .8em;
+  font-size: 0.8em;
   padding-left: 1em;
   padding-right: 1em;
   padding-top: 1em;
-  text-align: :justify; }
+  text-align: justify; }
 
 label, input, textarea {
   display: block;
@@ -159,7 +160,7 @@ textarea {
   width: 30em; }
 
 .footer {
-  font-size: .7em;
+  font-size: 0.7em;
   margin-top: 20px;
   text-align: center;
   clear: both; }
@@ -173,9 +174,9 @@ ul.constitution li {
 
 div.constitution_proposal {
   float: right;
-  border: 1px solid #042;
+  border: 1px solid #004422;
   padding: 0.5em 0.5em 0;
-  background-color: #ddd;
+  background-color: #dddddd;
   margin: 0 0 0.5em 0.5em; }
   div.constitution_proposal label, div.constitution_proposal input, div.constitution_proposal textarea {
     float: none;
