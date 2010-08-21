@@ -16,6 +16,13 @@ class MembersController < ApplicationController
   def show
     @member = co.members.find(params[:id])
     raise NotFound unless @member
+    
+    @timeline = [
+      @member,
+      @member.proposals.all,
+      @member.votes.all
+    ].flatten.map(&:to_event).sort{|a, b| b[:timestamp] <=> a[:timestamp]}
+    
     respond_with @member
   end
 
