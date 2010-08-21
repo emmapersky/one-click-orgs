@@ -1,4 +1,4 @@
-# One click organisations
+# One Click Orgs
 
 One Click Orgs is building a website where groups can quickly create a legal structure and get a simple system for group decisions. We think social enterprises, collectives and activist groups have better things to think about than obscure legal clauses.
 
@@ -24,7 +24,7 @@ For installation instructions, see HACKING.txt.
 One Click Orgs is licensed under the [GNU Affero General Public License, Version 3](http://www.fsf.org/licensing/licenses/agpl-3.0.html).
 
     One Click Orgs - Create legal organisations with just one click.
-    Copyright (C) 2009 Circus Foundation
+    Copyright (C) 2009, 2010 Circus Foundation
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
