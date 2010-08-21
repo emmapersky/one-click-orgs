@@ -1,0 +1,28 @@
+Multitenancy allows one instance/installation of the OCO app to host multiple, separate organisations.
+
+An installation of the app has a 'base domain', and each organisation has its own subdomain. For example, if the base domain is:
+
+  oneclickorgs.com
+  
+then these are two separate organisations:
+
+  regeneration.oneclickorgs.com
+  openspaces.oneclickorgs.com
+
+All model access should be scoped by the relevant organisation. In other words, don't call methods directly on Member, MemberClass, Clause, Proposal, etc., unless you genuinely need to do installation-wide, cross-organisation tasks.
+
+In controllers, the method #co (defined in ApplicationController) will return the current Organisation. To find a member, for example, you would do:
+
+  co.members.where(:name => "Jane Smith").first
+  
+not:
+
+  Member.where(:name => "Jane Smith").first   # Don't do this!
+
+In models, use the provided relationships to access other models. For example, in MemberClass, we have:
+
+  organisation.clauses.get_boolean()
+
+not:
+
+  Clause.get_boolean()
