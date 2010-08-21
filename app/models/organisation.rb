@@ -18,6 +18,8 @@ class Organisation < ActiveRecord::Base
   
   has_many :member_classes
   
+  validates_uniqueness_of :subdomain
+  
   after_create :create_default_member_classes
   
   # Given a full hostname, e.g. "myorganisation.oneclickorgs.com",

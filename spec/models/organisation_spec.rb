@@ -5,6 +5,16 @@ describe Organisation do
     @organisation = Organisation.make
   end
   
+  describe "validation" do
+    it "should not allow multiple organisations with the same subdomain" do
+      @first = Organisation.make(:subdomain => "apples")
+
+      lambda do
+        @second = Organisation.make(:subdomain => "apples")
+      end.should raise_error(ActiveRecord::RecordInvalid)
+    end
+  end
+  
   describe "text fields" do
     before(:each) do
       @organisation.clauses.set_text('organisation_name', 'The Cheese Collective')
