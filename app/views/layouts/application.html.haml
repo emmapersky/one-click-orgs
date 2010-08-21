@@ -13,7 +13,7 @@
       - if current_user
         = h current_user.name
         |
-        =link_to 'my settings', edit_member_path(current_user)
+        =link_to 'my account', edit_member_path(current_user)
         |
         =link_to 'logout', member_session_path, :method => :delete
     %div#doc
@@ -23,11 +23,10 @@
       %div#bd
         - if current_user
           %ul#nav
-            %li#navitem= link_to 'Dashboard', :controller => :one_click, :action => :dashboard
-            %li#navitem= link_to 'My Member Page', member_path(current_user)
-            %li#navitem= link_to 'Timeline', timeline_path
-            %li#navitem= link_to 'Members', members_path
+            %li#navitem= link_to 'Dashboard', root_path
+            %li#navitem= link_to 'Settings', settings_path
             %li#navitem= link_to 'Constitution', constitution_path
+            %li#navitem= link_to 'Members', members_path
 
         %div#notice
           = flash[:notice]
