@@ -75,7 +75,7 @@ class MembersController < ApplicationController
     )
     
     if proposal.save
-      redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Ejection proposal successfully created")
+      redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Ejection proposal successfully created")
     else
       redirect member_path(@member), :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
     end

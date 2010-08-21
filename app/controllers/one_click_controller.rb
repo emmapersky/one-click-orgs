@@ -1,14 +1,14 @@
 class OneClickController < ApplicationController
   
   def index
-    redirect_to(:action => 'control_centre')
+    redirect_to(:action => 'dashboard')
   end
   
   def constitution
     prepare_constitution_view
   end
   
-  def control_centre
+  def dashboard
     # only_provides :html
     
     # Fetch open proposals

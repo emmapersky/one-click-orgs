@@ -59,7 +59,7 @@ describe "induction process" do
     end
     
     post '/induction/confirm_founding_meeting', :members => {second_member_id.to_s => '1'}
-    response.should redirect_to '/one_click/control_centre'
+    response.should redirect_to '/one_click/dashboard'
     
     @organisation = Organisation.first
     @organisation.active?.should be_true
@@ -126,12 +126,12 @@ describe "induction process" do
         response.should redirect_to(login_path)
       end
       
-      it "should redirect to control centre if organisation is active and any induction action is requested" do
+      it "should redirect to dashboard if organisation is active and any induction action is requested" do
         login
         
         (InductionController::CONSTRUCTION_ACTIONS + InductionController::PENDING_ACTIONS).each do |a|
           get url_for(:controller=>'induction', :action=>a)
-          @response.should redirect_to(:controller=>'one_click', :action=>'control_centre')
+          @response.should redirect_to(:controller=>'one_click', :action=>'dashboard')
         end
       end
     end

@@ -23,7 +23,7 @@
       %div#bd
         - if current_user
           %ul#nav
-            %li#navitem= link_to 'My Control Centre', :controller => :one_click, :action => :control_centre
+            %li#navitem= link_to 'Dashboard', :controller => :one_click, :action => :dashboard
             %li#navitem= link_to 'My Member Page', member_path(current_user)
             %li#navitem= link_to 'Timeline', timeline_path
             %li#navitem= link_to 'Members', members_path

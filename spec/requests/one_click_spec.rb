@@ -22,7 +22,7 @@ describe "/one_click" do
     end
   end
   
-  describe "control centre" do
+  describe "dashboard" do
     before(:each) do
       login
     end
@@ -43,7 +43,7 @@ describe "/one_click" do
       
       # GH-89
       it "should display a link to the recently-closed 'add member' proposal" do
-        get url_for(:controller => 'one_click', :action => 'control_centre')
+        get url_for(:controller => 'one_click', :action => 'dashboard')
         response.should have_selector("table.decisions a[href='/proposals/#{@proposal.id}']")
       end
     end

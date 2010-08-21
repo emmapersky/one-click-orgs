@@ -86,5 +86,5 @@ OneClickOrgs::Application.routes.draw do
   
   resources :organisations
   
-  root :to => 'one_click#control_centre'
+  root :to => 'one_click#dashboard'
 end

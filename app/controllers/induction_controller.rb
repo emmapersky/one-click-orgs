@@ -212,7 +212,7 @@ class InductionController < ApplicationController
       m.send_welcome
     end
       
-    redirect_to(:controller => 'one_click', :action => 'control_centre')
+    redirect_to(:controller => 'one_click', :action => 'dashboard')
   end
   
   # Moves the organisation back from 'pending' state, to
@@ -231,7 +231,7 @@ private
   def check_active_organisation
     if co.active?
       if co.has_founding_member?
-        redirect_to(:controller => 'one_click', :action => 'control_centre')
+        redirect_to(:controller => 'one_click', :action => 'dashboard')
       else
         co.under_construction!
         raise "ERROR: organisation marked as active but no members present - reset"
