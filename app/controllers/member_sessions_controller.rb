@@ -8,7 +8,7 @@ class MemberSessionsController < ApplicationController
   end
   
   def create
-    self.current_user = Member.authenticate(params[:email], params[:password])
+    self.current_user = co.members.authenticate(params[:email], params[:password])
     if current_user
       flash[:notice] = "Authenticated successfully"
       redirect_back_or_default

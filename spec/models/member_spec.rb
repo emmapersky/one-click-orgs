@@ -8,8 +8,8 @@ describe Member do
     stub_constitution!
     stub_organisation!
 
-    @member = Member.make
-    @proposal = Proposal.make(:proposer_member_id => @member.id)
+    @member = @organisation.members.make
+    @proposal = @organisation.proposals.make(:proposer_member_id => @member.id)
   end
 
 
@@ -20,7 +20,7 @@ describe Member do
   end
 
   it "should not allow votes on members inducted after proposal was made" do
-    new_member = Member.make(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
+    new_member = @organisation.members.make(:created_at => Time.now + 1.day, :inducted_at => Time.now + 1.day)
     lambda {
       new_member.cast_vote(:for, @proposal.id)
     }.should raise_error(VoteError)
@@ -48,7 +48,7 @@ describe Member do
   describe "creation" do
     it "should schedule a welcome email delivery after member has been created" do
       lambda do
-        Member.create_member({:email=>'foo@example.com', :member_class=>MemberClass.make}, true)
+        @organisation.members.create_member({:email=>'foo@example.com', :member_class=>MemberClass.make}, true)
       end.should change { Delayed::Job.count }.by(1)
       
       job = Delayed::Job.first
@@ -67,9 +67,9 @@ describe Member do
 
   describe "finders" do
     it "should return only active members" do
-      Member.active.should == Member.all
-      disabled = Member.make(:active=>false)
-      Member.active.should == Member.all - [disabled]
+      @organisation.members.active.should == @organisation.members.all
+      disabled = @organisation.members.make(:active=>false)
+      @organisation.members.active.should == @organisation.members.all - [disabled]
     end
   end
 

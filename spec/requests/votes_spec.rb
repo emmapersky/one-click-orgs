@@ -3,7 +3,7 @@ require 'spec_helper'
 describe "everything" do
   before(:each) do 
     @user = login
-    @proposal = Proposal.make
+    @proposal = @organisation.proposals.make
     set_permission(@user, :vote, true)
   end
       

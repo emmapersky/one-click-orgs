@@ -12,24 +12,23 @@ class OneClickController < ApplicationController
     # only_provides :html
     
     # Fetch open proposals
-    @proposals = Proposal.currently_open
+    @proposals = co.proposals.currently_open
     
     # Fetch five most recent decisions
-    @decisions = Decision.order("id DESC").limit(5)
+    @decisions = co.decisions.order("id DESC").limit(5)
     
     # Fetch five most recent failed proposals
-    @failed_proposals = Proposal.failed.limit(5)
+    @failed_proposals = co.proposals.failed.limit(5)
     
-    @new_proposal = Proposal.new
-    @new_member = Member.new
+    @new_proposal = co.proposals.new
+    @new_member = co.members.new
   end
   
   def timeline
     @timeline = [
-      Member.all,
-      Proposal.all,
-      Decision.all
+      co.members.all,
+      co.proposals.all,
+      co.decisions.all
     ].flatten.map(&:to_event).sort{|a, b| b[:timestamp] <=> a[:timestamp]}
   end
-
 end

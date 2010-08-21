@@ -1,12 +1,16 @@
 class Decision < ActiveRecord::Base
   belongs_to :proposal
   
+  def organisation
+    proposal.organisation if proposal
+  end
+  
   def to_event
     { :timestamp => self.proposal.close_date, :object => self, :kind => :decision }    
   end 
   
   def send_email
-    Member.active.each do |m|
+    self.organisation.members.active.each do |m|
       DecisionMailer.notify_new_decision(m, self).deliver
     end
   end

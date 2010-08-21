@@ -2,20 +2,21 @@ require 'spec_helper'
 
 describe Clause do
   before(:each) do
-    @old_objectives = Clause.make(
+    @organisation = Organisation.make
+    @old_objectives = @organisation.clauses.make(
       :name => 'objectives', 
       :started_at => (Time.now - 3.days), 
       :ended_at => (Time.now - 1.day), 
       :text_value => "consuming ice-cream"
     )
     
-    @current_objectives = Clause.make(
+    @current_objectives = @organisation.clauses.make(
       :name => 'objectives',
       :started_at => (Time.now - 1.day),
       :text_value => "consuming doughnuts"
     )
     
-    @current_voting_period = Clause.make(
+    @current_voting_period = @organisation.clauses.make(
       :name => 'voting_period',
       :started_at => (Time.now - 1.day),
       :integer_value => 1
@@ -24,13 +25,13 @@ describe Clause do
   
   describe "get_current" do
     it "should find the current objectives" do
-      Clause.get_current('objectives').should == @current_objectives
+      @organisation.clauses.get_current('objectives').should == @current_objectives
     end
   end
   
   describe "creating a new clause" do
     before(:each) do
-      @c = Clause.new(:name => 'objectives', :text_value => 'consuming chocolate')
+      @c = @organisation.clauses.new(:name => 'objectives', :text_value => 'consuming chocolate')
       @c.save
     end
     

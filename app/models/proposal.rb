@@ -1,4 +1,6 @@
 class Proposal < ActiveRecord::Base
+  belongs_to :organisation
+  
   after_create :send_email
   
   has_many :votes
@@ -16,7 +18,7 @@ class Proposal < ActiveRecord::Base
   before_create :set_close_date
   private
   def set_close_date
-    self.close_date ||= Time.now.utc + Constitution.voting_period
+    self.close_date ||= Time.now.utc + organisation.constitution.voting_period
   end
   public
   
@@ -44,7 +46,7 @@ class Proposal < ActiveRecord::Base
   def member_count
     # TODO: find out how to do the following in one query
     count = 0
-    Member.where(["created_at < ? AND active = ? AND inducted_at IS NOT NULL", creation_date, true]).each do |m|
+    organisation.members.where(["created_at < ? AND active = ? AND inducted_at IS NOT NULL", creation_date, true]).each do |m|
       count += 1 if m.has_permission(:vote)
     end
     count
@@ -74,7 +76,7 @@ class Proposal < ActiveRecord::Base
   end
   
   def voting_system
-    Constitution.voting_system(:general)
+    organisation.constitution.voting_system(:general)
   end
     
   def passed?
@@ -93,7 +95,7 @@ class Proposal < ActiveRecord::Base
     save!
     
     if passed
-      decision = Decision.create!(:proposal_id=>self.id)
+      decision = self.create_decision
       decision.send_email
       
       params = self.parameters ? ActiveSupport::JSON.decode(self.parameters) : {}      
@@ -106,11 +108,11 @@ class Proposal < ActiveRecord::Base
   end
   
   def self.find_closeable_early_proposals
-    Proposal.currently_open.all.select { |p| p.voting_system.can_be_closed_early?(p) }
+    currently_open.all.select { |p| p.voting_system.can_be_closed_early?(p) }
   end
 
   def self.close_due_proposals
-   Proposal.where(["close_date < ? AND open = ?", Time.now.utc, true]).all.each { |p| p.close! }
+    where(["close_date < ? AND open = ?", Time.now.utc, true]).all.each { |p| p.close! }
   end
   
   def self.close_early_proposals
@@ -128,7 +130,7 @@ class Proposal < ActiveRecord::Base
   scope :failed, lambda {where(["close_date < ? AND accepted = ?", Time.now.utc, false]).order('close_date DESC')}
   
   def send_email
-    Member.active.each do |m|
+    self.organisation.members.active.each do |m|
       # only notify members who can vote
       ProposalMailer.notify_creation(m, self).deliver if m.has_permission(:vote)
     end

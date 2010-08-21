@@ -1,0 +1,9 @@
+.h1 SET YOU UP A ONE CLICK ORGS
+
+= form_tag(:action => 'create_base_domain') do
+  %p Confirm or edit the base domain for this installation.
+  %p
+    = label_tag('base_domain', "Base domain")
+    = text_field_tag('base_domain', @base_domain)
+  %p
+    = submit_tag("Save base domain")

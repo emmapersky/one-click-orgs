@@ -5,27 +5,27 @@ class MembersController < ApplicationController
   before_filter :require_membership_proposal_permission, :only => [:new, :create, :update, :destroy, :change_class]
 
   def index
-    @members = Member.active
-    @pending_members = Member.pending
-    @new_member = Member.new
+    @members = co.members.active
+    @pending_members = co.members.pending
+    @new_member = co.members.new
     respond_with @members
   end
 
   def show
-    @member = Member.find(params[:id])
+    @member = co.members.find(params[:id])
     raise NotFound unless @member
     respond_with @member
   end
 
   def new
     # only_provides :html
-    @member = Member.new
+    @member = co.members.new
     respond_with @member
   end
 
   def edit
     # only_provides :html
-    @member = Member.find(params[:id])
+    @member = co.members.find(params[:id])
     unless current_user.id == params[:id].to_i
       flash[:error] = "You are not authorized to do this."
       redirect_back_or_default
@@ -36,8 +36,8 @@ class MembersController < ApplicationController
 
   def create
     member = params[:member]
-    title = "Add #{member['name']} as a member of #{Organisation.organisation_name}" # TODO: should default in model
-    proposal = AddMemberProposal.new(
+    title = "Add #{member['name']} as a member of #{current_organisation.organisation_name}" # TODO: should default in model
+    proposal = co.add_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
       :parameters => AddMemberProposal.serialize_parameters(member)
@@ -53,7 +53,7 @@ class MembersController < ApplicationController
 
   def update
     id, member = params[:id], params[:member]
-    @member = Member.find(id)
+    @member = co.members.find(id)
     if @member.update_attributes(member)
        redirect_to member_path(@member), :notice => "Member updated"
     else
@@ -63,10 +63,10 @@ class MembersController < ApplicationController
   end
 
   def destroy
-    @member = Member.find(params[:id])
+    @member = co.members.find(params[:id])
     
-    title = "Eject #{@member.name} from #{Organisation.organisation_name}"
-    proposal = EjectMemberProposal.new(
+    title = "Eject #{@member.name} from #{current_organisation.organisation_name}"
+    proposal = co.eject_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
       :parameters => EjectMemberProposal.serialize_parameters('id' => @member.id)
@@ -80,11 +80,11 @@ class MembersController < ApplicationController
   end
   
   def change_class
-    @member = Member.find(params[:id])
-    @new_member_class = MemberClass.find(params[:member][:member_class_id])
+    @member = co.members.find(params[:id])
+    @new_member_class = co.member_classes.find(params[:member][:member_class_id])
     
     title = "Change member class of #{@member.name} from #{@member.member_class.name} to #{@new_member_class.name}"
-    proposal = ChangeMemberClassProposal.new(
+    proposal = co.change_member_class_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
       :description => params[:description],

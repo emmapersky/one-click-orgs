@@ -1,0 +1,6 @@
+= form_for(@organisation, organisations_path) do |f|
+  %p
+    = f.label(:subdomain, "Choose your OCO address")
+    = f.text_field(:subdomain) + '.' + Setting[:base_domain]
+  %p
+    = submit_tag "Save"

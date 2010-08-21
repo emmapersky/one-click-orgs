@@ -2,11 +2,11 @@ require 'spec_helper'
 
 describe MembersMailer do
   before :each do
-    @member = Member.make
-    @new_password = "foo"
-  
     stub_constitution!
     stub_organisation!
+    
+    @member = @organisation.members.make
+    @new_password = "foo"
   end
   
   describe "notify_new_password" do
@@ -20,7 +20,7 @@ describe MembersMailer do
     end
   
     it "should include login link in email text" do
-      @mail.body.should =~ %r{http://test.com/login}            
+      @mail.body.should =~ %r{http://test.oneclickorgs.com/login}            
     end
   end
   
@@ -35,7 +35,7 @@ describe MembersMailer do
     end
   
     it "should include login link in email text" do
-      @mail.body.should =~ %r{http://test.com/login}            
+      @mail.body.should =~ %r{http://test.oneclickorgs.com/login}            
     end
   end
 end

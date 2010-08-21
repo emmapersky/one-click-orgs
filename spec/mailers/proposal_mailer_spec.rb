@@ -6,8 +6,8 @@ describe ProposalMailer do
     before do
       stub_constitution!
       stub_organisation!
-      @member = Member.make
-      @proposal = Proposal.make(:proposer_member_id=>@member.id)
+      @member = @organisation.members.make
+      @proposal = @organisation.proposals.make(:proposer_member_id=>@member.id)
     end
     
     it "should include welcome phrase and proposal information in email text" do
@@ -19,7 +19,7 @@ describe ProposalMailer do
   
     it "should include correct propsal link in email text" do
       mail = ProposalMailer.notify_creation(@member, @proposal)
-      mail.body.should =~ %r{http://test.com/proposals/\d+}
+      mail.body.should =~ %r{http://test.oneclickorgs.com/proposals/\d+}
     end
   end
 end

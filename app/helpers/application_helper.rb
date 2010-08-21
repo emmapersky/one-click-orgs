@@ -1,16 +1,4 @@
 module ApplicationHelper
-  def oco_domain
-    Organisation.domain or raise "domain not defined"
-  end
-  
-  def absolute_oco_url(name)
-    oco_domain.concat(url_for(name))
-  end
-  
-  def absolute_oco_resource(name)
-    oco_domain.concat(url_for(name))
-  end
-  
   def get_satisfaction_widget
     raw <<-EOC
       <script type="text/javascript" charset="utf-8">

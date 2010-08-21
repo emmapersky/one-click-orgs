@@ -7,18 +7,4 @@ describe Merb::GlobalHelpers do
     stub_constitution!
     stub_organisation!
   end
-  
-  describe "url generation" do
-    it "should return generate an absolute url" do
-      absolute_oco_url('foo').should ==('http://test.com/foo')
-    end
-    
-    it "should return generate an absolute url for a resource" do
-      absolute_oco_resource(Proposal.new(:id=>1)).should ==('http://test.com/proposals/1')
-    end
-  end 
-  
-  it "should return the domain" do
-      oco_domain.should == 'http://test.com'
-  end
 end
