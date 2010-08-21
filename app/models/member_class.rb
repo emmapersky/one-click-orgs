@@ -1,5 +1,6 @@
 class MemberClass < ActiveRecord::Base
   belongs_to :organisation
+  has_many :members
   
   def has_permission(type)
     organisation.clauses.get_boolean(get_permission_name(type)) || false
