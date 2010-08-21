@@ -1,5 +1,0 @@
-%h3 Timeline
-%table.timeline
-  - for event in @timeline
-    %tr
-      = render :partial => event[:kind].to_s, :locals => {:event => event}

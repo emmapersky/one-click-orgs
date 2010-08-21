@@ -32,40 +32,8 @@
       %td.vote
         = render 'proposals/vote', :proposal => proposal
   
-%h4 Recent Decisions
-%table.decisions
-  %tr
-    %th Title
-    %th Decision made
-    %th For/against
-  - reset_cycle
-  - for decision in @decisions
-    %tr{:class => cycle('odd', 'even')}
-      %td
-        = decision.proposal.title
-        (
-        = link_to(decision.proposal.proposer.name, member_path(decision.proposal.proposer))
-        )
-        = render 'proposals/description', :proposal => decision.proposal
-        %p= link_to("More details", proposal_path(decision.proposal))
-      %td.timestamp= decision.proposal.close_date.to_s(:long)
-      %td.vote= render 'proposals/vote_count', :proposal => decision.proposal
-
-%h4 Recent Failed Proposals
-%table.failed_proposals
-  %tr
-    %th Title
-    %th Proposal failed
-    %th For/against
-  - reset_cycle
-  - for failed_proposal in @failed_proposals
-    %tr{:class => cycle('odd', 'even')}
-      %td
-        = failed_proposal.title
-        (
-        = link_to(failed_proposal.proposer.name, member_path(failed_proposal.proposer))
-        )
-        = render 'proposals/description', :proposal => failed_proposal
-        %p= link_to("More details", proposal_path(failed_proposal))
-      %td.timestamp= failed_proposal.close_date.to_s(:long)
-      %td.vote= render 'proposals/vote_count', :proposal => failed_proposal
+%h4 Timeline
+%table.timeline
+  - for event in @timeline
+    %tr
+      = render :partial => event[:kind].to_s, :locals => {:event => event}
