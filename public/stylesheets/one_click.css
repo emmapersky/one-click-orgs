@@ -75,19 +75,19 @@ a {
 table {
   border: 1px #cccccc solid !important; }
 
-table.proposals, table.decisions, table.failed_proposals {
+table.proposals, table.decisions, table.failed_proposals, table.members {
   border: 1px #004422 solid;
   margin: auto;
   width: 900px; }
-  table.proposals td.vote, table.decisions td.vote, table.failed_proposals td.vote {
+  table.proposals td.vote, table.decisions td.vote, table.failed_proposals td.vote, table.members td.vote {
     text-align: center;
     width: 12em; }
-  table.proposals form, table.decisions form, table.failed_proposals form {
+  table.proposals form, table.decisions form, table.failed_proposals form, table.members form {
     display: inline; }
-  table.proposals input, table.decisions input, table.failed_proposals input {
+  table.proposals input, table.decisions input, table.failed_proposals input, table.members input {
     margin: auto;
     width: 7em; }
-  table.proposals td.proposal_ends_in, table.decisions td.proposal_ends_in, table.failed_proposals td.proposal_ends_in {
+  table.proposals td.proposal_ends_in, table.decisions td.proposal_ends_in, table.failed_proposals td.proposal_ends_in, table.members td.proposal_ends_in {
     text-align: center;
     width: 14em; }
 

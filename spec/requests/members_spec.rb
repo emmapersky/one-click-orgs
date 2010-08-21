@@ -20,8 +20,7 @@ describe "everything" do
       end
 
       it "contains a list of members" do
-        # pending
-        @response.should have_xpath("//ol")
+        @response.should have_selector("table.members")
       end
     
     end
@@ -33,8 +32,7 @@ describe "everything" do
       end
     
       it "has a list of members" do
-        # pending
-        @response.should have_xpath("//ol/li")
+        @response.should have_selector("table.members tr")
       end
     end
   

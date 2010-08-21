@@ -1,16 +1,28 @@
 %h3
   Existing Members
-%ol
+%table.members
+  %thead
+    %tr
+      %th Name
+      %th Proposals (succeeded/failed)
+      %th Votes
   - for member in @members
-    %li
-      = link_to "#{member.name}", member_path(member)
-%h3
-  Pending Members
-%p
-  These members still need to agree to the constitution
-%ol
-  - for member in @pending_members
-    %li
-      = link_to "#{member.name}", member_path(member)
-
-= render :partial => 'shared/propose_new_member_form'
+    %tr
+      %td= link_to "#{member.name}", member_path(member)
+      %td
+        = member.proposals_count
+        (
+        = member.succeeded_proposals_count
+        \/
+        = member.failed_proposals_count
+        )
+      %td= member.votes_count
+- unless @pending_members.empty?
+  %h3
+    Pending Members
+  %p
+    These members still need to agree to the constitution
+  %ul
+    - for member in @pending_members
+      %li
+        = link_to "#{member.name}", member_path(member)
