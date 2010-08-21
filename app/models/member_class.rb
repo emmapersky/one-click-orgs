@@ -1,11 +1,12 @@
 class MemberClass < ActiveRecord::Base
+  belongs_to :organisation
   
   def has_permission(type)
-    Clause.get_boolean(get_permission_name(type)) || false
+    organisation.clauses.get_boolean(get_permission_name(type)) || false
   end
   
   def set_permission(type, value)
-    Clause.set_boolean(get_permission_name(type), value)
+    organisation.clauses.set_boolean(get_permission_name(type), value)
   end
   
 private

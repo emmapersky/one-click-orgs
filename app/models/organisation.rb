@@ -16,6 +16,10 @@ class Organisation < ActiveRecord::Base
   
   has_many :decisions, :through => :proposals
   
+  has_many :member_classes
+  
+  after_create :create_default_member_classes
+  
   # Given a full hostname, e.g. "myorganisation.oneclickorgs.com",
   # and assuming the installation's base domain is "oneclickorgs.com",
   # returns the organisation corresponding to the subdomain
@@ -75,5 +79,14 @@ class Organisation < ActiveRecord::Base
   
   def constitution
     @constitution ||= Constitution.new(self)
+  end
+  
+  def create_default_member_classes
+    # Set up a simple organisation: all members are equal
+    members = member_classes.find_or_create_by_name('Member')
+    members.set_permission(:constitution_proposal, true)
+    members.set_permission(:membership_proposal, true)
+    members.set_permission(:freeform_proposal, true)
+    members.set_permission(:vote, true)
   end
 end

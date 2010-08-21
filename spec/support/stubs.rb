@@ -5,8 +5,9 @@ def stub_setup!
 end
 
 def default_member_class
-  @default_member_class = MemberClass.where(:name => "Clown").first || 
-    MemberClass.create(:name => "Clown") or raise "can't create member class"
+  stub_organisation!
+  @default_member_class = @organisation.member_classes.where(:name => "Clown").first || 
+    @organisation.member_classes.create!(:name => "Clown")
 end
 
 def default_user

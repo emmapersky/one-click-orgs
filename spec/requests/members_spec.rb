@@ -85,7 +85,7 @@ describe "everything" do
 
   describe "/members/1/edit, given a member exists" do
     before(:each) do
-      @member = Member.make
+      @member = @organisation.members.make
     end
   
     it "responds successfully if resource == current_user" do

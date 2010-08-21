@@ -5,7 +5,7 @@ describe MembersMailer do
     stub_constitution!
     stub_organisation!
     
-    @member = Member.make
+    @member = @organisation.members.make
     @new_password = "foo"
   end
   

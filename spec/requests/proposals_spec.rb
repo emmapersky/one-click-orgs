@@ -17,15 +17,16 @@ describe "everything" do
   before(:each) do 
     stub_organisation!
     stub_constitution!
+    
     @user = login
   end
   
   describe "/proposals/1, given a proposal exists" do
     before(:each) do
       set_permission(@user, :vote, true)
-      @member_two = @organisation.members.make
+      @member_two = @organisation.members.make(:member_class => @default_member_class)
       set_permission(@member_two, :vote, true)
-      @member_three = @organisation.members.make
+      @member_three = @organisation.members.make(:member_class => @default_member_class)
       set_permission(@member_two, :vote, true)
       
       a_proposal_exists
@@ -148,9 +149,9 @@ describe "everything" do
     before do
       login
       set_permission(@user, :constitution_proposal, true)
-      @general_voting_system = Clause.set_text('general_voting_system', 'RelativeMajority')
-      @membership_voting_system = Clause.set_text('membership_voting_system', 'RelativeMajority')
-      @constitution_voting_system = Clause.set_text('constitution_voting_system', 'RelativeMajority')
+      @general_voting_system = @organisation.clauses.set_text('general_voting_system', 'RelativeMajority')
+      @membership_voting_system = @organisation.clauses.set_text('membership_voting_system', 'RelativeMajority')
+      @constitution_voting_system = @organisation.clauses.set_text('constitution_voting_system', 'RelativeMajority')
     end
     
     describe "for general decisions" do

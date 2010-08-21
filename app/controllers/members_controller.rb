@@ -80,11 +80,11 @@ class MembersController < ApplicationController
   end
   
   def change_class
-    @member = Member.find(params[:id])
-    @new_member_class = MemberClass.find(params[:member][:member_class_id])
+    @member = co.members.find(params[:id])
+    @new_member_class = co.member_classes.find(params[:member][:member_class_id])
     
     title = "Change member class of #{@member.name} from #{@member.member_class.name} to #{@new_member_class.name}"
-    proposal = ChangeMemberClassProposal.new(
+    proposal = co.change_member_class_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
       :description => params[:description],

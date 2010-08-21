@@ -76,9 +76,20 @@ describe "Multi-tenancy" do
   describe "with multiple organisations" do
     before(:each) do
       # Make three organisations, each with one member
-      stub_organisation!(true, 'aardvarks', false, true).members.make(:name => "Alvin", :email => 'alvin@example.com', :password => 'password', :password_confirmation => 'password')
-      stub_organisation!(true, 'beavers', false, true).members.make(:name => "Betty", :email => 'betty@example.com', :password => 'password', :password_confirmation => 'password')
-      stub_organisation!(true, 'chipmunks', false, true).members.make(:name => "Consuela", :email => 'consuela@example.com', :password => 'password', :password_confirmation => 'password')
+      stub_organisation!(true, 'aardvarks', false, true).tap do |o|
+        mc = o.member_classes.make
+        o.members.make(:name => "Alvin", :email => 'alvin@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
+      end
+      
+      stub_organisation!(true, 'beavers', false, true).tap do |o|
+        mc = o.member_classes.make
+        o.members.make(:name => "Betty", :email => 'betty@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
+      end
+      
+      stub_organisation!(true, 'chipmunks', false, true).tap do |o|
+        mc = o.member_classes.make
+        o.members.make(:name => "Consuela", :email => 'consuela@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
+      end
     end
     
     describe "logging in to a subdomain with a correct user" do

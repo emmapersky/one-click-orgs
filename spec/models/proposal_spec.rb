@@ -8,8 +8,9 @@ describe Proposal do
     stub_constitution!  
     stub_organisation!
     stub_voting_systems!
+    default_member_class
     
-    @member = @organisation.members.make
+    @member = @organisation.members.make(:member_class => @default_member_class)
     
     @mail = mock('mail', :deliver => nil)
     
@@ -18,8 +19,8 @@ describe Proposal do
   end
 
   it "should close early proposals" do
-    member_0, member_1, member_2 = @organisation.members.make_n(3)
-    member_3, member_4 = @organisation.members.make_n(2, :created_at => Time.now + 1.day) 
+    member_0, member_1, member_2 = @organisation.members.make_n(3, :member_class => @default_member_class)
+    member_3, member_4 = @organisation.members.make_n(2, :created_at => Time.now + 1.day, :member_class => @default_member_class)
     
     proposal = @organisation.proposals.create!(:proposer_member_id => member_1.id, :title => 'test')            
     [member_0, member_1, member_2].each { |m| m.cast_vote(:for, proposal.id)}
