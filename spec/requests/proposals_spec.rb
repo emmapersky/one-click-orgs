@@ -45,10 +45,6 @@ describe "everything" do
       it "responds successfully" do
         @response.should be_successful
       end
-      
-      it "should display the correct vote count" do
-        response.should contain /2\s*\/\s*1/ # i.e. "2/1" with arbitrary whitespace
-      end
     end
   end
   

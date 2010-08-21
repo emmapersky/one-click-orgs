@@ -14,32 +14,32 @@
 = render 'description', :proposal => @proposal
 
 %p
-  The proposal was made on
-  = @proposal.creation_date.to_s(:long)
-  by
+  Proposed by
   = link_to(@proposal.proposer.name, @proposal.proposer)
+  = @proposal.creation_date.to_s(:at_on)
 
--if @proposal.open?
+- if @proposal.open?
   %p
-    Voting on this proposal will end in
+    Voting ends
+    = @proposal.end_date.to_s(:at_on)
+  %p
+    Time remaining:
     = distance_of_time_in_words_to_now(@proposal.end_date)
-    (
-    = @proposal.end_date.to_s(:long)
-    )
-  %p
-    Number of votes for/against:
-    = render 'proposals/vote_count', :proposal => @proposal
+
+- if @proposal.open?
   - if current_user.has_permission(:vote)
     %p
-      Your vote:
       = render 'vote', :proposal => @proposal
   - else
     %p
       You cannot vote on this proposal.
 - else
   %p
-    Voting on this proposal ended
-    = @proposal.close_date.to_s(:long)
-  %p
-    Votes for/against:
+    This proposal
+    -if @proposal.accepted?
+      %strong SUCCEEDED
+    -else
+      %strong FAILED
+    (
     = render 'vote_count', :proposal => @proposal
+    
