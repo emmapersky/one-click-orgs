@@ -189,3 +189,9 @@ form div.constitution_proposal input#submit {
 
 ul.founding_members li {
   clear: left; }
+
+dl.settings dt {
+  font-weight: bold;
+  border-top: 1px solid #004422;
+  margin-top: 1em;
+  clear: right; }

@@ -24,6 +24,10 @@ class OneClickController < ApplicationController
     @new_member = co.members.new
   end
   
+  def settings
+    prepare_constitution_view
+  end
+  
   def timeline
     @timeline = [
       co.members.all,

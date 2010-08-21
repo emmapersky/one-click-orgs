@@ -1,0 +1,39 @@
+%h3 Settings
+
+%dl.settings
+  %dt Organisation name
+  %dd
+    = render :partial => 'shared/propose_change_org_name_form'
+    = @organisation_name
+  %dt Objectives
+  %dd
+    = render :partial => 'shared/propose_change_objectives_form'
+    = @objectives
+  %dt Assets
+  %dd
+    - if @assets
+      = render :partial => 'shared/propose_hold_no_assets_form'
+      The Organisation may hold, transfer and dispose of material assets and intangible assets
+    - else
+      = render :partial => 'shared/propose_hold_assets_form'
+      The Organisation does not hold material assets or intangible assets.
+  %dt Making decisions
+  %dd
+    = render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'general', :description => 'Change the way decisions are made:'}
+    A decision is made if a proposal receives
+    = @general_voting_system.long_description
+  %dt Changing the constitution
+  %dd
+    = render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'constitution', :description => 'Change the way the constitution is changed:'}
+    The constitution may only be amended by a decision where
+    = @constitution_voting_system.long_description(:include_received => true)
+  %dt Admitting and rejecting members
+  %dd
+    = render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'membership', :description => 'Change the way membership decisions are made:'}
+    New members may be appointed and exiting members ejected only by a decision where
+    = @membership_voting_system.long_description(:include_received => true)
+  %dt Voting period
+  %dd
+    = render :partial => 'shared/propose_change_voting_period_form'
+    = @voting_period
+    
