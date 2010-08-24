@@ -1,3 +1,8 @@
+require 'lib/one_click_orgs/setup'
+
+require 'lib/unauthenticated'
+require 'lib/not_found'
+
 class ApplicationController < ActionController::Base
   protect_from_forgery
   

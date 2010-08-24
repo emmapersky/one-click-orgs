@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require 'lib/vote_error'
 
 class Member < ActiveRecord::Base
   belongs_to :organisation

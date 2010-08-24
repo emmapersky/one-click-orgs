@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'lib/vote_error'
 
 describe Member do
 

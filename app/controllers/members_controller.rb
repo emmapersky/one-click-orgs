@@ -1,3 +1,5 @@
+require 'lib/not_found'
+
 class MembersController < ApplicationController
 
   respond_to :html
