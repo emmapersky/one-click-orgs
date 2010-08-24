@@ -94,9 +94,9 @@ PLATFORMS
 DEPENDENCIES
   daemons (~> 1.0.10)
   delayed_job (= 2.0.3)
-  faker (>= 0.3.1)
+  faker (~> 0.3.1)
   haml (~> 3.0.14)
-  machinist (>= 1.0.6)
+  machinist (~> 1.0.6)
   mysql
   rails (= 3.0.0.rc2)
   rcov (~> 0.9.8)
