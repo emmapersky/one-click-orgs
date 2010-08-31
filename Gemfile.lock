@@ -38,7 +38,7 @@ GEM
     erubis (2.6.6)
       abstract (>= 1.0.0)
     faker (0.3.1)
-    haml (3.0.17)
+    haml (3.0.18)
     i18n (0.4.1)
     machinist (1.0.6)
     mail (2.2.5)
@@ -95,7 +95,7 @@ DEPENDENCIES
   daemons (~> 1.0.10)
   delayed_job (= 2.0.3)
   faker (~> 0.3.1)
-  haml (~> 3.0.14)
+  haml (~> 3.0.18)
   machinist (~> 1.0.6)
   mysql
   rails (= 3.0.0)
