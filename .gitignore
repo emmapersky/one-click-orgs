@@ -11,3 +11,4 @@ tmp/**/*
 vendor/bundle/*
 vendor/gems/*
 doc/app
+tmp/restart.txt
