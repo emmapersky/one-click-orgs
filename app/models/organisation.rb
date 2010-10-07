@@ -46,11 +46,11 @@ class Organisation < ActiveRecord::Base
   # Returns the base URL for this instance of OCO.
   # Pass the :only_host => true option to just get the host name.
   def domain(options={})
-    raw_domain = clauses.get_text('domain')
+    raw_domain = host
     if options[:only_host]
-      raw_domain.gsub(%r{^.*?://}, '').gsub(%r{/$}, '')
-    else
       raw_domain
+    else
+      "http://#{raw_domain}"
     end
   end
   
