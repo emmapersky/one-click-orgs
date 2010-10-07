@@ -1,5 +1,5 @@
 - if current_user.has_permission(:constitution_proposal)
-  =form(:controller => 'proposals', :action => 'create_assets_amendment') do
+  = form_tag(:controller => 'proposals', :action => 'create_assets_amendment') do
     %div.constitution_proposal
       %p.reveal_link
         %a{:href => '#'}
