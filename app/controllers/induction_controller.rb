@@ -251,7 +251,7 @@ public
   
   def self.send_agenda_email(member)
     co = member.organisation
-    organisation_name = co.organisation.organisation_name
+    organisation_name = co.organisation_name
     founding_meeting_location = co.clauses.get_text('founding_meeting_location')
     founding_meeting_date = co.clauses.get_text('founding_meeting_date')
     founding_meeting_time = co.clauses.get_text('founding_meeting_time')
