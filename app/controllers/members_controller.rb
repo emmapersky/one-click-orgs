@@ -42,7 +42,7 @@ class MembersController < ApplicationController
     proposal = co.add_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
-      :parameters => AddMemberProposal.serialize_parameters(member)
+      :parameters => member
     )
     
     if proposal.save
@@ -71,7 +71,7 @@ class MembersController < ApplicationController
     proposal = co.eject_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
-      :parameters => EjectMemberProposal.serialize_parameters('id' => @member.id)
+      :parameters => {'id' => @member.id}
     )
     
     if proposal.save

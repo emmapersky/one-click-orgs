@@ -61,9 +61,8 @@ describe "everything" do
       end
       
       it "should create the proposal to eject the member" do
-        EjectMemberProposal.should_receive(:serialize_parameters).with('id' => @member.id).and_return(@serialized_parameters = mock('serialized parameters'))
         EjectMemberProposal.should_receive(:new).with(
-          :parameters => @serialized_parameters,
+          :parameters => {'id' => @member.id},
           :title => "Eject #{@member.name} from test",
           :proposer_member_id => @user.id
         ).and_return(@proposal = mock('proposal'))

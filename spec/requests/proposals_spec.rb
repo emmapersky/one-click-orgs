@@ -81,14 +81,12 @@ describe "everything" do
     end
     
     it "should create a proposal to change the organisation name" do
-      ChangeTextProposal.should_receive(:serialize_parameters).with(
-        'name' => 'organisation_name',
-        'value' => 'The Yoghurt Yurt'
-      ).and_return(@serialized_parameters = mock('serialized_parameters'))
-      
       ChangeTextProposal.should_receive(:new).with(
         :title => "Change organisation name to 'The Yoghurt Yurt'",
-        :parameters => @serialized_parameters,
+        :parameters => {
+          'name' => 'organisation_name',
+          'value' => 'The Yoghurt Yurt'
+        },
         :proposer_member_id => @user.id
       ).and_return(@proposal)
       
@@ -98,14 +96,12 @@ describe "everything" do
     end
     
     it "should create a proposal to change the objectives" do
-      ChangeTextProposal.should_receive(:serialize_parameters).with(
-        'name' => 'objectives',
-        'value' => 'make all the yoghurt'
-      ).and_return(@serialized_parameters = mock('serialized_parameters'))
-      
       ChangeTextProposal.should_receive(:new).with(
         :title => "Change objectives to 'make all the yoghurt'",
-        :parameters => @serialized_parameters,
+        :parameters => {
+          'name' => 'objectives',
+          'value' => 'make all the yoghurt'
+        },
         :proposer_member_id => @user.id
       ).and_return(@proposal)
       
@@ -115,14 +111,12 @@ describe "everything" do
     end
     
     it "should create a proposal to change the domain" do
-      ChangeTextProposal.should_receive(:serialize_parameters).with(
-        'name' => 'domain',
-        'value' => 'yaourt.com'
-      ).and_return(@serialized_parameters = mock('serialized_parameters'))
-      
       ChangeTextProposal.should_receive(:new).with(
         :title => "Change domain to 'yaourt.com'",
-        :parameters => @serialized_parameters,
+        :parameters => {
+          'name' => 'domain',
+          'value' => 'yaourt.com'
+        },
         :proposer_member_id => @user.id
       ).and_return(@proposal)
       
@@ -164,7 +158,7 @@ describe "everything" do
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.first.title.should == 'change general voting system to Supporting votes from every single member'
-        proposal_parameters = ActiveSupport::JSON.decode(ChangeVotingSystemProposal.all.first.parameters)
+        proposal_parameters = ChangeVotingSystemProposal.all.first.parameters
         proposal_parameters['type'].should == 'general'
         proposal_parameters['proposed_system'].should == 'Unanimous'
       end
@@ -180,7 +174,7 @@ describe "everything" do
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.all.first.title.should == 'change membership voting system to No opposing votes'
-        proposal_parameters = ActiveSupport::JSON.decode(ChangeVotingSystemProposal.all.first.parameters)
+        proposal_parameters = ChangeVotingSystemProposal.all.first.parameters
         proposal_parameters['type'].should == 'membership'
         proposal_parameters['proposed_system'].should == 'Veto'
       end
@@ -195,7 +189,7 @@ describe "everything" do
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.all.first.title.should == 'change constitution voting system to Supporting votes from more than half the members'
-        proposal_parameters = ActiveSupport::JSON.decode(ChangeVotingSystemProposal.all.first.parameters)
+        proposal_parameters = ChangeVotingSystemProposal.all.first.parameters
         proposal_parameters['type'].should == 'constitution'
         proposal_parameters['proposed_system'].should == 'AbsoluteMajority'
       end
@@ -210,7 +204,7 @@ describe "everything" do
 
         ChangeVotingPeriodProposal.count.should == 1
         ChangeVotingPeriodProposal.all.first.title.should == 'Change voting period to 24 hours'
-        proposal_parameters = ActiveSupport::JSON.decode(ChangeVotingPeriodProposal.all.first.parameters)
+        proposal_parameters = ChangeVotingPeriodProposal.all.first.parameters
         proposal_parameters['new_voting_period'].to_i.should == 86400
       end
     end

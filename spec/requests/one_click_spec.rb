@@ -32,7 +32,7 @@ describe "/one_click" do
         @proposal = @organisation.add_member_proposals.create!(
           :title => "Add new member",
           :proposer_member_id => default_user.id,
-          :parameters => AddMemberProposal.serialize_parameters(:email => "new@example.com", :name => "James Nouveau")
+          :parameters => {:email => "new@example.com", :name => "James Nouveau"}
         )
         @proposal.open = false
         @proposal.close_date = Time.now.utc

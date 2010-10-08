@@ -39,10 +39,10 @@ class ProposalsController < ApplicationController
     proposal = co.change_text_proposals.new(
       :title => "Change #{params[:name].humanize.downcase} to '#{params[:value]}'",
       :proposer_member_id => current_user.id,
-      :parameters => ChangeTextProposal.serialize_parameters(
+      :parameters => {
         'name' => params[:name],
         'value' => params[:value]
-      )
+      }
     )
     if proposal.save
       redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Constitutional amendment proposal succesfully created")
@@ -63,10 +63,10 @@ class ProposalsController < ApplicationController
     proposal = co.change_boolean_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
-      :parameters => ChangeBooleanProposal.serialize_parameters(
+      :parameters => {
         'name' => 'assets',
         'value' => new_assets_value
-      )
+      }
     )
     
     if proposal.save
@@ -81,9 +81,8 @@ class ProposalsController < ApplicationController
       proposal = co.change_voting_period_proposals.new(
         :title=>"Change voting period to #{VotingPeriods.name_for_value(params[:new_voting_period])}",
         :proposer_member_id => current_user.id,
-        :parameters => ChangeVotingSystemProposal.serialize_parameters(
-          'new_voting_period'=>params[:new_voting_period])
-      )      
+        :parameters => {'new_voting_period'=>params[:new_voting_period]}
+      )
       if proposal.save
         redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Constitutional amendment proposal succesfully created")
       else
@@ -102,7 +101,7 @@ class ProposalsController < ApplicationController
         proposal = co.change_voting_system_proposals.new(
           :title => "change general voting system to #{proposed_system.description}",
           :proposer_member_id => current_user.id,
-          :parameters => ChangeVotingSystemProposal.serialize_parameters('type'=>'general', 'proposed_system'=> proposed_system.simple_name)
+          :parameters => {'type'=>'general', 'proposed_system'=> proposed_system.simple_name}
         )
 
         if proposal.save
@@ -121,7 +120,7 @@ class ProposalsController < ApplicationController
         proposal = co.change_voting_system_proposals.new(
           :title => "change membership voting system to #{proposed_system.description}",
           :proposer_member_id => current_user.id,
-          :parameters => ChangeVotingSystemProposal.serialize_parameters('type' => 'membership', 'proposed_system' => proposed_system.simple_name)
+          :parameters => {'type' => 'membership', 'proposed_system' => proposed_system.simple_name}
         )
         
         if proposal.save
@@ -140,7 +139,7 @@ class ProposalsController < ApplicationController
         proposal = co.change_voting_system_proposals.new(
           :title => "change constitution voting system to #{proposed_system.description}",
           :proposer_member_id => current_user.id,
-          :parameters => ChangeVotingSystemProposal.serialize_parameters('type' => 'constitution', 'proposed_system' => proposed_system.simple_name)
+          :parameters => {'type' => 'constitution', 'proposed_system' => proposed_system.simple_name}
         )
         
         if proposal.save

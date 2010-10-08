@@ -98,13 +98,16 @@ class Proposal < ActiveRecord::Base
       decision = self.create_decision
       decision.send_email
       
-      params = self.parameters ? ActiveSupport::JSON.decode(self.parameters) : {}      
-      enact!(params) 
+      enact!(self.parameters)
     end
   end
 
-  def self.serialize_parameters(params)
-    params.to_json
+  def parameters
+    self[:parameters].blank? ? {} : ActiveSupport::JSON.decode(self[:parameters])
+  end
+  
+  def parameters=(new_parameters)
+    self[:parameters] = new_parameters.to_json
   end
   
   def self.find_closeable_early_proposals
