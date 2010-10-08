@@ -3,6 +3,7 @@ require 'spec_helper'
 describe ChangeTextProposal do
   before(:each) do
     stub_organisation!
+    @objectives = @organisation.clauses.set_integer('voting_period', 30*60)
     @objectives = @organisation.clauses.set_text('objectives', 'eat all the cheese')
   end
   
@@ -18,5 +19,10 @@ describe ChangeTextProposal do
       should change(@organisation.clauses, :count).by(1)
     
     @organisation.clauses.get_text('objectives').should == 'make all the yoghurt'
+  end
+  
+  it "should not validate if text has not been changed" do
+    @p = ChangeTextProposal.new(:proposer => Member.make, :title => "change objectives to eat all the cheese", :parameters => {'name' => 'objectives', 'value' => 'eat all the cheese'})
+    @p.should_not be_valid
   end
 end

@@ -9,4 +9,10 @@ class ChangeTextProposal < Proposal
   def voting_system
     organisation.constitution.voting_system(:constitution)
   end
+  
+  validates_each :parameters do |record, attribute, value|
+    if Clause.get_text(record.parameters['name']) == record.parameters['value']
+      record.errors.add :base, "Proposal does not change the current clause"
+    end
+  end
 end
