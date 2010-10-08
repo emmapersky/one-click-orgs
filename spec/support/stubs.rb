@@ -39,7 +39,10 @@ def stub_organisation!(active=true, name='test', stub_host_lookup=true, new_orga
   stub_setup!
   if new_organisation || !@organisation
     @organisation = Organisation.make(:subdomain => name)
+    
+    # TODO remove this; we don't use this clause anymore
     @organisation.clauses.set_text(:domain, "#{name}.oneclickorgs.com")
+    
     @organisation.clauses.set_text(:organisation_name, name)
   
     organisation_is_active if active
