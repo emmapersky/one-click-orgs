@@ -83,10 +83,17 @@ class Member < ActiveRecord::Base
   end
 
   def send_welcome
-    MembersMailer.welcome_new_member(self, self.password).deliver
+    # delayed_job will not have access to the instance variable @password
+    # when it reloads this Member object, so we cache it in the method
+    # parameters here.
+    self.dispatch_welcome(self.password)
   end
-  handle_asynchronously :send_welcome
-
+  
+  def dispatch_welcome(cached_password)
+    MembersMailer.welcome_new_member(self, cached_password).deliver
+  end
+  handle_asynchronously :dispatch_welcome
+  
   # only to be backwards compatible with systems running older versions of delayed job
   def self.send_new_member_email(member_id, password)
     Member.find(member_id).send_welcome_without_send_later
