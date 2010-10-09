@@ -4,8 +4,8 @@
   %thead
     %tr
       %th Name
-      %th Proposals (succeeded/failed)
-      %th Votes
+      %th Proposals made (succeeded/failed)
+      %th Votes cast
   - for member in @members
     %tr
       %td= link_to "#{member.name}", member_path(member)

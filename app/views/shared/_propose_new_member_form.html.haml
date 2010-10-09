@@ -1,6 +1,6 @@
 - if current_user.has_permission(:membership_proposal)
   %h4
-    New Member
+    Propose a new member
   %p
     = form_for(@new_member, :as => :member, :url => members_path) do |f|
       %p
