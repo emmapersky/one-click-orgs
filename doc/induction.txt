@@ -1,8 +1,9 @@
 2010-08-21 14:34:53
 
 http://github.com/emmapersky/one-click-orgs/issues#issue/118 "Update induction process to use interface closer to core app"
+See "One Click Orgs v1.0 Requirements" on Google Docs for functional spec.
 
-A new organisation is in a "pending" state until the founder marks it as "complete". i
+A new organisation is in a "pending" state until the founder marks it as "complete".
 In this state:
 - the founder can modify the organisation/consitution without making proposals
 - the founder can add new founding members without making proposals
@@ -45,4 +46,55 @@ when 'found org' proposal succeeded:
 - all founding members who voted 'yes' or who abstained get migrated to full 'member' status
 - all other founding members receive an email 'sorry that you don't want to be a part of this'
   - do we need/want to disable these accounts?
+
+ ========
+ = code =
+ ========
+
+CURRENT STATE
+
+DONE
+* code cleanup of misc controller clause setters/getters
+  * co.clauses.get_current||new, set, save!  -> co.clauses.set_text
+* new proposal to found org
+* new perm and before_filter: found_organisation_permission
+* new state and before_filter: organisation_pending
+* various controller/model/view changes for the above
+* fixed misc typos
+* 
+* ...?
+
+TODO
+* member class when adding new members (/induction/members)
+* remove timeline (NPE)
+* direct edit for:
+  * members -> add
+  * dashboard -> add member
+  * settings/constitution
+* skip 'has user been inducted?' before_filter if org is pending
+  * causes 'Error casting vote: Can not vote on proposals created before member inducted'
+* set org state to 'failed' if not enough members voted for it
+
+
+SNIPPETS
+
+# assign member classes, provided we already have members set up
+Member.all
+Member.all.each { |m| if m.id!=1 m.member_class = MemberClass.find_or_create_by_name('Founding Member'); m.save! }
+Member.all.each { |m| if m.id=1 m.member_class = MemberClass.find_or_create_by_name('Founder'); m.save! }
+
+# or just:
+m = Member.find_by_id(1)
+m.member_class = MemberClass.find_by_name('Founder'); m.save!
+
+# set up org in pending state
+o = Organisation.all.first
+o.clauses.set_text('organisation_state', 'pending')
+
+# browse site
+http://abc.oco:3000/
+a@b.com, abc
+
+# when done with org setup:
+o.clauses.set_text('organisation_state', 'proposed')
 

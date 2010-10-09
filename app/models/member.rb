@@ -78,7 +78,7 @@ class Member < ActiveRecord::Base
     # FIXME why not just pass the proposal in?
     proposal = organisation.proposals.find(proposal_id)
     raise VoteError, "proposal with id #{proposal_id} not found" unless proposal
-    if !self.inducted? || proposal.creation_date < self.inducted_at
+    if (!self.inducted? || proposal.creation_date < self.inducted_at) && !organisation.proposed?
       raise VoteError, "Can not vote on proposals created before member inducted"
     end
 

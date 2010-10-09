@@ -2,6 +2,8 @@ class Organisation < ActiveRecord::Base
   has_many :clauses
   has_many :members
   
+  has_many :found_organisation_proposals
+  
   has_many :proposals
   
   # Need to add the subclasses individually so that we can do things like:
@@ -63,6 +65,7 @@ class Organisation < ActiveRecord::Base
   end
   
   def under_construction?
+    # TODO: remove this. it is only used during induction
     clauses.get_text('organisation_state').nil?
   end
 
@@ -70,11 +73,20 @@ class Organisation < ActiveRecord::Base
     clauses.get_text('organisation_state') == 'pending'
   end
     
+  def proposed?
+    clauses.get_text('organisation_state') == 'proposed'
+  end
+    
+  def failed?
+    clauses.get_text('organisation_state') == 'failed'
+  end
+    
   def active?
     clauses.get_text('organisation_state') == 'active'
   end
   
   def under_construction!
+    # TODO: remove this. it is only used during induction
     clause = clauses.get_current('organisation_state')
     clause && clause.destroy    
   end

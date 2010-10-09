@@ -8,6 +8,9 @@ class ProposalsController < ApplicationController
     :create_text_amendment, :create_assets_amendment, :create_voting_period_amendment,
     :create_voting_system_amendment]
   
+  before_filter :require_found_organisation_permission, :only => [:found_organisation_proposal]
+  before_filter :ensure_organisation_pending, :only => [ :found_organisation_proposal ]
+  
   def index
     # Fetch open proposals
     @proposals = co.proposals.currently_open
@@ -34,6 +37,23 @@ class ProposalsController < ApplicationController
       redirect_to proposal_path(@proposal), :flash => {:notice => "Proposal was successfully created"}
     else
       redirect root_path, :flash => {:error => "Proposal not created"}
+    end
+  end
+  
+  def propose_foundation
+    proposal = co.found_organisation_proposals.new(
+      :title => "Proposal to Found #{co.organisation_name}",
+      :proposer_member_id => current_user.id
+    )
+    if proposal.save
+      current_user.member_class = MemberClass.find_by_name('Member')
+      current_user.save!
+      
+      co.clauses.set_text('organisation_state', 'proposed')
+      
+      redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Constitutional amendment proposal successfully created")
+    else
+      redirect_to(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
     end
   end
   
@@ -170,6 +190,13 @@ private
   
   def require_constitutional_proposal_permission
     if !current_user.has_permission(:constitution_proposal)
+      flash[:error] = "You do not have sufficient permissions to create such a proposal!"
+      redirect_back_or_default
+    end
+  end
+  
+  def require_found_organisation_permission
+    if !current_user.has_permission(:found_organisation_proposal)
       flash[:error] = "You do not have sufficient permissions to create such a proposal!"
       redirect_back_or_default
     end

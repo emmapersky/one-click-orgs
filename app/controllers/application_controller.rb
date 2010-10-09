@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on (or just returns the organisation if the app
   # is running in single organisation mode).
+  helper_method :current_organisation
   def current_organisation
     @current_organisation ||= (
       if Setting[:single_organisation_mode]

@@ -61,7 +61,7 @@ class Proposal < ActiveRecord::Base
     votes_for + votes_against
   end
   
-  def reject!
+  def reject!(params={})
     # TODO do some kind of email notification
   end
   
@@ -103,6 +103,8 @@ class Proposal < ActiveRecord::Base
       rescue => e
         Rails.logger.error("Error sending decision email: #{e.inspect}")
       end
+    else
+      reject!(params)
     end
   end
 
