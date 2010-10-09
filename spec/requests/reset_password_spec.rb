@@ -19,9 +19,9 @@ describe "ResetPassword" do
       post_reset
     end
   
-    it "should redirect to the index page" do
+    it "should display the done page" do
       post_reset
-      @response.should redirect_to(:controller => 'reset_password', :action => 'index')
+      @response.should render_template('reset_password/done')
     end
     
     def post_reset

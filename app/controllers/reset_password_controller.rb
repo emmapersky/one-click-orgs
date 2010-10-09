@@ -12,7 +12,8 @@ class ResetPasswordController < ApplicationController
           ResetPasswordController.send_later(:do_reset_email, m.id, new_password)
           
           Rails.logger.debug("reset password for #{email} to '#{new_password}'")
-          redirect_to({:action=>:index}, :flash => { :notice => "New password was sent to #{email}" })
+          @email = email
+          render(:action => :done)
         else
           Rails.logger.debug("error resetting password: #{m.errors.inspect}")
           redirect_to({:action=>:index}, :flash => { :error => "error resetting password: #{m.errors.inspect}" })                
