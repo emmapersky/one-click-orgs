@@ -130,7 +130,7 @@ class InductionController < ApplicationController
     @founding_meeting_date = co.clauses.get_text('founding_meeting_date')
     @founding_meeting_time = co.clauses.get_text('founding_meeting_time')
     
-    @members = co.members.active
+    @members = co.members
   end
     
   # Sends the constitution and agenda to founding members,

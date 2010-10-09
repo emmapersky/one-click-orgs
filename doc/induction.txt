@@ -43,7 +43,7 @@ when 'found org' proposal failed:
 - founding members can log in, view the constitution, will see a 'founding vote failed' message
 
 when 'found org' proposal succeeded:
-- all founding members who voted 'yes' or who abstained get migrated to full 'member' status
+- all founding members who voted 'yes' or who abstained (including the founder) get migrated to full 'member' status
 - all other founding members receive an email 'sorry that you don't want to be a part of this'
   - do we need/want to disable these accounts?
 
@@ -65,8 +65,11 @@ DONE
 * ...?
 
 TODO
-* member class when adding new members (/induction/members)
-* remove timeline (NPE)
+* reorganise induction process according to spec
+* auto-select appropriate member classes during induction
+  * "Founder" class at /induction/founder
+  * "Founding Member" class at /induction/members
+* remove dedicated timeline page and merge into dashboard (currently it just throws a NPE)
 * direct edit for:
   * members -> add
   * dashboard -> add member
@@ -74,6 +77,16 @@ TODO
 * skip 'has user been inducted?' before_filter if org is pending
   * causes 'Error casting vote: Can not vote on proposals created before member inducted'
 * set org state to 'failed' if not enough members voted for it
+
+
+TO RESET ORG STATE AND START INDUCTION
+$ rake db:setup
+$ ./script/rails server
+
+-> http://oco:3000/ and follow instructions
+
+a@b.com, abc
+http://abc.oco:3000/
 
 
 SNIPPETS
@@ -90,10 +103,6 @@ m.member_class = MemberClass.find_by_name('Founder'); m.save!
 # set up org in pending state
 o = Organisation.all.first
 o.clauses.set_text('organisation_state', 'pending')
-
-# browse site
-http://abc.oco:3000/
-a@b.com, abc
 
 # when done with org setup:
 o.clauses.set_text('organisation_state', 'proposed')
