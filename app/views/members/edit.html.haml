@@ -3,6 +3,7 @@
 
 %p
   = form_for(@member, :url => member_path(@member), :html => {'class' => 'member'}) do |f|
+    = error_messages_for(@member)
     %p
       = f.label(:first_name)
       = f.text_field :first_name

@@ -66,7 +66,7 @@ class MembersController < ApplicationController
     if @member.update_attributes(member)
        redirect_to member_path(@member), :notice => "Member updated"
     else
-      flash[:error] = @member.errors.inspect
+      flash[:error] = "There was a problem with your new details."
       render(:action => :edit)
     end
   end

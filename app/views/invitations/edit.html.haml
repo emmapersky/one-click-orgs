@@ -1,0 +1,18 @@
+%h2 Choose your password
+%p
+  Welcome to
+  = @organisation_name + ','
+  = @member.name + '.'
+  To begin, please choose a password:
+= form_for(@member, :url => invitation_path(@invitation_code)) do |member_form|
+  = error_messages_for(@member)
+  %p
+    = member_form.label :password
+    = member_form.password_field :password
+  %p
+    = member_form.label :password_confirmation
+    = member_form.password_field :password_confirmation
+  %p
+    = member_form.submit("Save")
+  
+    

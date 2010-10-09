@@ -321,3 +321,6 @@ dl.settings dt {
   border-top: 1px solid #004422;
   margin-top: 1em;
   clear: right; }
+
+div.field_with_errors input {
+  border: 1px solid red; }

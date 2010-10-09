@@ -75,7 +75,7 @@ class InductionController < ApplicationController
       if member_params[:first_name].present? && member_params[:last_name].present? && member_params[:email].present?
         if member_params[:id].blank?
           member = co.members.new
-          member.new_password!
+          member.new_invitation_code!
         else
           member = co.members.find(member_params[:id])
         end
@@ -209,7 +209,6 @@ class InductionController < ApplicationController
     #now, send out emails to confirm creation of all members
     other_members.each do |m|
       Rails.logger.info("sending welcome message to #{m}")
-      m.new_password!
       m.save
       m.send_welcome
     end

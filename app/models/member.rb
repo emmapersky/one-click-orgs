@@ -11,6 +11,11 @@ class Member < ActiveRecord::Base
   scope :active, where("active = 1 AND inducted_at IS NOT NULL")
   scope :pending, where("inducted_at IS NULL")
   
+  validates_uniqueness_of :invitation_code, :scope => :organisation_id, :allow_nil => true
+  
+  validates_confirmation_of :password
+  # validates_presence_of :password_confirmation, :if => :password_required?
+
   def proposals_count
     proposals.count
   end
@@ -92,21 +97,14 @@ class Member < ActiveRecord::Base
 
   def self.create_member(params, send_welcome=false)
     member = Member.new(params)
-    member.new_password!
+    member.new_invitation_code!
     member.save!
     member.send_welcome if send_welcome
     member
   end
 
   def send_welcome
-    # delayed_job will not have access to the instance variable @password
-    # when it reloads this Member object, so we cache it in the method
-    # parameters here.
-    self.dispatch_welcome(self.password)
-  end
-  
-  def dispatch_welcome(cached_password)
-    MembersMailer.welcome_new_member(self, cached_password).deliver
+    MembersMailer.welcome_new_member(self).deliver
   end
   
   # only to be backwards compatible with systems running older versions of delayed job
@@ -136,6 +134,20 @@ class Member < ActiveRecord::Base
   def name
     full_name = [first_name, last_name].compact.join(' ')
     full_name.blank? ? nil : full_name
+  end
+
+  # INVITATION CODE
+  
+  def self.generate_invitation_code
+    Digest::SHA1.hexdigest("#{Time.now}#{rand}")[0..9]
+  end
+  
+  def new_invitation_code!
+    self.invitation_code = self.class.generate_invitation_code
+  end
+  
+  def clear_invitation_code!
+    self.update_attribute(:invitation_code, nil)
   end
 end
 

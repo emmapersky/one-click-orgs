@@ -35,17 +35,6 @@ describe Member do
     }.should raise_error(VoteError)
   end
 
-  describe "passwords" do
-    it "should generate a new random password" do
-      new_pass = @member.new_password!(10)
-      new_pass.size.should == 10
-    end
-
-    it "should have at least 6 characters" do
-      lambda { @member.new_password!(1) }.should raise_error(ArgumentError)
-    end
-  end
-
   describe "creation" do
     it "should send a welcome email" do
       MembersMailer.should_receive(:welcome_new_member).and_return(mock('mail', :deliver => nil))

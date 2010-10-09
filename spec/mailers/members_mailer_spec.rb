@@ -26,16 +26,16 @@ describe MembersMailer do
   
   describe "welcome_new_member" do
     before do
-      @mail = MembersMailer.welcome_new_member(@member, @new_password)
+      @member.update_attribute(:invitation_code, "abcdef")
+      @mail = MembersMailer.welcome_new_member(@member)
     end
     
-    it "should include welcome phrase and password in email text" do          
+    it "should include welcome phrase in email text" do          
       @mail.body.should =~ /Dear #{@member.name}/
-      @mail.body.should =~ /#{@new_password}/            
     end
   
-    it "should include login link in email text" do
-      @mail.body.should =~ %r{http://test.oneclickorgs.com/login}            
+    it "should include invitation link in email text" do
+      @mail.body.should =~ %r{http://test.oneclickorgs.com/i/abcdef}
     end
   end
 end

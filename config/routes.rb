@@ -87,5 +87,8 @@ OneClickOrgs::Application.routes.draw do
   
   resources :organisations
   
+  match '/i/:id' => 'invitations#edit', :as => 'short_invitation'
+  resources :invitations
+  
   root :to => 'one_click#dashboard'
 end
