@@ -7,8 +7,11 @@
         = f.label(:email, "Email Address")
         = f.text_field :email
       %p
-        = f.label(:name)
-        = f.text_field :name
+        = f.label(:first_name)
+        = f.text_field :first_name
+      %p
+        = f.label(:last_name)
+        = f.text_field :last_name
       %p
         = f.label(:class)
         = collection_select(:member, :member_class_id, MemberClass.all, :id, :name)

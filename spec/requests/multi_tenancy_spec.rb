@@ -78,17 +78,17 @@ describe "Multi-tenancy" do
       # Make three organisations, each with one member
       stub_organisation!(true, 'aardvarks', false, true).tap do |o|
         mc = o.member_classes.make
-        o.members.make(:name => "Alvin", :email => 'alvin@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
+        o.members.make(:first_name => "Alvin", :email => 'alvin@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
       
       stub_organisation!(true, 'beavers', false, true).tap do |o|
         mc = o.member_classes.make
-        o.members.make(:name => "Betty", :email => 'betty@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
+        o.members.make(:first_name => "Betty", :email => 'betty@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
       
       stub_organisation!(true, 'chipmunks', false, true).tap do |o|
         mc = o.member_classes.make
-        o.members.make(:name => "Consuela", :email => 'consuela@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
+        o.members.make(:first_name => "Consuela", :email => 'consuela@example.com', :password => 'password', :password_confirmation => 'password', :member_class => mc)
       end
     end
     
@@ -99,7 +99,7 @@ describe "Multi-tenancy" do
         post 'http://beavers.oneclickorgs.com/member_session', :email => 'betty@example.com', :password => 'password'
         response.should redirect_to 'http://beavers.oneclickorgs.com/'
         follow_redirect!
-        response.body.should =~ /Welcome back, Betty!/
+        response.body.should =~ /Welcome back, Betty/
       end
     end
     

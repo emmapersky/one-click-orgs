@@ -13,11 +13,11 @@ All model access should be scoped by the relevant organisation. In other words, 
 
 In controllers, the method #co (defined in ApplicationController) will return the current Organisation. To find a member, for example, you would do:
 
-  co.members.where(:name => "Jane Smith").first
+  co.members.where(:email => "jane@example.com").first
   
 not:
 
-  Member.where(:name => "Jane Smith").first   # Don't do this!
+  Member.where(:email => "jane@example.com").first   # Don't do this!
 
 In models, use the provided relationships to access other models. For example, in MemberClass, we have:
 

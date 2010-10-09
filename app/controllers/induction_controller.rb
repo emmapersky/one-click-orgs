@@ -71,14 +71,15 @@ class InductionController < ApplicationController
   
   def create_members
     params[:members].each_value do |member_params|
-      if !member_params[:name].blank? && !member_params[:email].blank?
+      if member_params[:first_name].present? && member_params[:last_name].present? && member_params[:email].present?
         if member_params[:id].blank?
           member = co.members.new
           member.new_password!
         else
           member = co.members.find(member_params[:id])
         end
-        member.name = member_params[:name]
+        member.first_name = member_params[:first_name]
+        member.last_name = member_params[:last_name]
         member.email = member_params[:email]
         member.member_class = MemberClass.find(member_params[:member_class_id])
         member.save!

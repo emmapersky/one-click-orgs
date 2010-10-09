@@ -21,7 +21,7 @@ describe "induction process" do
     follow_redirect!
     response.should have_selector("form[action='/induction/create_founder']")
     
-    post '/induction/create_founder', :member => {:email => "bob@example.com", :name => "Bob Smith", :password => "letmein", :password_confirmation => "letmein", :member_class_id => @member_class.id}
+    post '/induction/create_founder', :member => {:email => "bob@example.com", :first_name => "Bob", :last_name => "Smith", :password => "letmein", :password_confirmation => "letmein", :member_class_id => @member_class.id}
     
     follow_redirect!
     
@@ -32,7 +32,9 @@ describe "induction process" do
     follow_redirect!
     response.should have_selector("form[action='/induction/create_members']")
     
-    post '/induction/create_members', 'members' => {'0' => {'id' => '', 'name' => "Erin Baker", 'email' => "erin@example.com", 'member_class_id' => @member_class.id }}
+    post '/induction/create_members', 'members' => {'0' => {'id' => '', 'first_name' => "Erin", 'last_name' => "Baker", 'email' => "erin@example.com", 'member_class_id' => @member_class.id }}
+    
+    @organisation.members.count.should == 2
     
     second_member_id = Member.last.id
     
@@ -75,7 +77,7 @@ describe "induction process" do
   
   it "should automatically log the initial user in" do
     get '/induction/founder'
-    post '/induction/create_founder', :member => {:email => "bob@example.com", :name => "Bob Smith", :password => "letmein", :password_confirmation => "letmein"}
+    post '/induction/create_founder', :member => {:email => "bob@example.com", :first_name => "Bob", :last_name => "Smith", :password => "letmein", :password_confirmation => "letmein"}
     follow_redirect!
     response.should have_selector("div.control_bar") do |control_bar|
       control_bar.should have_selector("a[href='/member_session'][data-method=delete]")
@@ -140,7 +142,7 @@ describe "induction process" do
   # it "should detect the domain" do
   #   organisation_is_under_construction
   #   @organisation.domain.should be_blank
-  #   post("/induction/create_founder", {:member => {:name => "Bob Smith", :email => "bob@example.com", :password => "qwerty", :password_confirmation => "qwerty"}})
+  #   post("/induction/create_founder", {:member => {:first_name => "Bob", :last_name => "Smith", :email => "bob@example.com", :password => "qwerty", :password_confirmation => "qwerty"}})
   #   @organisation.domain.should == "http://www.example.com"
   # end
 end
