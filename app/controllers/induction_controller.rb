@@ -41,17 +41,9 @@ class InductionController < ApplicationController
   end
   
   def create_organisation_details
-    organisation_name = co.clauses.get_current('organisation_name') || co.clauses.new(:name => 'organisation_name')
-    organisation_name.text_value = params[:organisation_name]
-    organisation_name.save!
-  
-    objectives = co.clauses.get_current('objectives') || co.clauses.new(:name => 'objectives')
-    objectives.text_value = params[:objectives]
-    objectives.save!
-    
-    assets = co.clauses.get_current('assets') || co.clauses.new(:name => 'assets')
-    assets.boolean_value = params[:assets] == '1'
-    assets.save!
+    co.clauses.set_text('organisation_name', params[:organisation_name])
+    co.clauses.set_text('objectives', params[:objectives])
+    co.clauses.set_boolean('assets', params[:assets]=='1')
     
     if params[:organisation_name].blank? || params[:objectives].blank?
         redirect_to({:action => 'organisation_details'}, :flash => {:error => "You must fill in the organisation name and objects."})
@@ -102,22 +94,11 @@ class InductionController < ApplicationController
   end
   
   def create_voting_settings
-    voting_period = co.clauses.get_current('voting_period') || co.clauses.new(:name => 'voting_period')
-    voting_period.integer_value = params[:voting_period]
-    voting_period.save!
-    
-    general_voting_system = co.clauses.get_current('general_voting_system') || co.clauses.new(:name => 'general_voting_system')
-    general_voting_system.text_value = params[:general_voting_system]
-    general_voting_system.save!
-    
-    membership_voting_system = co.clauses.get_current('membership_voting_system') || co.clauses.new(:name => 'membership_voting_system')
-    membership_voting_system.text_value = params[:membership_voting_system]
-    membership_voting_system.save!
-    
-    constitution_voting_system = co.clauses.get_current('constitution_voting_system') || co.clauses.new(:name => 'constitution_voting_system')
-    constitution_voting_system.text_value = params[:constitution_voting_system]
-    constitution_voting_system.save!
-    
+    co.clauses.set_integer('voting_period', params[:voting_period])
+    co.clauses.set_text('general_voting_system', params[:general_voting_system])
+    co.clauses.set_text('membership_voting_system', params[:membership_voting_system])
+    co.clauses.set_text('constitution_voting_system', params[:constitution_voting_system])
+        
     redirect_to(:action => 'preview_constitution')
   end
   
@@ -132,17 +113,9 @@ class InductionController < ApplicationController
   end
   
   def create_founding_meeting_details
-    founding_meeting_date = co.clauses.get_current('founding_meeting_date') || co.clauses.new(:name => 'founding_meeting_date')
-    founding_meeting_date.text_value = params[:date]
-    founding_meeting_date.save!
-  
-    founding_meeting_time = co.clauses.get_current('founding_meeting_time') || co.clauses.new(:name => 'founding_meeting_time')
-    founding_meeting_time.text_value = params[:time]
-    founding_meeting_time.save!
-  
-    founding_meeting_location = co.clauses.get_current('founding_meeting_location') || co.clauses.new(:name => 'founding_meeting_location')
-    founding_meeting_location.text_value = params[:location]
-    founding_meeting_location.save!
+    co.clauses.set_text('founding_meeting_date', params[:date])
+    co.clauses.set_text('founding_meeting_time', params[:time])
+    co.clauses.set_text('founding_meeting_location', params[:location])
     
     if params[:date].blank? || params[:time].blank? || params[:location].blank?
       redirect_to({:action => 'founding_meeting_details'}, :flash => {:error => "You must fill in a date, time and location for the founding meeting."})
@@ -163,10 +136,8 @@ class InductionController < ApplicationController
   # Sends the constitution and agenda to founding members,
   # and moves the organisation to 'pending' state.
   def confirm_agenda
-    organisation_state = co.clauses.get_current('organisation_state') || co.clauses.new(:name => 'organisation_state')
-    organisation_state.text_value = 'pending'
-    organisation_state.save!
-    
+    co.clauses.set_text('organisation_state', 'pending')
+        
     # Send emails with founding meeting agenda
     co.members.all.each do |member|
       InductionController.send_later(:send_agenda_email, member)
@@ -202,9 +173,7 @@ class InductionController < ApplicationController
       end
     end
     
-    organisation_state = co.clauses.get_current('organisation_state')
-    organisation_state.text_value = "active"
-    organisation_state.save!
+    co.clauses.set_text('organisation_state', 'active')
     
     #now, send out emails to confirm creation of all members
     other_members.each do |m|
