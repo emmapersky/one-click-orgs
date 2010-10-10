@@ -1,3 +1,8 @@
+%h2
+  Reset your password
+
+%p
+  Enter your email address, and you'll receive instructions on how to reset your password.
 = form_tag({:action => :reset}, :method => :put, 'accept-charset' => 'utf-8') do
   %p
     %label{:for => 'email'}
@@ -5,5 +10,6 @@
     %input{ :name => 'email', :type => "text", :id => 'email', :value => "" }
   %p
     %input#submit{ :name => "submit", :type => "submit", :value => "Send" }
-
-  
+%br
+%p
+  = link_to("Cancel this and go back.", root_path)
