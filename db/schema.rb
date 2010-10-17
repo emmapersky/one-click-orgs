@@ -51,9 +51,9 @@ ActiveRecord::Schema.define(:version => 20101009142048) do
     t.integer  "active",           :limit => 1,  :default => 1
     t.string   "crypted_password", :limit => 50
     t.string   "salt",             :limit => 50
-    t.datetime "inducted_at"
     t.integer  "organisation_id"
     t.integer  "member_class_id"
+    t.datetime "inducted_at"
     t.string   "first_name"
     t.string   "last_name"
   end
