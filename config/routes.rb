@@ -56,6 +56,7 @@ OneClickOrgs::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id(.:format)))'
   
+  match '/settings' => 'one_click#settings', :as => 'settings'
   match '/constitution' => 'one_click#constitution', :as => 'constitution'
   
   match '/timeline' => 'one_click#timeline', :as => 'timeline'
@@ -86,5 +87,5 @@ OneClickOrgs::Application.routes.draw do
   
   resources :organisations
   
-  root :to => 'one_click#control_centre'
+  root :to => 'one_click#dashboard'
 end

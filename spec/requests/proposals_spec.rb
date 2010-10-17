@@ -45,10 +45,6 @@ describe "everything" do
       it "responds successfully" do
         @response.should be_successful
       end
-      
-      it "should display the correct vote count" do
-        response.should contain /2\s*\/\s*1/ # i.e. "2/1" with arbitrary whitespace
-      end
     end
   end
   
@@ -92,7 +88,7 @@ describe "everything" do
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'organisation_name', 'value' => 'The Yoghurt Yurt'})
 
-      @response.should redirect_to('/one_click/control_centre')
+      @response.should redirect_to('/one_click/dashboard')
     end
     
     it "should create a proposal to change the objectives" do
@@ -107,7 +103,7 @@ describe "everything" do
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'objectives', 'value' => 'make all the yoghurt'})
       
-      @response.should redirect_to('/one_click/control_centre')
+      @response.should redirect_to('/one_click/dashboard')
     end
     
     it "should create a proposal to change the domain" do
@@ -122,7 +118,7 @@ describe "everything" do
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'domain', 'value' => 'yaourt.com'})
       
-      @response.should redirect_to('/one_click/control_centre')
+      @response.should redirect_to('/one_click/dashboard')
     end
   end
   
@@ -154,7 +150,7 @@ describe "everything" do
 
         puts @response.body if @response.status != 302
 
-        @response.should redirect_to("/one_click/control_centre")
+        @response.should redirect_to("/one_click/dashboard")
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.first.title.should == 'change general voting system to Supporting votes from every single member'
@@ -170,7 +166,7 @@ describe "everything" do
 
         puts @response.body if @response.status != 302
 
-        @response.should redirect_to("/one_click/control_centre")
+        @response.should redirect_to("/one_click/dashboard")
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.all.first.title.should == 'change membership voting system to No opposing votes'
@@ -185,7 +181,7 @@ describe "everything" do
         post(url_for(:controller=>'proposals', :action=>'create_voting_system_amendment'), {:constitution_voting_system=>'AbsoluteMajority'})
 
         puts @response.body if @response.status == 500
-        @response.should redirect_to("/one_click/control_centre")
+        @response.should redirect_to("/one_click/dashboard")
       
         ChangeVotingSystemProposal.count.should == 1
         ChangeVotingSystemProposal.all.first.title.should == 'change constitution voting system to Supporting votes from more than half the members'
@@ -200,7 +196,7 @@ describe "everything" do
         post(url_for(:controller=>'proposals', :action=>'create_voting_period_amendment'), {:new_voting_period=>'86400'})
 
         puts @response.body if @response.status == 500
-        @response.should redirect_to("/one_click/control_centre")
+        @response.should redirect_to("/one_click/dashboard")
 
         ChangeVotingPeriodProposal.count.should == 1
         ChangeVotingPeriodProposal.all.first.title.should == 'Change voting period to 24 hours'

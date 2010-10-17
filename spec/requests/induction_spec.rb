@@ -21,7 +21,7 @@ describe "induction process" do
     follow_redirect!
     response.should have_selector("form[action='/induction/create_founder']")
     
-    post '/induction/create_founder', :member => {:email => "bob@example.com", :name => "Bob Smith", :password => "letmein", :password_confirmation => "letmein", :member_class_id => @member_class.id}
+    post '/induction/create_founder', :member => {:email => "bob@example.com", :first_name => "Bob", :last_name => "Smith", :password => "letmein", :password_confirmation => "letmein", :member_class_id => @member_class.id}
     
     follow_redirect!
     
@@ -32,7 +32,9 @@ describe "induction process" do
     follow_redirect!
     response.should have_selector("form[action='/induction/create_members']")
     
-    post '/induction/create_members', 'members' => {'0' => {'id' => '', 'name' => "Erin Baker", 'email' => "erin@example.com", 'member_class_id' => @member_class.id }}
+    post '/induction/create_members', 'members' => {'0' => {'id' => '', 'first_name' => "Erin", 'last_name' => "Baker", 'email' => "erin@example.com", 'member_class_id' => @member_class.id }}
+    
+    @organisation.members.count.should == 2
     
     second_member_id = Member.last.id
     
@@ -59,7 +61,7 @@ describe "induction process" do
     end
     
     post '/induction/confirm_founding_meeting', :members => {second_member_id.to_s => '1'}
-    response.should redirect_to '/one_click/control_centre'
+    response.should redirect_to '/one_click/dashboard'
     
     @organisation = Organisation.first
     @organisation.active?.should be_true
@@ -75,7 +77,7 @@ describe "induction process" do
   
   it "should automatically log the initial user in" do
     get '/induction/founder'
-    post '/induction/create_founder', :member => {:email => "bob@example.com", :name => "Bob Smith", :password => "letmein", :password_confirmation => "letmein"}
+    post '/induction/create_founder', :member => {:email => "bob@example.com", :first_name => "Bob", :last_name => "Smith", :password => "letmein", :password_confirmation => "letmein"}
     follow_redirect!
     response.should have_selector("div.control_bar") do |control_bar|
       control_bar.should have_selector("a[href='/member_session'][data-method=delete]")
@@ -126,12 +128,12 @@ describe "induction process" do
         response.should redirect_to(login_path)
       end
       
-      it "should redirect to control centre if organisation is active and any induction action is requested" do
+      it "should redirect to dashboard if organisation is active and any induction action is requested" do
         login
         
         (InductionController::CONSTRUCTION_ACTIONS + InductionController::PENDING_ACTIONS).each do |a|
           get url_for(:controller=>'induction', :action=>a)
-          @response.should redirect_to(:controller=>'one_click', :action=>'control_centre')
+          @response.should redirect_to(:controller=>'one_click', :action=>'dashboard')
         end
       end
     end
@@ -140,7 +142,7 @@ describe "induction process" do
   # it "should detect the domain" do
   #   organisation_is_under_construction
   #   @organisation.domain.should be_blank
-  #   post("/induction/create_founder", {:member => {:name => "Bob Smith", :email => "bob@example.com", :password => "qwerty", :password_confirmation => "qwerty"}})
+  #   post("/induction/create_founder", {:member => {:first_name => "Bob", :last_name => "Smith", :email => "bob@example.com", :password => "qwerty", :password_confirmation => "qwerty"}})
   #   @organisation.domain.should == "http://www.example.com"
   # end
 end

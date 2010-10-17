@@ -4,11 +4,14 @@
 %p
   = form_for(@member, :url => member_path(@member), :html => {'class' => 'member'}) do |f|
     %p
+      = f.label(:first_name)
+      = f.text_field :first_name
+    %p
+      = f.label(:last_name)
+      = f.text_field :last_name
+    %p
       = f.label(:email, "Email Address")
       = f.text_field :email
-    %p
-      = f.label(:name)
-      = f.text_field :name
     %p
       = f.label(:password)
       = f.password_field :password

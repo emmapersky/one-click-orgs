@@ -1,0 +1,4 @@
+%td= event[:timestamp].to_s(:long)
+%td
+  A vote was made on the proposal:
+  = link_to(event[:object].proposal.title, proposal_path(event[:object].proposal))

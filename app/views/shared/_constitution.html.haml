@@ -1,27 +1,19 @@
 %h4 Definitions & Membership
 %ul.constitution
   %li
-    - if allow_changes
-      =render :partial => 'shared/propose_change_org_name_form'
     This is the constitution ("Constitution") of
     %span{:class=>'dynamic'}
       = @organisation_name
     ("The Organisation").  
   %li
-    - if allow_changes
-      =render :partial => 'shared/propose_change_objectives_form'
     The Organisation has the objectives of
     %span{:class=>'dynamic'}
       = @objectives
     ("Objectives").
   %li
     - if @assets
-      - if allow_changes
-        =render :partial => 'shared/propose_hold_no_assets_form'
       The Organisation may hold, transfer and dispose of material assets and intangible assets.
     - else
-      - if allow_changes
-        =render :partial => 'shared/propose_hold_assets_form'
       The Organisation does not hold material assets or intangible assets.
   %li The Organisation uses an electronic system to carry out its governance ("Governance System").
   %li The Organisation has one or more members ("Members") who support its Objectives. 
@@ -39,8 +31,6 @@
   %li Members may jointly make a decision ("Decision") relating to any aspect of the Organisation's activities as follows:
   %li Any member may submit a proposal ("Proposal") on the Governance System. 
   %li
-    - if allow_changes
-      =render :partial => 'shared/propose_change_voting_period_form'
     A Proposal may be voted on for a period of
     %span{:class=>'dynamic'}
       = @voting_period
@@ -49,22 +39,16 @@
   %li Members may vote to support ("Supporting Vote") or vote to oppose ("Opposing Vote") a Proposal on the Governance System during the Proposal's Voting Period. 
   %li Members may only vote on Proposals submitted during their membership of the Organisation.
   %li
-    - if allow_changes
-      = render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type => 'general', :description => 'Change the way General Decisions are made:'}
     A Decision is made if a Proposal receives
     %span{:class=>'dynamic'}
       = @general_voting_system.long_description
   %li except that:
   %li
-    - if allow_changes
-      = render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type=>'constitution', :description=>'Change the way Constitution Decisions are made:'}
     The Constitution may only be amended by a Decision where
     %span{:class=>'dynamic'}       
       = @constitution_voting_system.long_description(:include_received => true)
   %li and
   %li
-    - if allow_changes
-      = render :partial => 'shared/propose_voting_system_amendment_form', :locals => {:type=>'membership', :description=>'Change the way Membership Decisions are made:'}
     New Members may be appointed (and existing Members ejected) only by a Decision
     %span{:class=>'dynamic'}
       = @membership_voting_system.long_description(:include_received => true)

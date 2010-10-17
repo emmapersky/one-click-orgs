@@ -1,6 +1,8 @@
 - if current_user.has_permission(:vote)
   - if proposal.vote_by(current_user)
-    = proposal.vote_by(current_user).for_or_against
+    You voted to
+    %strong
+      = proposal.vote_by(current_user).for_or_against.upcase
   - else
     = form_tag(vote_for_path(:id => proposal.id, :return_to => request.url)) do
       = submit_tag "Support"

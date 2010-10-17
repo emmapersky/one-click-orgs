@@ -9,4 +9,8 @@ class Vote < ActiveRecord::Base
   def self.for_or_against(foa)
     foa ? "Support" : "Oppose"
   end
+  
+  def to_event
+    {:timestamp => self.created_at, :object => self, :kind => :vote }
+  end
 end

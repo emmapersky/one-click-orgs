@@ -16,6 +16,13 @@ class MembersController < ApplicationController
   def show
     @member = co.members.find(params[:id])
     raise NotFound unless @member
+    
+    @timeline = [
+      @member,
+      @member.proposals.all,
+      @member.votes.all
+    ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
+    
     respond_with @member
   end
 
@@ -75,7 +82,7 @@ class MembersController < ApplicationController
     )
     
     if proposal.save
-      redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Ejection proposal successfully created")
+      redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Ejection proposal successfully created")
     else
       redirect member_path(@member), :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
     end

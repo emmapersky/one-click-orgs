@@ -10,6 +10,22 @@ class Member < ActiveRecord::Base
 
   scope :active, where(["active = ? AND inducted_at IS NOT NULL", true])
   scope :pending, where("inducted_at IS NULL")
+  
+  def proposals_count
+    proposals.count
+  end
+  
+  def succeeded_proposals_count
+    proposals.where(:open => false, :accepted => true).count
+  end
+  
+  def failed_proposals_count
+    proposals.where(:open => false, :accepted => false).count
+  end
+  
+  def votes_count
+    votes.count
+  end
 
   # AUTHENTICATION
 
@@ -116,6 +132,11 @@ class Member < ActiveRecord::Base
   
   def has_permission(type)
     member_class.has_permission(type)
+  end
+  
+  def name
+    full_name = [first_name, last_name].compact.join(' ')
+    full_name.blank? ? nil : full_name
   end
 end
 

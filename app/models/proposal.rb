@@ -22,7 +22,6 @@ class Proposal < ActiveRecord::Base
   end
   public
   
-  
   validates_presence_of :proposer_member_id
   
   def end_date
