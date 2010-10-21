@@ -9,18 +9,24 @@
     = javascript_include_tag 'jquery', 'rails', 'application'
     = csrf_meta_tag
   %body
-    %div.control_bar
-      - if current_user
-        = h current_user.name
-        |
-        =link_to 'my account', edit_member_path(current_user)
-        |
-        =link_to 'logout', member_session_path, :method => :delete
-    %div#doc
-      %div#hd
-        %h1.header One Click Orgs
-        
-      %div#bd
+    %div#container
+      %div.control_bar
+        - if current_user
+          %p
+            %strong
+              = h current_user.name
+          %p
+            = link_to 'My account', edit_member_path(current_user)
+          %p
+            = link_to 'Logout', member_session_path, :method => :delete
+      %div#doc
+        %div#hd
+          %h1.header
+            = @current_organisation.organisation_name
+          %p
+            powered by
+            = link_to 'One Click Orgs', 'http://www.oneclickor.gs/'
+
         - if current_user
           %ul#nav
             %li#navitem= link_to 'Dashboard', root_path
@@ -28,12 +34,16 @@
             %li#navitem= link_to 'Constitution', constitution_path
             %li#navitem= link_to 'Members', members_path
 
-        %div#notice
-          = flash[:notice]
-        %div#error
-          = flash[:error]
+        - if flash[:notice]
+          %div#notice
+            = flash[:notice]
+        - if flash[:error]
+          %div#error
+            = flash[:error]
+        
+        %div#bd
           
-        = yield
-      %div.footer
-        = "One Click Orgs #{OneClickOrgs.version} - Running on Rails #{Rails.version}"
-    = get_satisfaction_widget
+          = yield
+        %div.footer
+          = "One Click Orgs #{OneClickOrgs.version} - Running on Rails #{Rails.version}"
+      = get_satisfaction_widget

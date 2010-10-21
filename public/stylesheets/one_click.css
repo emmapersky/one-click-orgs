@@ -1,26 +1,34 @@
-body {
-  color: #666666;
-  font-family: Myriad, Arial, Helvetica, sans-serif;
+* {
   margin: 0;
   padding: 0; }
 
+body {
+  background-color: #f6f6f6;
+  color: #333333;
+  font-family: "Myriad", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+#container {
+  background-color: white;
+  margin: 0 auto;
+  max-width: 1200px;
+  min-width: 800px;
+  padding: 12px; }
+
 .control_bar {
-  position: absolute;
-  right: 0.5em;
-  top: 0.2em; }
+  color: #666666;
+  float: right;
+  font-size: 0.75em;
+  padding: 6px 0;
+  text-align: right; }
+
+.control_bar a {
+  text-decoration: none; }
 
 h1.header {
-  color: #666666;
-  font-family: Georgia, Times New Roman;
-  font-size: 3em;
-  margin: 0;
-  padding: 0;
-  text-align: center; }
-
-h2,
-h3,
-h4 {
-  color: #977c57; }
+  color: black;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.4em;
+  margin-bottom: 4px; }
 
 h3 {
   font-size: 1.5em;
@@ -29,8 +37,20 @@ h3 {
 
 #doc,
 #hd #bd .footer {
-  margin: auto;
-  width: 950px; }
+  margin: auto; }
+
+#hd {
+  border-bottom: 1px solid #999999;
+  padding: 6px 0; }
+
+#hd p {
+  color: #666666;
+  font-size: 0.7em; }
+  #hd p a {
+    color: #666666;
+    text-decoration: none; }
+    #hd p a:hover {
+      text-decoration: underline; }
 
 br,
 form,
@@ -45,32 +65,35 @@ form input#submit {
 a {
   color: #627fc4; }
   a:hover {
-    color: #6699ff; }
+    color: #333333;
+    text-decoration: underline; }
 
 #nav {
-  text-align: center; }
+  margin: 12px 0; }
   #nav li {
-    float: left; }
+    display: inline;
+    padding-right: 80px; }
   #nav a {
-    border-bottom: 3px #eeeeee solid;
-    display: block;
-    font-family: georgia;
-    font-size: 17px;
-    margin: 0;
-    padding: 3px 0;
-    text-decoration: none !important;
-    width: 212px; }
+    text-decoration: none; }
     #nav a:hover {
-      border-bottom: 3px #cdeb8b solid;
-      text-decoration: none; }
+      text-decoration: underline; }
 
 #navitem {
   display: inline;
   margin: 0;
   padding: 0; }
 
+#notice, #error {
+  font-size: 0.8em;
+  margin: 4px 0;
+  padding: 12px; }
+
 #notice {
+  background-color: #c9dcc0;
   clear: both; }
+
+#error {
+  background-color: #df4242; }
 
 table {
   border: 1px #cccccc solid !important; }
