@@ -73,5 +73,22 @@ describe Member do
       @organisation.members.active.should == @organisation.members.all - [disabled]
     end
   end
-
+  
+  describe "name" do
+    it "returns the full name for a member with first name and last name" do
+      Member.new(:first_name => "Bob", :last_name => "Smith").name.should == "Bob Smith"
+    end
+    
+    it "returns the first name for a member with a first name only" do
+      Member.new(:first_name => "Bob").name.should == "Bob"
+    end
+    
+    it "returns the last name for a member with a last name only" do
+      Member.new(:last_name => "Smith").name.should == "Smith"
+    end
+    
+    it "returns nil for a member with no first name and no last name" do
+      Member.new.name.should be_nil
+    end
+  end
 end

@@ -21,7 +21,7 @@ class MembersController < ApplicationController
       @member,
       @member.proposals.all,
       @member.votes.all
-    ].flatten.map(&:to_event).sort{|a, b| b[:timestamp] <=> a[:timestamp]}
+    ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
     
     respond_with @member
   end

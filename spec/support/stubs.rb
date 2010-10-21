@@ -16,7 +16,8 @@ def default_user
     
   @default_user = @organisation.members.where(:email => "krusty@clown.com").first || 
     @organisation.members.create(:email => "krusty@clown.com",
-                 :name => "Krusty the clown",
+                 :first_name => "Krusty the",
+                 :last_name => "clown",
                  :password => "password",
                  :password_confirmation => "password",
                  :inducted_at => (Time.now.utc - 1.day),

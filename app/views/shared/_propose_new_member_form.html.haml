@@ -1,14 +1,17 @@
 - if current_user.has_permission(:membership_proposal)
   %h4
-    New Member
+    Propose a new member
   %p
     = form_for(@new_member, :as => :member, :url => members_path) do |f|
       %p
         = f.label(:email, "Email Address")
         = f.text_field :email
       %p
-        = f.label(:name)
-        = f.text_field :name
+        = f.label(:first_name)
+        = f.text_field :first_name
+      %p
+        = f.label(:last_name)
+        = f.text_field :last_name
       %p
         = f.label(:class)
         = collection_select(:member, :member_class_id, MemberClass.all, :id, :name)

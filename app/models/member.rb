@@ -133,5 +133,10 @@ class Member < ActiveRecord::Base
   def has_permission(type)
     member_class.has_permission(type)
   end
+  
+  def name
+    full_name = [first_name, last_name].compact.join(' ')
+    full_name.blank? ? nil : full_name
+  end
 end
 

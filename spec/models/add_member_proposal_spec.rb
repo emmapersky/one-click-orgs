@@ -14,7 +14,7 @@ describe AddMemberProposal do
   
   it "should send an email to the new member if proposal passes" do
     @proposal = @organisation.add_member_proposals.new
-    Member.should_receive(:create_member).with(hash_including(:name=>"Paul"), true)
-    @proposal.enact!(:name=>"Paul")
+    Member.should_receive(:create_member).with(hash_including(:first_name=>"Paul"), true)
+    @proposal.enact!(:first_name=>"Paul")
   end
 end

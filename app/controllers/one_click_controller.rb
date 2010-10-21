@@ -21,7 +21,7 @@ class OneClickController < ApplicationController
       co.members.all,
       co.proposals.all,
       co.decisions.all
-    ].flatten.map(&:to_event).sort{|a, b| b[:timestamp] <=> a[:timestamp]}
+    ].flatten.map(&:to_event).compact.sort{|a, b| b[:timestamp] <=> a[:timestamp]}
   end
   
   def settings

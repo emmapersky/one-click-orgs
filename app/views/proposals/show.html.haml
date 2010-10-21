@@ -40,6 +40,8 @@
       %strong SUCCEEDED
     -else
       %strong FAILED
-    (
-    = render 'vote_count', :proposal => @proposal
+
+%p
+  Vote count:
+  = render 'vote_count', :proposal => @proposal
     
