@@ -7,6 +7,8 @@ class OrganisationsController < ApplicationController
   
   before_filter :ensure_not_single_organisation_mode
   
+  layout "setup"
+  
   def new
     @organisation = Organisation.new
   end
@@ -16,6 +18,7 @@ class OrganisationsController < ApplicationController
     if @organisation.save
       redirect_to(:host => @organisation.host, :controller => 'induction', :action => 'founder')
     else
+      flash[:error] = "Sorry, that address is already taken."
       render(:action => :new)
     end
   end

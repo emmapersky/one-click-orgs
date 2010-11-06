@@ -1,35 +1,53 @@
-body
-  :color #666
-  :font-family Myriad,Arial,Helvetica,sans-serif
+*
   :margin 0
   :padding 0
+
+body
+  :background-color #f6f6f6
+  :color #333
+  :font-family 'Myriad','Myriad Pro','Helvetica Neue',Helvetica,Arial,sans-serif
+
+#container
+  :background-color #fff
+  :margin 0 auto
+  :max-width 1200px
+  :min-width 800px
+  :padding 12px
+
+/* Header
 
 .control_bar
-  :position absolute
-  :right .5em
-  :top .2em
+  :color #666
+  :float right
+  :font-size 0.75em
+  :padding 6px 0
+  :text-align right
+
+.control_bar a
+  :text-decoration none
 
 h1.header
-  :color #666
-  :font-family Georgia,Times New Roman
-  :font-size 3em
-  :margin 0
-  :padding 0
-  :text-align center
-h2,
-h3,
-h4
-  :color #977c57
-
-h3
-  :font-size 1.5em
-  :margin 20px 0 0
-  :padding 0
+  :color #000
+  :font-family Georgia,'Times New Roman',serif
+  :font-size 2.4em
+  :margin-bottom 4px
 
 #doc,
 #hd #bd .footer
   :margin auto
-  :width 950px
+
+#hd
+  :border-bottom 1px solid #999
+  :padding 6px 0
+
+#hd p
+  :color #666
+  :font-size 0.7em
+  a
+    :color #666
+    :text-decoration none
+    &:hover
+      :text-decoration underline
 
 br,
 form,
@@ -38,43 +56,99 @@ h2,
 h4
   :clear left
 
-form input#submit
-  :margin-left 16em
+h2
+  :font-size 2em
+  
+h3
+  :font-size 1.5em
 
 a
   :color #627fc4
   &:hover
-    :color #69f
+    :color #333
+    :text-decoration underline
+
+/* Navigation
 
 #nav
-  :text-align center
+  :margin 12px 0
   li
-    :float left
+    :display inline
+    :padding-right 80px
   a
-    :border-bottom 3px #eee solid
-    :display block
-    :font-family georgia
-    :font-size 17px
-    :margin 0
-    :padding 3px 0
-    :text-decoration none !important
-    :width 212px
+    :text-decoration none
     &:hover
-      :border-bottom 3px #cdeb8b solid
-      :text-decoration none
+      :text-decoration underline
 
 #navitem
   :display inline
   :margin 0
   :padding 0
 
+/* Header notifications
+
+#notice, #error
+  :font-size 0.8em
+  :margin 4px 0
+  :padding 12px
+
 #notice
+  :background-color #C9DCC0
   :clear both
 
-table
-  :border 1px #ccc solid !important
+#error
+  :background-color #DF4242
 
-table.proposals, table.decisions, table.failed_proposals, table.members
+/* Body
+
+#bd
+  a
+    &.cancel
+      :color #f00
+      :font-size 0.9em
+  p
+    :color #333
+    :margin-bottom 12px
+  ul
+    :margin 0 0 1em 2em
+    li
+      :margin 0.3em 0
+  .section
+    :background #f5f5fe
+    :border 1px solid #999
+    :margin-bottom 18px
+    :padding 12px
+    p.explanation
+      :color #666
+  .open-proposals
+    h4
+      :margin 18px 0 6px 0
+    span.time-ends
+      :color #666
+      :font-size 0.8em
+      :font-weight normal
+    p.votes
+      :float left
+      :margin-right 24px
+
+/* Tables
+
+table
+  :border-collapse collapse
+  :margin 1em 0 2em 0
+  :text-align left
+  th
+    :border-bottom 1px dashed #ccc
+    :font-weight bold
+    :white-space nowrap
+  th, td
+    :padding 0.4em 0.6em
+  td.timestamp
+    :white-space nowrap
+  tr.even td
+    :background #e9e9f4
+
+table.proposals, table.decisions, table.failed_proposals
   :border 1px #042 solid
   :margin auto
   :width 900px
@@ -89,22 +163,6 @@ table.proposals, table.decisions, table.failed_proposals, table.members
   td.proposal_ends_in
     :text-align center
     :width 14em
-
-th
-  :background #abc969 !important
-  :color #fff !important
-  :font-family georgia,times new roman
-  :font-weight 400
-  :padding 3px 0
-
-tr.even
-  :background #eee !important
-
-tr.odd
-  :background #fff !important
-
-tr:hover td
-  :background #ffc
 
 tr.vote_for
   :background-color #6bba70
@@ -135,11 +193,20 @@ div.description
   :padding-top 1em
   :text-align justify
 
-label, input, textarea
+/* Forms
+
+label, input, textarea, select
   :display block
-  :float left
+  :font-family 'Myriad','Myriad Pro','Helvetica Neue',Helvetica,Arial,sans-serif
+  :font-size 0.8em
   :margin-bottom 10px
+  :margin-left 20px
+  :padding 0.2em
   :width 30em
+
+label
+  :padding-right 1em
+  :margin-bottom 2px
 
 input[type=hidden]
   :display inline
@@ -150,14 +217,33 @@ input.checkbox
   :width auto
   :float none
 
-label
-  :padding-right 1em
-  :text-align right
-  :width 10em
-
 textarea
   :height 10em
   :width 30em
+
+div.open-proposals form
+  :clear none
+  :float left
+
+div.open-proposals form input
+  :width 5em
+
+form input[type="submit"]
+  :-webkit-border-radius 4px
+  :-moz-border-radius 4px
+  :border-radius 4px
+  :background-color #c9dcc0
+  :border 1px solid #333
+  :padding 3px
+  &:hover
+    :background-color #a1c2a3
+
+input#organisation_subdomain
+  :float left
+  :margin-right 4px
+  :text-align right
+
+/* Footer
 
 .footer
   :font-size .7em
@@ -165,10 +251,7 @@ textarea
   :text-align center
   :clear both
 
-ul.constitution li
-  :margin 0 0 0.5em
-  :clear right
-  
+ul.constitution li  
   input[type=hidden]
     :float right
     :width 0

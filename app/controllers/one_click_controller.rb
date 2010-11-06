@@ -1,4 +1,5 @@
 class OneClickController < ApplicationController
+  before_filter :current_organisation
   
   def index
     redirect_to(:action => 'dashboard')

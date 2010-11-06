@@ -1,4 +1,4 @@
-%h3 
+%h2 
   Constitution of 
   = @organisation_name
 
@@ -12,4 +12,4 @@
 = render :partial => 'shared/constitution', :locals => {:allow_changes => false}
   
 %p= link_to("I agree to abide by the constitution of #{@organisation_name}.", :action => 'induct_member')
-%p= link_to("Cancel", :action => 'cancel_membership')
+%p= link_to("Cancel", {:action => 'cancel_membership'}, {:class => 'cancel'})

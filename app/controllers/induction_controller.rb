@@ -1,4 +1,5 @@
 class InductionController < ApplicationController
+  before_filter :assign_organisation
   skip_before_filter :ensure_organisation_active
   before_filter :check_active_organisation
   
@@ -229,6 +230,10 @@ class InductionController < ApplicationController
   end
   
 private
+  def assign_organisation
+    @co = co
+  end
+  
   def check_active_organisation
     if co.active?
       if co.has_founding_member?

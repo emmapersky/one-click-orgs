@@ -1,36 +1,52 @@
-body {
-  color: #666666;
-  font-family: Myriad, Arial, Helvetica, sans-serif;
+* {
   margin: 0;
   padding: 0; }
 
+body {
+  background-color: #f6f6f6;
+  color: #333333;
+  font-family: "Myriad", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+
+#container {
+  background-color: white;
+  margin: 0 auto;
+  max-width: 1200px;
+  min-width: 800px;
+  padding: 12px; }
+
+/* Header */
 .control_bar {
-  position: absolute;
-  right: 0.5em;
-  top: 0.2em; }
+  color: #666666;
+  float: right;
+  font-size: 0.75em;
+  padding: 6px 0;
+  text-align: right; }
+
+.control_bar a {
+  text-decoration: none; }
 
 h1.header {
-  color: #666666;
-  font-family: Georgia, Times New Roman;
-  font-size: 3em;
-  margin: 0;
-  padding: 0;
-  text-align: center; }
-
-h2,
-h3,
-h4 {
-  color: #977c57; }
-
-h3 {
-  font-size: 1.5em;
-  margin: 20px 0 0;
-  padding: 0; }
+  color: black;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2.4em;
+  margin-bottom: 4px; }
 
 #doc,
 #hd #bd .footer {
-  margin: auto;
-  width: 950px; }
+  margin: auto; }
+
+#hd {
+  border-bottom: 1px solid #999999;
+  padding: 6px 0; }
+
+#hd p {
+  color: #666666;
+  font-size: 0.7em; }
+  #hd p a {
+    color: #666666;
+    text-decoration: none; }
+    #hd p a:hover {
+      text-decoration: underline; }
 
 br,
 form,
@@ -39,73 +55,106 @@ h2,
 h4 {
   clear: left; }
 
-form input#submit {
-  margin-left: 16em; }
+h2 {
+  font-size: 2em; }
+
+h3 {
+  font-size: 1.5em; }
 
 a {
   color: #627fc4; }
   a:hover {
-    color: #6699ff; }
+    color: #333333;
+    text-decoration: underline; }
 
+/* Navigation */
 #nav {
-  text-align: center; }
+  margin: 12px 0; }
   #nav li {
-    float: left; }
+    display: inline;
+    padding-right: 80px; }
   #nav a {
-    border-bottom: 3px #eeeeee solid;
-    display: block;
-    font-family: georgia;
-    font-size: 17px;
-    margin: 0;
-    padding: 3px 0;
-    text-decoration: none !important;
-    width: 212px; }
+    text-decoration: none; }
     #nav a:hover {
-      border-bottom: 3px #cdeb8b solid;
-      text-decoration: none; }
+      text-decoration: underline; }
 
 #navitem {
   display: inline;
   margin: 0;
   padding: 0; }
 
+/* Header notifications */
+#notice, #error {
+  font-size: 0.8em;
+  margin: 4px 0;
+  padding: 12px; }
+
 #notice {
+  background-color: #c9dcc0;
   clear: both; }
 
-table {
-  border: 1px #cccccc solid !important; }
+#error {
+  background-color: #df4242; }
 
-table.proposals, table.decisions, table.failed_proposals, table.members {
+/* Body */
+#bd a.cancel {
+  color: red;
+  font-size: 0.9em; }
+#bd p {
+  color: #333333;
+  margin-bottom: 12px; }
+#bd ul {
+  margin: 0 0 1em 2em; }
+  #bd ul li {
+    margin: 0.3em 0; }
+#bd .section {
+  background: #f5f5fe;
+  border: 1px solid #999999;
+  margin-bottom: 18px;
+  padding: 12px; }
+  #bd .section p.explanation {
+    color: #666666; }
+#bd .open-proposals h4 {
+  margin: 18px 0 6px 0; }
+#bd .open-proposals span.time-ends {
+  color: #666666;
+  font-size: 0.8em;
+  font-weight: normal; }
+#bd .open-proposals p.votes {
+  float: left;
+  margin-right: 24px; }
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  margin: 1em 0 2em 0;
+  text-align: left; }
+  table th {
+    border-bottom: 1px dashed #cccccc;
+    font-weight: bold;
+    white-space: nowrap; }
+  table th, table td {
+    padding: 0.4em 0.6em; }
+  table td.timestamp {
+    white-space: nowrap; }
+  table tr.even td {
+    background: #e9e9f4; }
+
+table.proposals, table.decisions, table.failed_proposals {
   border: 1px #004422 solid;
   margin: auto;
   width: 900px; }
-  table.proposals td.vote, table.decisions td.vote, table.failed_proposals td.vote, table.members td.vote {
+  table.proposals td.vote, table.decisions td.vote, table.failed_proposals td.vote {
     text-align: center;
     width: 12em; }
-  table.proposals form, table.decisions form, table.failed_proposals form, table.members form {
+  table.proposals form, table.decisions form, table.failed_proposals form {
     display: inline; }
-  table.proposals input, table.decisions input, table.failed_proposals input, table.members input {
+  table.proposals input, table.decisions input, table.failed_proposals input {
     margin: auto;
     width: 7em; }
-  table.proposals td.proposal_ends_in, table.decisions td.proposal_ends_in, table.failed_proposals td.proposal_ends_in, table.members td.proposal_ends_in {
+  table.proposals td.proposal_ends_in, table.decisions td.proposal_ends_in, table.failed_proposals td.proposal_ends_in {
     text-align: center;
     width: 14em; }
-
-th {
-  background: #abc969 !important;
-  color: white !important;
-  font-family: georgia, times new roman;
-  font-weight: 400;
-  padding: 3px 0; }
-
-tr.even {
-  background: #eeeeee !important; }
-
-tr.odd {
-  background: white !important; }
-
-tr:hover td {
-  background: #ffffcc; }
 
 tr.vote_for {
   background-color: #6bba70;
@@ -135,11 +184,19 @@ div.description {
   padding-top: 1em;
   text-align: justify; }
 
-label, input, textarea {
+/* Forms */
+label, input, textarea, select {
   display: block;
-  float: left;
+  font-family: "Myriad", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.8em;
   margin-bottom: 10px;
+  margin-left: 20px;
+  padding: 0.2em;
   width: 30em; }
+
+label {
+  padding-right: 1em;
+  margin-bottom: 2px; }
 
 input[type=hidden] {
   display: inline; }
@@ -150,27 +207,42 @@ input.checkbox {
   width: auto;
   float: none; }
 
-label {
-  padding-right: 1em;
-  text-align: right;
-  width: 10em; }
-
 textarea {
   height: 10em;
   width: 30em; }
 
+div.open-proposals form {
+  clear: none;
+  float: left; }
+
+div.open-proposals form input {
+  width: 5em; }
+
+form input[type="submit"] {
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  background-color: #c9dcc0;
+  border: 1px solid #333333;
+  padding: 3px; }
+  form input[type="submit"]:hover {
+    background-color: #a1c2a3; }
+
+input#organisation_subdomain {
+  float: left;
+  margin-right: 4px;
+  text-align: right; }
+
+/* Footer */
 .footer {
   font-size: 0.7em;
   margin-top: 20px;
   text-align: center;
   clear: both; }
 
-ul.constitution li {
-  margin: 0 0 0.5em;
-  clear: right; }
-  ul.constitution li input[type=hidden] {
-    float: right;
-    width: 0; }
+ul.constitution li input[type=hidden] {
+  float: right;
+  width: 0; }
 
 div.constitution_proposal {
   float: right;

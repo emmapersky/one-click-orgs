@@ -1,5 +1,6 @@
-- paras = []
-- paras = proposal.description.split("\n") if proposal.description
-%div.description
-  - for para in paras
-    %p= para
+- if proposal.description
+  - paras = []
+  - paras = proposal.description.split("\n")
+  %div.description
+    - for para in paras
+      %p= para
