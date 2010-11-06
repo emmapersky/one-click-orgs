@@ -1,6 +1,6 @@
-%h1 Set up this One Click Orgs installation
+%h2 Set up this One Click Orgs installation
 
-%h2 To host multiple organisations:
+%h3 To host multiple organisations:
 
 = form_tag(:action => 'create_base_domain') do
   %p Confirm or edit the base domain for this installation.
@@ -10,7 +10,7 @@
   %p
     = submit_tag("Save base domain")
 
-%h2 Or, to host a single organisation:
+%h3 Or, to host a single organisation:
 
 = form_tag(:action => 'set_single_organisation_mode') do
   %p= submit_tag("Run OCO in single organisation mode")

@@ -9,17 +9,19 @@
     = javascript_include_tag 'jquery', 'rails', 'application'
     = csrf_meta_tag
   %body
-    %div#doc
-      %div#hd
-        %h1.header One Click Orgs
+    %div#container
+      %div#doc
+        %div#hd
+          %h1.header One Click Orgs
+        - if flash[:notice]
+          %div#notice
+            = flash[:notice]
+        - if flash[:error]
+          %div#error
+            = flash[:error]
         
-      %div#bd
-        %div#notice
-          = flash[:notice]
-        %div#error
-          = flash[:error]
-          
-        = yield
-      %div.footer
-        = "One Click Orgs #{OneClickOrgs.version} - Running on Rails #{Rails.version}"
-    = get_satisfaction_widget
+        %div#bd
+          = yield
+        %div.footer
+          = "One Click Orgs #{OneClickOrgs.version} - Running on Rails #{Rails.version}"
+      = get_satisfaction_widget

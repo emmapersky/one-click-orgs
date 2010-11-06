@@ -52,6 +52,12 @@ h3
     &:hover
       :text-decoration underline
 
+#bd
+  p
+    :color #333
+    :font-size 0.85em
+    :margin-bottom 12px
+
 br,
 form,
 form p,
@@ -61,6 +67,16 @@ h4
 
 form input#submit
   :margin-left 16em
+
+form input[type="submit"]
+  :-webkit-border-radius 4px
+  :-moz-border-radius 4px
+  :border-radius 4px
+  :background-color #c9dcc0
+  :border 1px solid #333
+  :padding 3px
+  &:hover
+    :background-color #a1c2a3
 
 a
   :color #627fc4
@@ -161,8 +177,8 @@ div.description
 
 label, input, textarea
   :display block
-  :float left
   :margin-bottom 10px
+  :margin-left 20px
   :width 30em
 
 input[type=hidden]
@@ -176,12 +192,16 @@ input.checkbox
 
 label
   :padding-right 1em
-  :text-align right
-  :width 10em
+  :margin-bottom 2px
 
 textarea
   :height 10em
   :width 30em
+
+#organisation_subdomain
+  :float left
+  :margin-right 4px
+  :text-align right
 
 .footer
   :font-size .7em
