@@ -1,4 +1,4 @@
-require 'lib/periodic_proposal_closer'
+require File.join(Rails.root, '/lib/periodic_proposal_closer')
 
 # HACKTASTIC.
 begin

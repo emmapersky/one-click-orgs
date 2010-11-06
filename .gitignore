@@ -1,6 +1,7 @@
 .bundle
 .DS_Store
 ._*
+.rvmrc
 config/database.yml
 config/initializers/local_settings.rb
 coverage/*
