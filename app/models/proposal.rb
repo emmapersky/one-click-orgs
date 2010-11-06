@@ -137,7 +137,6 @@ class Proposal < ActiveRecord::Base
       ProposalMailer.notify_creation(m, self).deliver if m.has_permission(:vote)
     end
   end
-  handle_asynchronously :send_email
   
   # only to be backwards compatible with systems running older versions of delayed job
   def self.send_email_for(proposal_id)

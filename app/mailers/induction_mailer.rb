@@ -1,7 +1,4 @@
-class InductionMailer < ActionMailer::Base
-  helper :application
-
-  default :from => "info@oneclickorgs.com"
+class InductionMailer < OcoMailer
 
   def notify_agenda(options={})
     @member = options[:member]

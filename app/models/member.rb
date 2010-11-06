@@ -108,7 +108,6 @@ class Member < ActiveRecord::Base
   def dispatch_welcome(cached_password)
     MembersMailer.welcome_new_member(self, cached_password).deliver
   end
-  handle_asynchronously :dispatch_welcome
   
   # only to be backwards compatible with systems running older versions of delayed job
   def self.send_new_member_email(member_id, password)

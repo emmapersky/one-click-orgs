@@ -14,7 +14,6 @@ class Decision < ActiveRecord::Base
       DecisionMailer.notify_new_decision(m, self).deliver
     end
   end
-  handle_asynchronously :send_email
   
   # only to be backwards compatible with systems running older versions of delayed job
   def self.send_email_for(decision_id)

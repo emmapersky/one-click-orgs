@@ -1,7 +1,4 @@
-class DecisionMailer < ActionMailer::Base
-  helper :application
-
-  default :from => "info@oneclickorgs.com"
+class DecisionMailer < OcoMailer
 
   def notify_new_decision(member, decision)
     default_url_options[:host] = member.organisation.domain(:only_host => true)
