@@ -1,37 +1,34 @@
-%h3 Dashboard
+%h2 Dashboard
 
 %p= "Welcome back, #{current_user.name}!" if current_user
 
-= render :partial => 'shared/propose_freeform_form'
-  
-= render :partial => 'shared/propose_new_member_form'
 
-%h4 Votes in progress
-%table.proposals
-  %tr
-    %th Title
-    %th Ends
-    %th For/against
-    %th Your Vote
-  - for proposal in @proposals
-    %tr{:class => cycle('odd', 'even')}
-      %td
-        = proposal.title
-        (
-        = link_to(proposal.proposer.name, member_path(proposal.proposer))
-        )
-        = render 'proposals/description', :proposal => proposal
-        %p= link_to("More details", proposal_path(proposal))
-      %td.timestamp
-        = distance_of_time_in_words_to_now(proposal.end_date)
-        (
+.section.open-proposals
+  %h3 Open proposals
+  %p.explanation
+    These proposals are currently undergoing voting by
+    = @current_organisation.organisation_name
+    members.
+  - @proposals.each do |proposal|
+    %h4
+      = proposal.title
+      %span.time-ends
+        (voting ends
         = proposal.end_date.to_s(:long)
         )
-      %td 
-        = render 'proposals/vote_count', :proposal => proposal
-      %td.vote
-        = render 'proposals/vote', :proposal => proposal
+    = render 'proposals/description', :proposal => proposal
+    %p.votes
+      = proposal.votes_for
+      votes for,
+      = proposal.votes_against
+      against
+    = render 'proposals/vote', :proposal => proposal
   
+= render :partial => 'shared/propose_freeform_form'
+
+= render :partial => 'shared/propose_new_member_form'
+
+
 %h4 Timeline
 %table.timeline
   - for event in @timeline

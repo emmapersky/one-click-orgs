@@ -55,11 +55,12 @@ form p,
 h2,
 h4
   :clear left
+
+h2
+  :font-size 2em
   
 h3
   :font-size 1.5em
-  :margin 20px 0 0
-  :padding 0
 
 a
   :color #627fc4
@@ -112,6 +113,23 @@ a
     :margin 0 0 1em 2em
     li
       :margin 0.3em 0
+  .section
+    :background #f5f5fe
+    :border 1px solid #999
+    :margin-bottom 18px
+    :padding 12px
+    p.explanation
+      :color #666
+  .open-proposals
+    h4
+      :margin 18px 0 6px 0
+    span.time-ends
+      :color #666
+      :font-size 0.8em
+      :font-weight normal
+    p.votes
+      :float left
+      :margin-right 24px
 
 /* Tables
 
@@ -203,6 +221,13 @@ input.checkbox
 textarea
   :height 10em
   :width 30em
+
+div.open-proposals form
+  :clear none
+  :float left
+
+div.open-proposals form input
+  :width 5em
 
 form input[type="submit"]
   :-webkit-border-radius 4px

@@ -2,7 +2,7 @@
 %html
   %head
     %title
-      One Click Orgs
+      = @current_organisation ? @current_organisation.organisation_name : "One Click Orgs"
 
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
     = stylesheet_link_tag 'one_click'
