@@ -44,7 +44,7 @@ or
 
 3. Create your local config files:
 
-  $ bundle exec rake oco:generate_config
+  $ rake oco:generate_config
 
 4. Set up your database connection settings, by editing config/database.yml as desired.
 
@@ -67,8 +67,8 @@ RUNNING
 
 2. (Optional) In another shell, start the job server (which sends emails and closes proposals):
 
-  $ bundle exec script/delayed_job run       # run in foreground
-  $ bundle exec script/delayed_job start     # start as daemon (check log/delayed_job.log)
+  $ script/delayed_job run       # run in foreground
+  $ script/delayed_job start     # start as daemon (check log/delayed_job.log)
   $ rake jobs:work    # forground, from rake
   $ rake jobs:clear   # clear queue
 
