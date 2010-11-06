@@ -14,6 +14,8 @@ body
   :min-width 800px
   :padding 12px
 
+/* Header
+
 .control_bar
   :color #666
   :float right
@@ -29,11 +31,6 @@ h1.header
   :font-family Georgia,'Times New Roman',serif
   :font-size 2.4em
   :margin-bottom 4px
-
-h3
-  :font-size 1.5em
-  :margin 20px 0 0
-  :padding 0
 
 #doc,
 #hd #bd .footer
@@ -52,37 +49,25 @@ h3
     &:hover
       :text-decoration underline
 
-#bd
-  p
-    :color #333
-    :font-size 0.85em
-    :margin-bottom 12px
-
 br,
 form,
 form p,
 h2,
 h4
   :clear left
-
-form input#submit
-  :margin-left 16em
-
-form input[type="submit"]
-  :-webkit-border-radius 4px
-  :-moz-border-radius 4px
-  :border-radius 4px
-  :background-color #c9dcc0
-  :border 1px solid #333
-  :padding 3px
-  &:hover
-    :background-color #a1c2a3
+  
+h3
+  :font-size 1.5em
+  :margin 20px 0 0
+  :padding 0
 
 a
   :color #627fc4
   &:hover
     :color #333
     :text-decoration underline
+
+/* Navigation
 
 #nav
   :margin 12px 0
@@ -99,6 +84,8 @@ a
   :margin 0
   :padding 0
 
+/* Header notifications
+
 #notice, #error
   :font-size 0.8em
   :margin 4px 0
@@ -110,6 +97,23 @@ a
 
 #error
   :background-color #DF4242
+
+/* Body
+
+#bd
+  a
+    &.cancel
+      :color #f00
+      :font-size 0.9em
+  p
+    :color #333
+    :margin-bottom 12px
+  ul
+    :margin 0 0 1em 2em
+    li
+      :margin 0.3em 0
+
+/* Tables
 
 table
   :border 1px #ccc solid !important
@@ -175,11 +179,17 @@ div.description
   :padding-top 1em
   :text-align justify
 
+/* Forms
+
 label, input, textarea
   :display block
   :margin-bottom 10px
   :margin-left 20px
   :width 30em
+
+label
+  :padding-right 1em
+  :margin-bottom 2px
 
 input[type=hidden]
   :display inline
@@ -190,18 +200,26 @@ input.checkbox
   :width auto
   :float none
 
-label
-  :padding-right 1em
-  :margin-bottom 2px
-
 textarea
   :height 10em
   :width 30em
 
-#organisation_subdomain
+form input[type="submit"]
+  :-webkit-border-radius 4px
+  :-moz-border-radius 4px
+  :border-radius 4px
+  :background-color #c9dcc0
+  :border 1px solid #333
+  :padding 3px
+  &:hover
+    :background-color #a1c2a3
+
+input#organisation_subdomain
   :float left
   :margin-right 4px
   :text-align right
+
+/* Footer
 
 .footer
   :font-size .7em
@@ -209,10 +227,7 @@ textarea
   :text-align center
   :clear both
 
-ul.constitution li
-  :margin 0 0 0.5em
-  :clear right
-  
+ul.constitution li  
   input[type=hidden]
     :float right
     :width 0
