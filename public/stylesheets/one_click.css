@@ -5,7 +5,9 @@
 body {
   background-color: #f6f6f6;
   color: #333333;
-  font-family: "Myriad", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  font-family: "Myriad", "Myriad Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /* Prevent Feedback tab overlapping content */
+  padding: 0 40px; }
 
 #container {
   background-color: white;
