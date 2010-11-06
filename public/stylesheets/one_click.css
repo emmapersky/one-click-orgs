@@ -126,7 +126,19 @@ a {
 
 /* Tables */
 table {
-  border: 1px #cccccc solid !important; }
+  border-collapse: collapse;
+  margin: 1em 0 2em 0;
+  text-align: left; }
+  table th {
+    border-bottom: 1px dashed #cccccc;
+    font-weight: bold;
+    white-space: nowrap; }
+  table th, table td {
+    padding: 0.4em 0.6em; }
+  table td.timestamp {
+    white-space: nowrap; }
+  table tr.even td {
+    background: #e9e9f4; }
 
 table.proposals, table.decisions, table.failed_proposals, table.members {
   border: 1px #004422 solid;
@@ -143,22 +155,6 @@ table.proposals, table.decisions, table.failed_proposals, table.members {
   table.proposals td.proposal_ends_in, table.decisions td.proposal_ends_in, table.failed_proposals td.proposal_ends_in, table.members td.proposal_ends_in {
     text-align: center;
     width: 14em; }
-
-th {
-  background: #abc969 !important;
-  color: white !important;
-  font-family: georgia, times new roman;
-  font-weight: 400;
-  padding: 3px 0; }
-
-tr.even {
-  background: #eeeeee !important; }
-
-tr.odd {
-  background: white !important; }
-
-tr:hover td {
-  background: #ffffcc; }
 
 tr.vote_for {
   background-color: #6bba70;

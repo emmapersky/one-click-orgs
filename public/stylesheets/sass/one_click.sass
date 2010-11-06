@@ -134,7 +134,19 @@ a
 /* Tables
 
 table
-  :border 1px #ccc solid !important
+  :border-collapse collapse
+  :margin 1em 0 2em 0
+  :text-align left
+  th
+    :border-bottom 1px dashed #ccc
+    :font-weight bold
+    :white-space nowrap
+  th, td
+    :padding 0.4em 0.6em
+  td.timestamp
+    :white-space nowrap
+  tr.even td
+    :background #e9e9f4
 
 table.proposals, table.decisions, table.failed_proposals, table.members
   :border 1px #042 solid
@@ -151,22 +163,6 @@ table.proposals, table.decisions, table.failed_proposals, table.members
   td.proposal_ends_in
     :text-align center
     :width 14em
-
-th
-  :background #abc969 !important
-  :color #fff !important
-  :font-family georgia,times new roman
-  :font-weight 400
-  :padding 3px 0
-
-tr.even
-  :background #eee !important
-
-tr.odd
-  :background #fff !important
-
-tr:hover td
-  :background #ffc
 
 tr.vote_for
   :background-color #6bba70
