@@ -18,6 +18,7 @@ class OrganisationsController < ApplicationController
     if @organisation.save
       redirect_to(:host => @organisation.host, :controller => 'induction', :action => 'founder')
     else
+      flash[:error] = "Sorry, that address is already taken."
       render(:action => :new)
     end
   end
