@@ -1,9 +1,9 @@
-%h3 Induction - Founding meeting agenda
+%h2 Induction - Founding meeting agenda
 
 %p Please review the founding meeting agenda before it is sent out to all founding members.
 
-%h4= @organisation_name
-%h4 Agenda for the Founding Meeting
+%h3= @organisation_name
+%h3 Agenda for the Founding Meeting
 %p
   To be held at
   = @founding_meeting_location
@@ -12,13 +12,13 @@
   starting at
   = @founding_meeting_time
 
-%h5 Invited:
+%h4 Invited:
 %ul
   - @members.each do |member|
     %li
       = "#{member.name} <#{member.email}>"
 
-%h5 Agenda:
+%h4 Agenda:
 %ol
   %li
     Presentation and discussion of the Draft Constitution for

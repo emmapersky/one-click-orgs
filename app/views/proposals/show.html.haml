@@ -1,13 +1,13 @@
 - if @proposal.open?
-  %h3
+  %h2
     Proposal:
     = @proposal.title
 - elsif @proposal.accepted?
-  %h3
+  %h2
     Decision:
     = @proposal.title
 - else
-  %h3
+  %h2
     Failed proposal:
     = @proposal.title
 

@@ -1,5 +1,5 @@
-%h3 Induction - Members
-%h4 Member 1 (that's you)
+%h2 Induction - Members
+%h3 Member 1 (that's you)
 %p
   %label Name
   = @founder.name
@@ -9,7 +9,7 @@
 = form_tag(:controller => 'induction', :action => 'create_members') do
   - 0.upto(14) do |i|
     = fields_for(:members, @members[i], :index => i) do |f|
-      %h4="Member #{i+2}"
+      %h3="Member #{i+2}"
       %p
         = f.label(:first_name)
         = f.text_field(:first_name)
