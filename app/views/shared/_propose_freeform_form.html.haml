@@ -1,11 +1,12 @@
 - if current_user.has_permission(:freeform_proposal)
-  %h4 New Proposal
-  = form_for(@new_proposal, :url => proposals_path, 'class' => 'proposal') do |f|
-    %p
-      = f.label(:title)
-      = f.text_field :title
-    %p
-      = f.label(:description)
-      = f. text_area :description
-    %p
-    = submit_tag "Create Proposal", :id => 'submit'
+  %div.section
+    %h3 New Proposal
+    = form_for(@new_proposal, :url => proposals_path, 'class' => 'proposal') do |f|
+      %p
+        = f.label(:title)
+        = f.text_field :title
+      %p
+        = f.label(:description)
+        = f. text_area :description
+      %p
+      = submit_tag "Create Proposal", :id => 'submit'
