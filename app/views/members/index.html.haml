@@ -1,11 +1,10 @@
-%h3
+%h2
   Existing Members
-%table.members
-  %thead
-    %tr
-      %th Name
-      %th Proposals made (succeeded/failed)
-      %th Votes cast
+%table
+  %tr
+    %th Name
+    %th Proposals made (succeeded/failed)
+    %th Votes cast
   - for member in @members
     %tr
       %td= link_to "#{member.name}", member_path(member)
@@ -18,11 +17,14 @@
         )
       %td= member.votes_count
 - unless @pending_members.empty?
-  %h3
+  %h2
     Pending Members
-  %p
+  %p.explanation
     These members still need to agree to the constitution
-  %ul
+  %table
+    %tr
+      %th Name
     - for member in @pending_members
-      %li
-        = link_to "#{member.name}", member_path(member)
+      %tr
+        %td
+          = link_to "#{member.name}", member_path(member)
