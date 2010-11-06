@@ -26,10 +26,14 @@ body {
   text-decoration: none; }
 
 h1.header {
-  color: black;
-  font-family: Georgia, "Times New Roman", serif;
   font-size: 2.4em;
+  font-family: Georgia, "Times New Roman", serif;
   margin-bottom: 4px; }
+  h1.header a {
+    color: black;
+    text-decoration: none; }
+    h1.header a:hover {
+      text-decoration: underline; }
 
 #doc,
 #hd #bd .footer {

@@ -22,7 +22,7 @@
       %div#doc
         %div#hd
           %h1.header
-            = @current_organisation.organisation_name
+            = link_to(@current_organisation.organisation_name, root_path)
           %p
             powered by
             = link_to 'One Click Orgs', 'http://www.oneclickor.gs/'
