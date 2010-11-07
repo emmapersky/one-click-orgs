@@ -45,7 +45,7 @@ class MembersController < ApplicationController
 
   def create
     member = params[:member]
-    title = "Add #{member['name']} as a member of #{current_organisation.organisation_name}" # TODO: should default in model
+    title = "Add #{member['first_name']} #{member['last_name']} as a member of #{current_organisation.organisation_name}" # TODO: should default in model
     proposal = co.add_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
