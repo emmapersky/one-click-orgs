@@ -2,28 +2,28 @@
 
 %p= "Welcome back, #{current_user.name}!" if current_user
 
-
-.section.open-proposals
-  %h3 Open proposals
-  %p.explanation
-    These proposals are currently undergoing voting by
-    = @current_organisation.organisation_name
-    members.
-  - @proposals.each do |proposal|
-    %h4
-      = proposal.title
-      %span.time-ends
-        (voting ends
-        = proposal.end_date.to_s(:long)
-        )
-    = render 'proposals/description', :proposal => proposal
-    %p.votes
-      = proposal.votes_for
-      votes for,
-      = proposal.votes_against
-      against
-    = render 'proposals/vote', :proposal => proposal
-  .clear
+- if @proposals.present?
+  .section.open-proposals
+    %h3 Open proposals
+    %p.explanation
+      These proposals are currently undergoing voting by
+      = @current_organisation.organisation_name
+      members.
+    - @proposals.each do |proposal|
+      %h4
+        = proposal.title
+        %span.time-ends
+          (voting ends
+          = proposal.end_date.to_s(:long)
+          )
+      = render 'proposals/description', :proposal => proposal
+      %p.votes
+        = proposal.votes_for
+        votes for,
+        = proposal.votes_against
+        against
+      = render 'proposals/vote', :proposal => proposal
+    .clear
   
 = render :partial => 'shared/propose_freeform_form'
 
