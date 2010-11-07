@@ -16,6 +16,9 @@ body {
   min-width: 800px;
   padding: 12px; }
 
+div.clear {
+  clear: left; }
+
 /* Header */
 .control_bar {
   color: #666666;
