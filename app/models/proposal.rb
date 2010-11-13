@@ -95,9 +95,12 @@ class Proposal < ActiveRecord::Base
     
     if passed
       decision = self.create_decision
-      decision.send_email
-      
       enact!(self.parameters)
+      begin
+        decision.send_email
+      rescue => e
+        Rails.logger.error("Error sending decision email: #{e.inspect}")
+      end
     end
   end
 
