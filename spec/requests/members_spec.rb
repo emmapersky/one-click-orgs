@@ -43,7 +43,7 @@ describe "everything" do
       end
       
       it "redirects to resource(:members)" do
-        @response.should redirect_to(members_path)
+        @response.should redirect_to(root_path)
       end
       
       it "should set a notice flash" do
