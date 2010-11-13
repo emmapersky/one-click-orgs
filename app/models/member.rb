@@ -8,7 +8,7 @@ class Member < ActiveRecord::Base
   has_many :proposals, :foreign_key => 'proposer_member_id'
   belongs_to :member_class
 
-  scope :active, where(["active = ? AND inducted_at IS NOT NULL", true])
+  scope :active, where("active = 1 AND inducted_at IS NOT NULL")
   scope :pending, where("inducted_at IS NULL")
   
   def proposals_count

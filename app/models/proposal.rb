@@ -45,7 +45,7 @@ class Proposal < ActiveRecord::Base
   def member_count
     # TODO: find out how to do the following in one query
     count = 0
-    organisation.members.where(["created_at < ? AND active = ? AND inducted_at IS NOT NULL", creation_date, true]).each do |m|
+    organisation.members.where(["created_at < ? AND active = 1 AND inducted_at IS NOT NULL", creation_date]).each do |m|
       count += 1 if m.has_permission(:vote)
     end
     count
@@ -114,7 +114,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def self.close_due_proposals
-    where(["close_date < ? AND open = ?", Time.now.utc, true]).all.each { |p| p.close! }
+    where(["close_date < ? AND open = 1", Time.now.utc]).all.each { |p| p.close! }
   end
   
   def self.close_early_proposals
@@ -127,7 +127,7 @@ class Proposal < ActiveRecord::Base
     close_early_proposals
   end
   
-  scope :currently_open, lambda {where(["open = ? AND close_date > ?", true, Time.now.utc])}
+  scope :currently_open, lambda {where(["open = 1 AND close_date > ?", Time.now.utc])}
   
   scope :failed, lambda {where(["close_date < ? AND accepted = ?", Time.now.utc, false]).order('close_date DESC')}
   
