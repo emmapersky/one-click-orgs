@@ -41,26 +41,21 @@ describe Proposal do
   end
   
   it "should send out an email to each member after a Proposal has been made" do
-    @organisation.members.count.should >0
-    lambda do
-      @organisation.proposals.make(:proposer => @member)
-    end.should change { Delayed::Job.count }.by(1)
-
-    job = Delayed::Job.first
-    job.payload_object.class.should   == Delayed::PerformableMethod
-    job.payload_object.method.should  == :send_email_without_send_later
-    job.payload_object.args.should    == []
+    @organisation.members.count.should > 0
+    @member.member_class.set_permission(:vote, true)
+    
+    ProposalMailer.should_receive(:notify_creation).and_return(mock('email', :deliver => nil))
+    @organisation.proposals.make(:proposer => @member)
   end
   
   # FIXME Decision internals should be in the Decision spec, not here
   it "should send out an email to each member after a Decision has been made" do
      @organisation.members.count.should >0
-
-     lambda do
-       p = @organisation.proposals.make(:proposer => @member)
-       p.stub!(:passed?).and_return(true)
-       p.close!
-     end.should change { Delayed::Job.count }.by(2) #Decision + proposal
+     
+     DecisionMailer.should_receive(:notify_new_decision).and_return(mock('email', :deliver => nil))
+     p = @organisation.proposals.make(:proposer => @member)
+     p.stub!(:passed?).and_return(true)
+     p.close!
   end
   
   describe "to_event" do
