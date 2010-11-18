@@ -37,6 +37,7 @@ h1.header {
 
 #hd {
   border-bottom: 1px solid #999999;
+  margin-bottom: 12px;
   padding: 6px 0; }
 
 #hd p {
@@ -55,11 +56,17 @@ h2,
 h4 {
   clear: left; }
 
+br.clear {
+  clear: both; }
+
 h2 {
   font-size: 2em; }
 
 h3 {
   font-size: 1.5em; }
+
+h4 {
+  font-size: 1.2em; }
 
 a {
   color: #627fc4; }
@@ -86,7 +93,7 @@ a {
 /* Header notifications */
 #notice, #error {
   font-size: 0.8em;
-  margin: 4px 0;
+  margin: 12px 0;
   padding: 12px; }
 
 #notice {
@@ -113,13 +120,21 @@ a {
   margin-bottom: 18px;
   padding: 12px; }
   #bd .section p.explanation {
-    color: #666666; }
+    color: #666666;
+    font-size: 0.8em; }
 #bd .open-proposals h4 {
-  margin: 18px 0 6px 0; }
+  margin: 1em 0 0; }
 #bd .open-proposals span.time-ends {
   color: #666666;
   font-size: 0.8em;
   font-weight: normal; }
+#bd .open-proposals div.description {
+  border-left: 1px dashed #333333;
+  margin: 1em 0.5em;
+  padding: 0.5em 1em;
+  font-size: 0.8em; }
+  #bd .open-proposals div.description p {
+    margin: 0.4em 0; }
 #bd .open-proposals p.votes {
   float: left;
   margin-right: 24px; }
@@ -177,13 +192,6 @@ tr.vote_in_progress {
 tr.vote_for a, tr.vote_against a, tr.vote_in_progress a {
   color: white; }
 
-div.description {
-  font-size: 0.8em;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: 1em;
-  text-align: justify; }
-
 /* Forms */
 label, input, textarea, select {
   display: block;
@@ -213,10 +221,11 @@ textarea {
 
 div.open-proposals form {
   clear: none;
-  float: left; }
+  float: left;
+  margin: -0.3em 0 0; }
 
 div.open-proposals form input {
-  width: 5em; }
+  width: 6em; }
 
 form input[type="submit"] {
   -webkit-border-radius: 4px;

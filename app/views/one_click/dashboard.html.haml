@@ -1,10 +1,10 @@
-%h2 Dashboard
+%h2 Voting and Proposals
 
 %p= "Welcome back, #{current_user.name}!" if current_user
 
 
 .section.open-proposals
-  %h3 Open proposals
+  %h3 Votes in progress
   %p.explanation
     These proposals are currently undergoing voting by
     = @current_organisation.organisation_name
@@ -23,7 +23,8 @@
       = proposal.votes_against
       against
     = render 'proposals/vote', :proposal => proposal
-  
+    %br.clear
+      
 = render :partial => 'shared/propose_freeform_form'
 
 = render :partial => 'shared/propose_new_member_form'
