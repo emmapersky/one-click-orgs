@@ -139,6 +139,11 @@ a {
   float: left;
   margin-right: 24px; }
 
+span.dynamic {
+  background-color: #f3f3f3;
+  color: #9d8942;
+  padding: 2px; }
+
 /* Tables */
 table {
   border-collapse: collapse;
