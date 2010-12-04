@@ -6,9 +6,10 @@ class PasswordResetsController < ApplicationController
   
   def create
     email = params[:email]
-    if m = co.members.where(:email => email).first
-      m.new_password_reset_code!
-      MembersMailer.password_reset(m).deliver
+    if @member = co.members.where(:email => email).first
+      @member.new_password_reset_code!
+      @member.save!
+      MembersMailer.password_reset(@member).deliver
       render(:action => :show)
     else
       redirect_to({:action=>:new}, :flash => { :error => "No such user with email: #{email}" })
@@ -20,7 +21,7 @@ class PasswordResetsController < ApplicationController
     @member = Member.find_by_password_reset_code(@password_reset_code)
     
     unless @member
-      render(:action => :not_found)
+      render_404
     end
   end
   
