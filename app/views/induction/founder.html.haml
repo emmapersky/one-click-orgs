@@ -11,7 +11,7 @@
     = f.text_field :last_name
   %p
     = f.label(:class)
-    = f.collection_select(:member_class_id, MemberClass.all, :id, :name)
+    = f.collection_select(:member_class_id, @co.member_classes.all, :id, :name)
   %p
     = f.label :password
     = f.password_field :password

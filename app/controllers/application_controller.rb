@@ -27,6 +27,8 @@ class ApplicationController < ActionController::Base
   end
   alias :co :current_organisation
   
+  helper_method :current_organisation, :co
+  
   def date_format(d)
     d.to_s(:long)
   end

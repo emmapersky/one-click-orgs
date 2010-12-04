@@ -21,7 +21,7 @@
   = @member.votes_count
 
 - if current_user.has_permission(:membership_proposal)
-  - if MemberClass.count > 1
+  - if co.member_classes.count > 1
     .section
       %h3
         Change Member Class
@@ -37,7 +37,7 @@
         %p
           = label_tag(:class)
           = collection_select(:member, :member_class_id, 
-            MemberClass.all.reject {|mc| mc==@member.member_class }, :id, :name)
+            co.member_classes.all.reject {|mc| mc==@member.member_class }, :id, :name)
         %p
           = submit_tag "Create Proposal", :id => 'submit'
   .section

@@ -12,7 +12,7 @@ describe "induction process" do
   # This kind of thing would be better done in Cucumber with Webrat so that it's more readable and less brittle.
   
   before(:each) do
-    @member_class = MemberClass.make
+    @member_class = @organisation.member_classes.make
   end
   
   it "should work" do

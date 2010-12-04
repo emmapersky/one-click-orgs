@@ -14,6 +14,6 @@
         = f.text_field :last_name
       %p
         = f.label(:class)
-        = collection_select(:member, :member_class_id, MemberClass.all, :id, :name)
+        = collection_select(:member, :member_class_id, co.member_classes.all, :id, :name)
       %p
         = submit_tag "Invite member", :id => 'submit'
