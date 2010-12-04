@@ -1,7 +1,7 @@
 %h2 Induction
 %p ...
 
-= form_tag({:controller => 'organisations', :action => 'create'}, :method => "post") do |f|
+= form_tag({:controller => 'organisations', :action => 'create'}, :method => "post") do
 
   %h3 Founder
   = fields_for(:founder, @founder) do |f|
@@ -23,9 +23,10 @@
     %p
       = f.label :name, "Your group's name"
       = f.text_field :name
-    %p
-      = f.label :subdomain, "Your group's One Click Orgs web address"
-      = f.text_field :subdomain
+    - if !Setting[:single_organisation_mode]
+      %p
+        = f.label :subdomain, "Your group's One Click Orgs web address"
+        = f.text_field :subdomain
     %p
       = f.label :objectives, "Your group's objectives"
       = f.text_field :objectives

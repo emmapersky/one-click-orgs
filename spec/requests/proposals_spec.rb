@@ -85,6 +85,8 @@ describe "everything" do
         },
         :proposer_member_id => @user.id
       ).and_return(@proposal)
+      @proposal.should_receive(:start).and_return(true)
+      @proposal.should_receive(:accepted?).and_return(false)
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'name', 'value' => 'The Yoghurt Yurt'})
 
@@ -100,6 +102,8 @@ describe "everything" do
         },
         :proposer_member_id => @user.id
       ).and_return(@proposal)
+      @proposal.should_receive(:start).and_return(true)
+      @proposal.should_receive(:accepted?).and_return(false)
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'objectives', 'value' => 'make all the yoghurt'})
       
@@ -115,6 +119,8 @@ describe "everything" do
         },
         :proposer_member_id => @user.id
       ).and_return(@proposal)
+      @proposal.should_receive(:start).and_return(true)
+      @proposal.should_receive(:accepted?).and_return(false)
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'domain', 'value' => 'yaourt.com'})
       

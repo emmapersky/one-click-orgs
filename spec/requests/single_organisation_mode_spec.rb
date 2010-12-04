@@ -14,11 +14,9 @@ describe "Single-organisation mode" do
       Setting[:single_organisation_mode].should == 'true'
     end
     
-    it "creates an organisation" do
-      Organisation.count.should == 0
+    it "redirects to New Organisation form" do
       post 'http://oneclickorgs.com/setup/set_single_organisation_mode'
-      Organisation.count.should == 1
-      Organisation.last.subdomain.should be_blank
+      response.should redirect_to('http://oneclickorgs.com/organisations/new')
     end
     
     # TODO restore the following once induction has been rewritten

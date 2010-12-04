@@ -94,6 +94,7 @@ WHERE I LEFT IT LAST TIME:
 
 next steps:
 * check latest 1.0 spec and verify our wording, workflow, etc is according to spec
+* single-org mode: should probably ask for login post-signup. OR: don't ask for login after signup in multi-org mode
 * update unit tests before proceeding! (throw away old ones, write new ones)
   * all induction tests still need to be written
 * try logging in as founding member (not founder) during pending org, proposed org, active org

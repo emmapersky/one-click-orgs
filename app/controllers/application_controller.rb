@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   # Returns true if a user is logged in; false otherwise.
   def user_logged_in?
     current_user = @current_user
-    current_user ||= session[:user] ? co.members.find_by_id(session[:user]) : false
+    current_user ||= session[:user] && co ? co.members.find_by_id(session[:user]) : false
     @current_user = current_user
     current_user.is_a?(Member)
   end

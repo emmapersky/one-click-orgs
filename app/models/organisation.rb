@@ -74,7 +74,7 @@ class Organisation < ActiveRecord::Base
   end
   
   def host
-    [subdomain, Setting[:base_domain]].join('.')
+    subdomain ? [subdomain, Setting[:base_domain]].join('.') : Setting[:base_domain]
   end
   
   def has_founding_member?

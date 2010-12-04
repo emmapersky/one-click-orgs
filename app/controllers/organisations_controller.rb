@@ -14,6 +14,7 @@ class OrganisationsController < ApplicationController
   def new
     @organisation = Organisation.new
     @founder = @organisation.members.first || @organisation.members.new
+    #@single_organisation_mode = Setting[:single_organisation_mode]
   end
   
   def create
@@ -56,14 +57,10 @@ class OrganisationsController < ApplicationController
     # continue
     self.current_user = @founder # TODO: do we still need this?
 
-    redirect_to(:host => @organisation.host, :controller => 'one_click')
-  end
-
-protected
-
-  def ensure_not_single_organisation_mode
-    if Setting[:single_organisation_mode] == "true"
-      redirect_to root_path
+    if Setting[:single_organisation_mode]
+      redirect_to(:controller => 'one_click')
+    else
+      redirect_to(:host => @organisation.host, :controller => 'one_click')
     end
   end
 end

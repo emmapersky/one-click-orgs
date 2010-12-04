@@ -64,7 +64,8 @@ describe "everything" do
           :title => "Eject #{@member.name} from test",
           :proposer_member_id => @user.id
         ).and_return(@proposal = mock('proposal'))
-        @proposal.should_receive(:save).and_return(true)
+        @proposal.should_receive(:start).and_return(true)
+        @proposal.should_receive(:accepted?).and_return(false)
         
         make_request
       end

@@ -26,7 +26,8 @@ class SetupController < ApplicationController
   
   def set_single_organisation_mode
     Setting[:single_organisation_mode] = "true"
-    @organisation = Organisation.create
-    redirect_to(:controller => 'one_click')
+    Setting[:base_domain] = request.host_with_port
+    redirect_to(new_organisation_path)
+    #redirect_to(:controller => 'one_click')
   end
 end
