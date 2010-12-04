@@ -99,7 +99,7 @@ class ProposalsController < ApplicationController
       if current_system != proposed_system           
               
         proposal = co.change_voting_system_proposals.new(
-          :title => "change general voting system to #{proposed_system.description}",
+          :title => "Change general voting system to #{proposed_system.description}",
           :proposer_member_id => current_user.id,
           :parameters => {'type'=>'general', 'proposed_system'=> proposed_system.simple_name}
         )
@@ -118,7 +118,7 @@ class ProposalsController < ApplicationController
       
       if current_system != proposed_system
         proposal = co.change_voting_system_proposals.new(
-          :title => "change membership voting system to #{proposed_system.description}",
+          :title => "Change membership voting system to #{proposed_system.description}",
           :proposer_member_id => current_user.id,
           :parameters => {'type' => 'membership', 'proposed_system' => proposed_system.simple_name}
         )
@@ -137,7 +137,7 @@ class ProposalsController < ApplicationController
       
       if current_system != proposed_system
         proposal = co.change_voting_system_proposals.new(
-          :title => "change constitution voting system to #{proposed_system.description}",
+          :title => "Change constitution voting system to #{proposed_system.description}",
           :proposer_member_id => current_user.id,
           :parameters => {'type' => 'constitution', 'proposed_system' => proposed_system.simple_name}
         )
