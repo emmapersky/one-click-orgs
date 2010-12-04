@@ -115,6 +115,11 @@ class Member < ActiveRecord::Base
     save!
   end
 
+  def inducted!
+    self.inducted_at = Time.now.utc if !inducted?
+    save!
+  end
+
   def inducted?
     !inducted_at.nil?
   end

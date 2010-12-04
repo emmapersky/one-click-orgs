@@ -4,6 +4,7 @@ class FoundOrganisationProposal < Proposal
   
   def reject!(params)
     organisation.failed!
+    organisation.save
     # TODO email all founding members: failed to agree to found org
   end
   
@@ -18,6 +19,7 @@ class FoundOrganisationProposal < Proposal
     organisation.members.each do |member|
       if confirmed_member_ids.include?(member.id)
         member.member_class = MemberClass.find_by_name('Member')
+        member.inducted!
         member.save!
       else
         member.destroy 
@@ -25,6 +27,7 @@ class FoundOrganisationProposal < Proposal
     end
     
     organisation.active!
+    organisation.save
     
     # send out emails to announce org creation to all remaining members
     # TODO send separate email to members who voted "no"

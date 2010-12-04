@@ -45,7 +45,7 @@ class Organisation < ActiveRecord::Base
   end
   
   def objectives
-    @objectives ||= clauses.get_text('organisaton_objectives')
+    @objectives ||= clauses.get_text('organisation_objectives')
   end
   
   def objectives=(objectives)
@@ -54,7 +54,12 @@ class Organisation < ActiveRecord::Base
   end
   
   def assets
-    clauses.get_boolean('assets')
+    @assets ||= clauses.get_boolean('assets')
+  end
+  
+  def assets=(assets)
+    clauses.build(:name => 'assets', :boolean_value => assets)
+    @assets = assets
   end
   
   # Returns the base URL for this instance of OCO.
@@ -118,7 +123,7 @@ class Organisation < ActiveRecord::Base
   
   def active!
     #clauses.get_text('organisation_state', 'active')
-    clauses.build(:name => 'organisation_state', :text_value => 'failed')
+    clauses.build(:name => 'organisation_state', :text_value => 'active')
   end
   
   def constitution
@@ -139,9 +144,9 @@ class Organisation < ActiveRecord::Base
     
     founder = member_classes.find_or_create_by_name('Founder')
     founder.set_permission(:direct_edit, true)
-    founder.set_permission(:constitution_proposal, false)
-    founder.set_permission(:membership_proposal, false)
-    founder.set_permission(:freeform_proposal, false)
+    founder.set_permission(:constitution_proposal, true)
+    founder.set_permission(:membership_proposal, true)
+    founder.set_permission(:freeform_proposal, true)
     founder.set_permission(:found_organisation_proposal, true)
     founder.set_permission(:vote, true)
     founder.save

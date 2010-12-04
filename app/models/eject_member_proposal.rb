@@ -1,10 +1,18 @@
 class EjectMemberProposal < Proposal
-  def enact!(args={})
+
+  def allows_direct_edit?
+    true
+  end
+
+  def enact!(params)
     raise "Can not enact a proposal which has not passed" unless passed?
-    
-    params = ActiveSupport::JSON.decode(self.parameters)
     member = organisation.members.find(params['id'])
-    member.eject!
+    if organisation.pending?
+      # Special case: org in pending state
+      member.destroy
+    else
+      member.eject!
+    end
   end
   
   def voting_system

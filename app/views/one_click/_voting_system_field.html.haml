@@ -1,7 +1,7 @@
 %label{:for => "#{type}_voting_system"}= description
 %select{:name=>"#{type}_voting_system"}
   - VotingSystems.all do |vs|
-    - if vs.simple_name == instance_variable_get("@#{type}_voting_system".to_sym)
+    - if vs.simple_name == instance_variable_get("@#{type}_voting_system").simple_name
       %option{:value => vs.simple_name, :selected => true}= vs.description
     - else
       %option{:value=>vs.simple_name}= vs.description        

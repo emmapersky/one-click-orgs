@@ -45,6 +45,7 @@ class MembersController < ApplicationController
   end
 
   def create
+    # TODO: validate input
     member = params[:member]
     title = "Add #{member['first_name']} #{member['last_name']} as a member of #{current_organisation.organisation.name}" # TODO: should default in model
     proposal = co.add_member_proposals.new(
@@ -53,18 +54,23 @@ class MembersController < ApplicationController
       :parameters => member
     )
     
-    if proposal.save
-      redirect_to root_path, :notice => "Add Member Proposal successfully created"
+    if proposal.start
+      if proposal.accepted?
+        redirect_to members_path, :notice => "New member successfully created"
+      else
+        redirect_to members_path, :notice => "Add Member Proposal successfully created"
+      end
     else
       redirect_to root_path, :flash => {:error => "Error creating proposal: #{proposal.errors.full_messages.to_sentence}"}      
     end
   end
   
   def create_founding_member
+    # TODO: validate input
     member = params[:member]
     member[:member_class_id] = MemberClass.find_by_name('Founding Member').id.to_s
-    # raise member.to_json
     co.members.create_member(member, true)
+    # raise member.to_json
     redirect_to members_path, :notice => "Added a new founding member."
   end
 
@@ -89,8 +95,12 @@ class MembersController < ApplicationController
       :parameters => {'id' => @member.id}
     )
     
-    if proposal.save
-      redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Ejection proposal successfully created")
+    if proposal.start
+      if proposal.accepted?
+        redirect_to(members_path, :notice => "Member successfully ejected")
+      else
+        redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Ejection proposal successfully created")
+      end
     else
       redirect member_path(@member), :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
     end
@@ -110,8 +120,12 @@ class MembersController < ApplicationController
         'member_class_id' => @new_member_class.id)
     )
     
-    if proposal.save
-      flash[:notice] = "Membership class proposal successfully created"
+    if proposal.start
+      if proposal.accepted?
+        flash[:notice] = "Membership class successfully changed"
+      else
+        flash[:notice] = "Membership class proposal successfully created"
+      end
       redirect_back_or_default(member_path(@member))
     else
       flash[:error] = "Error creating proposal: #{proposal.errors.inspect}"

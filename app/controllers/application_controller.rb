@@ -137,7 +137,7 @@ class ApplicationController < ActionController::Base
       store_location
       redirect_to login_path
     else
-      redirect_to(:controller => 'induction')
+      redirect_to(:controller => 'one_click')
     end
   end
 end

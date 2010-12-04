@@ -4,6 +4,10 @@ class AddMemberProposal < Proposal
     errors.add(:base, "A member with this email address already exists") if organisation.members.find_by_email(parameters['email'])
   end
   
+  def allows_direct_edit?
+    true
+  end
+
   def enact!(params)
     organisation.members.create_member(params, true)
   end

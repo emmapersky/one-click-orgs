@@ -29,11 +29,13 @@ class ProposalsController < ApplicationController
     respond_with @proposal
   end
 
+  # Freeform proposal
   def create
     @proposal = co.proposals.new(params[:proposal])
     @proposal.proposer_member_id = current_user.id #fixme
         
-    if @proposal.save
+    if @proposal.start
+      # Freeform proposal has no need for direct enactment logic during pending stage.
       redirect_to proposal_path(@proposal), :flash => {:notice => "Proposal was successfully created"}
     else
       redirect root_path, :flash => {:error => "Proposal not created"}
@@ -45,13 +47,15 @@ class ProposalsController < ApplicationController
       :title => "Proposal to Found #{co.name}",
       :proposer_member_id => current_user.id
     )
-    if proposal.save
+    if proposal.start
+      # Founding proposal has no need for direct enactment logic during pending stage.
       current_user.member_class = MemberClass.find_by_name('Member')
       current_user.save!
       
       co.proposed!
+      co.save
       
-      redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Constitutional amendment proposal successfully created")
+      redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Constitutional amendment proposal successfully created")
     else
       redirect_to(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
     end
@@ -66,8 +70,12 @@ class ProposalsController < ApplicationController
         'value' => params[:value]
       }
     )
-    if proposal.save
-      redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Constitutional amendment proposal succesfully created")
+    if proposal.start
+      if proposal.accepted?
+        redirect_to(constitution_path, :notice => "Constitutional change was made")
+      else
+        redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Constitutional amendment proposal successfully created")
+      end
     else
       redirect_to(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
     end
@@ -91,8 +99,12 @@ class ProposalsController < ApplicationController
       }
     )
     
-    if proposal.save
-      redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Constitutional amendment proposal succesfully created")
+    if proposal.start
+      if proposal.accepted?
+        redirect_to(constitution_path, :notice => "Constitutional change was made")
+      else
+        redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Constitutional amendment proposal successfully created")
+      end
     else
       redirect_to(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
     end
@@ -105,8 +117,12 @@ class ProposalsController < ApplicationController
         :proposer_member_id => current_user.id,
         :parameters => {'new_voting_period'=>params[:new_voting_period]}
       )
-      if proposal.save
-        redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Constitutional amendment proposal succesfully created")
+      if proposal.start
+        if proposal.accepted?
+          redirect_to(constitution_path, :notice => "Constitutional change was made")
+        else
+          redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Constitutional amendment proposal successfully created")
+        end
       else
         redirect_to(constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"})
       end
@@ -126,8 +142,12 @@ class ProposalsController < ApplicationController
           :parameters => {'type'=>'general', 'proposed_system'=> proposed_system.simple_name}
         )
 
-        if proposal.save
-          redirect_to({:controller=>'one_click', :action=>'dashboard'}, :flash => {:notice=> "Change general voting system proposal successfully created"})
+        if proposal.start
+          if proposal.accepted?
+            redirect_to(constitution_path, :flash => {:notice=> "General voting system change was made"})
+          else
+            redirect_to({:controller=>'one_click', :action=>'dashboard'}, :flash => {:notice=> "Change general voting system proposal successfully created"})
+          end
         else
           redirect_to constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}      
         end
@@ -145,8 +165,12 @@ class ProposalsController < ApplicationController
           :parameters => {'type' => 'membership', 'proposed_system' => proposed_system.simple_name}
         )
         
-        if proposal.save
-          redirect_to({:controller=>'one_click', :action=>'dashboard'}, :flash => {:notice=> "Change membership voting system proposal successfully created"})
+        if proposal.start
+          if proposal.accepted?
+            redirect_to(constitution_path, :flash => {:notice=> "Membership voting system change was made"})
+          else
+            redirect_to({:controller=>'one_click', :action=>'dashboard'}, :flash => {:notice=> "Change membership voting system proposal successfully created"})
+          end
         else
           redirect_to constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
         end
@@ -164,16 +188,18 @@ class ProposalsController < ApplicationController
           :parameters => {'type' => 'constitution', 'proposed_system' => proposed_system.simple_name}
         )
         
-        if proposal.save
-          redirect_to({:controller=>'one_click', :action=>'dashboard'}, :flash => {:notice=> "Change constitution voting system proposal successfully created"})
+        if proposal.start
+          if proposal.accepted?
+            redirect_to(constitution_path, :flash => {:notice=> "Constitution voting system change was made"})
+          else
+            redirect_to({:controller=>'one_click', :action=>'dashboard'}, :flash => {:notice=> "Change constitution voting system proposal successfully created"})
+          end
         else
           redirect_to constitution_path, :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
         end
         
         return
       end
-      
-    
     end
     
     redirect_to constitution_path, :flash => {:error => "No changes."}                

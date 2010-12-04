@@ -35,6 +35,9 @@
         %div#overlay
           This organisation has been proposed for foundation. 
           Founding members can now vote until the end of the voting period.
+      - if current_organisation.failed?
+        %div#overlay
+          This organisation is inactive: the founding vote did not pass.
       %div#doc
         %div#hd
           %h1.header
@@ -42,7 +45,6 @@
           %p
             powered by
             = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
-
         - if current_user
           %ul#nav
             %li#navitem= link_to 'Dashboard', root_path
