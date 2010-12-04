@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require 'digest/md5'
 require 'lib/vote_error'
 
 class Member < ActiveRecord::Base
@@ -156,5 +157,12 @@ class Member < ActiveRecord::Base
   
   def clear_password_reset_code!
     self.update_attribute(:password_reset_code, nil)
+  end
+  
+  # GRAVATAR
+  
+  def gravatar_url
+    hash = Digest::MD5.hexdigest(email.downcase)
+    "http://www.gravatar.com/avatar/#{hash}?d=mm"
   end
 end

@@ -2,6 +2,9 @@
   = @member.name
 
 %p
+  = image_tag(@member.gravatar_url, :width => '80', :height => '80')
+
+%p
   = mail_to(@member.email)
 
 %p
