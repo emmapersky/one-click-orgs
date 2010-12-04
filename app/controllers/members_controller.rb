@@ -55,7 +55,7 @@ class MembersController < ApplicationController
     if proposal.save
       redirect_to root_path, :notice => "Add Member Proposal successfully created"
     else
-      redirect_to root_path, :flash => {:error => "Error creating proposal: #{@member.errors.inspect}"}      
+      redirect_to root_path, :flash => {:error => "Error creating proposal: #{proposal.errors.full_messages.to_sentence}"}      
     end
   end
 
