@@ -2,7 +2,6 @@
 
 %p= "Welcome back, #{current_user.name}!" if current_user
 
-
 .section.open-proposals
   %h3 Votes in progress
   %p.explanation
@@ -24,11 +23,18 @@
       against
     = render 'proposals/vote', :proposal => proposal
     %br.clear
-      
-= render :partial => 'shared/propose_freeform_form'
 
-= render :partial => 'shared/propose_new_member_form'
+.section
+  %input{:type => 'button', :value => 'Make a proposal', :id => 'button-proposal', :class => 'button-form-show'}  
+  %input{:type => 'button', :value => 'Invite a new member', :id => 'button-member-invite', :class => 'button-form-show'}
+  %input{:type => 'button', :value => 'Change the constitution', :id => 'button-constitution-change', :class => 'button-form-show'}
+  %br.clear
 
+  %div#propose_freeform_form.form-to-hide
+    = render :partial => 'shared/propose_freeform_form'
+
+  %div#propose_new_member_form.form-to-hide
+    = render :partial => 'shared/propose_new_member_form'
 
 %div.section
   %h3 Timeline
