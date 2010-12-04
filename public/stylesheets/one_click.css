@@ -278,9 +278,11 @@ form.login label, form.login input {
 
 /* Footer */
 .footer {
+  border-top: 1px solid black;
+  color: #666666;
   font-size: 0.7em;
-  margin-top: 20px;
-  text-align: center;
+  margin-top: 1em;
+  padding: 1em;
   clear: both; }
 
 ul.constitution li input[type=hidden] {
