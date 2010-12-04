@@ -84,40 +84,41 @@ goal:
   * done: org details
   * done: founding member details
   * todo later: better form highlighting/flashes (multi-flash, highlight form fields)
-  * todo: migrate+redirect to pending stage
-* todo: pending stage
-* todo: "found org" proposal
+  * done: migrate+redirect to pending stage
+* done: pending stage
+* done: "found org" proposal
 
 WHERE I LEFT IT LAST TIME:
-* just finished new setup form for (org, founder): controllers/organisation_controller.rb, views/organisation/new.html.haml
-  * should write some tests for OrganisationsController#create, and the org/member/member_class/constitution models
-  * should fix broken tests (esp. where code was removed)
-* BUG: after creating an org, re-visiting /organisations/new to create the next one leads to a NPE which can be resolved by destroying the current session. -> what's the best fix?
-* next: how to support both "direct edit" changes and "proposal process" changes without duplicating too much code?
-  * different wording, same forms; effect is immediate vs. delayed
-  * should "direct edit" changes show up in timeline? should members get emailed? (to demo live behaviour)
-    * if so: should timeline get cleared before org goes live?
-  * e.g. send to different controller? like /proposals, but for direct edit
-    * can only be called in pending state
+* finished functional changes
+** still needs loads of testing and cleanup, cf below 
 
-cleanup later:
-* remove all traces of old induction: controller, view, layout, etc (?)
+next steps:
+* check latest 1.0 spec and verify our wording, workflow, etc is according to spec
 * update unit tests before proceeding! (throw away old ones, write new ones)
   * all induction tests still need to be written
-* check latest 1.0 spec and verify our wording, workflow, etc is according to spec
-* How can we validate Member.password? it's accepted as form value, but actually saved as crypted_password
+* try logging in as founding member (not founder) during pending org, proposed org, active org
+* setup form for (org, founder)
+  * should write some tests for OrganisationsController#create, and the org/member/member_class/constitution models
+  * should fix broken tests (esp. where code was removed)
+  * How can we validate Member.password? it's accepted as form value, but actually saved as crypted_password
+* BUG: after creating an org, re-visiting /organisations/new to create the next one leads to a NPE which can be resolved by destroying the current session. -> what's the best fix?
+* pending stage & transition
+  * should use different wording for "direct edit" forms
+  * foundation: should link to founding proposal in header 
+  * if founding succeeds: should remove Founder, Founding Member member classes
+  * if founding fails: allow to retry (banner button: "start again", which resets some/all of the existing state. maybe just the org state.)
+  * ensure we're sending email: 
+    * adding a new member
+    * proposing the org
+    * activating/failing the org 
+* once org is active
+  * new members should be sent to welcome page where they get inducted (agree to constitution & EULA)
 
 TODO
 * auto-select appropriate member classes during induction
   * "Founder" class at /induction/founder
   * "Founding Member" class at /induction/members
 * remove dedicated timeline page during induction (currently it just throws a NPE)
-* direct edit for:
-  * members -> add
-  * dashboard -> add member
-  * settings/constitution
-* skip 'has user been inducted?' before_filter if org is pending
-  * causes 'Error casting vote: Can not vote on proposals created before member inducted'
 * set org state to 'failed' if not enough members voted for it
 
 
