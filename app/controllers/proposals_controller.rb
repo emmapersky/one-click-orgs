@@ -42,14 +42,14 @@ class ProposalsController < ApplicationController
   
   def propose_foundation
     proposal = co.found_organisation_proposals.new(
-      :title => "Proposal to Found #{co.organisation_name}",
+      :title => "Proposal to Found #{co.name}",
       :proposer_member_id => current_user.id
     )
     if proposal.save
       current_user.member_class = MemberClass.find_by_name('Member')
       current_user.save!
       
-      co.clauses.set_text('organisation_state', 'proposed')
+      co.proposed!
       
       redirect_to({:controller => 'one_click', :action => 'control_centre'}, :notice => "Constitutional amendment proposal successfully created")
     else

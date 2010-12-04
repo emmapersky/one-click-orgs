@@ -3,7 +3,7 @@ class MembersMailer < OcoMailer
     default_url_options[:host] = member.organisation.domain(:only_host => true)
 
     @member = member
-    @organisation_name = member.organisation.organisation_name
+    @organisation_name = member.organisation.organisation.name
     mail(:to => @member.email, :subject => "Your password")
   end
   

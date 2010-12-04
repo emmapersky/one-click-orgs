@@ -33,6 +33,9 @@ class Member < ActiveRecord::Base
     votes.count
   end
 
+  validates_presence_of :name, :email
+  # TODO: how can we validate :password? (not actually saved, but accepted during input)
+
   # AUTHENTICATION
 
   attr_accessor :password, :password_confirmation
@@ -109,7 +112,7 @@ class Member < ActiveRecord::Base
     
   def eject!
     self.active = false
-    save
+    save!
   end
 
   def inducted?

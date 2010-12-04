@@ -46,7 +46,7 @@ class MembersController < ApplicationController
 
   def create
     member = params[:member]
-    title = "Add #{member['first_name']} #{member['last_name']} as a member of #{current_organisation.organisation_name}" # TODO: should default in model
+    title = "Add #{member['first_name']} #{member['last_name']} as a member of #{current_organisation.organisation.name}" # TODO: should default in model
     proposal = co.add_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
@@ -82,7 +82,7 @@ class MembersController < ApplicationController
   def destroy
     @member = co.members.find(params[:id])
     
-    title = "Eject #{@member.name} from #{current_organisation.organisation_name}"
+    title = "Eject #{@member.name} from #{current_organisation.name}"
     proposal = co.eject_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,

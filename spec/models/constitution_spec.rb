@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Constitution do
   before(:each) do
-    @organisation = Organisation.make
+    @organisation = Organisation.make(:name => 'abc', :objectives => 'def')
   end
   
   describe 'voting systems' do

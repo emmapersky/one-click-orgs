@@ -2,28 +2,30 @@ require 'spec_helper'
 
 describe Organisation do
   before(:each) do
-    @organisation = Organisation.make(:subdomain => 'fromage')
+    @organisation = Organisation.make(:name => 'abc', :objectives => 'To boldly go', :subdomain => 'fromage')
     Setting[:base_domain] = 'oneclickorgs.com'
   end
   
   describe "validation" do
     it "should not allow multiple organisations with the same subdomain" do
-      @first = Organisation.make(:subdomain => "apples")
+      @first = Organisation.make(:name => 'abc', :objectives => 'To boldly go', :subdomain => "apples")
 
       lambda do
-        @second = Organisation.make(:subdomain => "apples")
+        @second = Organisation.make(:name => 'def', :objectives => 'To boldly go', :subdomain => "apples")
       end.should raise_error(ActiveRecord::RecordInvalid)
     end
   end
   
   describe "text fields" do
     before(:each) do
-      @organisation.clauses.set_text('organisation_name', 'The Cheese Collective')
-      @organisation.clauses.set_text('objectives', 'eat all the cheese')
+      @organisation.name = 'The Cheese Collective' # actually stored as 'organisation_name'
+      @organisation.objectives = 'eat all the cheese' # actually stored as 'organisation_objectoves'
+      @organisation.save!
+      @organisation.reload
     end
     
     it "should get the name of the organisation" do
-      @organisation.organisation_name.should == ("The Cheese Collective")
+      @organisation.name.should == ("The Cheese Collective")
     end
 
     it "should get the objectives of the organisation" do
@@ -32,14 +34,18 @@ describe Organisation do
     
     it "should change the name of the organisation" do
       lambda {
-        @organisation.clauses.set_text(:organisation_name, "The Yoghurt Yurt")
+        @organisation.name = "The Yoghurt Yurt"
+        @organisation.save!
+        @organisation.reload
       }.should change(Clause, :count).by(1)
-      @organisation.organisation_name.should == "The Yoghurt Yurt"
+      @organisation.name.should == "The Yoghurt Yurt"
     end
     
     it "should change the objectives of the organisation" do
       lambda {
-        @organisation.clauses.set_text(:objectives, "make all the yoghurt")
+        @organisation.objectives = "make all the yoghurt"
+        @organisation.save!
+        @organisation.reload
       }.should change(Clause, :count).by(1)
       @organisation.objectives.should == "make all the yoghurt"
     end

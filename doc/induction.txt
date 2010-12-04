@@ -56,20 +56,62 @@ CURRENT STATE
 DONE
 * code cleanup of misc controller clause setters/getters
   * co.clauses.get_current||new, set, save!  -> co.clauses.set_text
+* new simple induction: one form for founder and org
 * new proposal to found org
 * new perm and before_filter: found_organisation_permission
 * new state and before_filter: organisation_pending
 * various controller/model/view changes for the above
 * fixed misc typos
-* 
 * ...?
 
-TODO
+IN PROGRESS 
 * reorganise induction process according to spec
+
+current steps:
+* select org subdomain at /organisations/new
+* provide founder details, create account at /induction/founder
+* provide org name, objectives, asset flag at /induction/organisation_details
+* provide founding members' email, name at /induction/members
+* select governance parameters (voting settings) at /induction/voting_settings
+* preview org at /induction/preview_constitution
+* set up founding meeting at /induction/founding_meeting_details
+* preview founding meeting agenda at /induction/preview_agenda
+* report founding meeting results at /induction/founding_meeting
+* done.
+
+goal:
+* one intro/setup page, cf spec
+  * done: org details
+  * done: founding member details
+  * todo later: better form highlighting/flashes (multi-flash, highlight form fields)
+  * todo: migrate+redirect to pending stage
+* todo: pending stage
+* todo: "found org" proposal
+
+WHERE I LEFT IT LAST TIME:
+* just finished new setup form for (org, founder): controllers/organisation_controller.rb, views/organisation/new.html.haml
+  * should write some tests for OrganisationsController#create, and the org/member/member_class/constitution models
+  * should fix broken tests (esp. where code was removed)
+* BUG: after creating an org, re-visiting /organisations/new to create the next one leads to a NPE which can be resolved by destroying the current session. -> what's the best fix?
+* next: how to support both "direct edit" changes and "proposal process" changes without duplicating too much code?
+  * different wording, same forms; effect is immediate vs. delayed
+  * should "direct edit" changes show up in timeline? should members get emailed? (to demo live behaviour)
+    * if so: should timeline get cleared before org goes live?
+  * e.g. send to different controller? like /proposals, but for direct edit
+    * can only be called in pending state
+
+cleanup later:
+* remove all traces of old induction: controller, view, layout, etc (?)
+* update unit tests before proceeding! (throw away old ones, write new ones)
+  * all induction tests still need to be written
+* check latest 1.0 spec and verify our wording, workflow, etc is according to spec
+* How can we validate Member.password? it's accepted as form value, but actually saved as crypted_password
+
+TODO
 * auto-select appropriate member classes during induction
   * "Founder" class at /induction/founder
   * "Founding Member" class at /induction/members
-* remove dedicated timeline page and merge into dashboard (currently it just throws a NPE)
+* remove dedicated timeline page during induction (currently it just throws a NPE)
 * direct edit for:
   * members -> add
   * dashboard -> add member
@@ -84,6 +126,8 @@ $ rake db:setup
 $ ./script/rails server
 
 -> http://oco:3000/ and follow instructions
+
+(if request fails with "undefined method `members' for nil:NilClass" then delete current session/cookie)
 
 a@b.com, abc
 http://abc.oco:3000/

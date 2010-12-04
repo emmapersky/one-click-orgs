@@ -3,13 +3,25 @@ class InductionController < ApplicationController
   #skip_before_filter :ensure_organisation_active
   before_filter :check_active_organisation
   
-  before_filter :ensure_authenticated, :except => [:founder, :create_founder]
+  before_filter :ensure_organisation_under_construction
+  skip_before_filter :ensure_authenticated, :ensure_member_active
 
-  PENDING_ACTIONS = [:founding_meeting, :confirm_founding_meeting, :restart_induction]
-  CONSTRUCTION_ACTIONS = [:founder, :create_founder, :members, :create_members, :organisation_details, :create_organisation_details, :confirm_agenda]
+  public
+
+  def index
+    @org = co
+    @founder = co.members.first || co.members.new      
+  end
+
+  private
   
-  before_filter :ensure_organisation_under_construction, :only => CONSTRUCTION_ACTIONS
-  before_filter :ensure_organisation_pending, :only => PENDING_ACTIONS
+  def ensure_organisation_under_construction
+    redirect_to(:controller => 'one_click') unless co.under_construction?
+  end
+  
+  ########
+  # TODO: remove all code below, including associated views, as soon as induction has been fully rewritten
+  ########
 
   # UNDER CONSTRUCTION    
   def founder
@@ -34,18 +46,18 @@ class InductionController < ApplicationController
   end
   
   def organisation_details
-    @organisation_name = co.organisation_name
+    @organisation_name = co.name
     @objectives = co.objectives
     # FIXME This will erroneously revert the assets setting to true if co.assets is already set to false
     @assets = co.assets || true
   end
   
   def create_organisation_details
-    co.clauses.set_text('organisation_name', params[:organisation_name])
+    co.clauses.set_text('organisation_name', params[:name])
     co.clauses.set_text('objectives', params[:objectives])
     co.clauses.set_boolean('assets', params[:assets]=='1')
     
-    if params[:organisation_name].blank? || params[:objectives].blank?
+    if params[:name].blank? || params[:objectives].blank?
         redirect_to({:action => 'organisation_details'}, :flash => {:error => "You must fill in the organisation name and objects."})
     else
       redirect_to(:action => 'members')
@@ -125,7 +137,7 @@ class InductionController < ApplicationController
   end
   
   def preview_agenda
-    @organisation_name = co.organisation_name
+    @organisation_name = co.name
     @founding_meeting_location = co.clauses.get_text('founding_meeting_location')
     @founding_meeting_date = co.clauses.get_text('founding_meeting_date')
     @founding_meeting_time = co.clauses.get_text('founding_meeting_time')
@@ -151,7 +163,7 @@ class InductionController < ApplicationController
   # Form to confirm that the founding meeting happened,
   # and select which founding members voted in favour.
   def founding_meeting
-    @organisation_name = co.organisation_name
+    @organisation_name = co.name
     @founding_member = co.members.first
     @other_members = co.members.all; @other_members.shift
   end
@@ -213,19 +225,11 @@ private
     end
   end
   
-  def ensure_organisation_under_construction
-    redirect_to(:action => 'founding_meeting') unless co.under_construction?
-  end
-  
-  def ensure_organisation_pending
-    redirect_to(:action => 'founder') unless co.pending?
-  end
-
 public
   
   def self.send_agenda_email(member)
     co = member.organisation
-    organisation_name = co.organisation_name
+    organisation_name = co.name
     founding_meeting_location = co.clauses.get_text('founding_meeting_location')
     founding_meeting_date = co.clauses.get_text('founding_meeting_date')
     founding_meeting_time = co.clauses.get_text('founding_meeting_time')

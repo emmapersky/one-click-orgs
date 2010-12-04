@@ -1,0 +1,34 @@
+%h2 Induction
+%p ...
+
+= form_tag({:controller => 'induction', :action => 'create_draft_org'}, :method => "post") do |f|
+
+  %h3 Organisation
+  = fields_for(@org, :as => :org) do |f|
+    %p
+      = f.label :name, "Your group's name"
+      = f.text_field :name
+    %p
+      = f.label :subdomain, "Your group's One Click Orgs web address"
+      = f.text_field :subdomain
+    %p
+      = f.label :objectives, "Your group's objectives"
+      = f.text_field :objectives
+  
+  %h3 Founder
+  = fields_for(@founder, :as => :founder) do |f|
+    %p
+      = f.label :name, "Your name"
+      = f.text_field :name
+    %p
+      = f.label :email, "Your email address"
+      = f.text_field :email
+    %p
+      = f.label :password, "Choose a password"
+      = f.password_field :password
+    %p
+      = f.label :password_confirmation, "Confirm your password"
+      = f.password_field :password_confirmation
+    %p
+      = submit_tag "Create a draft constitution", :id => 'submit'
+  

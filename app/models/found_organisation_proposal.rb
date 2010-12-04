@@ -3,7 +3,7 @@
 class FoundOrganisationProposal < Proposal
   
   def reject!(params)
-    co.clauses.set_text('organisation_state', 'failed')
+    organisation.failed!
     # TODO email all founding members: failed to agree to found org
   end
   
@@ -15,7 +15,7 @@ class FoundOrganisationProposal < Proposal
       confirmed_member_ids << v.member_id unless v.for == false
     end
     
-    co.members.each do |member|
+    organisation.members.each do |member|
       if confirmed_member_ids.include?(member.id)
         member.member_class = MemberClass.find_by_name('Member')
         member.save!
@@ -24,11 +24,11 @@ class FoundOrganisationProposal < Proposal
       end
     end
     
-    co.clauses.set_text('organisation_state', 'active')
+    organisation.active!
     
     # send out emails to announce org creation to all remaining members
     # TODO send separate email to members who voted "no"
-    co.members.each do |m|
+    organisation.members.each do |m|
       Rails.logger.info("sending welcome message to #{m}")
       m.new_password!
       m.save

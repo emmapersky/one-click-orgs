@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
   end
   
   def prepare_constitution_view
-    @organisation_name = co.organisation_name
+    @organisation_name = co.name
     @objectives = co.objectives
     @assets = co.assets
     @website = co.domain
@@ -137,7 +137,7 @@ class ApplicationController < ActionController::Base
       store_location
       redirect_to login_path
     else
-      redirect_to(:controller => 'induction', :action => 'founder')
+      redirect_to(:controller => 'induction')
     end
   end
 end
