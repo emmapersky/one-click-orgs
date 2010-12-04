@@ -13,7 +13,7 @@ class InductionController < ApplicationController
 
   # UNDER CONSTRUCTION    
   def founder
-    @founder = co.members.first || co.members.new
+    @founder = co.members.first || co.members.new(:member_class => co.default_member_class)
   end
   
   def create_founder
@@ -66,7 +66,7 @@ class InductionController < ApplicationController
     @members = co.members.all
     @founder = @members.shift
     while @members.length < 15 do
-      @members.push(co.members.new)
+      @members.push(co.members.new(:member_class => co.default_member_class))
     end
   end
   

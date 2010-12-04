@@ -12,8 +12,11 @@
       %p
         = f.label(:last_name)
         = f.text_field :last_name
-      %p
-        = f.label(:class)
-        = collection_select(:member, :member_class_id, co.member_classes.all, :id, :name)
+      - if co.member_classes.count == 1
+        = f.hidden_field :member_class_id
+      - else
+        %p
+          = f.label(:class)
+          = f.collection_select(:member_class_id, co.member_classes.all, :id, :name)
       %p
         = submit_tag "Invite member", :id => 'submit'

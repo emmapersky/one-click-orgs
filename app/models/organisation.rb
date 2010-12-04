@@ -83,6 +83,10 @@ class Organisation < ActiveRecord::Base
     @constitution ||= Constitution.new(self)
   end
   
+  def default_member_class
+    member_classes.first
+  end
+  
   def create_default_member_classes
     # Set up a simple organisation: all members are equal
     members = member_classes.find_or_create_by_name('Member')

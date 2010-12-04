@@ -16,7 +16,7 @@ class OneClickController < ApplicationController
     @proposals = co.proposals.currently_open
     
     @new_proposal = co.proposals.new
-    @new_member = co.members.new
+    @new_member = co.members.new(:member_class => co.default_member_class)
     
     @timeline = [
       co.members.all,

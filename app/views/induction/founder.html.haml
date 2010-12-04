@@ -9,9 +9,12 @@
   %p
     = f.label :last_name
     = f.text_field :last_name
-  %p
-    = f.label(:class)
-    = f.collection_select(:member_class_id, @co.member_classes.all, :id, :name)
+  - if co.member_classes.count == 1
+    = f.hidden_field :member_class_id
+  - else
+    %p
+      = f.label(:class)
+      = f.collection_select(:member_class_id, co.member_classes.all, :id, :name)
   %p
     = f.label :password
     = f.password_field :password
