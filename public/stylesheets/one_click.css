@@ -110,6 +110,8 @@ a {
 #bd p {
   color: #333333;
   margin-bottom: 12px; }
+  #bd p.helper {
+    font-size: 0.9em; }
 #bd ul {
   margin: 0 0 1em 2em; }
   #bd ul li {
@@ -253,6 +255,12 @@ input#organisation_subdomain {
   float: left;
   margin-right: 4px;
   text-align: right; }
+
+form.login {
+  margin-left: 1em; }
+
+form.login label, form.login input {
+  margin-left: 0; }
 
 /* Footer */
 .footer {
