@@ -79,8 +79,6 @@ OneClickOrgs::Application.routes.draw do
   match '/login' => 'member_sessions#new', :as => 'login'
   resource :member_session, :only => [:new, :create, :destroy]
   
-  match '/reset_password(/:action)' => 'reset_password'
-  
   match '/welcome(/:action)' => 'welcome'
   
   match '/setup(/:action)' => 'setup'
@@ -89,6 +87,9 @@ OneClickOrgs::Application.routes.draw do
   
   match '/i/:id' => 'invitations#edit', :as => 'short_invitation'
   resources :invitations
+  
+  match '/r/:id' => 'password_resets#edit', :as => 'short_password_reset'
+  resources :password_resets
   
   root :to => 'one_click#dashboard'
 end

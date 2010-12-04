@@ -6,12 +6,11 @@ class MembersMailer < OcoMailer
     @organisation_name = member.organisation.organisation_name
     mail(:to => @member.email, :subject => "Your password")
   end
-
-  def notify_new_password(member, new_password)
+  
+  def password_reset(member)
     default_url_options[:host] = member.organisation.domain(:only_host => true)
-
+    
     @member = member
-    @new_password = new_password
     mail(:to => @member.email, :subject => "Your password")
   end
 end

@@ -89,12 +89,6 @@ class Member < ActiveRecord::Base
     end
   end
 
-  def new_password!(n=6)
-    raise ArgumentError, "password must have at least 6 characters" if n < 6
-    chars = ["a".."z", "A".."Z", "0".."9"].map(&:to_a).flatten
-    self.password = self.password_confirmation = (1..n).map { chars[rand(chars.size-1)] }.join
-  end
-
   def self.create_member(params, send_welcome=false)
     member = Member.new(params)
     member.new_invitation_code!
@@ -149,5 +143,18 @@ class Member < ActiveRecord::Base
   def clear_invitation_code!
     self.update_attribute(:invitation_code, nil)
   end
+  
+  # PASSWORD RESET CODE
+  
+  def self.generate_password_reset_code
+    Digest::SHA1.hexdigest("#{Time.now}#{rand}")[0..9]
+  end
+  
+  def new_password_reset_code!
+    self.password_reset_code = self.class.generate_password_reset_code
+  end
+  
+  def clear_password_reset_code!
+    self.update_attribute(:password_reset_code, nil)
+  end
 end
-

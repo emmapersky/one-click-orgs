@@ -3,7 +3,7 @@
 
 %p
   Enter your email address, and you'll receive instructions on how to reset your password.
-= form_tag({:action => :reset}, :method => :put, 'accept-charset' => 'utf-8') do
+= form_tag({:action => :create}, :method => :put, 'accept-charset' => 'utf-8') do
   %p
     %label{:for => 'email'}
       Email
