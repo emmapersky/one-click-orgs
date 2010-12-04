@@ -14,9 +14,9 @@
         - if current_user
           %p
             %strong
-              = h current_user.name
+              = link_to current_user.name, member_path(current_user)
           %p
-            = link_to 'My account', edit_member_path(current_user)
+            = link_to 'Edit your account', edit_member_path(current_user)
           %p
             = link_to 'Logout', member_session_path, :method => :delete
       %div#doc
@@ -45,5 +45,6 @@
           
           = yield
         %div.footer
-          = "One Click Orgs #{OneClickOrgs.version} - Running on Rails #{Rails.version}"
+          = link_to 'One Click Orgs', 'http://www.oneclickor.gs/'
+          = "#{OneClickOrgs.version}. Ruby on Rails #{Rails.version}."
       = get_satisfaction_widget
