@@ -21,6 +21,8 @@ class ProposalsController < ApplicationController
 
   def show
     @proposal = co.proposals.find(params[:id])
+    @comments = @proposal.comments
+    @comment = Comment.new
     respond_with @proposal
   end
 

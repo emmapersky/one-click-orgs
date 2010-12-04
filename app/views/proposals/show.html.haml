@@ -45,3 +45,16 @@
   Vote count:
   = render 'vote_count', :proposal => @proposal
     
+%h3 Comments
+- @comments.each do |comment|
+  .comment
+    %p.attribution
+      = link_to(comment.author.name, member_path(comment.author))
+      = comment.created_at.to_s(:at_on) + ':'
+    = simple_format(comment.body)
+= form_for(@comment, :url => proposal_comments_path(:proposal_id => @proposal)) do |f|
+  %p
+    = f.label :body, "Add a comment"
+    = f.text_area :body
+  %p
+    = f.submit "Submit comment"

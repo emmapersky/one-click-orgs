@@ -65,7 +65,9 @@ OneClickOrgs::Application.routes.draw do
   match '/votes/vote_against/:id' => 'votes#vote_against', :conditions => {:method => :post}, :as => 'vote_against'
   
   resources :decisions
-  resources :proposals
+  resources :proposals do
+    resources :comments
+  end
   match '/proposals(/:action)' => 'proposals'
   resources :members do
     member do

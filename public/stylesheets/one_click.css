@@ -324,3 +324,8 @@ dl.settings dt {
 
 div.field_with_errors input {
   border: 1px solid red; }
+
+#bd p.attribution {
+  font-size: 0.8em;
+  font-style: italic;
+  margin-bottom: 0; }

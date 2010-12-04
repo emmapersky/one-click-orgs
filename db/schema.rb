@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101204161301) do
+ActiveRecord::Schema.define(:version => 20101204190742) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(:version => 20101204161301) do
     t.integer  "integer_value"
     t.integer  "boolean_value",   :limit => 1
     t.integer  "organisation_id"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "author_id"
+    t.integer  "proposal_id"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "decisions", :force => true do |t|
