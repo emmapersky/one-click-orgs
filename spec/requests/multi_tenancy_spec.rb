@@ -108,7 +108,7 @@ describe "Multi-tenancy" do
         get 'http://aardvarks.oneclickorgs.com/'
         response.should redirect_to 'http://aardvarks.oneclickorgs.com/login'
         post 'http://aardvarks.oneclickorgs.com/member_session', :email => 'consuela@example.com', :password => 'password'
-        response.body.should =~ /Email or password were incorrect/
+        response.body.should =~ /The email address or password entered were incorrect/
       end
     end
     
