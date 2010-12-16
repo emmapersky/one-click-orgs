@@ -5,6 +5,7 @@
     %th Name
     %th Proposals made (succeeded/failed)
     %th Votes cast
+    %th Last login
   - for member in @members
     %tr
       %td= link_to "#{member.name}", member_path(member)
@@ -16,6 +17,9 @@
         = member.failed_proposals_count
         )
       %td= member.votes_count
+      %td
+        - if member.last_logged_in_at
+          = member.last_logged_in_at.to_s(:short)
 - unless @pending_members.empty?
   %h2
     Pending Members

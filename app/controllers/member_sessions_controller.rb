@@ -11,6 +11,8 @@ class MemberSessionsController < ApplicationController
   def create
     self.current_user = co.members.authenticate(params[:email], params[:password])
     if current_user
+      current_user.update_attribute(:last_logged_in_at, Time.now.utc)
+      
       flash[:notice] = "You are logged in"
       redirect_back_or_default
     else
