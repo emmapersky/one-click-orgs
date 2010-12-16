@@ -10,6 +10,7 @@ class Member < ActiveRecord::Base
   belongs_to :member_class
 
   scope :active, where("active = 1 AND inducted_at IS NOT NULL")
+  scope :inactive, where("active <> 1")
   scope :pending, where("inducted_at IS NULL")
   
   validates_uniqueness_of :invitation_code, :scope => :organisation_id, :allow_nil => true
@@ -110,6 +111,13 @@ class Member < ActiveRecord::Base
   def eject!
     self.active = false
     save
+  end
+  
+  def reactivate!
+    self.active = true
+    new_invitation_code!
+    save!
+    send_welcome
   end
 
   def inducted?
