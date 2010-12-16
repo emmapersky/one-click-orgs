@@ -69,7 +69,11 @@ class Member < ActiveRecord::Base
   before_save :encrypt_password
 
   # END AUTHENTICATION
-
+  
+  def can_vote?(proposal)
+    inducted? && proposal.creation_date >= inducted_at
+  end
+  
   def cast_vote(action, proposal_id)
     raise ArgumentError, "need action and proposal_id" unless action and proposal_id
 
@@ -79,7 +83,7 @@ class Member < ActiveRecord::Base
     # FIXME why not just pass the proposal in?
     proposal = organisation.proposals.find(proposal_id)
     raise VoteError, "proposal with id #{proposal_id} not found" unless proposal
-    if !self.inducted? || proposal.creation_date < self.inducted_at
+    unless can_vote?(proposal)
       raise VoteError, "Can not vote on proposals created before member inducted"
     end
 
