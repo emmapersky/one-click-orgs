@@ -5,9 +5,11 @@ class ProposalMailer < OcoMailer
 
     @member = member
     @proposal = proposal
+    
+    @organisation_name = member.organisation.organisation_name
 
     raise ArgumentError, "need member and proposal" unless @member and @proposal
 
-    mail(:to => @member.email, :subject => "New proposal: #{@proposal.title}")
+    mail(:to => @member.email, :subject => "New proposal: #{@proposal.title}", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
   end
 end

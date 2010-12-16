@@ -12,6 +12,6 @@ class InductionMailer < OcoMailer
     @members = options[:members]
     # TODO Should complain if required options aren't present
 
-    mail(:to => @member.email, :subject => "Agenda for '#{@organisation_name}' founding meeting")
+    mail(:to => @member.email, :subject => "Agenda for '#{@organisation_name}' founding meeting", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
   end
 end

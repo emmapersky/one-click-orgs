@@ -4,13 +4,14 @@ class MembersMailer < OcoMailer
 
     @member = member
     @organisation_name = member.organisation.organisation_name
-    mail(:to => @member.email, :subject => "Your password")
+    mail(:to => @member.email, :subject => "Your password", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com>")
   end
   
   def password_reset(member)
     default_url_options[:host] = member.organisation.domain(:only_host => true)
     
     @member = member
-    mail(:to => @member.email, :subject => "Your password")
+    @organisation_name = member.organisation.organisation_name
+    mail(:to => @member.email, :subject => "Your password", :from => "\"#{@organisation_name}\" <notifications@oneclickorgs.com")
   end
 end
