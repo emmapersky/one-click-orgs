@@ -1,5 +1,5 @@
 - if current_user.has_permission(:membership_proposal)
-  - if @organisation.pending?
+  - if @current_organisation.pending?
     %h3
       Invite a founding member
     %p
@@ -21,7 +21,7 @@
             = f.collection_select(:member_class_id, co.member_classes.all, :id, :name)
         %p
           = submit_tag "Invite member", :id => 'submit'
-- else
+  - else
     %h3
       Propose a new member
     %p

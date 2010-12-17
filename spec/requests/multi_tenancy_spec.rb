@@ -54,7 +54,8 @@ describe "Multi-tenancy" do
       it "should show a form to set details for the new organisation" do
         get 'http://oneclickorgs.com/organisations/new'
         response.should have_selector("form[action='/organisations']") do |form|
-          form.should have_selector("input[name='founder[name]']")
+          form.should have_selector("input[name='founder[first_name]']")
+          form.should have_selector("input[name='founder[last_name]']")
           form.should have_selector("input[name='founder[email]']")
           form.should have_selector("input[name='founder[password]']")
           form.should have_selector("input[name='founder[password_confirmation]']")

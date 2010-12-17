@@ -2,7 +2,7 @@
 %html
   %head
     %title
-      = @current_organisation ? @current_organisation.organisation_name : "One Click Orgs"
+      = @current_organisation ? @current_organisation.name : "One Click Orgs"
 
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
     = stylesheet_link_tag 'one_click'
@@ -20,7 +20,7 @@
           %p
             = link_to 'Logout', member_session_path, :method => :delete
       - if current_organisation.pending? 
-        - if current_user.has_permission(:found_organisation_proposal)
+        - if current_user and current_user.has_permission(:found_organisation_proposal)
           %div#overlay
             This organisation is in a pending state. 
             You can add more founding members and customise your organisation.
@@ -41,7 +41,7 @@
       %div#doc
         %div#hd
           %h1.header
-            = link_to(@current_organisation.organisation_name, root_path)
+            = link_to(@current_organisation.name, root_path)
           %p
             powered by
             = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'

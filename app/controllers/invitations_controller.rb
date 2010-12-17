@@ -30,7 +30,7 @@ class InvitationsController < ApplicationController
 private
   
   def set_up_organisation_name
-    @organisation_name = co.organisation_name
+    @organisation_name = co.name
   end
 end
 

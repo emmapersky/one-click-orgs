@@ -4,7 +4,7 @@
 # 
 # Name                        Value
 # 
-# organisation_name           String
+# name                        String
 # objectives                  String
 # assets                      Boolean
 # domain                      String

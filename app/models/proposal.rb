@@ -123,10 +123,8 @@ class Proposal < ActiveRecord::Base
     save!
     
     if passed
-      enact!(self.parameters) 
-      
-      decision = self.create_decision
       enact!(self.parameters)
+      decision = self.create_decision
       begin
         decision.send_email
       rescue => e

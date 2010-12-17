@@ -41,6 +41,7 @@ class OrganisationsController < ApplicationController
       if !@organisation.save
         errors << "Cannot create your organisation: #{@organisation.errors.full_messages.to_sentence}."
       end
+    
       @founder.member_class = @organisation.member_classes.find_by_name('Founder')
       if !@founder.save
         errors << "Cannot create your account: #{@founder.errors.full_messages.to_sentence}."
@@ -61,6 +62,14 @@ class OrganisationsController < ApplicationController
       redirect_to(:controller => 'one_click')
     else
       redirect_to(:host => @organisation.host, :controller => 'one_click')
+    end
+  end
+
+protected
+
+  def ensure_not_single_organisation_mode
+    if Setting[:single_organisation_mode] == "true"
+      redirect_to root_path
     end
   end
 end

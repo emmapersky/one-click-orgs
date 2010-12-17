@@ -8,6 +8,7 @@ class MembersController < ApplicationController
   before_filter :require_direct_edit_permission, :only => [:create_founding_member]
 
   def index
+    @current_organisation = co
     @members = co.members.active
     @pending_members = co.members.pending
     @new_member = co.members.new
@@ -47,7 +48,7 @@ class MembersController < ApplicationController
   def create
     # TODO: validate input
     member = params[:member]
-    title = "Add #{member['first_name']} #{member['last_name']} as a member of #{current_organisation.organisation.name}" # TODO: should default in model
+    title = "Add #{member['first_name']} #{member['last_name']} as a member of #{current_organisation.name}" # TODO: should default in model
     proposal = co.add_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
