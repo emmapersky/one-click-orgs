@@ -133,11 +133,7 @@ class ApplicationController < ActionController::Base
   
   rescue_from Unauthenticated, :with => :handle_unauthenticated
   def handle_unauthenticated
-    if co.has_founding_member?
-      store_location
-      redirect_to login_path
-    else
-      redirect_to(:controller => 'one_click')
-    end
+    store_location
+    redirect_to login_path
   end
 end
