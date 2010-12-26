@@ -18,7 +18,7 @@ class FoundOrganisationProposal < Proposal
     
     organisation.members.each do |member|
       if confirmed_member_ids.include?(member.id)
-        member.member_class = MemberClass.find_by_name('Member')
+        member.member_class = organisation.member_classes.find_by_name('Member')
         member.inducted!
         member.save!
       else

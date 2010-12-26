@@ -69,7 +69,7 @@ class MembersController < ApplicationController
   def create_founding_member
     # TODO: validate input
     member = params[:member]
-    member[:member_class_id] = MemberClass.find_by_name('Founding Member').id.to_s
+    member[:member_class_id] = co.member_classes.find_by_name('Founding Member').id.to_s
     co.members.create_member(member, true)
     # raise member.to_json
     redirect_to members_path, :notice => "Added a new founding member."

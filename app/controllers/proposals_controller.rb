@@ -49,7 +49,7 @@ class ProposalsController < ApplicationController
     )
     if proposal.start
       # Founding proposal has no need for direct enactment logic during pending stage.
-      current_user.member_class = MemberClass.find_by_name('Member')
+      current_user.member_class = co.member_classes.find_by_name('Member')
       current_user.save!
       
       co.proposed!
