@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   before_filter :ensure_authenticated
   before_filter :ensure_member_active
   #before_filter :ensure_organisation_active
-  #before_filter :ensure_member_inducted
+  before_filter :ensure_member_inducted
   
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on (or just returns the organisation if the app
@@ -114,10 +114,10 @@ class ApplicationController < ActionController::Base
   #     redirect_to(:controller => 'induction', :action => 'founder')
   #   end
   # end
-  # 
-  # def ensure_member_inducted
-  #   redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
-  # end
+  
+  def ensure_member_inducted
+    redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
+  end
   
   def redirect_to_welcome_member
     redirect_to(:controller => 'welcome', :action => 'index')

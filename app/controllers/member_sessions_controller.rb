@@ -2,7 +2,7 @@ class MemberSessionsController < ApplicationController
   skip_before_filter :ensure_authenticated
   skip_before_filter :ensure_member_active
   #skip_before_filter :ensure_organisation_active
-  #skip_before_filter :ensure_member_inducted
+  skip_before_filter :ensure_member_inducted
   
   def new
     redirect_to root_path if current_user
