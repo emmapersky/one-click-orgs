@@ -6,7 +6,7 @@ class ProposalMailer < OcoMailer
     @member = member
     @proposal = proposal
     
-    @organisation_name = member.organisation.organisation_name
+    @organisation_name = member.organisation.name
 
     raise ArgumentError, "need member and proposal" unless @member and @proposal
 

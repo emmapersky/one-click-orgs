@@ -41,7 +41,7 @@ describe AddMemberProposal do
   describe "enacting" do
     context "when proposed new member is brand new" do
       before(:each) do
-        @proposal = @organisation.add_member_proposals.make(:parameters => {'email' => "new@example.com"})
+        @proposal = @organisation.add_member_proposals.make(:parameters => {'first_name' => 'New', 'last_name' => 'Member', 'email' => "new@example.com"})
       end
       
       it "should create a new member" do

@@ -7,7 +7,7 @@ class DecisionMailer < OcoMailer
     @proposal = @decision.proposal
     @member = member
     
-    @organisation_name = member.organisation.organisation_name
+    @organisation_name = member.organisation.name
 
     raise ArgumentError, "need decision" unless @decision and @member
     raise ArgumentError, "decision has no attached proposal" unless @proposal
