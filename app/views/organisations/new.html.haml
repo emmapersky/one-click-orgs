@@ -1,5 +1,5 @@
-%h2 Induction
-%p ...
+%h2 New org
+%p TODO: Copy for new org page
 
 = form_tag({:controller => 'organisations', :action => 'create'}, :method => "post") do
 
@@ -29,7 +29,7 @@
     - if !Setting[:single_organisation_mode]
       %p
         = f.label :subdomain, "Your group's One Click Orgs web address"
-        = f.text_field :subdomain
+        = f.text_field(:subdomain) + '.' + Setting[:base_domain]
     %p
       = f.label :objectives, "Your group's objectives"
       = f.text_field :objectives

@@ -68,14 +68,17 @@ OneClickOrgs::Application.routes.draw do
   resources :proposals do
     resources :comments
   end
+  # TODO Don't want this global matching if possible:
   match '/proposals(/:action)' => 'proposals'
 
   resources :members do
     member do
       post :change_class
     end
+    collection do
+      post :create_founding_member
+    end
   end
-  match '/members/create_founding_member' => 'members#create_founding_member'
   
   match '/one_click(/:action)' => 'one_click'
   #match '/induction(/:action)' => 'induction'

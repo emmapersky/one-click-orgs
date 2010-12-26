@@ -9,8 +9,6 @@ class OrganisationsController < ApplicationController
   
   layout "setup"
   
-  public
- 
   def new
     @organisation = Organisation.new
     @founder = @organisation.members.first || @organisation.members.new
@@ -51,7 +49,7 @@ class OrganisationsController < ApplicationController
     # display errors
     if errors.size > 0
       flash[:error] = errors.join("\n") # don't want to insert <br>s here
-      render :template => 'organisations/new'
+      render :action => 'new'
       return
     end
 

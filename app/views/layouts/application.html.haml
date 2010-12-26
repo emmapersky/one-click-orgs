@@ -22,10 +22,10 @@
       - if current_organisation.pending? 
         - if current_user and current_user.has_permission(:found_organisation_proposal)
           %div#overlay
-            This organisation is in a pending state. 
+            This organisation is in a pending state.
             You can add more founding members and customise your organisation.
             Once you're happy with your changes you can make a proposal to found the organisation:
-            = form_tag('/proposals/propose_foundation', { :method => "POST" }) do |f|
+            = form_tag(:controller => 'proposals', :action => 'propose_foundation') do
               = submit_tag "Propose to Found This Organisation", :id => 'submit'
         - else
           %div#overlay

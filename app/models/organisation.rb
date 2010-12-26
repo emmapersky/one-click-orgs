@@ -2,8 +2,6 @@ class Organisation < ActiveRecord::Base
   has_many :clauses
   has_many :members
   
-  has_many :found_organisation_proposals
-  
   has_many :proposals
   
   # Need to add the subclasses individually so that we can do things like:
@@ -15,6 +13,7 @@ class Organisation < ActiveRecord::Base
   has_many :change_voting_period_proposals
   has_many :change_voting_system_proposals
   has_many :eject_member_proposals
+  has_many :found_organisation_proposals
   
   has_many :decisions, :through => :proposals
   

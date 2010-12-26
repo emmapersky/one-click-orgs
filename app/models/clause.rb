@@ -4,10 +4,9 @@
 # 
 # Name                        Value
 # 
-# name                        String
-# objectives                  String
+# organisation_name           String
+# organisation_objectives     String
 # assets                      Boolean
-# domain                      String
 # voting_period               Integer representing one of the options
 # general_voting_system       String -- the class name of the VotingSystem in use
 # membership_voting_system    String -- the class name of the VotingSystem in use

@@ -70,7 +70,8 @@ describe "Multi-tenancy" do
     describe "creating a new organisation" do
       org_parameters = {
         :founder => {
-          :name => 'Brad',
+          :first_name => 'Brad',
+          :last_name => 'Mehldau',
           :email => 'brad@me.com',
           :password => 'my_password',
           :password_confirmation => 'my_password'

@@ -32,6 +32,9 @@ class FoundOrganisationProposal < Proposal
     # send out emails to announce org creation to all remaining members
     # TODO send separate email to members who voted "no"
     organisation.members.each do |m|
+      # TODO replace this with a tailored email message about the successful foundation
+      # of the org
+      # TODO Don't need to reset their passwords at this point
       Rails.logger.info("sending welcome message to #{m}")
       m.new_password!
       m.save
@@ -39,6 +42,8 @@ class FoundOrganisationProposal < Proposal
     end
   end
   
+  # TODO Need a special voting system for FoundOrganisationProposal
+  # which simply requires three or more yes votes
   def voting_system
     organisation.constitution.voting_system(:constitution)
   end

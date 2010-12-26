@@ -108,7 +108,7 @@ class Proposal < ActiveRecord::Base
   public
 
   def passed?
-    @force_passed or voting_system.passed?(self)
+    @force_passed || voting_system.passed?(self)
   end
   
   def close!
