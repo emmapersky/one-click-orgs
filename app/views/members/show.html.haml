@@ -62,4 +62,4 @@
       %tr{:class => cycle('odd', 'even')}
         = render :partial => "one_click/#{event[:kind]}", :locals => {:event => event}
         %td.timestamp= event[:timestamp].to_s(:long)
-      
+

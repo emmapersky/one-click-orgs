@@ -10,12 +10,13 @@ class ApplicationController < ActionController::Base
   before_filter :ensure_organisation_exists
   before_filter :ensure_authenticated
   before_filter :ensure_member_active
-  before_filter :ensure_organisation_active
+  #before_filter :ensure_organisation_active
   before_filter :ensure_member_inducted
   
   # Returns the organisation corresponding to the subdomain that the current
   # request has been made on (or just returns the organisation if the app
   # is running in single organisation mode).
+  helper_method :current_organisation
   def current_organisation
     @current_organisation ||= (
       if Setting[:single_organisation_mode]
@@ -41,7 +42,7 @@ class ApplicationController < ActionController::Base
   # Returns true if a user is logged in; false otherwise.
   def user_logged_in?
     current_user = @current_user
-    current_user ||= session[:user] ? co.members.find_by_id(session[:user]) : false
+    current_user ||= session[:user] && co ? co.members.find_by_id(session[:user]) : false
     @current_user = current_user
     current_user.is_a?(Member)
   end
@@ -62,7 +63,7 @@ class ApplicationController < ActionController::Base
   end
   
   def prepare_constitution_view
-    @organisation_name = co.organisation_name
+    @organisation_name = co.name
     @objectives = co.objectives
     @assets = co.assets
     @website = co.domain
@@ -104,15 +105,15 @@ class ApplicationController < ActionController::Base
     end
   end
   
-  def ensure_organisation_active
-    return if co.active?
-    
-    if co.pending?
-      redirect_to(:controller => 'induction', :action => 'founding_meeting')
-    else
-      redirect_to(:controller => 'induction', :action => 'founder')
-    end
-  end
+  # def ensure_organisation_active
+  #   return if co.active?
+  #   
+  #   if co.pending?
+  #     redirect_to(:controller => 'induction', :action => 'founding_meeting')
+  #   else
+  #     redirect_to(:controller => 'induction', :action => 'founder')
+  #   end
+  # end
   
   def ensure_member_inducted
     redirect_to_welcome_member if co.active? && current_user && !current_user.inducted?
@@ -132,11 +133,7 @@ class ApplicationController < ActionController::Base
   
   rescue_from Unauthenticated, :with => :handle_unauthenticated
   def handle_unauthenticated
-    if co.has_founding_member?
-      store_location
-      redirect_to login_path
-    else
-      redirect_to(:controller => 'induction', :action => 'founder')
-    end
+    store_location
+    redirect_to login_path
   end
 end

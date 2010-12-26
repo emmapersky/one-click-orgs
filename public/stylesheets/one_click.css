@@ -40,6 +40,19 @@ h1.header {
     h1.header a:hover {
       text-decoration: underline; }
 
+#control_bar {
+  font-size: 1em;
+  padding: 1em;
+  text-align: right; }
+
+#overlay {
+  font-size: 1em;
+  margin: 0 1em 2em 1em;
+  padding: 1em;
+  background: #eedd33;
+  border: 1px solid black;
+  text-align: justify; }
+
 #doc,
 #hd #bd .footer {
   margin: auto; }

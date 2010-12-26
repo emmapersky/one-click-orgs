@@ -22,7 +22,7 @@ describe Proposal do
     member_0, member_1, member_2 = @organisation.members.make_n(3, :member_class => @default_member_class)
     member_3, member_4 = @organisation.members.make_n(2, :created_at => Time.now + 1.day, :member_class => @default_member_class)
     
-    proposal = @organisation.proposals.create!(:proposer_member_id => member_1.id, :title => 'test')            
+    proposal = @organisation.proposals.create!(:proposer_member_id => member_1.id, :title => 'test', :parameters => nil) 
     [member_0, member_1, member_2].each { |m| m.cast_vote(:for, proposal.id)}
     
     lambda {
@@ -33,7 +33,7 @@ describe Proposal do
   end
   
   it "should close due proposals" do    
-    proposal = @organisation.proposals.make(:proposer_member_id => @member.id, :close_date=>Time.now - 1.day)            
+    proposal = @organisation.proposals.make(:proposer_member_id => @member.id, :close_date=>Time.now - 1.day, :parameters => nil)  
     @organisation.proposals.close_due_proposals.should include(proposal)
     
     proposal.reload

@@ -2,7 +2,7 @@
 %html
   %head
     %title
-      = @current_organisation ? @current_organisation.organisation_name : "One Click Orgs"
+      = @current_organisation ? @current_organisation.name : "One Click Orgs"
 
     %link{:href=>"/favicon.ico", :rel=>"shortcut icon"}        
     = stylesheet_link_tag 'one_click'
@@ -19,14 +19,32 @@
             = link_to 'Edit your account', edit_member_path(current_user)
           %p
             = link_to 'Logout', member_session_path, :method => :delete
+      - if current_organisation.pending? 
+        - if current_user and current_user.has_permission(:found_organisation_proposal)
+          %div#overlay
+            This organisation is in a pending state.
+            You can add more founding members and customise your organisation.
+            Once you're happy with your changes you can make a proposal to found the organisation:
+            = form_tag(:controller => 'proposals', :action => 'propose_foundation') do
+              = submit_tag "Propose to Found This Organisation", :id => 'submit'
+        - else
+          %div#overlay
+            This organisation is in a pending state. 
+            You can already review the current version of the constitution.
+      - if current_organisation.proposed?
+        %div#overlay
+          This organisation has been proposed for foundation. 
+          Founding members can now vote until the end of the voting period.
+      - if current_organisation.failed?
+        %div#overlay
+          This organisation is inactive: the founding vote did not pass.
       %div#doc
         %div#hd
           %h1.header
-            = link_to(@current_organisation.organisation_name, root_path)
+            = link_to(@current_organisation.name, root_path)
           %p
             powered by
             = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
-
         - if current_user
           %ul#nav
             %li#navitem= link_to 'Dashboard', root_path

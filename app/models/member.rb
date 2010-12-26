@@ -34,6 +34,9 @@ class Member < ActiveRecord::Base
     votes.count
   end
 
+  validates_presence_of :first_name, :last_name, :email
+  # TODO: how can we validate :password? (not actually saved, but accepted during input)
+
   # AUTHENTICATION
 
   attr_accessor :password, :password_confirmation
@@ -71,6 +74,8 @@ class Member < ActiveRecord::Base
   # END AUTHENTICATION
   
   def can_vote?(proposal)
+    return true if organisation.proposed?
+    
     inducted? && proposal.creation_date >= inducted_at
   end
   
@@ -114,7 +119,12 @@ class Member < ActiveRecord::Base
     
   def eject!
     self.active = false
-    save
+    save!
+  end
+
+  def inducted!
+    self.inducted_at = Time.now.utc if !inducted?
+    save!
   end
   
   def reactivate!

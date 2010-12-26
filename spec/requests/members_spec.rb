@@ -43,7 +43,7 @@ describe "everything" do
       end
       
       it "redirects to resource(:members)" do
-        @response.should redirect_to(root_path)
+        @response.should redirect_to(members_path)
       end
       
       it "should set a notice flash" do
@@ -64,7 +64,8 @@ describe "everything" do
           :title => "Eject #{@member.name} from test",
           :proposer_member_id => @user.id
         ).and_return(@proposal = mock('proposal'))
-        @proposal.should_receive(:save).and_return(true)
+        @proposal.should_receive(:start).and_return(true)
+        @proposal.should_receive(:accepted?).and_return(false)
         
         make_request
       end

@@ -3,7 +3,7 @@ class SetupController < ApplicationController
   skip_before_filter :ensure_organisation_exists
   skip_before_filter :ensure_authenticated
   skip_before_filter :ensure_member_active
-  skip_before_filter :ensure_organisation_active
+  #skip_before_filter :ensure_organisation_active
   skip_before_filter :ensure_member_inducted
   
   layout 'setup'
@@ -26,7 +26,8 @@ class SetupController < ApplicationController
   
   def set_single_organisation_mode
     Setting[:single_organisation_mode] = "true"
-    @organisation = Organisation.create
-    redirect_to(:controller => 'induction', :action => 'founder')
+    Setting[:base_domain] = request.host_with_port
+    redirect_to(new_organisation_path)
+    #redirect_to(:controller => 'one_click')
   end
 end
