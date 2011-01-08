@@ -15,7 +15,9 @@
 require 'rubygems' 
 require 'sequel'
 
-# Tools
+# =========
+# = Tools =
+# =========
 
 # Migrate rows from one DB to another, translating primary keys.
 # Returns a mapping: old PK => new PK
@@ -30,8 +32,10 @@ def migrate_rows(src, dst, pk_column=:id, &block)
   end
   pk_map
 end
-# Main
 
+# ========
+# = Main =
+# ========
 
 if ARGV.size!=3 then
   puts "<mysql://username:password@host/source_db> <mysql://username:password@host/target_db> <org subdomain>"
