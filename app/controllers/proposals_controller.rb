@@ -32,6 +32,7 @@ class ProposalsController < ApplicationController
   # Freeform proposal
   def create
     @proposal = co.proposals.new(params[:proposal])
+    @proposal[:type] = Proposal # Bug #138, cf. http://www.simple10.com/rails-3-sti/
     @proposal.proposer_member_id = current_user.id #fixme
         
     if @proposal.start
