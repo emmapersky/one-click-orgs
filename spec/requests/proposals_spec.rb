@@ -78,15 +78,17 @@ describe "everything" do
     
     it "should create a proposal to change the organisation name" do
       ChangeTextProposal.should_receive(:new).with(
-        :title => "Change organisation name to 'The Yoghurt Yurt'",
+        :title => "Change name to 'The Yoghurt Yurt'",
         :parameters => {
-          'name' => 'organisation_name',
+          'name' => 'name',
           'value' => 'The Yoghurt Yurt'
         },
         :proposer_member_id => @user.id
       ).and_return(@proposal)
+      @proposal.should_receive(:start).and_return(true)
+      @proposal.should_receive(:accepted?).and_return(false)
       
-      post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'organisation_name', 'value' => 'The Yoghurt Yurt'})
+      post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'name', 'value' => 'The Yoghurt Yurt'})
 
       @response.should redirect_to('/one_click/dashboard')
     end
@@ -100,6 +102,8 @@ describe "everything" do
         },
         :proposer_member_id => @user.id
       ).and_return(@proposal)
+      @proposal.should_receive(:start).and_return(true)
+      @proposal.should_receive(:accepted?).and_return(false)
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'objectives', 'value' => 'make all the yoghurt'})
       
@@ -115,6 +119,8 @@ describe "everything" do
         },
         :proposer_member_id => @user.id
       ).and_return(@proposal)
+      @proposal.should_receive(:start).and_return(true)
+      @proposal.should_receive(:accepted?).and_return(false)
       
       post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'domain', 'value' => 'yaourt.com'})
       
@@ -129,7 +135,7 @@ describe "everything" do
     end
     
     it "should fail" do      
-      post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'organisation_name', 'value' => 'The Yoghurt Yurt'})
+      post(url_for(:controller => 'proposals', :action => 'create_text_amendment'), {'name' => 'name', 'value' => 'The Yoghurt Yurt'})
       @response.should redirect_to('/')
       Proposal.where(:proposer_member_id => @user.id).should be_empty
     end
@@ -153,7 +159,7 @@ describe "everything" do
         @response.should redirect_to("/one_click/dashboard")
       
         ChangeVotingSystemProposal.count.should == 1
-        ChangeVotingSystemProposal.first.title.should == 'change general voting system to Supporting votes from every single member'
+        ChangeVotingSystemProposal.first.title.should == 'Change general voting system to Supporting votes from every single member'
         proposal_parameters = ChangeVotingSystemProposal.all.first.parameters
         proposal_parameters['type'].should == 'general'
         proposal_parameters['proposed_system'].should == 'Unanimous'
@@ -169,7 +175,7 @@ describe "everything" do
         @response.should redirect_to("/one_click/dashboard")
       
         ChangeVotingSystemProposal.count.should == 1
-        ChangeVotingSystemProposal.all.first.title.should == 'change membership voting system to No opposing votes'
+        ChangeVotingSystemProposal.all.first.title.should == 'Change membership voting system to No opposing votes'
         proposal_parameters = ChangeVotingSystemProposal.all.first.parameters
         proposal_parameters['type'].should == 'membership'
         proposal_parameters['proposed_system'].should == 'Veto'
@@ -184,7 +190,7 @@ describe "everything" do
         @response.should redirect_to("/one_click/dashboard")
       
         ChangeVotingSystemProposal.count.should == 1
-        ChangeVotingSystemProposal.all.first.title.should == 'change constitution voting system to Supporting votes from more than half the members'
+        ChangeVotingSystemProposal.all.first.title.should == 'Change constitution voting system to Supporting votes from more than half the members'
         proposal_parameters = ChangeVotingSystemProposal.all.first.parameters
         proposal_parameters['type'].should == 'constitution'
         proposal_parameters['proposed_system'].should == 'AbsoluteMajority'

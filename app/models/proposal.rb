@@ -8,6 +8,8 @@ class Proposal < ActiveRecord::Base
   
   belongs_to :proposer, :class_name => 'Member', :foreign_key => 'proposer_member_id'
   
+  has_many :comments
+  
   before_create :set_creation_date
   private
   def set_creation_date
@@ -23,7 +25,26 @@ class Proposal < ActiveRecord::Base
   public
   
   validates_presence_of :proposer_member_id
-  
+
+  def allows_direct_edit?
+    false
+  end
+ 
+  # Call this to kick off a proposal.
+  # If the organisation is pending this will simply enact the proposal.
+  # If the organisation is "live" then a proposal will get created.
+  # Returns true on success, false otherwise.
+  def start
+    if organisation.pending? and allows_direct_edit? and proposer.has_permission(:direct_edit)
+      self.accepted = true
+      self.force_pass!
+      self.enact!(self.parameters) 
+      true
+    else
+      save
+    end
+  end
+ 
   def end_date
     self.close_date
   end
@@ -44,8 +65,9 @@ class Proposal < ActiveRecord::Base
   # returns the number of members who are eligible to vote on this proposal
   def member_count
     # TODO: find out how to do the following in one query
+    # TODO: need a different approach for the "Found organisation" proposal, where nobody has been inducted
     count = 0
-    organisation.members.where(["created_at < ? AND active = ? AND inducted_at IS NOT NULL", creation_date, true]).each do |m|
+    organisation.members.where(["created_at < ? AND active = 1 AND inducted_at IS NOT NULL", creation_date]).each do |m|
       count += 1 if m.has_permission(:vote)
     end
     count
@@ -59,7 +81,7 @@ class Proposal < ActiveRecord::Base
     votes_for + votes_against
   end
   
-  def reject!
+  def reject!(params={})
     # TODO do some kind of email notification
   end
   
@@ -77,9 +99,16 @@ class Proposal < ActiveRecord::Base
   def voting_system
     organisation.constitution.voting_system(:general)
   end
-    
+
+  # Override voting system in case of direct edits (subclasses may check the 'passed' flag)
+  protected
+  def force_pass!
+    @force_passed = true
+  end
+  public
+
   def passed?
-    voting_system.passed?(self)
+    @force_passed || voting_system.passed?(self)
   end
   
   def close!
@@ -94,10 +123,15 @@ class Proposal < ActiveRecord::Base
     save!
     
     if passed
-      decision = self.create_decision
-      decision.send_email
-      
       enact!(self.parameters)
+      decision = self.create_decision
+      begin
+        decision.send_email
+      rescue => e
+        Rails.logger.error("Error sending decision email: #{e.inspect}")
+      end
+    else
+      reject!(self.parameters)
     end
   end
 
@@ -114,7 +148,7 @@ class Proposal < ActiveRecord::Base
   end
 
   def self.close_due_proposals
-    where(["close_date < ? AND open = ?", Time.now.utc, true]).all.each { |p| p.close! }
+    where(["close_date < ? AND open = 1", Time.now.utc]).all.each { |p| p.close! }
   end
   
   def self.close_early_proposals
@@ -127,7 +161,7 @@ class Proposal < ActiveRecord::Base
     close_early_proposals
   end
   
-  scope :currently_open, lambda {where(["open = ? AND close_date > ?", true, Time.now.utc])}
+  scope :currently_open, lambda {where(["open = 1 AND close_date > ?", Time.now.utc])}
   
   scope :failed, lambda {where(["close_date < ? AND accepted = ?", Time.now.utc, false]).order('close_date DESC')}
   

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Clause do
   before(:each) do
-    @organisation = Organisation.make
+    @organisation = Organisation.make(:name => 'abc', :objectives => 'To boldly go', :subdomain => 'abc')
     @old_objectives = @organisation.clauses.make(
       :name => 'objectives', 
       :started_at => (Time.now - 3.days), 

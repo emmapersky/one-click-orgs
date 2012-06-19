@@ -1,4 +1,5 @@
 require 'digest/sha1'
+require 'digest/md5'
 require 'lib/vote_error'
 
 class Member < ActiveRecord::Base
@@ -8,9 +9,15 @@ class Member < ActiveRecord::Base
   has_many :proposals, :foreign_key => 'proposer_member_id'
   belongs_to :member_class
 
-  scope :active, where(["active = ? AND inducted_at IS NOT NULL", true])
+  scope :active, where("active = 1 AND inducted_at IS NOT NULL")
+  scope :inactive, where("active <> 1")
   scope :pending, where("inducted_at IS NULL")
   
+  validates_uniqueness_of :invitation_code, :scope => :organisation_id, :allow_nil => true
+  
+  validates_confirmation_of :password
+  # validates_presence_of :password_confirmation, :if => :password_required?
+
   def proposals_count
     proposals.count
   end
@@ -26,6 +33,9 @@ class Member < ActiveRecord::Base
   def votes_count
     votes.count
   end
+
+  validates_presence_of :first_name, :last_name, :email
+  # TODO: how can we validate :password? (not actually saved, but accepted during input)
 
   # AUTHENTICATION
 
@@ -62,7 +72,13 @@ class Member < ActiveRecord::Base
   before_save :encrypt_password
 
   # END AUTHENTICATION
-
+  
+  def can_vote?(proposal)
+    return true if organisation.proposed?
+    
+    inducted? && proposal.creation_date >= inducted_at
+  end
+  
   def cast_vote(action, proposal_id)
     raise ArgumentError, "need action and proposal_id" unless action and proposal_id
 
@@ -72,7 +88,7 @@ class Member < ActiveRecord::Base
     # FIXME why not just pass the proposal in?
     proposal = organisation.proposals.find(proposal_id)
     raise VoteError, "proposal with id #{proposal_id} not found" unless proposal
-    if !self.inducted? || proposal.creation_date < self.inducted_at
+    unless can_vote?(proposal)
       raise VoteError, "Can not vote on proposals created before member inducted"
     end
 
@@ -84,29 +100,16 @@ class Member < ActiveRecord::Base
     end
   end
 
-  def new_password!(n=6)
-    raise ArgumentError, "password must have at least 6 characters" if n < 6
-    chars = ["a".."z", "A".."Z", "0".."9"].map(&:to_a).flatten
-    self.password = self.password_confirmation = (1..n).map { chars[rand(chars.size-1)] }.join
-  end
-
   def self.create_member(params, send_welcome=false)
     member = Member.new(params)
-    member.new_password!
+    member.new_invitation_code!
     member.save!
     member.send_welcome if send_welcome
     member
   end
 
   def send_welcome
-    # delayed_job will not have access to the instance variable @password
-    # when it reloads this Member object, so we cache it in the method
-    # parameters here.
-    self.dispatch_welcome(self.password)
-  end
-  
-  def dispatch_welcome(cached_password)
-    MembersMailer.welcome_new_member(self, cached_password).deliver
+    MembersMailer.welcome_new_member(self).deliver
   end
   
   # only to be backwards compatible with systems running older versions of delayed job
@@ -116,7 +119,19 @@ class Member < ActiveRecord::Base
     
   def eject!
     self.active = false
-    save
+    save!
+  end
+
+  def inducted!
+    self.inducted_at = Time.now.utc if !inducted?
+    save!
+  end
+  
+  def reactivate!
+    self.active = true
+    new_invitation_code!
+    save!
+    send_welcome
   end
 
   def inducted?
@@ -137,5 +152,39 @@ class Member < ActiveRecord::Base
     full_name = [first_name, last_name].compact.join(' ')
     full_name.blank? ? nil : full_name
   end
-end
 
+  # INVITATION CODE
+  
+  def self.generate_invitation_code
+    Digest::SHA1.hexdigest("#{Time.now}#{rand}")[0..9]
+  end
+  
+  def new_invitation_code!
+    self.invitation_code = self.class.generate_invitation_code
+  end
+  
+  def clear_invitation_code!
+    self.update_attribute(:invitation_code, nil)
+  end
+  
+  # PASSWORD RESET CODE
+  
+  def self.generate_password_reset_code
+    Digest::SHA1.hexdigest("#{Time.now}#{rand}")[0..9]
+  end
+  
+  def new_password_reset_code!
+    self.password_reset_code = self.class.generate_password_reset_code
+  end
+  
+  def clear_password_reset_code!
+    self.update_attribute(:password_reset_code, nil)
+  end
+  
+  # GRAVATAR
+  
+  def gravatar_url
+    hash = Digest::MD5.hexdigest(email.downcase)
+    "http://www.gravatar.com/avatar/#{hash}?d=mm"
+  end
+end

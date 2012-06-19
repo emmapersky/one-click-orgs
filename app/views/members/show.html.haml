@@ -2,6 +2,9 @@
   = @member.name
 
 %p
+  = image_tag(@member.gravatar_url, :width => '80', :height => '80')
+
+%p
   = mail_to(@member.email)
 
 %p
@@ -18,7 +21,7 @@
   = @member.votes_count
 
 - if current_user.has_permission(:membership_proposal)
-  - if MemberClass.count > 1
+  - if co.member_classes.count > 1
     .section
       %h3
         Change Member Class
@@ -34,19 +37,20 @@
         %p
           = label_tag(:class)
           = collection_select(:member, :member_class_id, 
-            MemberClass.all.reject {|mc| mc==@member.member_class }, :id, :name)
+            co.member_classes.all.reject {|mc| mc==@member.member_class }, :id, :name)
         %p
           = submit_tag "Create Proposal", :id => 'submit'
-  .section
-    %h3
-      Propose the ejection of this member
+  - unless current_user == @member
+    .section
+      %h3
+        Propose the ejection of this member
 
-    = form_tag(member_path(@member), :method => :delete) do
-      %p
-        = label_tag(:description)
-        = text_area_tag :description
-      %p
-        = submit_tag "Create proposal to eject this member", :id => 'submit'
+      = form_tag(member_path(@member), :method => :delete) do
+        %p
+          = label_tag(:description)
+          = text_area_tag :description
+        %p
+          = submit_tag "Create proposal to eject this member", :id => 'submit'
 
 .section
   %h3 Timeline for this member
@@ -58,4 +62,4 @@
       %tr{:class => cycle('odd', 'even')}
         = render :partial => "one_click/#{event[:kind]}", :locals => {:event => event}
         %td.timestamp= event[:timestamp].to_s(:long)
-      
+

@@ -23,5 +23,9 @@
         %div#bd
           = yield
         %div.footer
-          = "One Click Orgs #{OneClickOrgs.version} - Running on Rails #{Rails.version}"
+          = link_to 'One Click Orgs', 'http://www.oneclickorgs.com/'
+          = "#{OneClickOrgs.version}."
+          Licensed under the
+          %a{:href => 'http://www.gnu.org/licenses/agpl.html'} AGPL.
+          %a{:href => 'http://github.com/oneclickorgs/one-click-orgs'} Source code.
       = get_satisfaction_widget

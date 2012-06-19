@@ -7,9 +7,12 @@ Sham.email      { Faker::Internet.email }
 Sham.password   { Faker::Name.first_name }
 Sham.first_name { Faker::Name.first_name }
 Sham.last_name  { Faker::Name.last_name }
+Sham.subdomain  { Faker::Internet.domain_word }
+Sham.objectives       { Faker::Lorem.sentence }
 
 MemberClass.blueprint do
   name "Director"
+  organisation
 end
 
 Member.blueprint do
@@ -55,5 +58,7 @@ Setting.blueprint do
 end
 
 Organisation.blueprint do
-  subdomain 'test'
+  name
+  objectives
+  subdomain
 end

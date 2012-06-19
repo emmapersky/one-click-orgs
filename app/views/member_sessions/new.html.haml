@@ -1,7 +1,7 @@
-%h3
-  Login
 %div
   = form_tag(member_session_path, :class => 'login') do
+    %h2
+      Login
     %p
       = label_tag(:email)
       = text_field_tag(:email)
@@ -9,6 +9,6 @@
       = label_tag(:password)
       = password_field_tag(:password)
     %p
-      = submit_tag "login", :id => 'submit'
-    %p
-      = link_to 'forgotten password', :controller => 'reset_password', :action => 'index'
+      = submit_tag "Login", :id => 'submit'
+    %p.helper
+      = link_to 'Forgotten your password?', new_password_reset_path

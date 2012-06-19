@@ -2,6 +2,11 @@
 # in the constitution; e.g. the organisation name, or the
 # organisation objectives.
 class ChangeTextProposal < Proposal
+
+  def allows_direct_edit?
+    true
+  end
+
   def enact!(params)
     organisation.clauses.set_text(params['name'], params['value'])
   end

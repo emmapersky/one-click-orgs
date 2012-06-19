@@ -1,6 +1,6 @@
 class OcoMailer < ActionMailer::Base
   helper :application
-  default :from => "info@oneclickorgs.com"
+  default :from => "notifications@oneclickorgs.com"
 
   class EmailJob
     attr_reader :mail

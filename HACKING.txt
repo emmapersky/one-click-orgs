@@ -74,6 +74,8 @@ RUNNING
 
 3. Visit http://localhost:3000/
 
+You can just choose 'single organisation mode', or if you want to test multi-tenancy mode, you'll need lines in your hosts file point yourorganisation.localhost, etc. to 127.0.0.1.
+
 UPDATING
 
 When you pull updates from the repository, you may need to update your gem bundle (if Gemfile.lock has changed) and/or migrate your database (if db/migrate has changed):

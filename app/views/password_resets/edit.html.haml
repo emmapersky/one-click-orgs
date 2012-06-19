@@ -1,0 +1,14 @@
+%h2 Reset your password
+%p
+  Choose a new password:
+= form_for(@member, :url => password_reset_path(@member.password_reset_code)) do |member_form|
+  = error_messages_for(@member)
+  %p
+    = member_form.label :password
+    = member_form.password_field :password
+  %p
+    = member_form.label :password_confirmation
+    = member_form.password_field :password_confirmation
+  %p
+    = member_form.submit("Save")
+  

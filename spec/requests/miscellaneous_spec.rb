@@ -8,7 +8,7 @@ describe "miscellaneous requests" do
     end
     
     it "should render the public/404.html file" do
-      response.body.should =~ /The page you were looking for doesn't exist\./
+      response.body.should =~ /The page you were looking for/
     end
     
     it "should not render using the application layout" do

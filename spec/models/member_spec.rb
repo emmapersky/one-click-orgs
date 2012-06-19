@@ -35,27 +35,10 @@ describe Member do
     }.should raise_error(VoteError)
   end
 
-  describe "passwords" do
-    it "should generate a new random password" do
-      new_pass = @member.new_password!(10)
-      new_pass.size.should == 10
-    end
-
-    it "should have at least 6 characters" do
-      lambda { @member.new_password!(1) }.should raise_error(ArgumentError)
-    end
-  end
-
   describe "creation" do
-    it "should schedule a welcome email delivery after member has been created" do
-      lambda do
-        @organisation.members.create_member({:email=>'foo@example.com', :member_class=>MemberClass.make}, true)
-      end.should change { Delayed::Job.count }.by(1)
-      
-      job = Delayed::Job.first
-      job.payload_object.class.should   == Delayed::PerformableMethod
-      job.payload_object.method.should  == :send_email_without_send_later
-      job.payload_object.args.should    == []
+    it "should send a welcome email" do
+      MembersMailer.should_receive(:welcome_new_member).and_return(mock('mail', :deliver => nil))
+      @organisation.members.create_member({:email=>'foo@example.com', :first_name=>'Klaus', :last_name=>'Haus'}, true)
     end
   end
 

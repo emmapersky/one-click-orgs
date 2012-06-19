@@ -1,8 +1,9 @@
-%h3
-  Edit Profile
+%h2
+  Edit Your Account
 
 %p
   = form_for(@member, :url => member_path(@member), :html => {'class' => 'member'}) do |f|
+    = error_messages_for(@member)
     %p
       = f.label(:first_name)
       = f.text_field :first_name
@@ -16,7 +17,7 @@
       = f.label(:password)
       = f.password_field :password
     %p
-      = f.label(:password_confirmation, "repeat password")
+      = f.label(:password_confirmation, "Repeat Password")
       = f.password_field :password_confirmation
     %p    
-      = submit_tag "Save Profile", :id => 'submit'
+      = submit_tag "Save Changes", :id => 'submit'

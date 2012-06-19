@@ -1,11 +1,10 @@
 Dear <%=raw(  @member.name || 'member'  )%>,
 
-you are now member of <%=raw(  @organisation_name  )%>. Your password is
-<%=raw(  @password  )%>
+You are now member of <%=raw(  @organisation_name  )%>.
 
-
-Please visit <%=raw(  login_url  )%> to log in.
+Please visit <%=raw(  short_invitation_url(:id => @member.invitation_code)  )%> to get started.
 
 Thanks
 
-oneclickorgs.com
+<%=raw @organisation_name%>
+Powered by One Click Orgs

@@ -17,4 +17,11 @@ module ApplicationHelper
       </script>
     EOC
   end
+  
+  def error_messages_for(object)
+    messages = object.errors.full_messages.map do |message|
+      content_tag(:li, message)
+    end.join
+    content_tag(:ul, messages.html_safe, :class => 'errors')
+  end
 end

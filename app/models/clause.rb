@@ -5,15 +5,22 @@
 # Name                        Value
 # 
 # organisation_name           String
-# objectives                  String
+# organisation_objectives     String
 # assets                      Boolean
-# domain                      String
 # voting_period               Integer representing one of the options
 # general_voting_system       String -- the class name of the VotingSystem in use
 # membership_voting_system    String -- the class name of the VotingSystem in use
 # constitution_voting_system  String -- the class name of the VotingSystem in use
 class Clause < ActiveRecord::Base
   belongs_to :organisation
+
+  validates_presence_of :name
+  # TODO: validate presence of exactly one of the value columns
+  validate(:on => :create) do |c|
+    errors.add('One of boolean_value, integer_value or text_value', 'cannot be empty') if [c.boolean_value, c.integer_value, c.text_value].all?(&:blank?)
+  end
+
+  scope :current, where('ended_at IS NULL')
   
   before_create :set_started_at
   private
@@ -24,14 +31,14 @@ class Clause < ActiveRecord::Base
   
   # Returns the currently active clause for the given name.
   def self.get_current(name)
-    where(["name = ? AND started_at <= ? AND ended_at IS NULL", name, Time.now.utc]).first
+    current.where(["name = ? AND started_at <= ?", name, Time.now.utc]).first
   end
   
   after_create :end_previous
   private
   # Finds the previous open clauses for this name, and ends them.
   def end_previous
-    organisation.clauses.where(["name = ? AND ended_at IS NULL and id != ?", name, self.id]).update_all(:ended_at => Time.now.utc)
+    organisation.clauses.current.where(["name = ? AND id != ?", name, self.id]).update_all(:ended_at => Time.now.utc)
   end
   public
   

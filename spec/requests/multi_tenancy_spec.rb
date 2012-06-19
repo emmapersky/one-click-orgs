@@ -51,24 +51,45 @@ describe "Multi-tenancy" do
     end
     
     describe "visiting the new organisation page" do
-      it "should show a form to set the subdomain for the new organisation" do
+      it "should show a form to set details for the new organisation" do
         get 'http://oneclickorgs.com/organisations/new'
         response.should have_selector("form[action='/organisations']") do |form|
+          form.should have_selector("input[name='founder[first_name]']")
+          form.should have_selector("input[name='founder[last_name]']")
+          form.should have_selector("input[name='founder[email]']")
+          form.should have_selector("input[name='founder[password]']")
+          form.should have_selector("input[name='founder[password_confirmation]']")
+          form.should have_selector("input[name='organisation[name]']")
           form.should have_selector("input[name='organisation[subdomain]']")
+          form.should have_selector("input[name='organisation[objectives]']")
           form.should have_selector("input[type=submit]")
         end
       end
     end
     
     describe "creating a new organisation" do
+      org_parameters = {
+        :founder => {
+          :first_name => 'Brad',
+          :last_name => 'Mehldau',
+          :email => 'brad@me.com',
+          :password => 'my_password',
+          :password_confirmation => 'my_password'
+        },
+        :organisation => {
+          :name => 'new organisation',
+          :subdomain => 'neworganisation',
+          :objectives => 'Organisation.createOrganisation.create',
+        }
+      }
       it "should create the organisation record" do
-        post 'http://oneclickorgs.com/organisations', :organisation => {:subdomain => 'neworganisation'}
+        post 'http://oneclickorgs.com/organisations', org_parameters
         Organisation.where(:subdomain => 'neworganisation').first.should_not be_nil
       end
       
       it "should redirect to the induction process for that domain" do
-        post 'http://oneclickorgs.com/organisations', :organisation => {:subdomain => 'neworganisation'}
-        response.should redirect_to 'http://neworganisation.oneclickorgs.com/induction/founder'
+        post 'http://oneclickorgs.com/organisations', org_parameters
+        response.should redirect_to 'http://neworganisation.oneclickorgs.com/one_click'
       end
     end
   end
@@ -108,7 +129,7 @@ describe "Multi-tenancy" do
         get 'http://aardvarks.oneclickorgs.com/'
         response.should redirect_to 'http://aardvarks.oneclickorgs.com/login'
         post 'http://aardvarks.oneclickorgs.com/member_session', :email => 'consuela@example.com', :password => 'password'
-        response.body.should =~ /Email or password were incorrect/
+        response.body.should =~ /The email address or password entered were incorrect/
       end
     end
     

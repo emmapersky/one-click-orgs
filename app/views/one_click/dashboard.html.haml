@@ -1,42 +1,51 @@
-%h2 Dashboard
+%h2 Voting and Proposals
 
 %p= "Welcome back, #{current_user.name}!" if current_user
 
+- if current_organisation.active? || current_organisation.proposed?
+  .section.open-proposals
+    %h3 Votes in progress
+    %p.explanation
+      These proposals are currently undergoing voting by
+      = @current_organisation.name
+      members.
+    - @proposals.each do |proposal|
+      %h4
+        = proposal.title
+        %span.time-ends
+          (voting ends
+          = proposal.end_date.to_s(:long)
+          )
+      = render 'proposals/description', :proposal => proposal
+      %p.votes
+        = proposal.votes_for
+        votes for,
+        = proposal.votes_against
+        against
+      = render 'proposals/vote', :proposal => proposal
+      %br.clear
 
-.section.open-proposals
-  %h3 Open proposals
-  %p.explanation
-    These proposals are currently undergoing voting by
-    = @current_organisation.organisation_name
-    members.
-  - @proposals.each do |proposal|
-    %h4
-      = proposal.title
-      %span.time-ends
-        (voting ends
-        = proposal.end_date.to_s(:long)
-        )
-    = render 'proposals/description', :proposal => proposal
-    %p.votes
-      = proposal.votes_for
-      votes for,
-      = proposal.votes_against
-      against
-    = render 'proposals/vote', :proposal => proposal
-  
-= render :partial => 'shared/propose_freeform_form'
+- if current_organisation.active?
+  .section
+    %input{:type => 'button', :value => 'Make a proposal', :id => 'button-proposal', :class => 'button-form-show'}  
+    %input{:type => 'button', :value => 'Invite a new member', :id => 'button-member-invite', :class => 'button-form-show'}
+    %input{:type => 'button', :value => 'Change the constitution', :id => 'button-constitution-change', :class => 'button-form-show'}
+    %br.clear
 
-= render :partial => 'shared/propose_new_member_form'
+    %div#propose_freeform_form.form-to-hide
+      = render :partial => 'shared/propose_freeform_form'
 
+    %div#propose_new_member_form.form-to-hide
+      = render :partial => 'shared/propose_new_member_form'
 
-%div.section
-  %h3 Timeline
-  %table.timeline
-    %tr
-      %th Event
-      %th Date
-    - for event in @timeline
-      %tr{:class => cycle('odd', 'even')}
-        = render :partial => event[:kind].to_s, :locals => {:event => event}
-        %td.timestamp= event[:timestamp].to_s(:long)
-        
+- if current_organisation.active? || current_organisation.failed?
+  %div.section
+    %h3 Timeline
+    %table.timeline
+      %tr
+        %th Event
+        %th Date
+      - for event in @timeline
+        %tr{:class => cycle('odd', 'even')}
+          = render :partial => event[:kind].to_s, :locals => {:event => event}
+          %td.timestamp= event[:timestamp].to_s(:long)

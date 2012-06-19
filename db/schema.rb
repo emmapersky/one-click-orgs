@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20101009142048) do
+ActiveRecord::Schema.define(:version => 20101216221134) do
 
   create_table "clauses", :force => true do |t|
     t.string   "name",            :limit => 50, :null => false
@@ -20,6 +20,14 @@ ActiveRecord::Schema.define(:version => 20101009142048) do
     t.integer  "integer_value"
     t.integer  "boolean_value",   :limit => 1
     t.integer  "organisation_id"
+  end
+
+  create_table "comments", :force => true do |t|
+    t.integer  "author_id"
+    t.integer  "proposal_id"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "decisions", :force => true do |t|
@@ -46,16 +54,19 @@ ActiveRecord::Schema.define(:version => 20101009142048) do
   end
 
   create_table "members", :force => true do |t|
-    t.string   "email",            :limit => 50,                :null => false
+    t.string   "email",               :limit => 50,                :null => false
     t.datetime "created_at"
-    t.integer  "active",           :limit => 1,  :default => 1
-    t.string   "crypted_password", :limit => 50
-    t.string   "salt",             :limit => 50
+    t.integer  "active",              :limit => 1,  :default => 1
+    t.string   "crypted_password",    :limit => 50
+    t.string   "salt",                :limit => 50
     t.integer  "organisation_id"
     t.integer  "member_class_id"
     t.datetime "inducted_at"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "invitation_code"
+    t.string   "password_reset_code"
+    t.datetime "last_logged_in_at"
   end
 
   create_table "organisations", :force => true do |t|

@@ -5,8 +5,10 @@ class MembersController < ApplicationController
   respond_to :html
   
   before_filter :require_membership_proposal_permission, :only => [:new, :create, :update, :destroy, :change_class]
+  before_filter :require_direct_edit_permission, :only => [:create_founding_member]
 
   def index
+    @current_organisation = co
     @members = co.members.active
     @pending_members = co.members.pending
     @new_member = co.members.new
@@ -44,21 +46,34 @@ class MembersController < ApplicationController
   end
 
   def create
+    # TODO: validate input
     member = params[:member]
-    title = "Add #{member['name']} as a member of #{current_organisation.organisation_name}" # TODO: should default in model
+    title = "Add #{member['first_name']} #{member['last_name']} as a member of #{current_organisation.name}" # TODO: should default in model
     proposal = co.add_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
       :parameters => member
     )
     
-    if proposal.save
-      redirect_to members_path, :notice => "Add Member Proposal successfully created"
+    if proposal.start
+      if proposal.accepted?
+        redirect_to members_path, :notice => "New member successfully created"
+      else
+        redirect_to members_path, :notice => "Add Member Proposal successfully created"
+      end
     else
-      redirect_to members_path, :flash => {:error => "Error creating proposal: #{@member.errors.inspect}"}      
+      redirect_to root_path, :flash => {:error => "Error creating proposal: #{proposal.errors.full_messages.to_sentence}"}      
     end
   end
-
+  
+  def create_founding_member
+    # TODO: validate input
+    member = params[:member]
+    member[:member_class_id] = co.member_classes.find_by_name('Founding Member').id.to_s
+    co.members.create_member(member, true)
+    # raise member.to_json
+    redirect_to members_path, :notice => "Added a new founding member."
+  end
 
   def update
     id, member = params[:id], params[:member]
@@ -66,7 +81,7 @@ class MembersController < ApplicationController
     if @member.update_attributes(member)
        redirect_to member_path(@member), :notice => "Member updated"
     else
-      flash[:error] = @member.errors.inspect
+      flash[:error] = "There was a problem with your new details."
       render(:action => :edit)
     end
   end
@@ -74,15 +89,19 @@ class MembersController < ApplicationController
   def destroy
     @member = co.members.find(params[:id])
     
-    title = "Eject #{@member.name} from #{current_organisation.organisation_name}"
+    title = "Eject #{@member.name} from #{current_organisation.name}"
     proposal = co.eject_member_proposals.new(
       :title => title,
       :proposer_member_id => current_user.id,
       :parameters => {'id' => @member.id}
     )
     
-    if proposal.save
-      redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Ejection proposal successfully created")
+    if proposal.start
+      if proposal.accepted?
+        redirect_to(members_path, :notice => "Member successfully ejected")
+      else
+        redirect_to({:controller => 'one_click', :action => 'dashboard'}, :notice => "Ejection proposal successfully created")
+      end
     else
       redirect member_path(@member), :flash => {:error => "Error creating proposal: #{proposal.errors.inspect}"}
     end
@@ -102,8 +121,12 @@ class MembersController < ApplicationController
         'member_class_id' => @new_member_class.id)
     )
     
-    if proposal.save
-      flash[:notice] = "Membership class proposal successfully created"
+    if proposal.start
+      if proposal.accepted?
+        flash[:notice] = "Membership class successfully changed"
+      else
+        flash[:notice] = "Membership class proposal successfully created"
+      end
       redirect_back_or_default(member_path(@member))
     else
       flash[:error] = "Error creating proposal: #{proposal.errors.inspect}"
@@ -112,6 +135,13 @@ class MembersController < ApplicationController
   end
 
 private
+
+  def require_direct_edit_permission
+    if !current_user.has_permission(:direct_edit)
+      flash[:error] = "You do not have sufficient permissions to make changes!"
+      redirect_back_or_default
+    end
+  end
 
   def require_membership_proposal_permission
     if !current_user.has_permission(:membership_proposal)

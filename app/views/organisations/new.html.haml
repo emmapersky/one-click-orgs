@@ -1,6 +1,39 @@
-= form_for(@organisation, organisations_path) do |f|
-  %p
-    = f.label(:subdomain, "Choose your OCO address")
-    = f.text_field(:subdomain) + '.' + Setting[:base_domain]
-  %p
-    = submit_tag "Save"
+%h2 New org
+%p TODO: Copy for new org page
+
+= form_tag({:controller => 'organisations', :action => 'create'}, :method => "post") do
+
+  %h3 Founder
+  = fields_for(:founder, @founder) do |f|
+    %p
+      = f.label :first_name, "Your first name"
+      = f.text_field :first_name
+    %p
+      = f.label :last_name, "Your last name"
+      = f.text_field :last_name
+    %p
+      = f.label :email, "Your email address"
+      = f.text_field :email
+    %p
+      = f.label :password, "Choose a password"
+      = f.password_field :password
+    %p
+      = f.label :password_confirmation, "Confirm your password"
+      = f.password_field :password_confirmation
+
+  %h3 Organisation
+  = fields_for(:organisation, @organisation) do |f|
+    %p
+      = f.label :name, "Your group's name"
+      = f.text_field :name
+    - if !Setting[:single_organisation_mode]
+      %p
+        = f.label :subdomain, "Your group's One Click Orgs web address"
+        = f.text_field(:subdomain) + '.' + Setting[:base_domain]
+    %p
+      = f.label :objectives, "Your group's objectives"
+      = f.text_field :objectives
+  
+    %p
+      = submit_tag "Create a draft constitution", :id => 'submit'
+  
